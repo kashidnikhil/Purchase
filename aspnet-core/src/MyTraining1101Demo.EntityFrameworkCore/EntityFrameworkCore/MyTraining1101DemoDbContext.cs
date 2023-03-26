@@ -12,6 +12,7 @@ using MyTraining1101Demo.MultiTenancy;
 using MyTraining1101Demo.MultiTenancy.Accounting;
 using MyTraining1101Demo.MultiTenancy.Payments;
 using MyTraining1101Demo.PhoneBook;
+using MyTraining1101Demo.Purchase.Units;
 using MyTraining1101Demo.Storage;
 
 namespace MyTraining1101Demo.EntityFrameworkCore
@@ -42,6 +43,9 @@ namespace MyTraining1101Demo.EntityFrameworkCore
         public virtual DbSet<SubscriptionPaymentExtensionData> SubscriptionPaymentExtensionDatas { get; set; }
 
         public virtual DbSet<UserDelegation> UserDelegations { get; set; }
+
+        public virtual DbSet<Unit> Units { get; set; }
+
 
         public MyTraining1101DemoDbContext(DbContextOptions<MyTraining1101DemoDbContext> options)
             : base(options)

@@ -1145,7 +1145,7 @@
     <text name="UiCustomization_DarkMode">Dark Mode</text>
     <text name="Theme_Theme13">Theme 13</text>
 
-	  <!-- Units section-->
+	<!-- Units section-->
 	  <text name="Units">Units</text>
 	  <text name="UnitsHeaderInfo">Manage units.</text>
 	  <text name="CreateNewUnit">Create new unit</text>
