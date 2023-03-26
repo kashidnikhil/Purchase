@@ -1144,5 +1144,18 @@
     <text name="WebhookPageInfo">Webhooks allow external services to be notified when certain events happen. When the specified events happen, we’ll send a POST request to each of the URLs you provide.</text>
     <text name="UiCustomization_DarkMode">Dark Mode</text>
     <text name="Theme_Theme13">Theme 13</text>
+
+	  <!-- Units section-->
+	  <text name="Units">Units</text>
+	  <text name="UnitsHeaderInfo">Manage units.</text>
+	  <text name="CreateNewUnit">Create new unit</text>
+	  <text name="EditUnit">Edit unit</text>
+	  <text name="UnitDeleteWarningMessage">Unit {0} will be deleted.</text>
+	  <text name="UnitRestoreMessage">Unit with name {0} already exists. Do you want to restore this unit?</text>
+	  <text name="UnitSuccessfullyRestored">Unit restored successfully</text>
+	  <text name="ExistingUnitErrorMessage">Unit {0} cannot be added. Unit already exists</text>
+	  <text name="NewUnitErrorMessage">No new instance of unit with name {0} cannot be added.Unit with name {0} already exists. Do you want to restore the unit?</text>
+
+
   </texts>
 </localizationDictionary>
