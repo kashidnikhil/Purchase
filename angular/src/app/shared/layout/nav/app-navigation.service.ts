@@ -32,6 +32,12 @@ export class AppNavigationService {
                         'Pages.Administration.AuditLogs',
                         'flaticon-folder-1',
                         '/app/main/units'
+                    ),
+                    new AppMenuItem(
+                        'Legal Entities',
+                        'Pages.Administration.AuditLogs',
+                        'flaticon-folder-1',
+                        '/app/main/legal-entities'
                     )
                     
                 ]

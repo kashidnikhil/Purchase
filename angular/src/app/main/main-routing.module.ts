@@ -26,6 +26,10 @@ import { RouterModule } from '@angular/router';
                         path: 'units',
                         loadChildren: () => import('./purchase/units/units.module').then(m => m.UnitsModule)
                     }, 
+                    {
+                        path: 'legal-entities',
+                        loadChildren: () => import('./purchase/legal-entities/legal-entities.module').then(m => m.LegalEntitiesModule)
+                    }, 
                                       
                     { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
                     { path: '**', redirectTo: 'dashboard' },

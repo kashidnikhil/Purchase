@@ -44,6 +44,8 @@ using MyTraining1101Demo.Notifications.Dto;
 using MyTraining1101Demo.Organizations.Dto;
 using MyTraining1101Demo.PhoneBook;
 using MyTraining1101Demo.PhoneBook.Dto;
+using MyTraining1101Demo.Purchase.LegalEntities;
+using MyTraining1101Demo.Purchase.LegalEntity.Dto;
 using MyTraining1101Demo.Purchase.Unit.Dto;
 using MyTraining1101Demo.Purchase.Units;
 using MyTraining1101Demo.Sessions.Dto;
@@ -188,6 +190,9 @@ namespace MyTraining1101Demo
 
             configuration.CreateMap<Unit, UnitDto>().ReverseMap();
             configuration.CreateMap<Unit, UnitInputDto>().ReverseMap();
+
+            configuration.CreateMap<LegalEntity, LegalEntityDto>().ReverseMap();
+            configuration.CreateMap<LegalEntity, LegalEntityInputDto>().ReverseMap();
 
             /* ADD YOUR OWN CUSTOM AUTOMAPPER MAPPINGS HERE */
         }
