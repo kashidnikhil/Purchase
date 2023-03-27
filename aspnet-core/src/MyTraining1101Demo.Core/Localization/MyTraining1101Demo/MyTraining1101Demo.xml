@@ -1156,6 +1156,15 @@
 	  <text name="ExistingUnitErrorMessage">Unit {0} cannot be added. Unit already exists</text>
 	  <text name="NewUnitErrorMessage">No new instance of unit with name {0} cannot be added.Unit with name {0} already exists. Do you want to restore the unit?</text>
 
-
+	  <!-- Legal Entity section-->
+	  <text name="LegalEntities">Legal Entities</text>
+	  <text name="LegalEntitiesHeaderInfo">Manage legal entities.</text>
+	  <text name="CreateNewLegalEntity">Create new legal entity</text>
+	  <text name="EditLegalEntity">Edit legal entity</text>
+	  <text name="LegalEntityDeleteWarningMessage">Legal Entity {0} will be deleted.</text>
+	  <text name="LegalEntityRestoreMessage">Legal Entity with name {0} already exists. Do you want to restore this legal entity?</text>
+	  <text name="LegalEntitySuccessfullyRestored">Legal entity restored successfully</text>
+	  <text name="ExistingLegalEntityErrorMessage">Legal entity {0} cannot be added. Legal entity already exists</text>
+	  <text name="NewLegalEntityErrorMessage">No new instance of legal entity with name {0} cannot be added.Legal entity with name {0} already exists. Do you want to restore the legal entity?</text>
   </texts>
 </localizationDictionary>
