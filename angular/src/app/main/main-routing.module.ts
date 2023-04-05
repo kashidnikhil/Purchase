@@ -15,7 +15,7 @@ import { RouterModule } from '@angular/router';
                 
                     {
                         path: 'phonebook',
-                        loadChildren: () => import('./phonebook/phonebook.module').then(m => m.PhoneBookModule),
+                        loadChildren: () => import('./Phonebook/phonebook.module').then(m => m.PhoneBookModule),
                         data: { permission: 'Pages.Tenant.PhoneBook' }
                     },
                     {
