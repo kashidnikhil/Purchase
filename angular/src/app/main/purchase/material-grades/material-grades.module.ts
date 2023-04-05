@@ -14,4 +14,4 @@ import { MaterialGradesRoutingModule } from "./material-grades-routing.module";
     providers: [],
 })
 
-export class MAterialGradesModule {}
+export class MaterialGradesModule {}

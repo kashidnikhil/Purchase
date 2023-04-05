@@ -30,6 +30,30 @@ import { RouterModule } from '@angular/router';
                         path: 'legal-entities',
                         loadChildren: () => import('./purchase/legal-entities/legal-entities.module').then(m => m.LegalEntitiesModule)
                     }, 
+                    {
+                        path: 'acceptance-criterias',
+                        loadChildren: () => import('./purchase/acceptance-criterias/acceptance-criterias.module').then(m => m.AcceptanceCriteriasModule)
+                    }, 
+                    {
+                        path: 'delivery-terms',
+                        loadChildren: () => import('./purchase/delivery-terms/delivery-terms.module').then(m => m.DeliveryTermsModule)
+                    }, 
+                    {
+                        path: 'material-grades',
+                        loadChildren: () => import('./purchase/material-grades/material-grades.module').then(m => m.MaterialGradesModule)
+                    }, 
+                    {
+                        path: 'po-general-terms',
+                        loadChildren: () => import('./purchase/po-general-terms/po-general-terms.module').then(m => m.POGeneralTermsModule)
+                    }, 
+                    {
+                        path: 'supplier-categories',
+                        loadChildren: () => import('./purchase/supplier-categories/supplier-categories.module').then(m => m.SupplierCategoriesModule)
+                    }, 
+                    {
+                        path: 'terms-of-payments',
+                        loadChildren: () => import('./purchase/terms-of-payments/terms-of-payments.module').then(m => m.TermsOfPaymentsModule)
+                    }, 
                                       
                     { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
                     { path: '**', redirectTo: 'dashboard' },
