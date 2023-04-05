@@ -12,7 +12,13 @@ using MyTraining1101Demo.MultiTenancy;
 using MyTraining1101Demo.MultiTenancy.Accounting;
 using MyTraining1101Demo.MultiTenancy.Payments;
 using MyTraining1101Demo.PhoneBook;
+using MyTraining1101Demo.Purchase.AcceptanceCriterias;
+using MyTraining1101Demo.Purchase.DeliveryTerms;
 using MyTraining1101Demo.Purchase.LegalEntities;
+using MyTraining1101Demo.Purchase.MaterialGrades;
+using MyTraining1101Demo.Purchase.POGeneralTerms;
+using MyTraining1101Demo.Purchase.SupplierCategories;
+using MyTraining1101Demo.Purchase.TermsOfPayments;
 using MyTraining1101Demo.Purchase.Units;
 using MyTraining1101Demo.Storage;
 
@@ -48,7 +54,20 @@ namespace MyTraining1101Demo.EntityFrameworkCore
         public virtual DbSet<Unit> Units { get; set; }
 
         public virtual DbSet<LegalEntity> LegalEntities { get; set; }
+
+        public virtual DbSet<AcceptanceCriteria> AcceptanceCriterias { get; set; }
+
+        public virtual DbSet<DeliveryTerm> DeliveryTerms { get; set; }
+
+        public virtual DbSet<MaterialGrade> MaterialGrades { get; set; }
+
+        public virtual DbSet<POGeneralTerm> POGeneralTerms { get; set; }
+
+        public virtual DbSet<SupplierCategory> SupplierCategories { get; set; }
+
+        public virtual DbSet<TermsOfPayment> TermsOfPayments { get; set; }
         
+
 
         public MyTraining1101DemoDbContext(DbContextOptions<MyTraining1101DemoDbContext> options)
             : base(options)

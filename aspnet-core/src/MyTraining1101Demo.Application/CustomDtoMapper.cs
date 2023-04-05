@@ -44,8 +44,20 @@ using MyTraining1101Demo.Notifications.Dto;
 using MyTraining1101Demo.Organizations.Dto;
 using MyTraining1101Demo.PhoneBook;
 using MyTraining1101Demo.PhoneBook.Dto;
+using MyTraining1101Demo.Purchase.AcceptanceCriterias;
+using MyTraining1101Demo.Purchase.AcceptanceCriterias.Dto;
+using MyTraining1101Demo.Purchase.DeliveryTerms;
+using MyTraining1101Demo.Purchase.DeliveryTerms.Dto;
 using MyTraining1101Demo.Purchase.LegalEntities;
 using MyTraining1101Demo.Purchase.LegalEntity.Dto;
+using MyTraining1101Demo.Purchase.MaterialGrades;
+using MyTraining1101Demo.Purchase.MaterialGrades.Dto;
+using MyTraining1101Demo.Purchase.POGeneralTerms;
+using MyTraining1101Demo.Purchase.POGeneralTerms.Dto;
+using MyTraining1101Demo.Purchase.SupplierCategories;
+using MyTraining1101Demo.Purchase.SupplierCategories.Dto;
+using MyTraining1101Demo.Purchase.TermsOfPayments;
+using MyTraining1101Demo.Purchase.TermsOfPayments.Dto;
 using MyTraining1101Demo.Purchase.Unit.Dto;
 using MyTraining1101Demo.Purchase.Units;
 using MyTraining1101Demo.Sessions.Dto;
@@ -187,6 +199,23 @@ namespace MyTraining1101Demo
             //User Delegations
             configuration.CreateMap<CreateUserDelegationDto, UserDelegation>();
 
+            configuration.CreateMap<AcceptanceCriteria, AcceptanceCriteriaDto>().ReverseMap();
+            configuration.CreateMap<AcceptanceCriteria, AcceptanceCriteriaInputDto>().ReverseMap();
+
+            configuration.CreateMap<DeliveryTerm, DeliveryTermDto>().ReverseMap();
+            configuration.CreateMap<DeliveryTerm, DeliveryTermInputDto>().ReverseMap();
+
+            configuration.CreateMap<MaterialGrade, MaterialGradeDto>().ReverseMap();
+            configuration.CreateMap<MaterialGrade, MaterialGradeInputDto>().ReverseMap();
+
+            configuration.CreateMap<POGeneralTerm, POGeneralTermDto>().ReverseMap();
+            configuration.CreateMap<POGeneralTerm, POGeneralTermInputDto>().ReverseMap();
+
+            configuration.CreateMap<SupplierCategory, SupplierCategoryDto>().ReverseMap();
+            configuration.CreateMap<SupplierCategory, SupplierCategoryInputDto>().ReverseMap();
+
+            configuration.CreateMap<TermsOfPayment, TermsOfPaymentDto>().ReverseMap();
+            configuration.CreateMap<TermsOfPayment, TermsOfPaymentInputDto>().ReverseMap();
 
             configuration.CreateMap<Unit, UnitDto>().ReverseMap();
             configuration.CreateMap<Unit, UnitInputDto>().ReverseMap();
