@@ -1178,5 +1178,60 @@
 	  <text name="AcceptanceCriteriaSuccessfullyRestored">Acceptance criteria restored successfully</text>
 	  <text name="ExistingAcceptanceCriteriaErrorMessage">Acceptance criteria {0} cannot be added. Acceptance criteria already exists</text>
 	  <text name="NewAcceptanceCriteriaErrorMessage">No new instance of acceptance criteria with name {0} cannot be added.Acceptance criteria with name {0} already exists. Do you want to restore the acceptance criteria?</text>
+
+	  <!-- Delivery Term section-->
+	  <text name="DeliveryTerms">Delivery Terms</text>
+	  <text name="DeliveryTermsHeaderInfo">Manage delivery terms.</text>
+	  <text name="CreateNewDeliveryTerm">Create new delivery term</text>
+	  <text name="EditDeliveryTerm">Edit delivery term</text>
+	  <text name="DeliveryTermDeleteWarningMessage">Delivery term {0} will be deleted.</text>
+	  <text name="DeliveryTermRestoreMessage">Delivery term with name {0} already exists. Do you want to restore this delivery term?</text>
+	  <text name="DeliveryTermSuccessfullyRestored">Delivery term restored successfully</text>
+	  <text name="ExistingDeliveryTermErrorMessage">Delivery term {0} cannot be added. Delivery term already exists</text>
+	  <text name="NewDeliveryTermErrorMessage">No new instance of delivery term with name {0} cannot be added.Delivery term with name {0} already exists. Do you want to restore the delivery term?</text>
+
+	  <!-- Material Grade section-->
+	  <text name="MaterialGrades">Material Grades</text>
+	  <text name="MaterialGradesHeaderInfo">Manage material grades.</text>
+	  <text name="CreateNewMaterialGrade">Create new material grade</text>
+	  <text name="EditMaterialGrade">Edit material grade</text>
+	  <text name="MaterialGradeDeleteWarningMessage">Material grade {0} will be deleted.</text>
+	  <text name="MaterialGradeRestoreMessage">Material grade with name {0} already exists. Do you want to restore this material grade?</text>
+	  <text name="MaterialGradeSuccessfullyRestored">Material grade restored successfully</text>
+	  <text name="ExistingMaterialGradeErrorMessage">Material grade {0} cannot be added. Material grade already exists</text>
+	  <text name="NewMaterialGradeErrorMessage">No new instance of material grade with name {0} cannot be added.Material grade with name {0} already exists. Do you want to restore the material grade?</text>
+
+	  <!-- PO General Term section-->
+	  <text name="POGeneralTerms">PO General Terms</text>
+	  <text name="POGeneralTermsHeaderInfo">Manage PO General Terms.</text>
+	  <text name="CreateNewPOGeneralTerm">Create new PO General Term</text>
+	  <text name="EditPOGeneralTerm">Edit PO General Term</text>
+	  <text name="POGeneralTermDeleteWarningMessage">PO General Term {0} will be deleted.</text>
+	  <text name="POGeneralTermRestoreMessage">PO General Term with name {0} already exists. Do you want to restore this PO General Term?</text>
+	  <text name="POGeneralTermSuccessfullyRestored">PO General Term restored successfully</text>
+	  <text name="ExistingPOGeneralTermErrorMessage">PO General Term {0} cannot be added. PO General Term already exists</text>
+	  <text name="NewPOGeneralTermErrorMessage">No new instance of PO General Term with name {0} cannot be added.PO General Term with name {0} already exists. Do you want to restore the PO General Term?</text>
+
+	  <!-- Supplier Category section-->
+	  <text name="SupplierCategories">Supplier Categories</text>
+	  <text name="SupplierCategoriesHeaderInfo">Manage supplier categories.</text>
+	  <text name="CreateNewSupplierCategory">Create new supplier category</text>
+	  <text name="EditSupplierCategory">Edit supplier category</text>
+	  <text name="SupplierCategoryDeleteWarningMessage">Supplier category {0} will be deleted.</text>
+	  <text name="SupplierCategoryRestoreMessage">Supplier category with name {0} already exists. Do you want to restore this supplier category?</text>
+	  <text name="SupplierCategorySuccessfullyRestored">Supplier category restored successfully</text>
+	  <text name="ExistingSupplierCategoryErrorMessage">Supplier category {0} cannot be added. Supplier category already exists</text>
+	  <text name="NewSupplierCategoryErrorMessage">No new instance of supplier category with name {0} cannot be added.Supplier category with name {0} already exists. Do you want to restore the supplier category?</text>
+
+	  <!-- Terms of Payment section-->
+	  <text name="TermsOfPayments">Terms Of Payments</text>
+	  <text name="TermsOfPaymentsHeaderInfo">Manage terms of payments.</text>
+	  <text name="CreateNewTermsOfPayment">Create new terms of payment</text>
+	  <text name="EditTermsOfPayment">Edit terms of payment</text>
+	  <text name="TermsOfPaymentDeleteWarningMessage">Terms of payment {0} will be deleted.</text>
+	  <text name="TermsOfPaymentRestoreMessage">Terms of payment with name {0} already exists. Do you want to restore this terms of payment?</text>
+	  <text name="TermsOfPaymentSuccessfullyRestored">Terms of payment restored successfully</text>
+	  <text name="ExistingTermsOfPaymentErrorMessage">Terms of payment {0} cannot be added. Terms of payment already exists</text>
+	  <text name="NewTermsOfPaymentErrorMessage">No new instance of terms of payment with name {0} cannot be added.Terms of payment with name {0} already exists. Do you want to restore the terms of payment?</text>
   </texts>
 </localizationDictionary>
