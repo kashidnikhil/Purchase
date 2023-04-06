@@ -2,21 +2,21 @@ import { Component, Injector, ViewChild, ViewEncapsulation, AfterViewInit } from
 import { ActivatedRoute } from '@angular/router';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { AppComponentBase } from '@shared/common/app-component-base';
-import {  DeliveryTermDto, DeliveryTermServiceProxy, ResponseDto } from '@shared/service-proxies/service-proxies';
+import { MaterialGradeDto, MaterialGradeServiceProxy, ResponseDto } from '@shared/service-proxies/service-proxies';
 import { LazyLoadEvent } from 'primeng/api';
 import { Paginator } from 'primeng/paginator';
 import { Table } from 'primeng/table';
 import { finalize } from 'rxjs/operators';
-import { CreateOrEditDeliveryTermModalComponent } from '../create-edit-delivery-term/create-or-edit-delivery-term-modal.component';
+import { CreateOrEditMaterialGradeModalComponent } from '../create-edit-material-grade/create-or-edit-material-grade-modal.component';
 
 @Component({
-    templateUrl: './delivery-terms.component.html',
+    templateUrl: './material-grades.component.html',
     encapsulation: ViewEncapsulation.None,
-    styleUrls: ['./delivery-terms.component.less'],
+    styleUrls: ['./material-grades.component.less'],
     animations: [appModuleAnimation()],
 })
-export class DeliveryTermsComponent extends AppComponentBase implements AfterViewInit {
-    @ViewChild('createOrEditDeliveryTermModal', { static: true }) createOrEditDeliveryTermModal: CreateOrEditDeliveryTermModalComponent;
+export class MaterialGradesComponent extends AppComponentBase implements AfterViewInit {
+    @ViewChild('createOrEditMaterialGradeModal', { static: true }) createOrEditMaterialGradeModal: CreateOrEditMaterialGradeModalComponent;
     @ViewChild('dataTable', { static: true }) dataTable: Table;
     @ViewChild('paginator', { static: true }) paginator: Paginator;
     
@@ -25,7 +25,7 @@ export class DeliveryTermsComponent extends AppComponentBase implements AfterVie
 
     constructor(
         injector: Injector,
-        private _deliveryTermService: DeliveryTermServiceProxy,
+        private _materialGradeService: MaterialGradeServiceProxy,
         private _activatedRoute: ActivatedRoute
     ) {
         super(injector);
@@ -36,15 +36,15 @@ export class DeliveryTermsComponent extends AppComponentBase implements AfterVie
         this.primengTableHelper.adjustScroll(this.dataTable);
     }
 
-    getDeliveryTerms(event?: LazyLoadEvent) {
+    getMaterialGrades(event?: LazyLoadEvent) {
         if (this.primengTableHelper.shouldResetPaging(event)) {
             this.paginator.changePage(0);
             return;
         }
 
         this.primengTableHelper.showLoadingIndicator();
-        this._deliveryTermService
-            .getDeliveryTerms(
+        this._materialGradeService
+            .getMaterialGrades(
                     this.filterText,
                     this.primengTableHelper.getSorting(this.dataTable),
                     this.primengTableHelper.getMaxResultCount(this.paginator, event),
@@ -62,14 +62,14 @@ export class DeliveryTermsComponent extends AppComponentBase implements AfterVie
         this.paginator.changePage(this.paginator.getPage());
     }
 
-    createDeliveryTerm(): void {
-        this.createOrEditDeliveryTermModal.show();
+    createMaterialGrade(): void {
+        this.createOrEditMaterialGradeModal.show();
     }
 
-    deleteDeliveryTerm(deliveryTerm: DeliveryTermDto): void {
-        this.message.confirm(this.l('DeliveryTermDeleteWarningMessage', deliveryTerm.name), this.l('AreYouSure'), (isConfirmed) => {
+    deleteMaterialGrade(deliveryTerm: MaterialGradeDto): void {
+        this.message.confirm(this.l('MaterialGradeDeleteWarningMessage', deliveryTerm.name), this.l('AreYouSure'), (isConfirmed) => {
             if (isConfirmed) {
-                this._deliveryTermService.deleteDeliveryTerm(deliveryTerm.id).subscribe(() => {
+                this._materialGradeService.deleteMaterialGrade(deliveryTerm.id).subscribe(() => {
                     this.reloadPage();
                     this.notify.success(this.l('SuccessfullyDeleted'));
                 });
@@ -77,35 +77,35 @@ export class DeliveryTermsComponent extends AppComponentBase implements AfterVie
         });
     }
 
-    restoreDeliveryTerm(deliveryTermResponse: ResponseDto):void {
-        if(deliveryTermResponse.id == null){
-            if(deliveryTermResponse.isExistingDataAlreadyDeleted){
-                this.message.confirm(this.l('DeliveryTermRestoreMessage', deliveryTermResponse.name), this.l('AreYouSure'), async (isConfirmed) => {
+    restoreMaterialGrade(materialGradeResponse: ResponseDto):void {
+        if(materialGradeResponse.id == null){
+            if(materialGradeResponse.isExistingDataAlreadyDeleted){
+                this.message.confirm(this.l('MaterialGradeRestoreMessage', materialGradeResponse.name), this.l('AreYouSure'), async (isConfirmed) => {
                     if (isConfirmed) {
-                        this._deliveryTermService.restoreDeliveryTerm(deliveryTermResponse.restoringItemId).subscribe(() => {
+                        this._materialGradeService.restoreMaterialGrade(materialGradeResponse.restoringItemId).subscribe(() => {
                             this.reloadPage();
-                            this.notify.success(this.l('DeliveryTermSuccessfullyRestored'));
+                            this.notify.success(this.l('MaterialGradeSuccessfullyRestored'));
                         });
                     }
                 });
             }
             else{
-                this.notify.error(this.l('ExistingDeliveryTermErrorMessage',deliveryTermResponse.name));
+                this.notify.error(this.l('ExistingMaterialGradeErrorMessage',materialGradeResponse.name));
             }
         }
         else{
-            if(deliveryTermResponse.isExistingDataAlreadyDeleted){
-                this.message.confirm(this.l('NewDeliveryTermErrorMessage', deliveryTermResponse.name), this.l('AreYouSure'), async (isConfirmed) => {
+            if(materialGradeResponse.isExistingDataAlreadyDeleted){
+                this.message.confirm(this.l('NewMaterialGradeErrorMessage', materialGradeResponse.name), this.l('AreYouSure'), async (isConfirmed) => {
                     if (isConfirmed) {
-                        this._deliveryTermService.restoreDeliveryTerm(deliveryTermResponse.restoringItemId).subscribe(() => {
+                        this._materialGradeService.restoreMaterialGrade(materialGradeResponse.restoringItemId).subscribe(() => {
                             this.reloadPage();
-                            this.notify.success(this.l('DeliveryTermSuccessfullyRestored'));
+                            this.notify.success(this.l('MaterialGradeSuccessfullyRestored'));
                         });
                     }
                 });
             }   
             else{
-                this.notify.error(this.l('ExistingDeliveryTermErrorMessage',deliveryTermResponse.name));
+                this.notify.error(this.l('ExistingMaterialGradeErrorMessage',materialGradeResponse.name));
             }
         }
     }

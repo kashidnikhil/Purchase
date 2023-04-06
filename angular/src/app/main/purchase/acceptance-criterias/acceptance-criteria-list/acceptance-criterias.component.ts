@@ -66,7 +66,7 @@ export class AcceptanceCriteriasComponent extends AppComponentBase implements Af
         this.createOrEditAcceptanceCriteriaModal.show();
     }
 
-    deleteTechnique(acceptanceCriteria: AcceptanceCriteriaDto): void {
+    deleteAcceptanceCriteria(acceptanceCriteria: AcceptanceCriteriaDto): void {
         this.message.confirm(this.l('AcceptanceCriteriaDeleteWarningMessage', acceptanceCriteria.name), this.l('AreYouSure'), (isConfirmed) => {
             if (isConfirmed) {
                 this._acceptanceCriteriaService.deleteAcceptanceCriteria(acceptanceCriteria.id).subscribe(() => {

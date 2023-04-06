@@ -1,14 +1,14 @@
 <div [@routerTransition]>
     <div class="content d-flex flex-column flex-column-fluid">
-        <sub-header [title]="'AcceptanceCriterias' | localize" [description]="'AcceptanceCriteriasHeaderInfo' | localize">
+        <sub-header [title]="'MaterialGrades' | localize" [description]="'MaterialGradesHeaderInfo' | localize">
             <div role="actions">
                 <button
-                    (click)="createAcceptanceCriteria()"
+                    (click)="createMaterialGrade()"
                     class="btn btn-primary"
                 >
                 <!-- *ngIf="'Pages.Administration.Users.Create' | permission" -->
                     <i class="fa fa-plus"></i>
-                    {{ 'CreateNewAcceptanceCriteria' | localize }}
+                    {{ 'CreateNewMaterialGrade' | localize }}
                 </button>
             </div>
         </sub-header>
@@ -29,7 +29,7 @@
                                                 [placeholder]="l('SearchWithThreeDot')"
                                                 type="text"
                                             />
-                                            <button (click)="getAcceptanceCriterias()" class="btn btn-primary" type="submit">
+                                            <button (click)="getMaterialGrades()" class="btn btn-primary" type="submit">
                                                 <i class="flaticon-search-1" [attr.aria-label]="l('Search')"></i>
                                             </button>
                                         </div>
@@ -45,7 +45,7 @@
                             <p-table
                                 #dataTable
                                 sortMode="multiple"
-                                (onLazyLoad)="getAcceptanceCriterias($event)"
+                                (onLazyLoad)="getMaterialGrades($event)"
                                 [value]="primengTableHelper.records"
                                 rows="{{ primengTableHelper.defaultRecordsCountPerPage }}"
                                 [paginator]="false"
@@ -119,7 +119,7 @@
                                                         <a
                                                             href="javascript:;"
                                                             class="dropdown-item"
-                                                            (click)="createOrEditAcceptanceCriteriaModal.show(record.id)"
+                                                            (click)="createOrEditMaterialGradeModal.show(record.id)"
                                                         >
                                                             {{ 'Edit' | localize }}
                                                         </a>
@@ -136,7 +136,7 @@
                                                         <a
                                                             href="javascript:;"
                                                             class="dropdown-item"
-                                                            (click)="deleteAcceptanceCriteria(record)"
+                                                            (click)="deleteMaterialGrade(record)"
                                                         >
                                                             {{ 'Delete' | localize }}
                                                         </a>
@@ -162,7 +162,7 @@
                                 <p-paginator
                                     [rows]="primengTableHelper.defaultRecordsCountPerPage"
                                     #paginator
-                                    (onPageChange)="getAcceptanceCriterias($event)"
+                                    (onPageChange)="getMaterialGrades($event)"
                                     [totalRecords]="primengTableHelper.totalRecordsCount"
                                     [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
                                     [showCurrentPageReport]="true"
@@ -177,6 +177,6 @@
                 </div>
             </div>
         </div>
-        <create-edit-acceptance-criteria-modal #createOrEditAcceptanceCriteriaModal (modalSave)="getAcceptanceCriterias()" (restoreAcceptanceCriteia)="restoreAcceptanceCriteria($event)"></create-edit-acceptance-criteria-modal>
+        <create-edit-material-grade-modal #createOrEditMaterialGradeModal (modalSave)="getMaterialGrades()" (restoreMaterialGrade)="restoreMaterialGrade($event)"></create-edit-material-grade-modal>
     </div>
 </div>
