@@ -2,46 +2,46 @@ import { Component, EventEmitter, Injector, Output, ViewChild, ViewEncapsulation
 import { AppComponentBase } from '@shared/common/app-component-base';
 import {
     ResponseDto,
-    SupplierCategoryDto,
-    SupplierCategoryInputDto,
-    SupplierCategoryServiceProxy,
+    TermsOfPaymentDto,
+    TermsOfPaymentInputDto,
+    TermsOfPaymentServiceProxy,
 } from '@shared/service-proxies/service-proxies';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { map as _map, filter as _filter } from 'lodash-es';
 import { finalize } from 'rxjs/operators';
 
 @Component({
-    selector: 'create-edit-supplier-category-modal',
-    templateUrl: './create-or-edit-supplier-category-modal.component.html',
+    selector: 'create-edit-terms-of-payment-modal',
+    templateUrl: './create-or-edit-terms-of-payment-modal.component.html',
     encapsulation: ViewEncapsulation.None,
-    styleUrls: ['create-or-edit-supplier-category-modal.component.less']
+    styleUrls: ['create-or-edit-terms-of-payment-modal.component.less']
 })
-export class CreateOrEditSupplierCategoryModalComponent extends AppComponentBase {
+export class CreateOrEditTermsOfPaymentModalComponent extends AppComponentBase {
     @ViewChild('createOrEditModal', { static: true }) modal: ModalDirective;
 
     @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
-    @Output() restoreSupplierCategory: EventEmitter<ResponseDto> = new EventEmitter<ResponseDto>();
+    @Output() restoreTermsOfPayment: EventEmitter<ResponseDto> = new EventEmitter<ResponseDto>();
 
     active = false;
     saving = false;
-    supplierCategoryItem : SupplierCategoryDto = new SupplierCategoryDto();
+    termsOfPaymentItem : TermsOfPaymentDto = new TermsOfPaymentDto();
     
     constructor(
         injector: Injector,
-        private _supplierCategoryService : SupplierCategoryServiceProxy
+        private _termsOfPaymentService : TermsOfPaymentServiceProxy
     ) {
         super(injector);
     }
 
-    show(supplierCategoryId?: string): void {
-        if (!supplierCategoryId) {
-            this.supplierCategoryItem = new SupplierCategoryDto({id : null, name: "", description: ""}); 
+    show(termsOfPaymentId?: string): void {
+        if (!termsOfPaymentId) {
+            this.termsOfPaymentItem = new TermsOfPaymentDto({id : null, name: "", description: ""}); 
             this.active = true;
             this.modal.show();
         }
         else{
-            this._supplierCategoryService.getSupplierCategoryById(supplierCategoryId).subscribe((response : SupplierCategoryDto)=> {
-                this.supplierCategoryItem  = response;
+            this._termsOfPaymentService.getTermsOfPaymentById(termsOfPaymentId).subscribe((response : TermsOfPaymentDto)=> {
+                this.termsOfPaymentItem  = response;
                 this.active = true;
                 this.modal.show();
             });
@@ -54,11 +54,11 @@ export class CreateOrEditSupplierCategoryModalComponent extends AppComponentBase
     }
 
     save(): void {
-        let input = new SupplierCategoryInputDto();
-        input = this.supplierCategoryItem;
+        let input = new TermsOfPaymentInputDto();
+        input = this.termsOfPaymentItem;
         this.saving = true;
-        this._supplierCategoryService
-            .insertOrUpdateSupplierCategory(input)
+        this._termsOfPaymentService
+            .insertOrUpdateTermsOfPayment(input)
             .pipe(
                 finalize(() => {
                     this.saving = false;
@@ -72,7 +72,7 @@ export class CreateOrEditSupplierCategoryModalComponent extends AppComponentBase
                 }
                 else{
                     this.close();
-                    this.restoreSupplierCategory.emit(response);
+                    this.restoreTermsOfPayment.emit(response);
                 }
             });
     }

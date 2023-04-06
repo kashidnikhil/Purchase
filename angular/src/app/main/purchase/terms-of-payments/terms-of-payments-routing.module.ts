@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { TermsOfPaymentsComponent } from './terms-of-payment-list/terms-of-payments.component';
 
 const routes: Routes = [
-    // {
-    //     path: '',
-    //     component: UnitsComponent,
-    //     pathMatch: 'full',
-    // },
+    {
+        path: '',
+        component: TermsOfPaymentsComponent,
+        pathMatch: 'full',
+    },
 ];
 
 @NgModule({
