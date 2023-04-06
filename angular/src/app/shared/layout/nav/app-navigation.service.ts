@@ -44,6 +44,36 @@ export class AppNavigationService {
                         'Pages.Administration.AuditLogs',
                         'flaticon-folder-1',
                         '/app/main/acceptance-criterias'
+                    ),
+                    new AppMenuItem(
+                        'Delivery Terms',
+                        'Pages.Administration.AuditLogs',
+                        'flaticon-folder-1',
+                        '/app/main/delivery-terms'
+                    ),
+                    new AppMenuItem(
+                        'Material Grades',
+                        'Pages.Administration.AuditLogs',
+                        'flaticon-folder-1',
+                        '/app/main/material-grades'
+                    ),
+                    new AppMenuItem(
+                        'PO General Terms',
+                        'Pages.Administration.AuditLogs',
+                        'flaticon-folder-1',
+                        '/app/main/po-general-terms'
+                    ),
+                    new AppMenuItem(
+                        'Supplier Categories',
+                        'Pages.Administration.AuditLogs',
+                        'flaticon-folder-1',
+                        '/app/main/supplier-categories'
+                    ),
+                    new AppMenuItem(
+                        'Terms of Payments',
+                        'Pages.Administration.AuditLogs',
+                        'flaticon-folder-1',
+                        '/app/main/terms-of-payments'
                     )
                     
                 ]
