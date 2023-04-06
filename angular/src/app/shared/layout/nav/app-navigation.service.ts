@@ -38,6 +38,12 @@ export class AppNavigationService {
                         'Pages.Administration.AuditLogs',
                         'flaticon-folder-1',
                         '/app/main/legal-entities'
+                    ),
+                    new AppMenuItem(
+                        'Acceptance Criterias',
+                        'Pages.Administration.AuditLogs',
+                        'flaticon-folder-1',
+                        '/app/main/acceptance-criterias'
                     )
                     
                 ]

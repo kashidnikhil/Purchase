@@ -1166,5 +1166,17 @@
 	  <text name="LegalEntitySuccessfullyRestored">Legal entity restored successfully</text>
 	  <text name="ExistingLegalEntityErrorMessage">Legal entity {0} cannot be added. Legal entity already exists</text>
 	  <text name="NewLegalEntityErrorMessage">No new instance of legal entity with name {0} cannot be added.Legal entity with name {0} already exists. Do you want to restore the legal entity?</text>
+
+
+	  <!-- Acceptance Criteria section-->
+	  <text name="AcceptanceCriterias">Acceptance Criterias</text>
+	  <text name="AcceptanceCriteriasHeaderInfo">Manage acceptance criterias.</text>
+	  <text name="CreateNewAcceptanceCriteria">Create new acceptance criteria</text>
+	  <text name="EditAcceptanceCriteria">Edit acceptance criteria</text>
+	  <text name="AcceptanceCriteriaDeleteWarningMessage">Acceptance criteria {0} will be deleted.</text>
+	  <text name="AcceptanceCriteriaRestoreMessage">Acceptance criteria with name {0} already exists. Do you want to restore this acceptance criteria?</text>
+	  <text name="AcceptanceCriteriaSuccessfullyRestored">Acceptance criteria restored successfully</text>
+	  <text name="ExistingAcceptanceCriteriaErrorMessage">Acceptance criteria {0} cannot be added. Acceptance criteria already exists</text>
+	  <text name="NewAcceptanceCriteriaErrorMessage">No new instance of acceptance criteria with name {0} cannot be added.Acceptance criteria with name {0} already exists. Do you want to restore the acceptance criteria?</text>
   </texts>
 </localizationDictionary>
