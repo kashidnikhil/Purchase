@@ -2,21 +2,21 @@ import { Component, Injector, ViewChild, ViewEncapsulation, AfterViewInit } from
 import { ActivatedRoute } from '@angular/router';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { AppComponentBase } from '@shared/common/app-component-base';
-import { AcceptanceCriteriaDto, AcceptanceCriteriaServiceProxy, ResponseDto } from '@shared/service-proxies/service-proxies';
+import {  DeliveryTermDto, DeliveryTermServiceProxy, ResponseDto } from '@shared/service-proxies/service-proxies';
 import { LazyLoadEvent } from 'primeng/api';
 import { Paginator } from 'primeng/paginator';
 import { Table } from 'primeng/table';
 import { finalize } from 'rxjs/operators';
-import { CreateOrEditAcceptanceCriteriaModalComponent } from '../create-edit-acceptance-criteria/create-or-edit-acceptance-criteria-modal.component';
+import { CreateOrEditDeliveryTermModalComponent } from '../create-edit-delivery-term/create-or-edit-delivery-term-modal.component';
 
 @Component({
-    templateUrl: './acceptance-criterias.component.html',
+    templateUrl: './delivery-terms.component.html',
     encapsulation: ViewEncapsulation.None,
-    styleUrls: ['./acceptance-criterias.component.less'],
+    styleUrls: ['./delivery-terms.component.less'],
     animations: [appModuleAnimation()],
 })
-export class AcceptanceCriteriasComponent extends AppComponentBase implements AfterViewInit {
-    @ViewChild('createOrEditAcceptanceCriteriaModal', { static: true }) createOrEditAcceptanceCriteriaModal: CreateOrEditAcceptanceCriteriaModalComponent;
+export class DeliveryTermsComponent extends AppComponentBase implements AfterViewInit {
+    @ViewChild('createOrEditDeliveryTermModal', { static: true }) createOrEditAcceptanceCriteriaModal: CreateOrEditDeliveryTermModalComponent;
     @ViewChild('dataTable', { static: true }) dataTable: Table;
     @ViewChild('paginator', { static: true }) paginator: Paginator;
     
@@ -25,7 +25,7 @@ export class AcceptanceCriteriasComponent extends AppComponentBase implements Af
 
     constructor(
         injector: Injector,
-        private _acceptanceCriteriaService: AcceptanceCriteriaServiceProxy,
+        private _deliveryTermService: DeliveryTermServiceProxy,
         private _activatedRoute: ActivatedRoute
     ) {
         super(injector);
@@ -36,15 +36,15 @@ export class AcceptanceCriteriasComponent extends AppComponentBase implements Af
         this.primengTableHelper.adjustScroll(this.dataTable);
     }
 
-    getAcceptanceCriterias(event?: LazyLoadEvent) {
+    getDeliveryTerms(event?: LazyLoadEvent) {
         if (this.primengTableHelper.shouldResetPaging(event)) {
             this.paginator.changePage(0);
             return;
         }
 
         this.primengTableHelper.showLoadingIndicator();
-        this._acceptanceCriteriaService
-            .getAcceptanceCriterias(
+        this._deliveryTermService
+            .getDeliveryTerms(
                     this.filterText,
                     this.primengTableHelper.getSorting(this.dataTable),
                     this.primengTableHelper.getMaxResultCount(this.paginator, event),
@@ -62,14 +62,14 @@ export class AcceptanceCriteriasComponent extends AppComponentBase implements Af
         this.paginator.changePage(this.paginator.getPage());
     }
 
-    createAcceptanceCriteria(): void {
+    createDeliveryTerm(): void {
         this.createOrEditAcceptanceCriteriaModal.show();
     }
 
-    deleteTechnique(acceptanceCriteria: AcceptanceCriteriaDto): void {
-        this.message.confirm(this.l('AcceptanceCriteriaDeleteWarningMessage', acceptanceCriteria.name), this.l('AreYouSure'), (isConfirmed) => {
+    deleteTechnique(deliveryTerm: DeliveryTermDto): void {
+        this.message.confirm(this.l('DeliveryTermDeleteWarningMessage', deliveryTerm.name), this.l('AreYouSure'), (isConfirmed) => {
             if (isConfirmed) {
-                this._acceptanceCriteriaService.deleteAcceptanceCriteria(acceptanceCriteria.id).subscribe(() => {
+                this._deliveryTermService.deleteDeliveryTerm(deliveryTerm.id).subscribe(() => {
                     this.reloadPage();
                     this.notify.success(this.l('SuccessfullyDeleted'));
                 });
@@ -77,35 +77,35 @@ export class AcceptanceCriteriasComponent extends AppComponentBase implements Af
         });
     }
 
-    restoreAcceptanceCriteria(acceptanceCriteriaResponse: ResponseDto):void {
-        if(acceptanceCriteriaResponse.id == null){
-            if(acceptanceCriteriaResponse.isExistingDataAlreadyDeleted){
-                this.message.confirm(this.l('AcceptanceCriteriaRestoreMessage', acceptanceCriteriaResponse.name), this.l('AreYouSure'), async (isConfirmed) => {
+    restoreDeliveryTerm(deliveryTermResponse: ResponseDto):void {
+        if(deliveryTermResponse.id == null){
+            if(deliveryTermResponse.isExistingDataAlreadyDeleted){
+                this.message.confirm(this.l('DeliveryTermRestoreMessage', deliveryTermResponse.name), this.l('AreYouSure'), async (isConfirmed) => {
                     if (isConfirmed) {
-                        this._acceptanceCriteriaService.restoreAcceptanceCriteria(acceptanceCriteriaResponse.restoringItemId).subscribe(() => {
+                        this._deliveryTermService.restoreDeliveryTerm(deliveryTermResponse.restoringItemId).subscribe(() => {
                             this.reloadPage();
-                            this.notify.success(this.l('AcceptanceCriteriaSuccessfullyRestored'));
+                            this.notify.success(this.l('DeliveryTermSuccessfullyRestored'));
                         });
                     }
                 });
             }
             else{
-                this.notify.error(this.l('ExistingAcceptanceCriteriaErrorMessage',acceptanceCriteriaResponse.name));
+                this.notify.error(this.l('ExistingDeliveryTermErrorMessage',deliveryTermResponse.name));
             }
         }
         else{
-            if(acceptanceCriteriaResponse.isExistingDataAlreadyDeleted){
-                this.message.confirm(this.l('NewAcceptanceCriteriaErrorMessage', acceptanceCriteriaResponse.name), this.l('AreYouSure'), async (isConfirmed) => {
+            if(deliveryTermResponse.isExistingDataAlreadyDeleted){
+                this.message.confirm(this.l('NewDeliveryTermErrorMessage', deliveryTermResponse.name), this.l('AreYouSure'), async (isConfirmed) => {
                     if (isConfirmed) {
-                        this._acceptanceCriteriaService.restoreAcceptanceCriteria(acceptanceCriteriaResponse.restoringItemId).subscribe(() => {
+                        this._deliveryTermService.restoreDeliveryTerm(deliveryTermResponse.restoringItemId).subscribe(() => {
                             this.reloadPage();
-                            this.notify.success(this.l('AcceptanceCriteriaSuccessfullyRestored'));
+                            this.notify.success(this.l('DeliveryTermSuccessfullyRestored'));
                         });
                     }
                 });
             }   
             else{
-                this.notify.error(this.l('ExistingAcceptanceCriteriaErrorMessage',acceptanceCriteriaResponse.name));
+                this.notify.error(this.l('ExistingDeliveryTermErrorMessage',deliveryTermResponse.name));
             }
         }
     }
