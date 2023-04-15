@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MyTraining1101Demo.Purchase.LegalEntity.Dto
+namespace MyTraining1101Demo.Purchase.LegalEntities.Dto
 {
     public class LegalEntityInputDto
     {

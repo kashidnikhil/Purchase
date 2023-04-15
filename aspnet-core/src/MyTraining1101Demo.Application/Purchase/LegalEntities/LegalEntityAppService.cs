@@ -1,6 +1,5 @@
 ﻿using Abp.Application.Services.Dto;
-using MyTraining1101Demo.Purchase.LegalEntity;
-using MyTraining1101Demo.Purchase.LegalEntity.Dto;
+using MyTraining1101Demo.Purchase.LegalEntities.Dto;
 using MyTraining1101Demo.Purchase.Shared;
 using System;
 using System.Collections.Generic;

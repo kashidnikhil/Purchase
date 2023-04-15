@@ -18,6 +18,9 @@ using MyTraining1101Demo.Purchase.LegalEntities;
 using MyTraining1101Demo.Purchase.MaterialGrades;
 using MyTraining1101Demo.Purchase.POGeneralTerms;
 using MyTraining1101Demo.Purchase.SupplierCategories;
+using MyTraining1101Demo.Purchase.Suppliers.SupplierBanks;
+using MyTraining1101Demo.Purchase.Suppliers.SupplierContactPersons;
+using MyTraining1101Demo.Purchase.Suppliers.SupplierMaster;
 using MyTraining1101Demo.Purchase.TermsOfPayments;
 using MyTraining1101Demo.Purchase.Units;
 using MyTraining1101Demo.Storage;
@@ -66,8 +69,13 @@ namespace MyTraining1101Demo.EntityFrameworkCore
         public virtual DbSet<SupplierCategory> SupplierCategories { get; set; }
 
         public virtual DbSet<TermsOfPayment> TermsOfPayments { get; set; }
-        
 
+        public virtual DbSet<Supplier> Suppliers { get; set; }
+
+        public virtual DbSet<SupplierContactPerson> SupplierContactPersons { get; set; }
+
+        public virtual DbSet<SupplierBank> SupplierBanks { get; set; }
+        
 
         public MyTraining1101DemoDbContext(DbContextOptions<MyTraining1101DemoDbContext> options)
             : base(options)

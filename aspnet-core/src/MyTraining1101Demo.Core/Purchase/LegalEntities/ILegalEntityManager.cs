@@ -1,10 +1,10 @@
 ﻿using Abp.Application.Services.Dto;
 using Abp.Domain.Services;
 using MyTraining1101Demo.Purchase.Shared;
-using MyTraining1101Demo.Purchase.LegalEntity.Dto;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using MyTraining1101Demo.Purchase.LegalEntities.Dto;
 
 namespace MyTraining1101Demo.Purchase.LegalEntities
 {

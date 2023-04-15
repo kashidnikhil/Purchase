@@ -49,7 +49,7 @@ using MyTraining1101Demo.Purchase.AcceptanceCriterias.Dto;
 using MyTraining1101Demo.Purchase.DeliveryTerms;
 using MyTraining1101Demo.Purchase.DeliveryTerms.Dto;
 using MyTraining1101Demo.Purchase.LegalEntities;
-using MyTraining1101Demo.Purchase.LegalEntity.Dto;
+using MyTraining1101Demo.Purchase.LegalEntities.Dto;
 using MyTraining1101Demo.Purchase.MaterialGrades;
 using MyTraining1101Demo.Purchase.MaterialGrades.Dto;
 using MyTraining1101Demo.Purchase.POGeneralTerms;

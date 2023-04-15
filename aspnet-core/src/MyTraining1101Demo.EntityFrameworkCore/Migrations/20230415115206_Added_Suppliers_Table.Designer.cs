@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyTraining1101Demo.EntityFrameworkCore;
 
@@ -11,9 +12,10 @@ using MyTraining1101Demo.EntityFrameworkCore;
 namespace MyTraining1101Demo.Migrations
 {
     [DbContext(typeof(MyTraining1101DemoDbContext))]
-    partial class MyTraining1101DemoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230415115206_Added_Suppliers_Table")]
+    partial class Added_Suppliers_Table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2383,114 +2385,7 @@ namespace MyTraining1101Demo.Migrations
                     b.ToTable("SupplierCategory");
                 });
 
-            modelBuilder.Entity("MyTraining1101Demo.Purchase.Suppliers.SupplierBanks.SupplierBank", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<long>("AccountNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("BankName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("BranchName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long?>("CreatorUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("DeleterUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("DeletionTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("LastModificationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long?>("LastModifierUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("MICRCode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PaymentMode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RTGS")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("SupplierId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SupplierId");
-
-                    b.ToTable("SupplierBanks");
-                });
-
-            modelBuilder.Entity("MyTraining1101Demo.Purchase.Suppliers.SupplierContactPersons.SupplierContactPerson", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ContactPersonName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long?>("CreatorUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("DeleterUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("DeletionTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Designation")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EmailId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("LastModificationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long?>("LastModifierUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("MobileNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("SupplierId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SupplierId");
-
-                    b.ToTable("SupplierContactPersons");
-                });
-
-            modelBuilder.Entity("MyTraining1101Demo.Purchase.Suppliers.SupplierMaster.Supplier", b =>
+            modelBuilder.Entity("MyTraining1101Demo.Purchase.Suppliers.Supplier", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -2977,25 +2872,7 @@ namespace MyTraining1101Demo.Migrations
                     b.Navigation("Person");
                 });
 
-            modelBuilder.Entity("MyTraining1101Demo.Purchase.Suppliers.SupplierBanks.SupplierBank", b =>
-                {
-                    b.HasOne("MyTraining1101Demo.Purchase.Suppliers.SupplierMaster.Supplier", "Supplier")
-                        .WithMany()
-                        .HasForeignKey("SupplierId");
-
-                    b.Navigation("Supplier");
-                });
-
-            modelBuilder.Entity("MyTraining1101Demo.Purchase.Suppliers.SupplierContactPersons.SupplierContactPerson", b =>
-                {
-                    b.HasOne("MyTraining1101Demo.Purchase.Suppliers.SupplierMaster.Supplier", "Supplier")
-                        .WithMany()
-                        .HasForeignKey("SupplierId");
-
-                    b.Navigation("Supplier");
-                });
-
-            modelBuilder.Entity("MyTraining1101Demo.Purchase.Suppliers.SupplierMaster.Supplier", b =>
+            modelBuilder.Entity("MyTraining1101Demo.Purchase.Suppliers.Supplier", b =>
                 {
                     b.HasOne("MyTraining1101Demo.Purchase.LegalEntities.LegalEntity", "LegalEntity")
                         .WithMany()

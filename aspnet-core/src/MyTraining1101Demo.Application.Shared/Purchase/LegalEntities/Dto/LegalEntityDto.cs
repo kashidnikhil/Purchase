@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MyTraining1101Demo.Purchase.LegalEntity.Dto
+namespace MyTraining1101Demo.Purchase.LegalEntities.Dto
 {
     public class LegalEntityDto
     {
