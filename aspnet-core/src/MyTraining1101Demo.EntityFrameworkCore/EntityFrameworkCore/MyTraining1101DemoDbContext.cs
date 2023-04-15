@@ -16,6 +16,7 @@ using MyTraining1101Demo.Purchase.AcceptanceCriterias;
 using MyTraining1101Demo.Purchase.DeliveryTerms;
 using MyTraining1101Demo.Purchase.LegalEntities;
 using MyTraining1101Demo.Purchase.MaterialGrades;
+using MyTraining1101Demo.Purchase.Models;
 using MyTraining1101Demo.Purchase.POGeneralTerms;
 using MyTraining1101Demo.Purchase.SupplierCategories;
 using MyTraining1101Demo.Purchase.Suppliers.SupplierBanks;
@@ -69,6 +70,9 @@ namespace MyTraining1101Demo.EntityFrameworkCore
         public virtual DbSet<SupplierCategory> SupplierCategories { get; set; }
 
         public virtual DbSet<TermsOfPayment> TermsOfPayments { get; set; }
+
+        public virtual DbSet<Model> Models { get; set; }
+
 
         public virtual DbSet<Supplier> Suppliers { get; set; }
 

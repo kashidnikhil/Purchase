@@ -60,6 +60,8 @@ using MyTraining1101Demo.Purchase.TermsOfPayments;
 using MyTraining1101Demo.Purchase.TermsOfPayments.Dto;
 using MyTraining1101Demo.Purchase.Unit.Dto;
 using MyTraining1101Demo.Purchase.Units;
+using MyTraining1101Demo.Purchase.Models.Dto;
+using MyTraining1101Demo.Purchase.Models;
 using MyTraining1101Demo.Sessions.Dto;
 using MyTraining1101Demo.WebHooks.Dto;
 
@@ -222,6 +224,9 @@ namespace MyTraining1101Demo
 
             configuration.CreateMap<LegalEntity, LegalEntityDto>().ReverseMap();
             configuration.CreateMap<LegalEntity, LegalEntityInputDto>().ReverseMap();
+
+            configuration.CreateMap<Model, ModelDto>().ReverseMap();
+            configuration.CreateMap<Model, ModelInputDto>().ReverseMap();
 
             /* ADD YOUR OWN CUSTOM AUTOMAPPER MAPPINGS HERE */
         }

@@ -74,6 +74,12 @@ export class AppNavigationService {
                         'Pages.Administration.AuditLogs',
                         'flaticon-folder-1',
                         '/app/main/terms-of-payments'
+                    ),
+                    new AppMenuItem(
+                        'Models',
+                        'Pages.Administration.AuditLogs',
+                        'flaticon-folder-1',
+                        '/app/main/models'
                     )
                     
                 ]

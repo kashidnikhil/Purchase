@@ -53,7 +53,11 @@ import { RouterModule } from '@angular/router';
                     {
                         path: 'terms-of-payments',
                         loadChildren: () => import('./purchase/terms-of-payments/terms-of-payments.module').then(m => m.TermsOfPaymentsModule)
-                    }, 
+                    },
+                    {
+                        path: 'models',
+                        loadChildren: () => import('./purchase/models/models.module').then(m => m.ModelsModule)
+                    },
                                       
                     { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
                     { path: '**', redirectTo: 'dashboard' },
