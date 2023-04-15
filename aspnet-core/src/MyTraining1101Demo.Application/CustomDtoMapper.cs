@@ -64,6 +64,12 @@ using MyTraining1101Demo.Purchase.Models.Dto;
 using MyTraining1101Demo.Purchase.Models;
 using MyTraining1101Demo.Sessions.Dto;
 using MyTraining1101Demo.WebHooks.Dto;
+using MyTraining1101Demo.Purchase.Suppliers.SupplierMaster;
+using MyTraining1101Demo.Purchase.Suppliers.SupplierBanks;
+using MyTraining1101Demo.Purchase.Suppliers.SupplierContactPersons;
+using MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierMaster;
+using MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierBanks;
+using MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierContactPersons;
 
 namespace MyTraining1101Demo
 {
@@ -227,6 +233,25 @@ namespace MyTraining1101Demo
 
             configuration.CreateMap<Model, ModelDto>().ReverseMap();
             configuration.CreateMap<Model, ModelInputDto>().ReverseMap();
+
+            configuration.CreateMap<Supplier, SupplierDto>()
+                 .ForMember(dto => dto.DeliveryBy, options => options.MapFrom(x => x.DeliveryBy))
+                 .ForMember(dto => dto.PaymentMode, options => options.MapFrom(x => x.PaymentMode))
+                 .ForMember(dto => dto.Category, options => options.MapFrom(x => x.Category))
+                 .ReverseMap();
+            
+            configuration.CreateMap<Supplier, SupplierInputDto>()
+                 .ForMember(dto => dto.DeliveryBy, options => options.MapFrom(x => x.DeliveryBy))
+                 .ForMember(dto => dto.PaymentMode, options => options.MapFrom(x => x.PaymentMode))
+                 .ForMember(dto => dto.Category, options => options.MapFrom(x => x.Category))
+                 .ReverseMap();
+
+            configuration.CreateMap<SupplierBank, SupplierBankDto>().ReverseMap();
+            configuration.CreateMap<SupplierBank, SupplierBankInputDto>().ReverseMap();
+
+            configuration.CreateMap<SupplierContactPerson, SupplierContactPersonDto>().ReverseMap();
+            configuration.CreateMap<SupplierContactPerson, SupplierContactPersonInputDto>().ReverseMap();
+
 
             /* ADD YOUR OWN CUSTOM AUTOMAPPER MAPPINGS HERE */
         }
