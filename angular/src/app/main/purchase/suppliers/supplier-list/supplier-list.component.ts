@@ -66,7 +66,7 @@ export class SupplierListComponent extends AppComponentBase implements AfterView
     }
 
     deleteSupplier(supplierItem: SupplierDto): void {
-        this.message.confirm(this.l('SupplierCategoryDeleteWarningMessage', supplierItem.name), this.l('AreYouSure'), (isConfirmed) => {
+        this.message.confirm(this.l('SupplierDeleteWarningMessage', supplierItem.name), this.l('AreYouSure'), (isConfirmed) => {
             if (isConfirmed) {
                 this._supplierService.deleteSupplierMasterData(supplierItem.id).subscribe(() => {
                     this.reloadPage();

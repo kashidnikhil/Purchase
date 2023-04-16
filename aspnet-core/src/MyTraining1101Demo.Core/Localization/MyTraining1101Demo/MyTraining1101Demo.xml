@@ -1238,6 +1238,9 @@
 	  <text name="Suppliers">Suppliers</text>
 	  <text name="SuppliersHeaderInfo">Manage suppliers.</text>
 	  <text name="CreateNewSupplier">Create new supplier</text>
+	  <text name="GeneralInfo">General Information</text>
+	  <text name="ContactPerson">Contact Person</text>
+	  <text name="SupplierBankDetails">Supplier Bank Details</text>
 	  <text name="EditSupplier">Edit supplier</text>
 	  <text name="SupplierDeleteWarningMessage">Supplier {0} will be deleted.</text>
 	  <text name="SupplierRestoreMessage">Supplier with name {0} already exists. Do you want to restore this supplier?</text>
