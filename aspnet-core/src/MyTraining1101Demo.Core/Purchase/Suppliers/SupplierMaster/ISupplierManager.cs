@@ -13,5 +13,7 @@ namespace MyTraining1101Demo.Purchase.Suppliers.SupplierMaster
         Task<Guid> InsertOrUpdateSupplierMasterIntoDB(SupplierInputDto input);
 
         Task<bool> DeleteSupplierMasterFromDB(Guid supplierId);
+
+        Task<SupplierDto> GetSupplierMasterByIdFromDB(Guid supplierId);
     }
 }

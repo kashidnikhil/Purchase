@@ -1,15 +1,13 @@
-﻿using Abp.Domain.Repositories;
-using Abp.Domain.Uow;
-using MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierBanks;
-using MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierContactPersons;
-using MyTraining1101Demo.Purchase.Suppliers.SupplierContactPersons;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace MyTraining1101Demo.Purchase.Suppliers.SupplierBanks
+﻿namespace MyTraining1101Demo.Purchase.Suppliers.SupplierBanks
 {
+    using Abp.Domain.Repositories;
+    using Abp.Domain.Uow;
+    using MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierBanks;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+
     public class SupplierBankManager : MyTraining1101DemoDomainServiceBase, ISupplierBankManager
     {
         private readonly IRepository<SupplierBank, Guid> _supplierBankRepository;

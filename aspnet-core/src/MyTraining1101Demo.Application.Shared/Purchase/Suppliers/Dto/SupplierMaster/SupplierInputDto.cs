@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierBanks;
+using MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierContactPersons;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -35,6 +37,12 @@ namespace MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierMaster
 
         public int Category { get; set; }
 
+        public List<SupplierContactPersonInputDto> SupplierContactPersons { get; set; }
+
+        public List<SupplierBankInputDto> SupplierBanks { get; set; }
+
         public Guid LegalEntityId { get; set; }
+
+
     }
 }

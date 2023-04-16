@@ -82,5 +82,21 @@ namespace MyTraining1101Demo.Purchase.Suppliers.SupplierMaster
             }
         }
 
+        public async Task<SupplierDto> GetSupplierMasterByIdFromDB(Guid supplierId)
+        {
+            try
+            {
+                var supplierMasterItem = await this._supplierRepository.GetAsync(supplierId);
+
+                return ObjectMapper.Map<SupplierDto>(supplierMasterItem);
+
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.Message, ex);
+                throw ex;
+            }
+        }
+
     }
 }
