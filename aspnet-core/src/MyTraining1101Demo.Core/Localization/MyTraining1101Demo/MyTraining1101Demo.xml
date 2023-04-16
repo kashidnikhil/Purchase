@@ -1233,5 +1233,17 @@
 	  <text name="TermsOfPaymentSuccessfullyRestored">Terms of payment restored successfully</text>
 	  <text name="ExistingTermsOfPaymentErrorMessage">Terms of payment {0} cannot be added. Terms of payment already exists</text>
 	  <text name="NewTermsOfPaymentErrorMessage">No new instance of terms of payment with name {0} cannot be added.Terms of payment with name {0} already exists. Do you want to restore the terms of payment?</text>
+	  
+	  <!-- Terms of Payment section-->
+	  <text name="Suppliers">Suppliers</text>
+	  <text name="SuppliersHeaderInfo">Manage suppliers.</text>
+	  <text name="CreateNewSupplier">Create new supplier</text>
+	  <text name="EditSupplier">Edit supplier</text>
+	  <text name="SupplierDeleteWarningMessage">Supplier {0} will be deleted.</text>
+	  <text name="SupplierRestoreMessage">Supplier with name {0} already exists. Do you want to restore this supplier?</text>
+	  <text name="SupplierSuccessfullyRestored">Supplier restored successfully</text>
+	  <text name="ExistingSupplierErrorMessage">Supplier {0} cannot be added. Supplier already exists</text>
+	  <text name="NewSupplierErrorMessage">No new instance of supplier with name {0} cannot be added.Supplier with name {0} already exists. Do you want to restore the supplier?</text>
+  
   </texts>
 </localizationDictionary>
