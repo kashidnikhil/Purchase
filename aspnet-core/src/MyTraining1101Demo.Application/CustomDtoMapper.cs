@@ -246,6 +246,8 @@ namespace MyTraining1101Demo
                  .ForMember(dto => dto.Category, options => options.MapFrom(x => x.Category))
                  .ReverseMap();
 
+            configuration.CreateMap<Supplier, SupplierListDto>().ReverseMap();
+
             configuration.CreateMap<SupplierBank, SupplierBankDto>().ReverseMap();
             configuration.CreateMap<SupplierBank, SupplierBankInputDto>().ReverseMap();
 
