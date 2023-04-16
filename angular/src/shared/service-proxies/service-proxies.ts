@@ -12594,6 +12594,259 @@ export class SubscriptionServiceProxy {
 }
 
 @Injectable()
+export class SupplierServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @param searchString (optional) 
+     * @param sorting (optional) 
+     * @param maxResultCount (optional) 
+     * @param skipCount (optional) 
+     * @return Success
+     */
+    getSuppliers(searchString: string | undefined, sorting: string | undefined, maxResultCount: number | undefined, skipCount: number | undefined): Observable<PagedResultDtoOfSupplierListDto> {
+        let url_ = this.baseUrl + "/api/services/app/Supplier/GetSuppliers?";
+        if (searchString === null)
+            throw new Error("The parameter 'searchString' cannot be null.");
+        else if (searchString !== undefined)
+            url_ += "SearchString=" + encodeURIComponent("" + searchString) + "&";
+        if (sorting === null)
+            throw new Error("The parameter 'sorting' cannot be null.");
+        else if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetSuppliers(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetSuppliers(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PagedResultDtoOfSupplierListDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PagedResultDtoOfSupplierListDto>;
+        }));
+    }
+
+    protected processGetSuppliers(response: HttpResponseBase): Observable<PagedResultDtoOfSupplierListDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PagedResultDtoOfSupplierListDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PagedResultDtoOfSupplierListDto>(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    insertOrUpdateSupplier(body: SupplierInputDto | undefined): Observable<string> {
+        let url_ = this.baseUrl + "/api/services/app/Supplier/InsertOrUpdateSupplier";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processInsertOrUpdateSupplier(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processInsertOrUpdateSupplier(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<string>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<string>;
+        }));
+    }
+
+    protected processInsertOrUpdateSupplier(response: HttpResponseBase): Observable<string> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+    
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<string>(null as any);
+    }
+
+    /**
+     * @param supplierId (optional) 
+     * @return Success
+     */
+    deleteSupplierMasterData(supplierId: string | undefined): Observable<boolean> {
+        let url_ = this.baseUrl + "/api/services/app/Supplier/DeleteSupplierMasterData?";
+        if (supplierId === null)
+            throw new Error("The parameter 'supplierId' cannot be null.");
+        else if (supplierId !== undefined)
+            url_ += "supplierId=" + encodeURIComponent("" + supplierId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDeleteSupplierMasterData(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDeleteSupplierMasterData(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<boolean>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<boolean>;
+        }));
+    }
+
+    protected processDeleteSupplierMasterData(response: HttpResponseBase): Observable<boolean> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+    
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<boolean>(null as any);
+    }
+
+    /**
+     * @param supplierId (optional) 
+     * @return Success
+     */
+    getSupplierMasterById(supplierId: string | undefined): Observable<SupplierDto> {
+        let url_ = this.baseUrl + "/api/services/app/Supplier/GetSupplierMasterById?";
+        if (supplierId === null)
+            throw new Error("The parameter 'supplierId' cannot be null.");
+        else if (supplierId !== undefined)
+            url_ += "supplierId=" + encodeURIComponent("" + supplierId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetSupplierMasterById(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetSupplierMasterById(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<SupplierDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<SupplierDto>;
+        }));
+    }
+
+    protected processGetSupplierMasterById(response: HttpResponseBase): Observable<SupplierDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = SupplierDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<SupplierDto>(null as any);
+    }
+}
+
+@Injectable()
 export class SupplierCategoryServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -28434,6 +28687,54 @@ export interface IPagedResultDtoOfSupplierCategoryDto {
     items: SupplierCategoryDto[] | undefined;
 }
 
+export class PagedResultDtoOfSupplierListDto implements IPagedResultDtoOfSupplierListDto {
+    totalCount!: number;
+    items!: SupplierListDto[] | undefined;
+
+    constructor(data?: IPagedResultDtoOfSupplierListDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.totalCount = _data["totalCount"];
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(SupplierListDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfSupplierListDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfSupplierListDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IPagedResultDtoOfSupplierListDto {
+    totalCount: number;
+    items: SupplierListDto[] | undefined;
+}
+
 export class PagedResultDtoOfTenantListDto implements IPagedResultDtoOfTenantListDto {
     totalCount!: number;
     items!: TenantListDto[] | undefined;
@@ -30753,6 +31054,142 @@ export enum SubscriptionStartType {
     Paid = 3,
 }
 
+export class SupplierBankDto implements ISupplierBankDto {
+    id!: string;
+    bankName!: string | undefined;
+    branchName!: string | undefined;
+    address!: string | undefined;
+    accountNumber!: number;
+    micrCode!: string | undefined;
+    rtgs!: string | undefined;
+    paymentMode!: string | undefined;
+    supplierId!: string;
+
+    constructor(data?: ISupplierBankDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.bankName = _data["bankName"];
+            this.branchName = _data["branchName"];
+            this.address = _data["address"];
+            this.accountNumber = _data["accountNumber"];
+            this.micrCode = _data["micrCode"];
+            this.rtgs = _data["rtgs"];
+            this.paymentMode = _data["paymentMode"];
+            this.supplierId = _data["supplierId"];
+        }
+    }
+
+    static fromJS(data: any): SupplierBankDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new SupplierBankDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["bankName"] = this.bankName;
+        data["branchName"] = this.branchName;
+        data["address"] = this.address;
+        data["accountNumber"] = this.accountNumber;
+        data["micrCode"] = this.micrCode;
+        data["rtgs"] = this.rtgs;
+        data["paymentMode"] = this.paymentMode;
+        data["supplierId"] = this.supplierId;
+        return data;
+    }
+}
+
+export interface ISupplierBankDto {
+    id: string;
+    bankName: string | undefined;
+    branchName: string | undefined;
+    address: string | undefined;
+    accountNumber: number;
+    micrCode: string | undefined;
+    rtgs: string | undefined;
+    paymentMode: string | undefined;
+    supplierId: string;
+}
+
+export class SupplierBankInputDto implements ISupplierBankInputDto {
+    id!: string | undefined;
+    bankName!: string | undefined;
+    branchName!: string | undefined;
+    address!: string | undefined;
+    accountNumber!: number;
+    micrCode!: string | undefined;
+    rtgs!: string | undefined;
+    paymentMode!: string | undefined;
+    supplierId!: string | undefined;
+
+    constructor(data?: ISupplierBankInputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.bankName = _data["bankName"];
+            this.branchName = _data["branchName"];
+            this.address = _data["address"];
+            this.accountNumber = _data["accountNumber"];
+            this.micrCode = _data["micrCode"];
+            this.rtgs = _data["rtgs"];
+            this.paymentMode = _data["paymentMode"];
+            this.supplierId = _data["supplierId"];
+        }
+    }
+
+    static fromJS(data: any): SupplierBankInputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new SupplierBankInputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["bankName"] = this.bankName;
+        data["branchName"] = this.branchName;
+        data["address"] = this.address;
+        data["accountNumber"] = this.accountNumber;
+        data["micrCode"] = this.micrCode;
+        data["rtgs"] = this.rtgs;
+        data["paymentMode"] = this.paymentMode;
+        data["supplierId"] = this.supplierId;
+        return data;
+    }
+}
+
+export interface ISupplierBankInputDto {
+    id: string | undefined;
+    bankName: string | undefined;
+    branchName: string | undefined;
+    address: string | undefined;
+    accountNumber: number;
+    micrCode: string | undefined;
+    rtgs: string | undefined;
+    paymentMode: string | undefined;
+    supplierId: string | undefined;
+}
+
 export class SupplierCategoryDto implements ISupplierCategoryDto {
     id!: string;
     name!: string | undefined;
@@ -30839,6 +31276,398 @@ export interface ISupplierCategoryInputDto {
     id: string | undefined;
     name: string | undefined;
     description: string | undefined;
+}
+
+export class SupplierContactPersonDto implements ISupplierContactPersonDto {
+    id!: string;
+    contactPersonName!: string | undefined;
+    designation!: string | undefined;
+    emailId!: string | undefined;
+    mobileNumber!: string | undefined;
+    supplierId!: string;
+
+    constructor(data?: ISupplierContactPersonDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.contactPersonName = _data["contactPersonName"];
+            this.designation = _data["designation"];
+            this.emailId = _data["emailId"];
+            this.mobileNumber = _data["mobileNumber"];
+            this.supplierId = _data["supplierId"];
+        }
+    }
+
+    static fromJS(data: any): SupplierContactPersonDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new SupplierContactPersonDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["contactPersonName"] = this.contactPersonName;
+        data["designation"] = this.designation;
+        data["emailId"] = this.emailId;
+        data["mobileNumber"] = this.mobileNumber;
+        data["supplierId"] = this.supplierId;
+        return data;
+    }
+}
+
+export interface ISupplierContactPersonDto {
+    id: string;
+    contactPersonName: string | undefined;
+    designation: string | undefined;
+    emailId: string | undefined;
+    mobileNumber: string | undefined;
+    supplierId: string;
+}
+
+export class SupplierContactPersonInputDto implements ISupplierContactPersonInputDto {
+    id!: string | undefined;
+    contactPersonName!: string | undefined;
+    designation!: string | undefined;
+    emailId!: string | undefined;
+    mobileNumber!: string | undefined;
+    supplierId!: string | undefined;
+
+    constructor(data?: ISupplierContactPersonInputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.contactPersonName = _data["contactPersonName"];
+            this.designation = _data["designation"];
+            this.emailId = _data["emailId"];
+            this.mobileNumber = _data["mobileNumber"];
+            this.supplierId = _data["supplierId"];
+        }
+    }
+
+    static fromJS(data: any): SupplierContactPersonInputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new SupplierContactPersonInputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["contactPersonName"] = this.contactPersonName;
+        data["designation"] = this.designation;
+        data["emailId"] = this.emailId;
+        data["mobileNumber"] = this.mobileNumber;
+        data["supplierId"] = this.supplierId;
+        return data;
+    }
+}
+
+export interface ISupplierContactPersonInputDto {
+    id: string | undefined;
+    contactPersonName: string | undefined;
+    designation: string | undefined;
+    emailId: string | undefined;
+    mobileNumber: string | undefined;
+    supplierId: string | undefined;
+}
+
+export class SupplierDto implements ISupplierDto {
+    id!: string;
+    name!: string | undefined;
+    telephoneNumber!: string | undefined;
+    faxNumber!: string | undefined;
+    email!: string | undefined;
+    mobile!: string | undefined;
+    website!: string | undefined;
+    yearOfEstablishment!: number;
+    panNumber!: string | undefined;
+    vatNumber!: string | undefined;
+    gstNumber!: string | undefined;
+    certifications!: string | undefined;
+    deliveryBy!: number;
+    paymentMode!: number;
+    category!: number;
+    supplierBanks!: SupplierBankDto[] | undefined;
+    supplierContactPersons!: SupplierContactPersonDto[] | undefined;
+    legalEntityId!: string;
+
+    constructor(data?: ISupplierDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.name = _data["name"];
+            this.telephoneNumber = _data["telephoneNumber"];
+            this.faxNumber = _data["faxNumber"];
+            this.email = _data["email"];
+            this.mobile = _data["mobile"];
+            this.website = _data["website"];
+            this.yearOfEstablishment = _data["yearOfEstablishment"];
+            this.panNumber = _data["panNumber"];
+            this.vatNumber = _data["vatNumber"];
+            this.gstNumber = _data["gstNumber"];
+            this.certifications = _data["certifications"];
+            this.deliveryBy = _data["deliveryBy"];
+            this.paymentMode = _data["paymentMode"];
+            this.category = _data["category"];
+            if (Array.isArray(_data["supplierBanks"])) {
+                this.supplierBanks = [] as any;
+                for (let item of _data["supplierBanks"])
+                    this.supplierBanks!.push(SupplierBankDto.fromJS(item));
+            }
+            if (Array.isArray(_data["supplierContactPersons"])) {
+                this.supplierContactPersons = [] as any;
+                for (let item of _data["supplierContactPersons"])
+                    this.supplierContactPersons!.push(SupplierContactPersonDto.fromJS(item));
+            }
+            this.legalEntityId = _data["legalEntityId"];
+        }
+    }
+
+    static fromJS(data: any): SupplierDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new SupplierDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["name"] = this.name;
+        data["telephoneNumber"] = this.telephoneNumber;
+        data["faxNumber"] = this.faxNumber;
+        data["email"] = this.email;
+        data["mobile"] = this.mobile;
+        data["website"] = this.website;
+        data["yearOfEstablishment"] = this.yearOfEstablishment;
+        data["panNumber"] = this.panNumber;
+        data["vatNumber"] = this.vatNumber;
+        data["gstNumber"] = this.gstNumber;
+        data["certifications"] = this.certifications;
+        data["deliveryBy"] = this.deliveryBy;
+        data["paymentMode"] = this.paymentMode;
+        data["category"] = this.category;
+        if (Array.isArray(this.supplierBanks)) {
+            data["supplierBanks"] = [];
+            for (let item of this.supplierBanks)
+                data["supplierBanks"].push(item.toJSON());
+        }
+        if (Array.isArray(this.supplierContactPersons)) {
+            data["supplierContactPersons"] = [];
+            for (let item of this.supplierContactPersons)
+                data["supplierContactPersons"].push(item.toJSON());
+        }
+        data["legalEntityId"] = this.legalEntityId;
+        return data;
+    }
+}
+
+export interface ISupplierDto {
+    id: string;
+    name: string | undefined;
+    telephoneNumber: string | undefined;
+    faxNumber: string | undefined;
+    email: string | undefined;
+    mobile: string | undefined;
+    website: string | undefined;
+    yearOfEstablishment: number;
+    panNumber: string | undefined;
+    vatNumber: string | undefined;
+    gstNumber: string | undefined;
+    certifications: string | undefined;
+    deliveryBy: number;
+    paymentMode: number;
+    category: number;
+    supplierBanks: SupplierBankDto[] | undefined;
+    supplierContactPersons: SupplierContactPersonDto[] | undefined;
+    legalEntityId: string;
+}
+
+export class SupplierInputDto implements ISupplierInputDto {
+    id!: string | undefined;
+    name!: string | undefined;
+    telephoneNumber!: string | undefined;
+    faxNumber!: string | undefined;
+    email!: string | undefined;
+    mobile!: string | undefined;
+    website!: string | undefined;
+    yearOfEstablishment!: number;
+    panNumber!: string | undefined;
+    vatNumber!: string | undefined;
+    gstNumber!: string | undefined;
+    certifications!: string | undefined;
+    deliveryBy!: number;
+    paymentMode!: number;
+    category!: number;
+    supplierContactPersons!: SupplierContactPersonInputDto[] | undefined;
+    supplierBanks!: SupplierBankInputDto[] | undefined;
+    legalEntityId!: string;
+
+    constructor(data?: ISupplierInputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.name = _data["name"];
+            this.telephoneNumber = _data["telephoneNumber"];
+            this.faxNumber = _data["faxNumber"];
+            this.email = _data["email"];
+            this.mobile = _data["mobile"];
+            this.website = _data["website"];
+            this.yearOfEstablishment = _data["yearOfEstablishment"];
+            this.panNumber = _data["panNumber"];
+            this.vatNumber = _data["vatNumber"];
+            this.gstNumber = _data["gstNumber"];
+            this.certifications = _data["certifications"];
+            this.deliveryBy = _data["deliveryBy"];
+            this.paymentMode = _data["paymentMode"];
+            this.category = _data["category"];
+            if (Array.isArray(_data["supplierContactPersons"])) {
+                this.supplierContactPersons = [] as any;
+                for (let item of _data["supplierContactPersons"])
+                    this.supplierContactPersons!.push(SupplierContactPersonInputDto.fromJS(item));
+            }
+            if (Array.isArray(_data["supplierBanks"])) {
+                this.supplierBanks = [] as any;
+                for (let item of _data["supplierBanks"])
+                    this.supplierBanks!.push(SupplierBankInputDto.fromJS(item));
+            }
+            this.legalEntityId = _data["legalEntityId"];
+        }
+    }
+
+    static fromJS(data: any): SupplierInputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new SupplierInputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["name"] = this.name;
+        data["telephoneNumber"] = this.telephoneNumber;
+        data["faxNumber"] = this.faxNumber;
+        data["email"] = this.email;
+        data["mobile"] = this.mobile;
+        data["website"] = this.website;
+        data["yearOfEstablishment"] = this.yearOfEstablishment;
+        data["panNumber"] = this.panNumber;
+        data["vatNumber"] = this.vatNumber;
+        data["gstNumber"] = this.gstNumber;
+        data["certifications"] = this.certifications;
+        data["deliveryBy"] = this.deliveryBy;
+        data["paymentMode"] = this.paymentMode;
+        data["category"] = this.category;
+        if (Array.isArray(this.supplierContactPersons)) {
+            data["supplierContactPersons"] = [];
+            for (let item of this.supplierContactPersons)
+                data["supplierContactPersons"].push(item.toJSON());
+        }
+        if (Array.isArray(this.supplierBanks)) {
+            data["supplierBanks"] = [];
+            for (let item of this.supplierBanks)
+                data["supplierBanks"].push(item.toJSON());
+        }
+        data["legalEntityId"] = this.legalEntityId;
+        return data;
+    }
+}
+
+export interface ISupplierInputDto {
+    id: string | undefined;
+    name: string | undefined;
+    telephoneNumber: string | undefined;
+    faxNumber: string | undefined;
+    email: string | undefined;
+    mobile: string | undefined;
+    website: string | undefined;
+    yearOfEstablishment: number;
+    panNumber: string | undefined;
+    vatNumber: string | undefined;
+    gstNumber: string | undefined;
+    certifications: string | undefined;
+    deliveryBy: number;
+    paymentMode: number;
+    category: number;
+    supplierContactPersons: SupplierContactPersonInputDto[] | undefined;
+    supplierBanks: SupplierBankInputDto[] | undefined;
+    legalEntityId: string;
+}
+
+export class SupplierListDto implements ISupplierListDto {
+    id!: string;
+    name!: string | undefined;
+
+    constructor(data?: ISupplierListDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.name = _data["name"];
+        }
+    }
+
+    static fromJS(data: any): SupplierListDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new SupplierListDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["name"] = this.name;
+        return data;
+    }
+}
+
+export interface ISupplierListDto {
+    id: string;
+    name: string | undefined;
 }
 
 export class SwitchedAccountAuthenticateResultModel implements ISwitchedAccountAuthenticateResultModel {
