@@ -1239,7 +1239,10 @@
 	  <text name="SuppliersHeaderInfo">Manage suppliers.</text>
 	  <text name="CreateNewSupplier">Create new supplier</text>
 	  <text name="GeneralInfo">General Information</text>
+	  <text name="SupplierName">Supplier Name</text>
+	  <text name="Website">Website</text>
 	  <text name="ContactPerson">Contact Person</text>
+	  <text name="AccreditionsOrCertifications">Accreditions/Certifications</text>
 	  <text name="SupplierBankDetails">Supplier Bank Details</text>
 	  <text name="EditSupplier">Edit supplier</text>
 	  <text name="SupplierDeleteWarningMessage">Supplier {0} will be deleted.</text>

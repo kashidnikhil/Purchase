@@ -4,6 +4,7 @@ import { SubheaderModule } from "@app/shared/common/sub-header/subheader.module"
 import { SuppliersRoutingModule } from "./suppliers-routing.module";
 import { SupplierListComponent } from "./supplier-list/supplier-list.component";
 import { CreateOrEditSupplierModalComponent } from "./create-edit-supplier/create-or-edit-supplier-modal.component";
+import { ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
     declarations: [
@@ -13,6 +14,7 @@ import { CreateOrEditSupplierModalComponent } from "./create-edit-supplier/creat
     imports: [
         AppSharedModule,  
         SuppliersRoutingModule,
+        ReactiveFormsModule,
         SubheaderModule,
     ],
     providers: [],

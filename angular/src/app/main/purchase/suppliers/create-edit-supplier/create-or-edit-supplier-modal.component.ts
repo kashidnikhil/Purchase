@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Injector, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import {
+    LegalEntityDto,
+    LegalEntityServiceProxy,
     SupplierDto,
     SupplierInputDto,
     SupplierServiceProxy,
@@ -8,6 +10,7 @@ import {
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { map as _map, filter as _filter } from 'lodash-es';
 import { finalize } from 'rxjs/operators';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
     selector: 'create-edit-supplier-modal',
@@ -17,24 +20,35 @@ import { finalize } from 'rxjs/operators';
 })
 export class CreateOrEditSupplierModalComponent extends AppComponentBase {
     @ViewChild('createOrEditModal', { static: true }) modal: ModalDirective;
-
+    @ViewChild('createOrEditModal') public tabSetElement : any;
     @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
     // @Output() restoreSupplierCategory: EventEmitter<ResponseDto> = new EventEmitter<ResponseDto>();
 
+    supplierForm!: FormGroup;
     active = false;
     saving = false;
     supplierItem : SupplierDto = new SupplierDto();
     
+    legalEntityList : LegalEntityDto[] =[];
+    
     constructor(
         injector: Injector,
-        private _supplierService : SupplierServiceProxy
+        private formBuilder: FormBuilder,
+        private _supplierService : SupplierServiceProxy,
+        private _legalEntityService : LegalEntityServiceProxy
     ) {
         super(injector);
     }
 
-    show(supplierId?: string): void {
+    changeTab(){
+        this.tabSetElement.setActiveTab(2);
+    }
+
+    async show(supplierId?: string) {
+        await this.loadDropdownList();
         if (!supplierId) {
-            this.supplierItem = new SupplierDto(); 
+            let supplierItem = new SupplierDto(); 
+            this.initialiseSupplierForm(supplierItem);
             this.active = true;
             this.modal.show();
         }
@@ -47,7 +61,37 @@ export class CreateOrEditSupplierModalComponent extends AppComponentBase {
         }        
     }
 
-   
+    initialiseSupplierForm(supplierItem: SupplierDto){
+        this.supplierForm = this.formBuilder.group({
+            id: new FormControl(supplierItem.id, []),
+            name: new FormControl(supplierItem.name, []),
+            faxNumber: new FormControl(supplierItem.faxNumber, []),
+            email: new FormControl(supplierItem.email, []),
+            mobile: new FormControl(supplierItem.mobile, []),
+            website: new FormControl(supplierItem.website, []),
+            certifications: new FormControl(supplierItem.certifications, []),
+            legalEntityId: new FormControl(supplierItem.legalEntityId, []),
+            gstNumber: new FormControl(supplierItem.gstNumber, []),
+            deliveryBy: new FormControl(supplierItem.deliveryBy, []),
+            category: new FormControl(supplierItem.category, []),
+            paymentMode: new FormControl(supplierItem.paymentMode, []),
+        });
+    }
+
+    async loadDropdownList() {
+        await this.loadLegalEntityList();
+    }
+
+    async loadLegalEntityList(){
+        let legalEntityList = await this._legalEntityService.getLegalEntityList().toPromise();
+        if (legalEntityList.length > 0) {
+            this.legalEntityList = [];
+            legalEntityList.forEach((legalEntityItem: LegalEntityDto) => {
+                this.legalEntityList.push(legalEntityItem);
+            });
+        }
+    }
+
     onShown(): void {
         document.getElementById('name').focus();
     }
