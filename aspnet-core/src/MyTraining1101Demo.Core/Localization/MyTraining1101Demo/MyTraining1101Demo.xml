@@ -1160,6 +1160,7 @@
 	  <text name="LegalEntities">Legal Entities</text>
 	  <text name="LegalEntitiesHeaderInfo">Manage legal entities.</text>
 	  <text name="CreateNewLegalEntity">Create new legal entity</text>
+	  <text name="LegalEntity">Legal Entity</text>
 	  <text name="EditLegalEntity">Edit legal entity</text>
 	  <text name="LegalEntityDeleteWarningMessage">Legal Entity {0} will be deleted.</text>
 	  <text name="LegalEntityRestoreMessage">Legal Entity with name {0} already exists. Do you want to restore this legal entity?</text>
@@ -1242,7 +1243,10 @@
 	  <text name="SupplierName">Supplier Name</text>
 	  <text name="Website">Website</text>
 	  <text name="ContactPerson">Contact Person</text>
-	  <text name="AccreditionsOrCertifications">Accreditions/Certifications</text>
+	  <text name="AccreditionsOrCertifications">Accreditions / Certifications</text>
+	  <text name="YearOfEstablishment">Year Of Establishment</text>
+	  <text name="GSTNumber">GST Number</text>
+	  <text name="PaymentMode">Payment Mode</text>
 	  <text name="SupplierBankDetails">Supplier Bank Details</text>
 	  <text name="EditSupplier">Edit supplier</text>
 	  <text name="SupplierDeleteWarningMessage">Supplier {0} will be deleted.</text>

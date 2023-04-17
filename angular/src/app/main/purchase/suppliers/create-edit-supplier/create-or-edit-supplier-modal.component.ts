@@ -11,6 +11,7 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
 import { map as _map, filter as _filter } from 'lodash-es';
 import { finalize } from 'rxjs/operators';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { IDropdownDto } from '@app/shared/common/data-models/dropdown';
 
 @Component({
     selector: 'create-edit-supplier-modal',
@@ -30,6 +31,7 @@ export class CreateOrEditSupplierModalComponent extends AppComponentBase {
     supplierItem : SupplierDto = new SupplierDto();
     
     legalEntityList : LegalEntityDto[] =[];
+    yearList : IDropdownDto[] = [];
     
     constructor(
         injector: Injector,
@@ -38,10 +40,6 @@ export class CreateOrEditSupplierModalComponent extends AppComponentBase {
         private _legalEntityService : LegalEntityServiceProxy
     ) {
         super(injector);
-    }
-
-    changeTab(){
-        this.tabSetElement.setActiveTab(2);
     }
 
     async show(supplierId?: string) {
@@ -72,6 +70,7 @@ export class CreateOrEditSupplierModalComponent extends AppComponentBase {
             certifications: new FormControl(supplierItem.certifications, []),
             legalEntityId: new FormControl(supplierItem.legalEntityId, []),
             gstNumber: new FormControl(supplierItem.gstNumber, []),
+            yearOfEstablishment: new FormControl(supplierItem.yearOfEstablishment, []),
             deliveryBy: new FormControl(supplierItem.deliveryBy, []),
             category: new FormControl(supplierItem.category, []),
             paymentMode: new FormControl(supplierItem.paymentMode, []),
@@ -80,6 +79,7 @@ export class CreateOrEditSupplierModalComponent extends AppComponentBase {
 
     async loadDropdownList() {
         await this.loadLegalEntityList();
+        this.loadYearList();
     }
 
     async loadLegalEntityList(){
@@ -89,6 +89,15 @@ export class CreateOrEditSupplierModalComponent extends AppComponentBase {
             legalEntityList.forEach((legalEntityItem: LegalEntityDto) => {
                 this.legalEntityList.push(legalEntityItem);
             });
+        }
+    }
+
+    loadYearList(){
+        for(let i = 1950; i <= 2050; i++){
+            let yearItem  : IDropdownDto = new IDropdownDto();
+            yearItem.title = <string> <unknown>i;
+            yearItem.value = i;
+            this.yearList.push(yearItem);
         }
     }
 
