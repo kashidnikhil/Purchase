@@ -23,6 +23,49 @@
                                         name="name" />
                                 </div>
                             </div>
+                            <div class="mb-4">
+                                <button type="button" class="btn btn-primary" (click)="addSupplierAddress()">
+                                    <i class="fa fa-plus"></i>
+                                    {{ 'AddNewAddress' | localize }}
+                                </button>
+                            </div>
+                            <div formArrayName="supplierAddresses" class="mb-4">
+                                <div class="card mb-3"
+                                    *ngFor="let addressGroup of supplierAddresses.controls; let index = index">
+                                    <div [formGroupName]="index" class="p-3">
+
+                                        <div class="col-md-12 row mb-4">
+                                            <div class="col-md-8">
+                                                <div class="form-group">
+                                                    <label>{{"Address" | localize}}</label>
+                                                    <input #addressInput id="address" class="form-control" type="text"
+                                                        name="address" formControlName="address"
+                                                        [ngClass]="{ 'is-invalid': saving && addressGroup.get('address').errors }">
+                                                    <div *ngIf="saving && addressGroup.get('address').errors"
+                                                        class="invalid-feedback">
+                                                        <div *ngIf="addressGroup.get('address').errors.required">
+                                                            Address is required</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label>{{"AddressType" | localize}}</label>
+                                                    <input #addressTypeInput id="addressType" class="form-control" type="text"
+                                                        name="addressType" formControlName="addressType">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <div class="mt-5 text-center">
+                                                    <h3>
+                                                        <i class="fa fa-trash" *ngIf="!addressGroup.value.id && supplierAddresses.controls.length > 1" (click)="deleteSupplierAddressItem(index)"></i>
+                                                    </h3>
+                                                </div>
+                                            </div> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-md-12 row mb-4">
                                 <div class="col-md-4 row">
                                     <div class="form-group mb-1">

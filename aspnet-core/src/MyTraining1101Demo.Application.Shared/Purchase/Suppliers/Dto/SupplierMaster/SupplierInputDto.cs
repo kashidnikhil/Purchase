@@ -22,7 +22,7 @@ namespace MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierMaster
 
         public string Website { get; set; }
 
-        public int YearOfEstablishment { get; set; }
+        public int? YearOfEstablishment { get; set; }
 
         public string PanNumber { get; set; }
 
@@ -32,11 +32,11 @@ namespace MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierMaster
 
         public string Certifications { get; set; }
 
-        public int DeliveryBy { get; set; }
+        public int? DeliveryBy { get; set; }
 
-        public int PaymentMode { get; set; }
+        public int? PaymentMode { get; set; }
 
-        public int Category { get; set; }
+        public int? Category { get; set; }
 
         public List<SupplierAddressInputDto> SupplierAddresses { get; set; }
 
@@ -44,7 +44,7 @@ namespace MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierMaster
 
         public List<SupplierBankInputDto> SupplierBanks { get; set; }
 
-        public Guid LegalEntityId { get; set; }
+        public Guid? LegalEntityId { get; set; }
 
 
     }

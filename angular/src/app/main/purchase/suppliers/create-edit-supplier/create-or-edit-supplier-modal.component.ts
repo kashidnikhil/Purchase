@@ -13,8 +13,8 @@ import {
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { map as _map, filter as _filter } from 'lodash-es';
 import { finalize } from 'rxjs/operators';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { IDropdownDto } from '@app/shared/common/data-models/dropdown';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { DropdownDto } from '@app/shared/common/data-models/dropdown';
 
 @Component({
     selector: 'create-edit-supplier-modal',
@@ -34,7 +34,7 @@ export class CreateOrEditSupplierModalComponent extends AppComponentBase {
     supplierItem : SupplierDto = new SupplierDto();
     
     legalEntityList : LegalEntityDto[] =[];
-    yearList : IDropdownDto[] = [];
+    yearList : DropdownDto[] = [];
     
     constructor(
         injector: Injector,
@@ -64,9 +64,11 @@ export class CreateOrEditSupplierModalComponent extends AppComponentBase {
 
     initialiseSupplierForm(supplierItem: SupplierDto){
         let supplierAddressItem : SupplierAddressDto = new SupplierAddressDto();
+        let supplierContactPersonItem : SupplierContactPersonDto = new SupplierContactPersonDto();
+        let supplierBankItem : SupplierBankDto = new SupplierBankDto();
         this.supplierForm = this.formBuilder.group({
             id: new FormControl(supplierItem.id, []),
-            name: new FormControl(supplierItem.name, []),
+            name: new FormControl(supplierItem.name, [Validators.required]),
             faxNumber: new FormControl(supplierItem.faxNumber, []),
             email: new FormControl(supplierItem.email, []),
             mobile: new FormControl(supplierItem.mobile, []),
@@ -78,32 +80,76 @@ export class CreateOrEditSupplierModalComponent extends AppComponentBase {
             deliveryBy: new FormControl(supplierItem.deliveryBy, []),
             category: new FormControl(supplierItem.category, []),
             paymentMode: new FormControl(supplierItem.paymentMode, []),
-            supplierAddresses : supplierItem.supplierAddresses && supplierItem.supplierAddresses.length > 0 ? 
-            supplierItem.supplierAddresses.map((x: SupplierAddressDto) => this.createSupplierAddress(x)) : this.createSupplierAddress(supplierAddressItem),
-            supplierBanks : supplierItem.supplierBanks && supplierItem.supplierBanks.length > 0 ? 
-            supplierItem.supplierBanks.map((x: SupplierBankDto) => this.createSupplierBank(x)) : this.formBuilder.array([]),
-            supplierContactPersons : supplierItem.supplierContactPersons && supplierItem.supplierContactPersons.length > 0 ? 
-            supplierItem.supplierContactPersons.map((x: SupplierContactPersonDto) => this.createSupplierContactPerson(x)) : this.formBuilder.array([]),
-
+            supplierAddresses: supplierItem.supplierAddresses && supplierItem.supplierAddresses.length > 0 ? this.formBuilder.array(
+                supplierItem.supplierAddresses.map((x : SupplierAddressDto) => 
+                    this.createSupplierAddress(x)
+                  )
+            ) : this.formBuilder.array([this.createSupplierAddress(supplierAddressItem)]),
+            supplierContactPersons: supplierItem.supplierContactPersons && supplierItem.supplierContactPersons.length > 0 ? this.formBuilder.array(
+                supplierItem.supplierContactPersons.map((x : SupplierContactPersonDto) => 
+                    this.createSupplierContactPerson(x)
+                  )
+            ) : this.createSupplierContactPerson(supplierContactPersonItem),
+            supplierBanks: supplierItem.supplierBanks && supplierItem.supplierBanks.length > 0 ? this.formBuilder.array(
+                supplierItem.supplierBanks.map((x : SupplierBankDto) => 
+                    this.createSupplierBank(x)
+                  )
+            ) : this.createSupplierBank(supplierBankItem)
         });
     }
 
-    createSupplierAddress(supplierAddress: SupplierAddressDto): FormGroup {
+    get supplierAddresses(): FormArray {
+        return (<FormArray>this.supplierForm.get('supplierAddresses'));
+    }
+
+    get supplierBanks(): FormArray{
+        return (<FormArray>this.supplierForm.get('supplierBanks'));
+    }
+    
+    get supplierContactPersons(): FormArray{
+        return (<FormArray>this.supplierForm.get('supplierContactPersons'));
+    }
+    
+    addSupplierAddress() {
+        let suppplierAddressItem : SupplierAddressDto = new SupplierAddressDto();
+        let addressForm = this.createSupplierAddress(suppplierAddressItem);
+        this.supplierAddresses.push(addressForm);
+    }
+
+    addSupplierContactPerson() {
+        let supplierContactPersonItem : SupplierContactPersonDto = new SupplierContactPersonDto();
+        let contactPersonForm = this.createSupplierContactPerson(supplierContactPersonItem);
+        this.supplierContactPersons.push(contactPersonForm);
+    }
+
+    addSupplierBank() {
+        let suppplierBankItem : SupplierBankDto = new SupplierBankDto();
+        let bankForm = this.createSupplierBank(suppplierBankItem);
+        this.supplierBanks.push(bankForm);
+    }
+
+    createSupplierAddress(supplierAddressItem: SupplierAddressDto): FormGroup {
         return this.formBuilder.group({
-            id: new FormControl(supplierAddress.id, []),
-            address: new FormControl(supplierAddress.address, []),
-            addressType: new FormControl(supplierAddress.addressType, [])
+            id: new FormControl(supplierAddressItem.id, []),
+            address: new FormControl(supplierAddressItem.address, [Validators.required]),
+            addressType: new FormControl(supplierAddressItem.addressType, [])
         });
+    }
+
+    deleteSupplierAddressItem(indexValue: number){
+        const supplierAddressArray = this.supplierAddresses;
+        supplierAddressArray.removeAt(indexValue);
     }
 
     createSupplierBank(supplierBank: SupplierBankDto): FormGroup {
         return this.formBuilder.group({
             id: new FormControl(supplierBank.id, []),
-            bankName: new FormControl(supplierBank.bankName, []),
+            bankName: new FormControl(supplierBank.bankName, [Validators.required]),
             branchName: new FormControl(supplierBank.branchName, []),
             address: new FormControl(supplierBank.address, []),
-            accountNumber: new FormControl(supplierBank.accountNumber, []),
+            accountNumber: new FormControl(supplierBank.accountNumber, [Validators.required]),
             micrCode: new FormControl(supplierBank.micrCode, []),
+            ifscCode: new FormControl(supplierBank.ifscCode, []),
             rtgs: new FormControl(supplierBank.rtgs, []),
             paymentMode: new FormControl(supplierBank.paymentMode, []),
         });
@@ -112,7 +158,7 @@ export class CreateOrEditSupplierModalComponent extends AppComponentBase {
     createSupplierContactPerson(supplierContactPerson: SupplierContactPersonDto): FormGroup {
         return this.formBuilder.group({
             id: new FormControl(supplierContactPerson.id, []),
-            contactPersonName: new FormControl(supplierContactPerson.contactPersonName, []),
+            contactPersonName: new FormControl(supplierContactPerson.contactPersonName, [Validators.required]),
             branchName: new FormControl(supplierContactPerson.designation, []),
             address: new FormControl(supplierContactPerson.emailId, []),
             accountNumber: new FormControl(supplierContactPerson.mobileNumber, [])
@@ -136,7 +182,7 @@ export class CreateOrEditSupplierModalComponent extends AppComponentBase {
 
     loadYearList(){
         for(let i = 1950; i <= 2050; i++){
-            let yearItem  : IDropdownDto = new IDropdownDto();
+            let yearItem  : DropdownDto = new DropdownDto();
             yearItem.title = <string> <unknown>i;
             yearItem.value = i;
             this.yearList.push(yearItem);

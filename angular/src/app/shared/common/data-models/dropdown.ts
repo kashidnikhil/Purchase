@@ -1,4 +1,4 @@
-export class IDropdownDto {
+export class DropdownDto {
     title: string;
     value: number;
 }

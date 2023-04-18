@@ -20,7 +20,7 @@ namespace MyTraining1101Demo.Purchase.Suppliers.SupplierMaster
 
         public string Website { get; set; }
 
-        public int YearOfEstablishment { get; set; }
+        public int? YearOfEstablishment { get; set; }
 
         public string PanNumber { get; set; }
 
@@ -30,11 +30,11 @@ namespace MyTraining1101Demo.Purchase.Suppliers.SupplierMaster
 
         public string Certifications { get; set; }
 
-        public DeliveryType DeliveryBy { get; set; }
+        public DeliveryType? DeliveryBy { get; set; }
 
-        public PaymentModeType PaymentMode { get; set; }
+        public PaymentModeType? PaymentMode { get; set; }
 
-        public CategoryType Category { get; set; }
+        public CategoryType? Category { get; set; }
 
         public virtual Guid? LegalEntityId { get; set; }
         public virtual LegalEntity LegalEntity { get; set; }

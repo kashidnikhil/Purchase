@@ -1246,6 +1246,8 @@
 	  <text name="AccreditionsOrCertifications">Accreditions / Certifications</text>
 	  <text name="YearOfEstablishment">Year Of Establishment</text>
 	  <text name="GSTNumber">GST Number</text>
+	  <text name="AddNewAddress">Add New Address</text>
+	  <text name="AddressType">Address Type</text>
 	  <text name="PaymentMode">Payment Mode</text>
 	  <text name="SupplierBankDetails">Supplier Bank Details</text>
 	  <text name="EditSupplier">Edit supplier</text>

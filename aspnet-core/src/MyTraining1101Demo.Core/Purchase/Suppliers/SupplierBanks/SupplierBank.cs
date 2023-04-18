@@ -18,6 +18,8 @@
 
         public string MICRCode { get; set; }
 
+        public string IFSCCode { get; set; }
+
         public string RTGS { get; set; }
 
         public string PaymentMode { get; set; }

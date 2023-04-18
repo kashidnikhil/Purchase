@@ -31157,6 +31157,7 @@ export class SupplierBankDto implements ISupplierBankDto {
     address!: string | undefined;
     accountNumber!: number;
     micrCode!: string | undefined;
+    ifscCode!: string | undefined;
     rtgs!: string | undefined;
     paymentMode!: string | undefined;
     supplierId!: string;
@@ -31178,6 +31179,7 @@ export class SupplierBankDto implements ISupplierBankDto {
             this.address = _data["address"];
             this.accountNumber = _data["accountNumber"];
             this.micrCode = _data["micrCode"];
+            this.ifscCode = _data["ifscCode"];
             this.rtgs = _data["rtgs"];
             this.paymentMode = _data["paymentMode"];
             this.supplierId = _data["supplierId"];
@@ -31199,6 +31201,7 @@ export class SupplierBankDto implements ISupplierBankDto {
         data["address"] = this.address;
         data["accountNumber"] = this.accountNumber;
         data["micrCode"] = this.micrCode;
+        data["ifscCode"] = this.ifscCode;
         data["rtgs"] = this.rtgs;
         data["paymentMode"] = this.paymentMode;
         data["supplierId"] = this.supplierId;
@@ -31213,6 +31216,7 @@ export interface ISupplierBankDto {
     address: string | undefined;
     accountNumber: number;
     micrCode: string | undefined;
+    ifscCode: string | undefined;
     rtgs: string | undefined;
     paymentMode: string | undefined;
     supplierId: string;
@@ -31225,6 +31229,7 @@ export class SupplierBankInputDto implements ISupplierBankInputDto {
     address!: string | undefined;
     accountNumber!: number;
     micrCode!: string | undefined;
+    ifscCode!: string | undefined;
     rtgs!: string | undefined;
     paymentMode!: string | undefined;
     supplierId!: string | undefined;
@@ -31246,6 +31251,7 @@ export class SupplierBankInputDto implements ISupplierBankInputDto {
             this.address = _data["address"];
             this.accountNumber = _data["accountNumber"];
             this.micrCode = _data["micrCode"];
+            this.ifscCode = _data["ifscCode"];
             this.rtgs = _data["rtgs"];
             this.paymentMode = _data["paymentMode"];
             this.supplierId = _data["supplierId"];
@@ -31267,6 +31273,7 @@ export class SupplierBankInputDto implements ISupplierBankInputDto {
         data["address"] = this.address;
         data["accountNumber"] = this.accountNumber;
         data["micrCode"] = this.micrCode;
+        data["ifscCode"] = this.ifscCode;
         data["rtgs"] = this.rtgs;
         data["paymentMode"] = this.paymentMode;
         data["supplierId"] = this.supplierId;
@@ -31281,6 +31288,7 @@ export interface ISupplierBankInputDto {
     address: string | undefined;
     accountNumber: number;
     micrCode: string | undefined;
+    ifscCode: string | undefined;
     rtgs: string | undefined;
     paymentMode: string | undefined;
     supplierId: string | undefined;
@@ -31494,18 +31502,18 @@ export class SupplierDto implements ISupplierDto {
     email!: string | undefined;
     mobile!: string | undefined;
     website!: string | undefined;
-    yearOfEstablishment!: number;
+    yearOfEstablishment!: number | undefined;
     panNumber!: string | undefined;
     vatNumber!: string | undefined;
     gstNumber!: string | undefined;
     certifications!: string | undefined;
-    deliveryBy!: number;
-    paymentMode!: number;
-    category!: number;
+    deliveryBy!: number | undefined;
+    paymentMode!: number | undefined;
+    category!: number | undefined;
     supplierAddresses!: SupplierAddressDto[] | undefined;
     supplierBanks!: SupplierBankDto[] | undefined;
     supplierContactPersons!: SupplierContactPersonDto[] | undefined;
-    legalEntityId!: string;
+    legalEntityId!: string | undefined;
 
     constructor(data?: ISupplierDto) {
         if (data) {
@@ -31604,18 +31612,18 @@ export interface ISupplierDto {
     email: string | undefined;
     mobile: string | undefined;
     website: string | undefined;
-    yearOfEstablishment: number;
+    yearOfEstablishment: number | undefined;
     panNumber: string | undefined;
     vatNumber: string | undefined;
     gstNumber: string | undefined;
     certifications: string | undefined;
-    deliveryBy: number;
-    paymentMode: number;
-    category: number;
+    deliveryBy: number | undefined;
+    paymentMode: number | undefined;
+    category: number | undefined;
     supplierAddresses: SupplierAddressDto[] | undefined;
     supplierBanks: SupplierBankDto[] | undefined;
     supplierContactPersons: SupplierContactPersonDto[] | undefined;
-    legalEntityId: string;
+    legalEntityId: string | undefined;
 }
 
 export class SupplierInputDto implements ISupplierInputDto {
@@ -31626,18 +31634,18 @@ export class SupplierInputDto implements ISupplierInputDto {
     email!: string | undefined;
     mobile!: string | undefined;
     website!: string | undefined;
-    yearOfEstablishment!: number;
+    yearOfEstablishment!: number | undefined;
     panNumber!: string | undefined;
     vatNumber!: string | undefined;
     gstNumber!: string | undefined;
     certifications!: string | undefined;
-    deliveryBy!: number;
-    paymentMode!: number;
-    category!: number;
+    deliveryBy!: number | undefined;
+    paymentMode!: number | undefined;
+    category!: number | undefined;
     supplierAddresses!: SupplierAddressInputDto[] | undefined;
     supplierContactPersons!: SupplierContactPersonInputDto[] | undefined;
     supplierBanks!: SupplierBankInputDto[] | undefined;
-    legalEntityId!: string;
+    legalEntityId!: string | undefined;
 
     constructor(data?: ISupplierInputDto) {
         if (data) {
@@ -31736,18 +31744,18 @@ export interface ISupplierInputDto {
     email: string | undefined;
     mobile: string | undefined;
     website: string | undefined;
-    yearOfEstablishment: number;
+    yearOfEstablishment: number | undefined;
     panNumber: string | undefined;
     vatNumber: string | undefined;
     gstNumber: string | undefined;
     certifications: string | undefined;
-    deliveryBy: number;
-    paymentMode: number;
-    category: number;
+    deliveryBy: number | undefined;
+    paymentMode: number | undefined;
+    category: number | undefined;
     supplierAddresses: SupplierAddressInputDto[] | undefined;
     supplierContactPersons: SupplierContactPersonInputDto[] | undefined;
     supplierBanks: SupplierBankInputDto[] | undefined;
-    legalEntityId: string;
+    legalEntityId: string | undefined;
 }
 
 export class SupplierListDto implements ISupplierListDto {
