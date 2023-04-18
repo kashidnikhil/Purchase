@@ -3,6 +3,9 @@ import { AppComponentBase } from '@shared/common/app-component-base';
 import {
     LegalEntityDto,
     LegalEntityServiceProxy,
+    SupplierAddressDto,
+    SupplierBankDto,
+    SupplierContactPersonDto,
     SupplierDto,
     SupplierInputDto,
     SupplierServiceProxy,
@@ -60,6 +63,7 @@ export class CreateOrEditSupplierModalComponent extends AppComponentBase {
     }
 
     initialiseSupplierForm(supplierItem: SupplierDto){
+        let supplierAddressItem : SupplierAddressDto = new SupplierAddressDto();
         this.supplierForm = this.formBuilder.group({
             id: new FormControl(supplierItem.id, []),
             name: new FormControl(supplierItem.name, []),
@@ -74,6 +78,44 @@ export class CreateOrEditSupplierModalComponent extends AppComponentBase {
             deliveryBy: new FormControl(supplierItem.deliveryBy, []),
             category: new FormControl(supplierItem.category, []),
             paymentMode: new FormControl(supplierItem.paymentMode, []),
+            supplierAddresses : supplierItem.supplierAddresses && supplierItem.supplierAddresses.length > 0 ? 
+            supplierItem.supplierAddresses.map((x: SupplierAddressDto) => this.createSupplierAddress(x)) : this.createSupplierAddress(supplierAddressItem),
+            supplierBanks : supplierItem.supplierBanks && supplierItem.supplierBanks.length > 0 ? 
+            supplierItem.supplierBanks.map((x: SupplierBankDto) => this.createSupplierBank(x)) : this.formBuilder.array([]),
+            supplierContactPersons : supplierItem.supplierContactPersons && supplierItem.supplierContactPersons.length > 0 ? 
+            supplierItem.supplierContactPersons.map((x: SupplierContactPersonDto) => this.createSupplierContactPerson(x)) : this.formBuilder.array([]),
+
+        });
+    }
+
+    createSupplierAddress(supplierAddress: SupplierAddressDto): FormGroup {
+        return this.formBuilder.group({
+            id: new FormControl(supplierAddress.id, []),
+            address: new FormControl(supplierAddress.address, []),
+            addressType: new FormControl(supplierAddress.addressType, [])
+        });
+    }
+
+    createSupplierBank(supplierBank: SupplierBankDto): FormGroup {
+        return this.formBuilder.group({
+            id: new FormControl(supplierBank.id, []),
+            bankName: new FormControl(supplierBank.bankName, []),
+            branchName: new FormControl(supplierBank.branchName, []),
+            address: new FormControl(supplierBank.address, []),
+            accountNumber: new FormControl(supplierBank.accountNumber, []),
+            micrCode: new FormControl(supplierBank.micrCode, []),
+            rtgs: new FormControl(supplierBank.rtgs, []),
+            paymentMode: new FormControl(supplierBank.paymentMode, []),
+        });
+    }
+
+    createSupplierContactPerson(supplierContactPerson: SupplierContactPersonDto): FormGroup {
+        return this.formBuilder.group({
+            id: new FormControl(supplierContactPerson.id, []),
+            contactPersonName: new FormControl(supplierContactPerson.contactPersonName, []),
+            branchName: new FormControl(supplierContactPerson.designation, []),
+            address: new FormControl(supplierContactPerson.emailId, []),
+            accountNumber: new FormControl(supplierContactPerson.mobileNumber, [])
         });
     }
 
