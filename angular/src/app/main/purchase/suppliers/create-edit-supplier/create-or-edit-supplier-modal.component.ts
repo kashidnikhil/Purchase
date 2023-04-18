@@ -149,7 +149,7 @@ export class CreateOrEditSupplierModalComponent extends AppComponentBase {
 
     save(): void {
         let input = new SupplierInputDto();
-        input = this.supplierItem;
+        input = this.supplierForm.value;
         this.saving = true;
         this._supplierService
             .insertOrUpdateSupplier(input)
