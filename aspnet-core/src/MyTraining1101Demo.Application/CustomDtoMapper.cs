@@ -70,6 +70,8 @@ using MyTraining1101Demo.Purchase.Suppliers.SupplierContactPersons;
 using MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierMaster;
 using MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierBanks;
 using MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierContactPersons;
+using MyTraining1101Demo.Purchase.Suppliers.SupplierAddresses;
+using MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierAddresses;
 
 namespace MyTraining1101Demo
 {
@@ -254,6 +256,8 @@ namespace MyTraining1101Demo
             configuration.CreateMap<SupplierContactPerson, SupplierContactPersonDto>().ReverseMap();
             configuration.CreateMap<SupplierContactPerson, SupplierContactPersonInputDto>().ReverseMap();
 
+            configuration.CreateMap<SupplierAddress, SupplierAddressDto>().ReverseMap();
+            configuration.CreateMap<SupplierAddress, SupplierAddressInputDto>().ReverseMap();
 
             /* ADD YOUR OWN CUSTOM AUTOMAPPER MAPPINGS HERE */
         }

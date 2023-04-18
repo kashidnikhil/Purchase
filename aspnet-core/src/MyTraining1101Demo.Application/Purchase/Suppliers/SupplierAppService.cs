@@ -2,6 +2,7 @@
 {
     using Abp.Application.Services.Dto;
     using MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierMaster;
+    using MyTraining1101Demo.Purchase.Suppliers.SupplierAddresses;
     using MyTraining1101Demo.Purchase.Suppliers.SupplierBanks;
     using MyTraining1101Demo.Purchase.Suppliers.SupplierContactPersons;
     using MyTraining1101Demo.Purchase.Suppliers.SupplierMaster;
@@ -13,14 +14,17 @@
         private readonly ISupplierManager _supplierManager;
         private readonly ISupplierBankManager _supplierBankManager;
         private readonly ISupplierContactPersonManager _supplierContactPersonManager;
+        private readonly ISupplierAddressManager _supplierAddressManager;
 
         public SupplierAppService(
             ISupplierManager supplierManager,
-          ISupplierBankManager supplierBankManager,
-          ISupplierContactPersonManager supplierContactPersonManager
+            ISupplierBankManager supplierBankManager,
+            ISupplierContactPersonManager supplierContactPersonManager,
+            ISupplierAddressManager supplierAddressManager
          )
         {
             _supplierManager = supplierManager;
+            _supplierAddressManager = supplierAddressManager;
             _supplierContactPersonManager = supplierContactPersonManager;
             _supplierBankManager = supplierBankManager;
         }
@@ -47,6 +51,15 @@
 
                 if (insertedOrUpdatedSupplierId != Guid.Empty)
                 {
+                    if (input.SupplierAddresses != null && input.SupplierAddresses.Count > 0)
+                    {
+                        input.SupplierAddresses.ForEach(supplierAddressItem =>
+                        {
+                            supplierAddressItem.SupplierId = insertedOrUpdatedSupplierId;
+                        });
+                        await this._supplierAddressManager.BulkInsertOrUpdateSupplierAddresses(input.SupplierAddresses);
+                    }
+
                     if (input.SupplierContactPersons != null && input.SupplierContactPersons.Count > 0)
                     {
                         input.SupplierContactPersons.ForEach(supplierContactPersonItem =>
@@ -105,6 +118,7 @@
 
                 if (supplierMasterItem.Id != Guid.Empty)
                 {
+                    supplierMasterItem.SupplierAddresses = await this._supplierAddressManager.GetSupplierAddressListFromDB(supplierMasterItem.Id);
                     supplierMasterItem.SupplierContactPersons = await this._supplierContactPersonManager.GetSupplierContactPersonListFromDB(supplierMasterItem.Id);
                     supplierMasterItem.SupplierBanks = await this._supplierBankManager.GetSupplierBankListFromDB(supplierMasterItem.Id);
                 }

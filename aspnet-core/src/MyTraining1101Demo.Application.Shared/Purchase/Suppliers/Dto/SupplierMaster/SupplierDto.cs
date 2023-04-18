@@ -1,4 +1,5 @@
-﻿using MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierBanks;
+﻿using MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierAddresses;
+using MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierBanks;
 using MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierContactPersons;
 using System;
 using System.Collections.Generic;
@@ -35,6 +36,8 @@ namespace MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierMaster
         public int PaymentMode { get; set; }
 
         public int Category { get; set; }
+
+        public IList<SupplierAddressDto> SupplierAddresses { get; set; }
 
         public IList<SupplierBankDto> SupplierBanks { get; set; }
 

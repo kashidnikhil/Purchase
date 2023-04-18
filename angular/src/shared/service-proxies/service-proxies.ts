@@ -31054,6 +31054,102 @@ export enum SubscriptionStartType {
     Paid = 3,
 }
 
+export class SupplierAddressDto implements ISupplierAddressDto {
+    id!: string;
+    address!: string | undefined;
+    addressType!: string | undefined;
+    supplierId!: string;
+
+    constructor(data?: ISupplierAddressDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.address = _data["address"];
+            this.addressType = _data["addressType"];
+            this.supplierId = _data["supplierId"];
+        }
+    }
+
+    static fromJS(data: any): SupplierAddressDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new SupplierAddressDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["address"] = this.address;
+        data["addressType"] = this.addressType;
+        data["supplierId"] = this.supplierId;
+        return data;
+    }
+}
+
+export interface ISupplierAddressDto {
+    id: string;
+    address: string | undefined;
+    addressType: string | undefined;
+    supplierId: string;
+}
+
+export class SupplierAddressInputDto implements ISupplierAddressInputDto {
+    id!: string | undefined;
+    address!: string | undefined;
+    addressType!: string | undefined;
+    supplierId!: string;
+
+    constructor(data?: ISupplierAddressInputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.address = _data["address"];
+            this.addressType = _data["addressType"];
+            this.supplierId = _data["supplierId"];
+        }
+    }
+
+    static fromJS(data: any): SupplierAddressInputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new SupplierAddressInputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["address"] = this.address;
+        data["addressType"] = this.addressType;
+        data["supplierId"] = this.supplierId;
+        return data;
+    }
+}
+
+export interface ISupplierAddressInputDto {
+    id: string | undefined;
+    address: string | undefined;
+    addressType: string | undefined;
+    supplierId: string;
+}
+
 export class SupplierBankDto implements ISupplierBankDto {
     id!: string;
     bankName!: string | undefined;
@@ -31406,6 +31502,7 @@ export class SupplierDto implements ISupplierDto {
     deliveryBy!: number;
     paymentMode!: number;
     category!: number;
+    supplierAddresses!: SupplierAddressDto[] | undefined;
     supplierBanks!: SupplierBankDto[] | undefined;
     supplierContactPersons!: SupplierContactPersonDto[] | undefined;
     legalEntityId!: string;
@@ -31436,6 +31533,11 @@ export class SupplierDto implements ISupplierDto {
             this.deliveryBy = _data["deliveryBy"];
             this.paymentMode = _data["paymentMode"];
             this.category = _data["category"];
+            if (Array.isArray(_data["supplierAddresses"])) {
+                this.supplierAddresses = [] as any;
+                for (let item of _data["supplierAddresses"])
+                    this.supplierAddresses!.push(SupplierAddressDto.fromJS(item));
+            }
             if (Array.isArray(_data["supplierBanks"])) {
                 this.supplierBanks = [] as any;
                 for (let item of _data["supplierBanks"])
@@ -31474,6 +31576,11 @@ export class SupplierDto implements ISupplierDto {
         data["deliveryBy"] = this.deliveryBy;
         data["paymentMode"] = this.paymentMode;
         data["category"] = this.category;
+        if (Array.isArray(this.supplierAddresses)) {
+            data["supplierAddresses"] = [];
+            for (let item of this.supplierAddresses)
+                data["supplierAddresses"].push(item.toJSON());
+        }
         if (Array.isArray(this.supplierBanks)) {
             data["supplierBanks"] = [];
             for (let item of this.supplierBanks)
@@ -31505,6 +31612,7 @@ export interface ISupplierDto {
     deliveryBy: number;
     paymentMode: number;
     category: number;
+    supplierAddresses: SupplierAddressDto[] | undefined;
     supplierBanks: SupplierBankDto[] | undefined;
     supplierContactPersons: SupplierContactPersonDto[] | undefined;
     legalEntityId: string;
@@ -31526,6 +31634,7 @@ export class SupplierInputDto implements ISupplierInputDto {
     deliveryBy!: number;
     paymentMode!: number;
     category!: number;
+    supplierAddresses!: SupplierAddressInputDto[] | undefined;
     supplierContactPersons!: SupplierContactPersonInputDto[] | undefined;
     supplierBanks!: SupplierBankInputDto[] | undefined;
     legalEntityId!: string;
@@ -31556,6 +31665,11 @@ export class SupplierInputDto implements ISupplierInputDto {
             this.deliveryBy = _data["deliveryBy"];
             this.paymentMode = _data["paymentMode"];
             this.category = _data["category"];
+            if (Array.isArray(_data["supplierAddresses"])) {
+                this.supplierAddresses = [] as any;
+                for (let item of _data["supplierAddresses"])
+                    this.supplierAddresses!.push(SupplierAddressInputDto.fromJS(item));
+            }
             if (Array.isArray(_data["supplierContactPersons"])) {
                 this.supplierContactPersons = [] as any;
                 for (let item of _data["supplierContactPersons"])
@@ -31594,6 +31708,11 @@ export class SupplierInputDto implements ISupplierInputDto {
         data["deliveryBy"] = this.deliveryBy;
         data["paymentMode"] = this.paymentMode;
         data["category"] = this.category;
+        if (Array.isArray(this.supplierAddresses)) {
+            data["supplierAddresses"] = [];
+            for (let item of this.supplierAddresses)
+                data["supplierAddresses"].push(item.toJSON());
+        }
         if (Array.isArray(this.supplierContactPersons)) {
             data["supplierContactPersons"] = [];
             for (let item of this.supplierContactPersons)
@@ -31625,6 +31744,7 @@ export interface ISupplierInputDto {
     deliveryBy: number;
     paymentMode: number;
     category: number;
+    supplierAddresses: SupplierAddressInputDto[] | undefined;
     supplierContactPersons: SupplierContactPersonInputDto[] | undefined;
     supplierBanks: SupplierBankInputDto[] | undefined;
     legalEntityId: string;

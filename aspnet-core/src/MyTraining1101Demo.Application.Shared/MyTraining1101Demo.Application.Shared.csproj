@@ -10,7 +10,4 @@
   <ItemGroup>
     <ProjectReference Include="..\MyTraining1101Demo.Core.Shared\MyTraining1101Demo.Core.Shared.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Purchase\Suppliers\Dto\SupplierAddresses\" />
-  </ItemGroup>
 </Project>
