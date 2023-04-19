@@ -19,7 +19,7 @@ namespace MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierBanks
 
         public string RTGS { get; set; }
 
-        public string PaymentMode { get; set; }
+        public int? PaymentMode { get; set; }
 
         public Guid SupplierId { get; set; }
     }

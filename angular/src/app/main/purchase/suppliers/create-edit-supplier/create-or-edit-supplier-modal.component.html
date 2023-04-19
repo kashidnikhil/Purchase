@@ -22,11 +22,10 @@
                                     <input #nameInput id="name" class="form-control" type="text" formControlName="name"
                                         name="name"
                                         [ngClass]="{ 'is-invalid': submitted && supplierForm.get('name').errors }" />
-                                        <div *ngIf="submitted && supplierForm.get('name').errors"
-                                                        class="invalid-feedback">
-                                                        <div *ngIf="supplierForm.get('name').errors.required">
-                                                            Supplier name is required</div>
-                                                    </div>
+                                    <div *ngIf="submitted && supplierForm.get('name').errors" class="invalid-feedback">
+                                        <div *ngIf="supplierForm.get('name').errors.required">
+                                            Supplier name is required</div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="mb-4">
@@ -57,17 +56,19 @@
                                             <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label>{{"AddressType" | localize}}</label>
-                                                    <input #addressTypeInput id="addressType" class="form-control" type="text"
-                                                        name="addressType" formControlName="addressType">
+                                                    <input #addressTypeInput id="addressType" class="form-control"
+                                                        type="text" name="addressType" formControlName="addressType">
                                                 </div>
                                             </div>
                                             <div class="col-md-1">
                                                 <div class="mt-5 text-center">
                                                     <h3>
-                                                        <i class="fa fa-trash" *ngIf="!addressGroup.value.id && supplierAddresses.controls.length > 1" (click)="deleteSupplierAddressItem(index)"></i>
+                                                        <i class="fa fa-trash"
+                                                            *ngIf="!addressGroup.value.id && supplierAddresses.controls.length > 1"
+                                                            (click)="deleteSupplierAddressItem(index)"></i>
                                                     </h3>
                                                 </div>
-                                            </div> 
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -131,8 +132,7 @@
                                         <select placeholder="Select Year" class="form-control" #yearOfEstablishmentInput
                                             formControlName="yearOfEstablishment" id="yearOfEstablishment"
                                             name="yearOfEstablishment">
-                                            <option *ngFor="let yearItem of yearList"
-                                                value="{{ yearItem.value }}">
+                                            <option *ngFor="let yearItem of yearList" value="{{ yearItem.value }}">
                                                 {{ yearItem.title }}
                                             </option>
                                         </select>
@@ -150,23 +150,32 @@
                                 <div class="col-md-8 mt-5">
                                     <label>{{"Category" | localize}} :-</label> &nbsp;&nbsp;
                                     <div class="form-check form-check-inline mt-5">
-                                        <input class="form-check-input" type="radio" name="category" id="category" (change)="supplierForm.value.category = 1" [checked]="supplierForm.value.category == 1" [value]="supplierForm.value.category">
+                                        <input class="form-check-input" type="radio" name="category" id="category"
+                                            (change)="supplierForm.value.category = 1"
+                                            [checked]="supplierForm.value.category == 1"
+                                            [value]="supplierForm.value.category">
                                         <label class="form-check-label" for="inlineRadio1">Manufacturer</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="category" id="category" (change)="supplierForm.value.category = 2" [checked]="supplierForm.value.category == 2" [value]="supplierForm.value.category">
+                                        <input class="form-check-input" type="radio" name="category" id="category"
+                                            (change)="supplierForm.value.category = 2"
+                                            [checked]="supplierForm.value.category == 2"
+                                            [value]="supplierForm.value.category">
                                         <label class="form-check-label" for="inlineRadio1">Trader</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="category" id="category" (change)="supplierForm.value.category = 3" [checked]="supplierForm.value.category == 3" [value]="supplierForm.value.category">
+                                        <input class="form-check-input" type="radio" name="category" id="category"
+                                            (change)="supplierForm.value.category = 3"
+                                            [checked]="supplierForm.value.category == 3"
+                                            [value]="supplierForm.value.category">
                                         <label class="form-check-label" for="inlineRadio1">Service Provider</label>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>{{"PaymentMode" | localize}}</label>
-                                        <select placeholder="Select Mode of Payment" class="form-control" #paymentModeInput
-                                            formControlName="paymentMode" id="paymentMode"
+                                        <select placeholder="Select Mode of Payment" class="form-control"
+                                            #paymentModeInput formControlName="paymentMode" id="paymentMode"
                                             name="paymentMode">
                                             <option *ngFor="let legalEntityItem of legalEntityList"
                                                 value="{{ legalEntityItem.id }}">
@@ -193,17 +202,19 @@
                                             <div class="col-md-10">
                                                 <div class="form-group">
                                                     <label>{{"ContactPersonName" | localize}}</label>
-                                                    <input #contactPersonNameInput id="contactPersonName" class="form-control" type="text"
-                                                        name="contactPersonName" formControlName="contactPersonName"
+                                                    <input #contactPersonNameInput id="contactPersonName"
+                                                        class="form-control" type="text" name="contactPersonName"
+                                                        formControlName="contactPersonName"
                                                         [ngClass]="{ 'is-invalid': submitted && supplierContactPersonGroup.get('contactPersonName').errors }">
                                                     <div *ngIf="submitted && supplierContactPersonGroup.get('contactPersonName').errors"
                                                         class="invalid-feedback">
-                                                        <div *ngIf="supplierContactPersonGroup.get('contactPersonName').errors.required">
+                                                        <div
+                                                            *ngIf="supplierContactPersonGroup.get('contactPersonName').errors.required">
                                                             Contact person name is required</div>
                                                     </div>
                                                 </div>
                                             </div>
-                                             <!--<div class="col-md-1">
+                                            <!--<div class="col-md-1">
                                                 <div class="mt-5 text-center">
                                                     <h3>
                                                         <i class="fa fa-trash" *ngIf="!supplierContactPersonGroup.value.id && supplierContactPersons.controls.length > 1" (click)="deleteSupplierContactPersonItem(index)"></i>
@@ -215,8 +226,8 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>{{"Designation" | localize}}</label>
-                                                    <input #designationInput id="designation" class="form-control" type="text"
-                                                        name="designation" formControlName="designation" />
+                                                    <input #designationInput id="designation" class="form-control"
+                                                        type="text" name="designation" formControlName="designation" />
                                                 </div>
                                             </div>
                                             <div class="col-md-5">
@@ -229,8 +240,9 @@
                                             <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label>{{"MobileNumber" | localize}}</label>
-                                                    <input #mobileNumberInput id="mobileNumber" class="form-control" type="text"
-                                                        name="mobileNumber" formControlName="mobileNumber" />
+                                                    <input #mobileNumberInput id="mobileNumber" class="form-control"
+                                                        type="text" name="mobileNumber"
+                                                        formControlName="mobileNumber" />
                                                 </div>
                                             </div>
                                         </div>
@@ -239,6 +251,110 @@
                             </div>
                         </tab>
                         <tab class="pt-5" heading="{{ 'SupplierBankDetails' | localize }}">
+                            <div class="mb-4">
+                                <button type="button" class="btn btn-primary" (click)="addSupplierBank()">
+                                    <i class="fa fa-plus"></i>
+                                    {{ 'AddNewBank' | localize }}
+                                </button>
+                            </div>
+                            <div formArrayName="supplierBanks" class="mb-4">
+                                <div class="card mb-3"
+                                    *ngFor="let supplierBankGroup of supplierBanks.controls; let index = index">
+                                    <div [formGroupName]="index" class="p-3">
+
+                                        <div class="col-md-12 row mb-4">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>{{"BankName" | localize}}</label>
+                                                    <input #bankNameInput id="bankName" class="form-control" type="text"
+                                                        name="bankName" formControlName="bankName"
+                                                        [ngClass]="{ 'is-invalid': submitted && supplierBankGroup.get('bankName').errors }">
+                                                    <div *ngIf="submitted && supplierBankGroup.get('bankName').errors"
+                                                        class="invalid-feedback">
+                                                        <div *ngIf="supplierBankGroup.get('bankName').errors.required">
+                                                            Bank name is required</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>{{"BranchName" | localize}}</label>
+                                                    <input #branchNameInput id="branchName" class="form-control"
+                                                        type="text" name="branchName" formControlName="branchName">
+                                                    <!-- [ngClass]="{ 'is-invalid': submitted && supplierBankGroup.get('contactPersonName').errors }"
+                                                    <div *ngIf="submitted && supplierBankGroup.get('contactPersonName').errors"
+                                                        class="invalid-feedback">
+                                                        <div *ngIf="supplierBankGroup.get('contactPersonName').errors.required">
+                                                            Contact person name is required</div>
+                                                    </div> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 row mb-4">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>{{"Address" | localize}}</label>
+                                                    <textarea #addressInput id="address" class="form-control"
+                                                        type="text" rows="3" name="address"
+                                                        formControlName="address"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 row mb-4">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>{{"AccountNumber" | localize}}</label>
+                                                    <input #accountNumberInput id="accountNumber" class="form-control"
+                                                        type="text" name="accountNumber" formControlName="accountNumber"
+                                                        [ngClass]="{ 'is-invalid': submitted && supplierBankGroup.get('accountNumber').errors }">
+                                                    <div *ngIf="submitted && supplierBankGroup.get('accountNumber').errors"
+                                                        class="invalid-feedback">
+                                                        <div
+                                                            *ngIf="supplierBankGroup.get('accountNumber').errors.required">
+                                                            Account number is required</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>{{"IFSCCode" | localize}}</label>
+                                                    <input #ifscCodeInput id="ifscCode" class="form-control" type="text"
+                                                        name="ifscCode" formControlName="ifscCode">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>{{"MICRCode" | localize}}</label>
+                                                    <input #micrCodeInput id="micrCode" class="form-control" type="text"
+                                                        name="micrCode" formControlName="micrCode">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 row mb-4">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>{{"RTGS" | localize}}</label>
+                                                    <input #rtgsInput id="rtgs" class="form-control" type="text"
+                                                        name="rtgs" formControlName="rtgs">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>{{"PaymentMode" | localize}}</label>
+                                                    <select placeholder="Select Payment Mode" class="form-control"
+                                                        #paymentModeInput formControlName="paymentMode" id="paymentMode"
+                                                        name="paymentMode">
+                                                        <option *ngFor="let legalEntityItem of legalEntityList"
+                                                            value="{{ legalEntityItem.id }}">
+                                                            {{ legalEntityItem.name }}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </tab>
                     </tabset>
                 </div>

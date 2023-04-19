@@ -31159,7 +31159,7 @@ export class SupplierBankDto implements ISupplierBankDto {
     micrCode!: string | undefined;
     ifscCode!: string | undefined;
     rtgs!: string | undefined;
-    paymentMode!: string | undefined;
+    paymentMode!: number | undefined;
     supplierId!: string;
 
     constructor(data?: ISupplierBankDto) {
@@ -31218,7 +31218,7 @@ export interface ISupplierBankDto {
     micrCode: string | undefined;
     ifscCode: string | undefined;
     rtgs: string | undefined;
-    paymentMode: string | undefined;
+    paymentMode: number | undefined;
     supplierId: string;
 }
 
@@ -31231,7 +31231,7 @@ export class SupplierBankInputDto implements ISupplierBankInputDto {
     micrCode!: string | undefined;
     ifscCode!: string | undefined;
     rtgs!: string | undefined;
-    paymentMode!: string | undefined;
+    paymentMode!: number | undefined;
     supplierId!: string | undefined;
 
     constructor(data?: ISupplierBankInputDto) {
@@ -31290,7 +31290,7 @@ export interface ISupplierBankInputDto {
     micrCode: string | undefined;
     ifscCode: string | undefined;
     rtgs: string | undefined;
-    paymentMode: string | undefined;
+    paymentMode: number | undefined;
     supplierId: string | undefined;
 }
 

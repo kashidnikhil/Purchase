@@ -22,9 +22,18 @@
 
         public string RTGS { get; set; }
 
-        public string PaymentMode { get; set; }
+        public BankPaymentModeType? PaymentMode { get; set; }
 
         public virtual Guid? SupplierId { get; set; }
         public virtual Supplier Supplier { get; set; }
+    }
+
+    public enum BankPaymentModeType
+    {
+        None = 1,
+        PublicLimited,
+        PrivateLimited,
+        Partnership,
+        Proprietorship
     }
 }

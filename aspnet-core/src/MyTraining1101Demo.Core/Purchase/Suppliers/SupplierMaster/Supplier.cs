@@ -44,13 +44,15 @@ namespace MyTraining1101Demo.Purchase.Suppliers.SupplierMaster
     public enum DeliveryType
     {
         Supplier = 1,
-
+        Self
     }
 
     public enum PaymentModeType
     {
         Advance = 1,
-
+        AgainstPerforma,
+        AgainstDelivery,
+        Credit
     }
 
     public enum CategoryType
@@ -58,6 +60,5 @@ namespace MyTraining1101Demo.Purchase.Suppliers.SupplierMaster
         Manufacturer = 1,
         Trader,
         ServiceProvider
-
     }
 }

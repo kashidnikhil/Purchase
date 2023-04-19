@@ -250,8 +250,12 @@ namespace MyTraining1101Demo
 
             configuration.CreateMap<Supplier, SupplierListDto>().ReverseMap();
 
-            configuration.CreateMap<SupplierBank, SupplierBankDto>().ReverseMap();
-            configuration.CreateMap<SupplierBank, SupplierBankInputDto>().ReverseMap();
+            configuration.CreateMap<SupplierBank, SupplierBankDto>()
+                 .ForMember(dto => dto.PaymentMode, options => options.MapFrom(x => x.PaymentMode))
+                 .ReverseMap();
+            configuration.CreateMap<SupplierBank, SupplierBankInputDto>()
+                 .ForMember(dto => dto.PaymentMode, options => options.MapFrom(x => x.PaymentMode))
+                 .ReverseMap();
 
             configuration.CreateMap<SupplierContactPerson, SupplierContactPersonDto>().ReverseMap();
             configuration.CreateMap<SupplierContactPerson, SupplierContactPersonInputDto>().ReverseMap();
