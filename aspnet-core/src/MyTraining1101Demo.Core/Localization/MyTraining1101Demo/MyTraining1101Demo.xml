@@ -1247,7 +1247,12 @@
 	  <text name="YearOfEstablishment">Year Of Establishment</text>
 	  <text name="GSTNumber">GST Number</text>
 	  <text name="AddNewAddress">Add New Address</text>
+	  <text name="AddNewContactPerson">Add New Contact Person</text>
+	  <text name="ContactPersonName">Contact Person Name</text>
 	  <text name="AddressType">Address Type</text>
+	  <text name="Designation">Designation</text>
+	  <text name="MobileNumber">Mobile Number</text>
+	  <text name="EmailId">Email Id</text>
 	  <text name="PaymentMode">Payment Mode</text>
 	  <text name="SupplierBankDetails">Supplier Bank Details</text>
 	  <text name="EditSupplier">Edit supplier</text>

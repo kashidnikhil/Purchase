@@ -20,7 +20,13 @@
                                 <div class="form-group mb-1">
                                     <label>{{"SupplierName" | localize}}</label>
                                     <input #nameInput id="name" class="form-control" type="text" formControlName="name"
-                                        name="name" />
+                                        name="name"
+                                        [ngClass]="{ 'is-invalid': submitted && supplierForm.get('name').errors }" />
+                                        <div *ngIf="submitted && supplierForm.get('name').errors"
+                                                        class="invalid-feedback">
+                                                        <div *ngIf="supplierForm.get('name').errors.required">
+                                                            Supplier name is required</div>
+                                                    </div>
                                 </div>
                             </div>
                             <div class="mb-4">
@@ -172,6 +178,65 @@
                             </div>
                         </tab>
                         <tab class="pt-5" heading="{{ 'ContactPerson' | localize }}">
+                            <div class="mb-4">
+                                <button type="button" class="btn btn-primary" (click)="addSupplierContactPerson()">
+                                    <i class="fa fa-plus"></i>
+                                    {{ 'AddNewContactPerson' | localize }}
+                                </button>
+                            </div>
+                            <div formArrayName="supplierContactPersons" class="mb-4">
+                                <div class="card mb-3"
+                                    *ngFor="let supplierContactPersonGroup of supplierContactPersons.controls; let index = index">
+                                    <div [formGroupName]="index" class="p-3">
+
+                                        <div class="col-md-12 row mb-4">
+                                            <div class="col-md-10">
+                                                <div class="form-group">
+                                                    <label>{{"ContactPersonName" | localize}}</label>
+                                                    <input #contactPersonNameInput id="contactPersonName" class="form-control" type="text"
+                                                        name="contactPersonName" formControlName="contactPersonName"
+                                                        [ngClass]="{ 'is-invalid': submitted && supplierContactPersonGroup.get('contactPersonName').errors }">
+                                                    <div *ngIf="submitted && supplierContactPersonGroup.get('contactPersonName').errors"
+                                                        class="invalid-feedback">
+                                                        <div *ngIf="supplierContactPersonGroup.get('contactPersonName').errors.required">
+                                                            Contact person name is required</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                             <!--<div class="col-md-1">
+                                                <div class="mt-5 text-center">
+                                                    <h3>
+                                                        <i class="fa fa-trash" *ngIf="!supplierContactPersonGroup.value.id && supplierContactPersons.controls.length > 1" (click)="deleteSupplierContactPersonItem(index)"></i>
+                                                    </h3>
+                                                </div>
+                                            </div>  -->
+                                        </div>
+                                        <div class="col-md-12 row mb-4">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>{{"Designation" | localize}}</label>
+                                                    <input #designationInput id="designation" class="form-control" type="text"
+                                                        name="designation" formControlName="designation" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <div class="form-group">
+                                                    <label>{{"EmailId" | localize}}</label>
+                                                    <input #emailIdInput id="emailId" class="form-control" type="text"
+                                                        name="emailId" formControlName="emailId" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label>{{"MobileNumber" | localize}}</label>
+                                                    <input #mobileNumberInput id="mobileNumber" class="form-control" type="text"
+                                                        name="mobileNumber" formControlName="mobileNumber" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </tab>
                         <tab class="pt-5" heading="{{ 'SupplierBankDetails' | localize }}">
                         </tab>

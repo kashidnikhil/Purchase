@@ -137,6 +137,16 @@ export class CreateOrEditSupplierModalComponent extends AppComponentBase {
         });
     }
 
+    deleteSupplierContactPersonItem(indexValue: number){
+        const supplierContactPersonArray = this.supplierContactPersons;
+        supplierContactPersonArray.removeAt(indexValue);
+    }
+
+    deleteSupplierBankItem(indexValue: number){
+        const supplierBankArray = this.supplierBanks;
+        supplierBankArray.removeAt(indexValue);
+    }
+
     deleteSupplierAddressItem(indexValue: number){
         const supplierAddressArray = this.supplierAddresses;
         supplierAddressArray.removeAt(indexValue);
@@ -160,9 +170,9 @@ export class CreateOrEditSupplierModalComponent extends AppComponentBase {
         return this.formBuilder.group({
             id: new FormControl(supplierContactPerson.id, []),
             contactPersonName: new FormControl(supplierContactPerson.contactPersonName, [Validators.required]),
-            branchName: new FormControl(supplierContactPerson.designation, []),
-            address: new FormControl(supplierContactPerson.emailId, []),
-            accountNumber: new FormControl(supplierContactPerson.mobileNumber, [])
+            designation: new FormControl(supplierContactPerson.designation, []),
+            emailId: new FormControl(supplierContactPerson.emailId, []),
+            mobileNumber: new FormControl(supplierContactPerson.mobileNumber, [])
         });
     }
 
@@ -222,6 +232,7 @@ export class CreateOrEditSupplierModalComponent extends AppComponentBase {
     }
 
     close(): void {
+        this.submitted = false;
         this.active = false;
         this.modal.hide();
     }
