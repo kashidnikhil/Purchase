@@ -14,7 +14,7 @@
 
         public string Address { get; set; }
 
-        public long AccountNumber { get; set; }
+        public long? AccountNumber { get; set; }
 
         public string MICRCode { get; set; }
 

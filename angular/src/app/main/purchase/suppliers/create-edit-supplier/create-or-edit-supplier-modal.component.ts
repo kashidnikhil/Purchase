@@ -29,8 +29,9 @@ export class CreateOrEditSupplierModalComponent extends AppComponentBase {
     // @Output() restoreSupplierCategory: EventEmitter<ResponseDto> = new EventEmitter<ResponseDto>();
 
     supplierForm!: FormGroup;
-    active = false;
-    saving = false;
+    active :boolean = false;
+    submitted :boolean = false;
+    saving :boolean = false;
     supplierItem : SupplierDto = new SupplierDto();
     
     legalEntityList : LegalEntityDto[] =[];
@@ -89,12 +90,12 @@ export class CreateOrEditSupplierModalComponent extends AppComponentBase {
                 supplierItem.supplierContactPersons.map((x : SupplierContactPersonDto) => 
                     this.createSupplierContactPerson(x)
                   )
-            ) : this.createSupplierContactPerson(supplierContactPersonItem),
+            ) : this.formBuilder.array([this.createSupplierContactPerson(supplierContactPersonItem)]),
             supplierBanks: supplierItem.supplierBanks && supplierItem.supplierBanks.length > 0 ? this.formBuilder.array(
                 supplierItem.supplierBanks.map((x : SupplierBankDto) => 
                     this.createSupplierBank(x)
                   )
-            ) : this.createSupplierBank(supplierBankItem)
+            ) : this.formBuilder.array([this.createSupplierBank(supplierBankItem)])
         });
     }
 
@@ -194,27 +195,30 @@ export class CreateOrEditSupplierModalComponent extends AppComponentBase {
     }
 
     save(): void {
-        let input = new SupplierInputDto();
-        input = this.supplierForm.value;
-        this.saving = true;
-        this._supplierService
-            .insertOrUpdateSupplier(input)
-            .pipe(
-                finalize(() => {
-                    this.saving = false;
-                })
-            )
-            .subscribe((response : string) => {
-                if(!response){
-                    this.notify.info(this.l('SavedSuccessfully'));
-                    this.close();
-                    this.modalSave.emit(null);
-                }
-                // else{
-                //     this.close();
-                //     this.restoreSupplierCategory.emit(response);
-                // }
-            });
+        this.submitted = true;
+        if(this.supplierForm.valid){
+            let input = new SupplierInputDto();
+            this.saving = true;
+            input = this.supplierForm.value;
+            this._supplierService
+                .insertOrUpdateSupplier(input)
+                .pipe(
+                    finalize(() => {
+                        this.saving = false;
+                    })
+                )
+                .subscribe((response : string) => {
+                    if(!response){
+                        this.notify.info(this.l('SavedSuccessfully'));
+                        this.close();
+                        this.modalSave.emit(null);
+                    }
+                    // else{
+                    //     this.close();
+                    //     this.restoreSupplierCategory.emit(response);
+                    // }
+                });
+        }
     }
 
     close(): void {

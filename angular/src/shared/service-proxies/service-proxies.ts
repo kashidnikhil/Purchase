@@ -31155,7 +31155,7 @@ export class SupplierBankDto implements ISupplierBankDto {
     bankName!: string | undefined;
     branchName!: string | undefined;
     address!: string | undefined;
-    accountNumber!: number;
+    accountNumber!: number | undefined;
     micrCode!: string | undefined;
     ifscCode!: string | undefined;
     rtgs!: string | undefined;
@@ -31214,7 +31214,7 @@ export interface ISupplierBankDto {
     bankName: string | undefined;
     branchName: string | undefined;
     address: string | undefined;
-    accountNumber: number;
+    accountNumber: number | undefined;
     micrCode: string | undefined;
     ifscCode: string | undefined;
     rtgs: string | undefined;
@@ -31227,7 +31227,7 @@ export class SupplierBankInputDto implements ISupplierBankInputDto {
     bankName!: string | undefined;
     branchName!: string | undefined;
     address!: string | undefined;
-    accountNumber!: number;
+    accountNumber!: number | undefined;
     micrCode!: string | undefined;
     ifscCode!: string | undefined;
     rtgs!: string | undefined;
@@ -31286,7 +31286,7 @@ export interface ISupplierBankInputDto {
     bankName: string | undefined;
     branchName: string | undefined;
     address: string | undefined;
-    accountNumber: number;
+    accountNumber: number | undefined;
     micrCode: string | undefined;
     ifscCode: string | undefined;
     rtgs: string | undefined;

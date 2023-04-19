@@ -11,7 +11,7 @@ namespace MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierBanks
 
         public string Address { get; set; }
 
-        public long AccountNumber { get; set; }
+        public long? AccountNumber { get; set; }
 
         public string MICRCode { get; set; }
 

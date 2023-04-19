@@ -40,8 +40,8 @@
                                                     <label>{{"Address" | localize}}</label>
                                                     <input #addressInput id="address" class="form-control" type="text"
                                                         name="address" formControlName="address"
-                                                        [ngClass]="{ 'is-invalid': saving && addressGroup.get('address').errors }">
-                                                    <div *ngIf="saving && addressGroup.get('address').errors"
+                                                        [ngClass]="{ 'is-invalid': submitted && addressGroup.get('address').errors }">
+                                                    <div *ngIf="submitted && addressGroup.get('address').errors"
                                                         class="invalid-feedback">
                                                         <div *ngIf="addressGroup.get('address').errors.required">
                                                             Address is required</div>
