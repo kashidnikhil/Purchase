@@ -15,6 +15,7 @@ import { map as _map, filter as _filter } from 'lodash-es';
 import { finalize } from 'rxjs/operators';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DropdownDto } from '@app/shared/common/data-models/dropdown';
+import { TabsetComponent } from 'ngx-bootstrap/tabs';
 
 @Component({
     selector: 'create-edit-supplier-modal',
@@ -24,7 +25,7 @@ import { DropdownDto } from '@app/shared/common/data-models/dropdown';
 })
 export class CreateOrEditSupplierModalComponent extends AppComponentBase {
     @ViewChild('createOrEditModal', { static: true }) modal: ModalDirective;
-    @ViewChild('createOrEditModal') public tabSetElement: any;
+    @ViewChild(TabsetComponent) tabSet: TabsetComponent;
     @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
     // @Output() restoreSupplierCategory: EventEmitter<ResponseDto> = new EventEmitter<ResponseDto>();
 
@@ -32,6 +33,7 @@ export class CreateOrEditSupplierModalComponent extends AppComponentBase {
     active: boolean = false;
     submitted: boolean = false;
     saving: boolean = false;
+    currentTab: number = 0;
 
     legalEntityList: LegalEntityDto[] = [];
     yearList: DropdownDto[] = [];
@@ -305,5 +307,10 @@ export class CreateOrEditSupplierModalComponent extends AppComponentBase {
         this.submitted = false;
         this.active = false;
         this.modal.hide();
+    }
+
+    changeTab(tabIndex: number){
+        this.currentTab = tabIndex;
+        this.tabSet.tabs[tabIndex].active = true;
     }
 }

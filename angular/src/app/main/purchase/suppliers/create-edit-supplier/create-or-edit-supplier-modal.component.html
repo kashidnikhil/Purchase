@@ -6,7 +6,8 @@
             <form *ngIf="active && supplierForm" [formGroup]="supplierForm" novalidate (ngSubmit)="save()">
                 <div class="modal-header">
                     <h4 class="modal-title">
-                        <span *ngIf="supplierForm.get('id').value">{{ 'EditSupplier' | localize }} : {{ supplierForm.get('name').value }}</span>
+                        <span *ngIf="supplierForm.get('id').value">{{ 'EditSupplier' | localize }} : {{
+                            supplierForm.get('name').value }}</span>
                         <span *ngIf="!supplierForm.get('name').value">{{ 'CreateNewSupplier' | localize }}</span>
                     </h4>
                     <button type="button" class="btn-close" (click)="close()" [attr.aria-label]="l('Close')"
@@ -15,7 +16,7 @@
                 </div>
                 <div class="modal-body">
                     <tabset #tabs class="nav-tabs">
-                        <tab class="pt-5" heading="{{ 'GeneralInfo' | localize }}">
+                        <tab class="pt-5" (selectTab)="changeTab(0)"   heading="{{ 'GeneralInfo' | localize }}">
                             <div class="col-md-12 row mb-4">
                                 <div class="form-group mb-1">
                                     <label>{{"SupplierName" | localize}}</label>
@@ -189,9 +190,8 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>{{"DeliveryBy" | localize}}</label>
-                                        <select placeholder="Select Delivery Type" class="form-control"
-                                            #deliveryByInput formControlName="deliveryBy" id="deliveryBy"
-                                            name="deliveryBy">
+                                        <select placeholder="Select Delivery Type" class="form-control" #deliveryByInput
+                                            formControlName="deliveryBy" id="deliveryBy" name="deliveryBy">
                                             <option *ngFor="let deliveryTypeItem of deliveryList"
                                                 value="{{ deliveryTypeItem.value }}">
                                                 {{ deliveryTypeItem.title }}
@@ -199,9 +199,18 @@
                                         </select>
                                     </div>
                                 </div>
+                                <div class="col-md-8">
+                                    <div class="float-end">
+
+                                        <button type="button" class="btn btn-success mt-5" (click)="changeTab(1)">
+                                            {{ 'Next' | localize }} &nbsp;
+                                            <i class="fa fa-arrow-right"></i>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </tab>
-                        <tab class="pt-5" heading="{{ 'ContactPerson' | localize }}">
+                        <tab class="pt-5" (selectTab)="changeTab(1)" heading="{{ 'ContactPerson' | localize }}">
                             <div class="mb-4">
                                 <button type="button" class="btn btn-primary" (click)="addSupplierContactPerson()">
                                     <i class="fa fa-plus"></i>
@@ -265,7 +274,7 @@
                                 </div>
                             </div>
                         </tab>
-                        <tab class="pt-5" heading="{{ 'SupplierBankDetails' | localize }}">
+                        <tab class="pt-5" (selectTab)="changeTab(2)" heading="{{ 'SupplierBankDetails' | localize }}">
                             <div class="mb-4">
                                 <button type="button" class="btn btn-primary" (click)="addSupplierBank()">
                                     <i class="fa fa-plus"></i>
@@ -373,8 +382,9 @@
                         </tab>
                     </tabset>
                 </div>
-                <div class="modal-footer">
-                    <button [disabled]="saving" type="button" class="btn btn-light-primary font-weight-bold"
+                <div class="modal-footer" >
+                    <div *ngIf="currentTab == 2">
+                        <button [disabled]="saving" type="button" class="btn btn-light-primary font-weight-bold"
                         (click)="close()">
                         {{ 'Cancel' | localize }}
                     </button>
@@ -383,6 +393,7 @@
                         <i class="fa fa-save"></i>
                         <span>{{ 'Save' | localize }}</span>
                     </button>
+                    </div>
                 </div>
             </form>
         </div>
