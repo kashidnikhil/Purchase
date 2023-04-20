@@ -288,7 +288,7 @@ export class CreateOrEditSupplierModalComponent extends AppComponentBase {
                     })
                 )
                 .subscribe((response: string) => {
-                    if (!response) {
+                    if (response) {
                         this.notify.info(this.l('SavedSuccessfully'));
                         this.close();
                         this.modalSave.emit(null);
