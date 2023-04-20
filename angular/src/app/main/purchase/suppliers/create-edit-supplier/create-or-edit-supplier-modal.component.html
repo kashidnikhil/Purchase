@@ -6,8 +6,8 @@
             <form *ngIf="active && supplierForm" [formGroup]="supplierForm" novalidate (ngSubmit)="save()">
                 <div class="modal-header">
                     <h4 class="modal-title">
-                        <span *ngIf="supplierItem.id">{{ 'EditSupplier' | localize }}: {{ supplierItem.name }}</span>
-                        <span *ngIf="!supplierItem.id">{{ 'CreateNewSupplier' | localize }}</span>
+                        <span *ngIf="supplierForm.get('id').value">{{ 'EditSupplier' | localize }} : {{ supplierForm.get('name').value }}</span>
+                        <span *ngIf="!supplierForm.get('name').value">{{ 'CreateNewSupplier' | localize }}</span>
                     </h4>
                     <button type="button" class="btn-close" (click)="close()" [attr.aria-label]="l('Close')"
                         [disabled]="saving">

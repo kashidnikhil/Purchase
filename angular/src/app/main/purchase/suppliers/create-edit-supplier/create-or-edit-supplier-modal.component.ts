@@ -32,7 +32,6 @@ export class CreateOrEditSupplierModalComponent extends AppComponentBase {
     active: boolean = false;
     submitted: boolean = false;
     saving: boolean = false;
-    supplierItem: SupplierDto = new SupplierDto();
 
     legalEntityList: LegalEntityDto[] = [];
     yearList: DropdownDto[] = [];
@@ -59,7 +58,8 @@ export class CreateOrEditSupplierModalComponent extends AppComponentBase {
         }
         else {
             this._supplierService.getSupplierMasterById(supplierId).subscribe((response: SupplierDto) => {
-                this.supplierItem = response;
+                let supplierItem = response;
+                this.initialiseSupplierForm(supplierItem);
                 this.active = true;
                 this.modal.show();
             });
@@ -271,7 +271,7 @@ export class CreateOrEditSupplierModalComponent extends AppComponentBase {
     }
 
     onShown(): void {
-        document.getElementById('name').focus();
+        // document.getElementById('name').focus();
     }
 
     save(): void {
