@@ -24,24 +24,27 @@ import { DropdownDto } from '@app/shared/common/data-models/dropdown';
 })
 export class CreateOrEditSupplierModalComponent extends AppComponentBase {
     @ViewChild('createOrEditModal', { static: true }) modal: ModalDirective;
-    @ViewChild('createOrEditModal') public tabSetElement : any;
+    @ViewChild('createOrEditModal') public tabSetElement: any;
     @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
     // @Output() restoreSupplierCategory: EventEmitter<ResponseDto> = new EventEmitter<ResponseDto>();
 
     supplierForm!: FormGroup;
-    active :boolean = false;
-    submitted :boolean = false;
-    saving :boolean = false;
-    supplierItem : SupplierDto = new SupplierDto();
-    
-    legalEntityList : LegalEntityDto[] =[];
-    yearList : DropdownDto[] = [];
-    
+    active: boolean = false;
+    submitted: boolean = false;
+    saving: boolean = false;
+    supplierItem: SupplierDto = new SupplierDto();
+
+    legalEntityList: LegalEntityDto[] = [];
+    yearList: DropdownDto[] = [];
+    paymentModeList: DropdownDto[] = [];
+    bankPaymentModeList: DropdownDto[] = [];
+    deliveryList: DropdownDto[] = [];
+
     constructor(
         injector: Injector,
         private formBuilder: FormBuilder,
-        private _supplierService : SupplierServiceProxy,
-        private _legalEntityService : LegalEntityServiceProxy
+        private _supplierService: SupplierServiceProxy,
+        private _legalEntityService: LegalEntityServiceProxy
     ) {
         super(injector);
     }
@@ -49,24 +52,24 @@ export class CreateOrEditSupplierModalComponent extends AppComponentBase {
     async show(supplierId?: string) {
         await this.loadDropdownList();
         if (!supplierId) {
-            let supplierItem = new SupplierDto(); 
+            let supplierItem = new SupplierDto();
             this.initialiseSupplierForm(supplierItem);
             this.active = true;
             this.modal.show();
         }
-        else{
-            this._supplierService.getSupplierMasterById(supplierId).subscribe((response : SupplierDto)=> {
-                this.supplierItem  = response;
+        else {
+            this._supplierService.getSupplierMasterById(supplierId).subscribe((response: SupplierDto) => {
+                this.supplierItem = response;
                 this.active = true;
                 this.modal.show();
             });
-        }        
+        }
     }
 
-    initialiseSupplierForm(supplierItem: SupplierDto){
-        let supplierAddressItem : SupplierAddressDto = new SupplierAddressDto();
-        let supplierContactPersonItem : SupplierContactPersonDto = new SupplierContactPersonDto();
-        let supplierBankItem : SupplierBankDto = new SupplierBankDto();
+    initialiseSupplierForm(supplierItem: SupplierDto) {
+        let supplierAddressItem: SupplierAddressDto = new SupplierAddressDto();
+        let supplierContactPersonItem: SupplierContactPersonDto = new SupplierContactPersonDto();
+        let supplierBankItem: SupplierBankDto = new SupplierBankDto();
         this.supplierForm = this.formBuilder.group({
             id: new FormControl(supplierItem.id, []),
             name: new FormControl(supplierItem.name, [Validators.required]),
@@ -82,19 +85,19 @@ export class CreateOrEditSupplierModalComponent extends AppComponentBase {
             category: new FormControl(supplierItem.category, []),
             paymentMode: new FormControl(supplierItem.paymentMode, []),
             supplierAddresses: supplierItem.supplierAddresses && supplierItem.supplierAddresses.length > 0 ? this.formBuilder.array(
-                supplierItem.supplierAddresses.map((x : SupplierAddressDto) => 
+                supplierItem.supplierAddresses.map((x: SupplierAddressDto) =>
                     this.createSupplierAddress(x)
-                  )
+                )
             ) : this.formBuilder.array([this.createSupplierAddress(supplierAddressItem)]),
             supplierContactPersons: supplierItem.supplierContactPersons && supplierItem.supplierContactPersons.length > 0 ? this.formBuilder.array(
-                supplierItem.supplierContactPersons.map((x : SupplierContactPersonDto) => 
+                supplierItem.supplierContactPersons.map((x: SupplierContactPersonDto) =>
                     this.createSupplierContactPerson(x)
-                  )
+                )
             ) : this.formBuilder.array([this.createSupplierContactPerson(supplierContactPersonItem)]),
             supplierBanks: supplierItem.supplierBanks && supplierItem.supplierBanks.length > 0 ? this.formBuilder.array(
-                supplierItem.supplierBanks.map((x : SupplierBankDto) => 
+                supplierItem.supplierBanks.map((x: SupplierBankDto) =>
                     this.createSupplierBank(x)
-                  )
+                )
             ) : this.formBuilder.array([this.createSupplierBank(supplierBankItem)])
         });
     }
@@ -103,28 +106,28 @@ export class CreateOrEditSupplierModalComponent extends AppComponentBase {
         return (<FormArray>this.supplierForm.get('supplierAddresses'));
     }
 
-    get supplierBanks(): FormArray{
+    get supplierBanks(): FormArray {
         return (<FormArray>this.supplierForm.get('supplierBanks'));
     }
-    
-    get supplierContactPersons(): FormArray{
+
+    get supplierContactPersons(): FormArray {
         return (<FormArray>this.supplierForm.get('supplierContactPersons'));
     }
-    
+
     addSupplierAddress() {
-        let suppplierAddressItem : SupplierAddressDto = new SupplierAddressDto();
+        let suppplierAddressItem: SupplierAddressDto = new SupplierAddressDto();
         let addressForm = this.createSupplierAddress(suppplierAddressItem);
         this.supplierAddresses.push(addressForm);
     }
 
     addSupplierContactPerson() {
-        let supplierContactPersonItem : SupplierContactPersonDto = new SupplierContactPersonDto();
+        let supplierContactPersonItem: SupplierContactPersonDto = new SupplierContactPersonDto();
         let contactPersonForm = this.createSupplierContactPerson(supplierContactPersonItem);
         this.supplierContactPersons.push(contactPersonForm);
     }
 
     addSupplierBank() {
-        let suppplierBankItem : SupplierBankDto = new SupplierBankDto();
+        let suppplierBankItem: SupplierBankDto = new SupplierBankDto();
         let bankForm = this.createSupplierBank(suppplierBankItem);
         this.supplierBanks.push(bankForm);
     }
@@ -137,17 +140,17 @@ export class CreateOrEditSupplierModalComponent extends AppComponentBase {
         });
     }
 
-    deleteSupplierContactPersonItem(indexValue: number){
+    deleteSupplierContactPersonItem(indexValue: number) {
         const supplierContactPersonArray = this.supplierContactPersons;
         supplierContactPersonArray.removeAt(indexValue);
     }
 
-    deleteSupplierBankItem(indexValue: number){
+    deleteSupplierBankItem(indexValue: number) {
         const supplierBankArray = this.supplierBanks;
         supplierBankArray.removeAt(indexValue);
     }
 
-    deleteSupplierAddressItem(indexValue: number){
+    deleteSupplierAddressItem(indexValue: number) {
         const supplierAddressArray = this.supplierAddresses;
         supplierAddressArray.removeAt(indexValue);
     }
@@ -177,11 +180,78 @@ export class CreateOrEditSupplierModalComponent extends AppComponentBase {
     }
 
     async loadDropdownList() {
-        await this.loadLegalEntityList();
         this.loadYearList();
+        this.loadPaymentModeList();
+        this.loadBankPaymentModeList();
+        this.loadDeliveryList();
+        await this.loadLegalEntityList();
     }
 
-    async loadLegalEntityList(){
+    loadPaymentModeList(): DropdownDto[] {
+        this.paymentModeList = [
+            {
+                title: "Advance",
+                value: 1
+            },
+            {
+                title: "Against Performa",
+                value: 2
+            },
+            {
+                title: "Against Delivery",
+                value: 3
+            },
+            {
+                title: "Credit",
+                value: 4
+            },
+        ];
+
+        return this.paymentModeList;
+    }
+
+    loadDeliveryList() : DropdownDto[]{
+        this.deliveryList = [
+            {
+                title : "Supplier",
+                value : 1
+            },
+            {
+                title : "Self",
+                value : 2
+            }
+        ];
+        return this.deliveryList;
+    }
+
+    loadBankPaymentModeList(): DropdownDto[] {
+        this.bankPaymentModeList = [
+            {
+                title: "None",
+                value: 1
+            },
+            {
+                title: "Public Limited",
+                value: 2
+            },
+            {
+                title: "Private Limited",
+                value: 3
+            },
+            {
+                title: "Partnership",
+                value: 4
+            },
+            {
+                title: "Proprietorship",
+                value: 5
+            }
+        ];
+
+        return this.paymentModeList;
+    }
+
+    async loadLegalEntityList() {
         let legalEntityList = await this._legalEntityService.getLegalEntityList().toPromise();
         if (legalEntityList.length > 0) {
             this.legalEntityList = [];
@@ -191,10 +261,10 @@ export class CreateOrEditSupplierModalComponent extends AppComponentBase {
         }
     }
 
-    loadYearList(){
-        for(let i = 1950; i <= 2050; i++){
-            let yearItem  : DropdownDto = new DropdownDto();
-            yearItem.title = <string> <unknown>i;
+    loadYearList() {
+        for (let i = 1950; i <= 2050; i++) {
+            let yearItem: DropdownDto = new DropdownDto();
+            yearItem.title = <string><unknown>i;
             yearItem.value = i;
             this.yearList.push(yearItem);
         }
@@ -206,7 +276,7 @@ export class CreateOrEditSupplierModalComponent extends AppComponentBase {
 
     save(): void {
         this.submitted = true;
-        if(this.supplierForm.valid){
+        if (this.supplierForm.valid) {
             let input = new SupplierInputDto();
             this.saving = true;
             input = this.supplierForm.value;
@@ -217,8 +287,8 @@ export class CreateOrEditSupplierModalComponent extends AppComponentBase {
                         this.saving = false;
                     })
                 )
-                .subscribe((response : string) => {
-                    if(!response){
+                .subscribe((response: string) => {
+                    if (!response) {
                         this.notify.info(this.l('SavedSuccessfully'));
                         this.close();
                         this.modalSave.emit(null);

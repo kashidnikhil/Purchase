@@ -1252,6 +1252,7 @@
 	  <text name="BankName">Bank Name</text>
 	  <text name="BranchName">Branch Name</text>
 	  <text name="ContactPersonName">Contact Person Name</text>
+	  <text name="DeliveryBy">Delivery By</text>
 	  <text name="AccountNumber">Account Number</text>
 	  <text name="MICRCode">MICR Code</text>
 	  <text name="IFSCCode">IFSC Code</text>

@@ -177,9 +177,24 @@
                                         <select placeholder="Select Mode of Payment" class="form-control"
                                             #paymentModeInput formControlName="paymentMode" id="paymentMode"
                                             name="paymentMode">
-                                            <option *ngFor="let legalEntityItem of legalEntityList"
-                                                value="{{ legalEntityItem.id }}">
-                                                {{ legalEntityItem.name }}
+                                            <option *ngFor="let paymentModeItem of paymentModeList"
+                                                value="{{ paymentModeItem.value }}">
+                                                {{ paymentModeItem.title }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>{{"DeliveryBy" | localize}}</label>
+                                        <select placeholder="Select Delivery Type" class="form-control"
+                                            #deliveryByInput formControlName="deliveryBy" id="deliveryBy"
+                                            name="deliveryBy">
+                                            <option *ngFor="let deliveryTypeItem of deliveryList"
+                                                value="{{ deliveryTypeItem.value }}">
+                                                {{ deliveryTypeItem.title }}
                                             </option>
                                         </select>
                                     </div>
@@ -344,9 +359,9 @@
                                                     <select placeholder="Select Payment Mode" class="form-control"
                                                         #paymentModeInput formControlName="paymentMode" id="paymentMode"
                                                         name="paymentMode">
-                                                        <option *ngFor="let legalEntityItem of legalEntityList"
-                                                            value="{{ legalEntityItem.id }}">
-                                                            {{ legalEntityItem.name }}
+                                                        <option *ngFor="let bankPaymentModeItem of bankPaymentModeList"
+                                                            value="{{ bankPaymentModeItem.value }}">
+                                                            {{ bankPaymentModeItem.title }}
                                                         </option>
                                                     </select>
                                                 </div>
