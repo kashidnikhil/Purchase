@@ -2174,6 +2174,259 @@ export class CommonLookupServiceProxy {
 }
 
 @Injectable()
+export class CompanyServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @param searchString (optional) 
+     * @param sorting (optional) 
+     * @param maxResultCount (optional) 
+     * @param skipCount (optional) 
+     * @return Success
+     */
+    getCompanies(searchString: string | undefined, sorting: string | undefined, maxResultCount: number | undefined, skipCount: number | undefined): Observable<PagedResultDtoOfCompanyListDto> {
+        let url_ = this.baseUrl + "/api/services/app/Company/GetCompanies?";
+        if (searchString === null)
+            throw new Error("The parameter 'searchString' cannot be null.");
+        else if (searchString !== undefined)
+            url_ += "SearchString=" + encodeURIComponent("" + searchString) + "&";
+        if (sorting === null)
+            throw new Error("The parameter 'sorting' cannot be null.");
+        else if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetCompanies(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetCompanies(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PagedResultDtoOfCompanyListDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PagedResultDtoOfCompanyListDto>;
+        }));
+    }
+
+    protected processGetCompanies(response: HttpResponseBase): Observable<PagedResultDtoOfCompanyListDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PagedResultDtoOfCompanyListDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PagedResultDtoOfCompanyListDto>(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    insertOrUpdateCompany(body: CompanyInputDto | undefined): Observable<string> {
+        let url_ = this.baseUrl + "/api/services/app/Company/InsertOrUpdateCompany";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processInsertOrUpdateCompany(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processInsertOrUpdateCompany(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<string>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<string>;
+        }));
+    }
+
+    protected processInsertOrUpdateCompany(response: HttpResponseBase): Observable<string> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+    
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<string>(null as any);
+    }
+
+    /**
+     * @param companyId (optional) 
+     * @return Success
+     */
+    deleteCompanyMasterData(companyId: string | undefined): Observable<boolean> {
+        let url_ = this.baseUrl + "/api/services/app/Company/DeleteCompanyMasterData?";
+        if (companyId === null)
+            throw new Error("The parameter 'companyId' cannot be null.");
+        else if (companyId !== undefined)
+            url_ += "companyId=" + encodeURIComponent("" + companyId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDeleteCompanyMasterData(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDeleteCompanyMasterData(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<boolean>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<boolean>;
+        }));
+    }
+
+    protected processDeleteCompanyMasterData(response: HttpResponseBase): Observable<boolean> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+    
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<boolean>(null as any);
+    }
+
+    /**
+     * @param companyId (optional) 
+     * @return Success
+     */
+    getCompanyMasterById(companyId: string | undefined): Observable<CompanyDto> {
+        let url_ = this.baseUrl + "/api/services/app/Company/GetCompanyMasterById?";
+        if (companyId === null)
+            throw new Error("The parameter 'companyId' cannot be null.");
+        else if (companyId !== undefined)
+            url_ += "companyId=" + encodeURIComponent("" + companyId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetCompanyMasterById(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetCompanyMasterById(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<CompanyDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<CompanyDto>;
+        }));
+    }
+
+    protected processGetCompanyMasterById(response: HttpResponseBase): Observable<CompanyDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = CompanyDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<CompanyDto>(null as any);
+    }
+}
+
+@Injectable()
 export class CustomerServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -19819,6 +20072,362 @@ export interface IComboboxItemDto {
     isSelected: boolean;
 }
 
+export class CompanyAddressDto implements ICompanyAddressDto {
+    id!: string;
+    address!: string | undefined;
+    companyId!: string;
+
+    constructor(data?: ICompanyAddressDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.address = _data["address"];
+            this.companyId = _data["companyId"];
+        }
+    }
+
+    static fromJS(data: any): CompanyAddressDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CompanyAddressDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["address"] = this.address;
+        data["companyId"] = this.companyId;
+        return data;
+    }
+}
+
+export interface ICompanyAddressDto {
+    id: string;
+    address: string | undefined;
+    companyId: string;
+}
+
+export class CompanyAddressInputDto implements ICompanyAddressInputDto {
+    id!: string | undefined;
+    address!: string | undefined;
+    companyId!: string;
+
+    constructor(data?: ICompanyAddressInputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.address = _data["address"];
+            this.companyId = _data["companyId"];
+        }
+    }
+
+    static fromJS(data: any): CompanyAddressInputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CompanyAddressInputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["address"] = this.address;
+        data["companyId"] = this.companyId;
+        return data;
+    }
+}
+
+export interface ICompanyAddressInputDto {
+    id: string | undefined;
+    address: string | undefined;
+    companyId: string;
+}
+
+export class CompanyContactPersonDto implements ICompanyContactPersonDto {
+    id!: string;
+    contactPersonName!: string | undefined;
+    designation!: string | undefined;
+    emailId!: string | undefined;
+    mobileNumber!: string | undefined;
+    companyId!: string;
+
+    constructor(data?: ICompanyContactPersonDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.contactPersonName = _data["contactPersonName"];
+            this.designation = _data["designation"];
+            this.emailId = _data["emailId"];
+            this.mobileNumber = _data["mobileNumber"];
+            this.companyId = _data["companyId"];
+        }
+    }
+
+    static fromJS(data: any): CompanyContactPersonDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CompanyContactPersonDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["contactPersonName"] = this.contactPersonName;
+        data["designation"] = this.designation;
+        data["emailId"] = this.emailId;
+        data["mobileNumber"] = this.mobileNumber;
+        data["companyId"] = this.companyId;
+        return data;
+    }
+}
+
+export interface ICompanyContactPersonDto {
+    id: string;
+    contactPersonName: string | undefined;
+    designation: string | undefined;
+    emailId: string | undefined;
+    mobileNumber: string | undefined;
+    companyId: string;
+}
+
+export class CompanyContactPersonInputDto implements ICompanyContactPersonInputDto {
+    contactPersonName!: string | undefined;
+    designation!: string | undefined;
+    emailId!: string | undefined;
+    mobileNumber!: string | undefined;
+    companyId!: string;
+
+    constructor(data?: ICompanyContactPersonInputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.contactPersonName = _data["contactPersonName"];
+            this.designation = _data["designation"];
+            this.emailId = _data["emailId"];
+            this.mobileNumber = _data["mobileNumber"];
+            this.companyId = _data["companyId"];
+        }
+    }
+
+    static fromJS(data: any): CompanyContactPersonInputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CompanyContactPersonInputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["contactPersonName"] = this.contactPersonName;
+        data["designation"] = this.designation;
+        data["emailId"] = this.emailId;
+        data["mobileNumber"] = this.mobileNumber;
+        data["companyId"] = this.companyId;
+        return data;
+    }
+}
+
+export interface ICompanyContactPersonInputDto {
+    contactPersonName: string | undefined;
+    designation: string | undefined;
+    emailId: string | undefined;
+    mobileNumber: string | undefined;
+    companyId: string;
+}
+
+export class CompanyDto implements ICompanyDto {
+    id!: string;
+    name!: string | undefined;
+    companyContactPersons!: CompanyContactPersonDto[] | undefined;
+    companyAddresses!: CompanyAddressDto[] | undefined;
+
+    constructor(data?: ICompanyDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.name = _data["name"];
+            if (Array.isArray(_data["companyContactPersons"])) {
+                this.companyContactPersons = [] as any;
+                for (let item of _data["companyContactPersons"])
+                    this.companyContactPersons!.push(CompanyContactPersonDto.fromJS(item));
+            }
+            if (Array.isArray(_data["companyAddresses"])) {
+                this.companyAddresses = [] as any;
+                for (let item of _data["companyAddresses"])
+                    this.companyAddresses!.push(CompanyAddressDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): CompanyDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CompanyDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["name"] = this.name;
+        if (Array.isArray(this.companyContactPersons)) {
+            data["companyContactPersons"] = [];
+            for (let item of this.companyContactPersons)
+                data["companyContactPersons"].push(item.toJSON());
+        }
+        if (Array.isArray(this.companyAddresses)) {
+            data["companyAddresses"] = [];
+            for (let item of this.companyAddresses)
+                data["companyAddresses"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface ICompanyDto {
+    id: string;
+    name: string | undefined;
+    companyContactPersons: CompanyContactPersonDto[] | undefined;
+    companyAddresses: CompanyAddressDto[] | undefined;
+}
+
+export class CompanyInputDto implements ICompanyInputDto {
+    name!: string | undefined;
+    companyContactPersons!: CompanyContactPersonInputDto[] | undefined;
+    companyAddresses!: CompanyAddressInputDto[] | undefined;
+
+    constructor(data?: ICompanyInputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            if (Array.isArray(_data["companyContactPersons"])) {
+                this.companyContactPersons = [] as any;
+                for (let item of _data["companyContactPersons"])
+                    this.companyContactPersons!.push(CompanyContactPersonInputDto.fromJS(item));
+            }
+            if (Array.isArray(_data["companyAddresses"])) {
+                this.companyAddresses = [] as any;
+                for (let item of _data["companyAddresses"])
+                    this.companyAddresses!.push(CompanyAddressInputDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): CompanyInputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CompanyInputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        if (Array.isArray(this.companyContactPersons)) {
+            data["companyContactPersons"] = [];
+            for (let item of this.companyContactPersons)
+                data["companyContactPersons"].push(item.toJSON());
+        }
+        if (Array.isArray(this.companyAddresses)) {
+            data["companyAddresses"] = [];
+            for (let item of this.companyAddresses)
+                data["companyAddresses"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface ICompanyInputDto {
+    name: string | undefined;
+    companyContactPersons: CompanyContactPersonInputDto[] | undefined;
+    companyAddresses: CompanyAddressInputDto[] | undefined;
+}
+
+export class CompanyListDto implements ICompanyListDto {
+    name!: string | undefined;
+
+    constructor(data?: ICompanyListDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+        }
+    }
+
+    static fromJS(data: any): CompanyListDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CompanyListDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        return data;
+    }
+}
+
+export interface ICompanyListDto {
+    name: string | undefined;
+}
+
 export class CreateCustomerInput implements ICreateCustomerInput {
     name!: string;
     address!: string;
@@ -28013,6 +28622,54 @@ export class PagedResultDtoOfAuditLogListDto implements IPagedResultDtoOfAuditLo
 export interface IPagedResultDtoOfAuditLogListDto {
     totalCount: number;
     items: AuditLogListDto[] | undefined;
+}
+
+export class PagedResultDtoOfCompanyListDto implements IPagedResultDtoOfCompanyListDto {
+    totalCount!: number;
+    items!: CompanyListDto[] | undefined;
+
+    constructor(data?: IPagedResultDtoOfCompanyListDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.totalCount = _data["totalCount"];
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(CompanyListDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfCompanyListDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfCompanyListDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IPagedResultDtoOfCompanyListDto {
+    totalCount: number;
+    items: CompanyListDto[] | undefined;
 }
 
 export class PagedResultDtoOfDeliveryTermDto implements IPagedResultDtoOfDeliveryTermDto {

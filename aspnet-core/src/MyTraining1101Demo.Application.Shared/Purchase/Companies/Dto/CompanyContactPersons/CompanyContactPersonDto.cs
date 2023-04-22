@@ -6,7 +6,7 @@ namespace MyTraining1101Demo.Purchase.Companies.Dto.CompanyContactPersons
 {
     public class CompanyContactPersonDto
     {
-        public Guid? Id { get; set; }
+        public Guid Id { get; set; }
         public string ContactPersonName { get; set; }
 
         public string Designation { get; set; }
