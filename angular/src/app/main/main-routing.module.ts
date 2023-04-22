@@ -61,7 +61,12 @@ import { RouterModule } from '@angular/router';
                     {
                         path: 'models',
                         loadChildren: () => import('./purchase/models/models.module').then(m => m.ModelsModule)
+                    },,
+                    {
+                        path: 'companies',
+                        loadChildren: () => import('./purchase/companies/companies.module').then(m => m.CompaniesModule)
                     },
+                       
                                       
                     { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
                     { path: '**', redirectTo: 'dashboard' },

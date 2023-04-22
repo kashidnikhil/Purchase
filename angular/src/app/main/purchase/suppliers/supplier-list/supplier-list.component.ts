@@ -2,11 +2,12 @@ import { Component, Injector, ViewChild, ViewEncapsulation, AfterViewInit } from
 import { ActivatedRoute } from '@angular/router';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { AppComponentBase } from '@shared/common/app-component-base';
-import { ResponseDto, SupplierCategoryDto, SupplierCategoryServiceProxy, SupplierDto, SupplierServiceProxy } from '@shared/service-proxies/service-proxies';
+import { SupplierDto, SupplierServiceProxy } from '@shared/service-proxies/service-proxies';
 import { LazyLoadEvent } from 'primeng/api';
 import { Paginator } from 'primeng/paginator';
 import { Table } from 'primeng/table';
 import { finalize } from 'rxjs/operators';
+import { CreateOrEditSupplierModalComponent } from '../create-edit-supplier/create-or-edit-supplier-modal.component';
 
 @Component({
     templateUrl: './supplier-list.component.html',
@@ -15,7 +16,7 @@ import { finalize } from 'rxjs/operators';
     animations: [appModuleAnimation()],
 })
 export class SupplierListComponent extends AppComponentBase implements AfterViewInit {
-    @ViewChild('createOrEditSupplierModal', { static: true }) createOrEditSupplierModal: any; //CreateOrEditSupplierCategoryModalComponent;
+    @ViewChild('createOrEditSupplierModal', { static: true }) createOrEditSupplierModal: CreateOrEditSupplierModalComponent;
     @ViewChild('dataTable', { static: true }) dataTable: Table;
     @ViewChild('paginator', { static: true }) paginator: Paginator;
     
