@@ -13,6 +13,9 @@ using MyTraining1101Demo.MultiTenancy.Accounting;
 using MyTraining1101Demo.MultiTenancy.Payments;
 using MyTraining1101Demo.PhoneBook;
 using MyTraining1101Demo.Purchase.AcceptanceCriterias;
+using MyTraining1101Demo.Purchase.Companies.CompanyAddresses;
+using MyTraining1101Demo.Purchase.Companies.CompanyContactPersons;
+using MyTraining1101Demo.Purchase.Companies.CompanyMaster;
 using MyTraining1101Demo.Purchase.DeliveryTerms;
 using MyTraining1101Demo.Purchase.LegalEntities;
 using MyTraining1101Demo.Purchase.MaterialGrades;
@@ -82,6 +85,12 @@ namespace MyTraining1101Demo.EntityFrameworkCore
         public virtual DbSet<SupplierBank> SupplierBanks { get; set; }
 
         public virtual DbSet<SupplierAddress> SupplierAddresses { get; set; }
+
+        public virtual DbSet<Company> Companies { get; set; }
+
+        public virtual DbSet<CompanyAddress> CompanyAddresses { get; set; }
+
+        public virtual DbSet<CompanyContactPerson> CompanyContactPersons { get; set; }
 
 
         public MyTraining1101DemoDbContext(DbContextOptions<MyTraining1101DemoDbContext> options)
