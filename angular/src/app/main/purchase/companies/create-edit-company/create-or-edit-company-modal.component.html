@@ -3,6 +3,21 @@
     [config]="{ backdrop: 'static', keyboard: !saving }">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
+            <form *ngIf="active && companyForm" [formGroup]="companyForm" novalidate (ngSubmit)="save()">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="companyForm.get('id').value">{{ 'EditCompany' | localize }} : {{
+                            companyForm.get('name').value }}</span>
+                        <span *ngIf="!companyForm.get('name').value">{{ 'CreateNewCompany' | localize }}</span>
+                    </h4>
+                    <button type="button" class="btn-close" (click)="close()" [attr.aria-label]="l('Close')"
+                        [disabled]="saving">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    
+                </div>
+            </form>
         </div>
     </div>
 </div>

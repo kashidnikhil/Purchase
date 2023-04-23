@@ -62,7 +62,7 @@ export class CompanyListComponent extends AppComponentBase implements AfterViewI
         this.paginator.changePage(this.paginator.getPage());
     }
 
-    createSupplier(): void {
+    createCompany(): void {
         this.createOrEditCompanyModal.show();
     }
 

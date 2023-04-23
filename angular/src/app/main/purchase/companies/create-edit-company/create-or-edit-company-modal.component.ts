@@ -13,7 +13,7 @@ import { ModalDirective } from "ngx-bootstrap/modal";
 export class CreateOrEditCompanyModalComponent extends AppComponentBase {
     @ViewChild('createOrEditCompanyModal', { static: true }) modal: ModalDirective;
     
-    supplierForm!: FormGroup;
+    companyForm!: FormGroup;
     active: boolean = false;
     submitted: boolean = false;
     saving: boolean = false;
@@ -30,21 +30,35 @@ export class CreateOrEditCompanyModalComponent extends AppComponentBase {
         // await this.loadDropdownList();
         if (!companyId) {
             let companyItem = new CompanyDto();
-            // this.initialiseSupplierForm(companyItem);
+            this.initialiseCompanyForm(companyItem);
             this.active = true;
             this.modal.show();
         }
         else {
             this._companyService.getCompanyMasterById(companyId).subscribe((response: CompanyDto) => {
-                let supplierItem = response;
-                // this.initialiseSupplierForm(supplierItem);
+                let companyItem = response;
+                // this.initialiseSupplierForm(companyItem);
                 this.active = true;
                 this.modal.show();
             });
         }
     }
 
+    initialiseCompanyForm(companyItem : CompanyDto){
+
+    }
+
     onShown(): void {
         // document.getElementById('name').focus();
+    }
+
+    save(): void {
+
+    }
+
+    close(): void {
+        this.submitted = false;
+        this.active = false;
+        this.modal.hide();
     }
 }

@@ -1,14 +1,14 @@
 <div [@routerTransition]>
     <div class="content d-flex flex-column flex-column-fluid">
-        <sub-header [title]="'Suppliers' | localize" [description]="'SuppliersHeaderInfo' | localize">
+        <sub-header [title]="'Companies' | localize" [description]="'CompaniesHeaderInfo' | localize">
             <div role="actions">
                 <button
-                    (click)="createSupplier()"
+                    (click)="createCompany()"
                     class="btn btn-primary"
                 >
                 <!-- *ngIf="'Pages.Administration.Users.Create' | permission" -->
                     <i class="fa fa-plus"></i>
-                    {{ 'CreateNewSupplier' | localize }}
+                    {{ 'CreateNewCompany' | localize }}
                 </button>
             </div>
         </sub-header>
