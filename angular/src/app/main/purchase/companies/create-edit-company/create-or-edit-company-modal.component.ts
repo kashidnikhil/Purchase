@@ -1,7 +1,7 @@
 import { Component, Injector, ViewChild, ViewEncapsulation } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { FormArray, FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { AppComponentBase } from "@shared/common/app-component-base";
-import { CompanyDto, CompanyServiceProxy } from "@shared/service-proxies/service-proxies";
+import { CompanyAddressDto, CompanyContactPersonDto, CompanyDto, CompanyServiceProxy } from "@shared/service-proxies/service-proxies";
 import { ModalDirective } from "ngx-bootstrap/modal";
 
 @Component({
@@ -37,7 +37,7 @@ export class CreateOrEditCompanyModalComponent extends AppComponentBase {
         else {
             this._companyService.getCompanyMasterById(companyId).subscribe((response: CompanyDto) => {
                 let companyItem = response;
-                // this.initialiseSupplierForm(companyItem);
+                this.initialiseCompanyForm(companyItem);
                 this.active = true;
                 this.modal.show();
             });
@@ -45,11 +45,63 @@ export class CreateOrEditCompanyModalComponent extends AppComponentBase {
     }
 
     initialiseCompanyForm(companyItem : CompanyDto){
+        let companyAddressItem : CompanyAddressDto = new CompanyAddressDto();
+        let companyContactPersonItem : CompanyContactPersonDto = new CompanyContactPersonDto();
+        this.companyForm = this.formBuilder.group({
+            id: new FormControl(companyItem.id, []),
+            name: new FormControl(companyItem.name, []),
+            companyAddresses: companyItem.companyAddresses && companyItem.companyAddresses.length > 0 ? this.formBuilder.array(
+                companyItem.companyAddresses.map((x: CompanyAddressDto) =>
+                    this.createCompanyAddress(x)
+                )
+            ) : this.formBuilder.array([this.createCompanyAddress(companyAddressItem)]),
+            companyContactPersons: companyItem.companyContactPersons && companyItem.companyContactPersons.length > 0 ? this.formBuilder.array(
+                companyItem.companyContactPersons.map((x: CompanyContactPersonDto) =>
+                    this.createCompanyContactPerson(x)
+                )
+            ) : this.formBuilder.array([this.createCompanyContactPerson(companyContactPersonItem)])
+        });
+    }
 
+    createCompanyAddress(companyAddress: CompanyAddressDto): FormGroup {
+        return this.formBuilder.group({
+            id: new FormControl(companyAddress.id, []),
+            address: new FormControl(companyAddress.address, [])
+        });
+    }
+
+    createCompanyContactPerson(companyContactPerson: CompanyContactPersonDto): FormGroup {
+        return this.formBuilder.group({
+            id: new FormControl(companyContactPerson.id, []),
+            contactPersonName: new FormControl(companyContactPerson.contactPersonName, []),
+            designation: new FormControl(companyContactPerson.designation, []),
+            emailId: new FormControl(companyContactPerson.emailId, []),
+            mobileNumber: new FormControl(companyContactPerson.mobileNumber, [])
+        });
+    }
+
+    get companyAddresses(): FormArray {
+        return (<FormArray>this.companyForm.get('companyAddresses'));
+    }
+
+    get companyContactPersons(): FormArray {
+        return (<FormArray>this.companyForm.get('companyContactPersons'));
     }
 
     onShown(): void {
         // document.getElementById('name').focus();
+    }
+
+    addCompanyAddress() {
+        let companyAddressItem: CompanyAddressDto = new CompanyAddressDto();
+        let addressForm = this.createCompanyAddress(companyAddressItem);
+        this.companyAddresses.push(addressForm);
+    }
+
+    addCompanyContactPerson() {
+        let companyContactPersonItem: CompanyContactPersonDto = new CompanyContactPersonDto();
+        let contactPersonForm = this.createCompanyContactPerson(companyContactPersonItem);
+        this.companyContactPersons.push(contactPersonForm);
     }
 
     save(): void {

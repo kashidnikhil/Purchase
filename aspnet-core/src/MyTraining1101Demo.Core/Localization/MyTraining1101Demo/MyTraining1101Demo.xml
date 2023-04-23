@@ -1269,6 +1269,10 @@
 	  <text name="SupplierSuccessfullyRestored">Supplier restored successfully</text>
 	  <text name="ExistingSupplierErrorMessage">Supplier {0} cannot be added. Supplier already exists</text>
 	  <text name="NewSupplierErrorMessage">No new instance of supplier with name {0} cannot be added.Supplier with name {0} already exists. Do you want to restore the supplier?</text>
-  
+
+	  <text name="Companies">Companies</text>
+	  <text name="CompaniesHeaderInfo">Manage companies.</text>
+	  <text name="CreateNewCompany">Create New Company</text>
+	  <text name="EditCompany">Edit Company</text>
   </texts>
 </localizationDictionary>
