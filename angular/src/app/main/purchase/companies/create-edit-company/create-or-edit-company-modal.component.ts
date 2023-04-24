@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Injector, Output, ViewChild, ViewEncapsulation } from "@angular/core";
-import { FormArray, FormBuilder, FormControl, FormGroup } from "@angular/forms";
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { AppComponentBase } from "@shared/common/app-component-base";
 import { CompanyAddressDto, CompanyContactPersonDto, CompanyDto, CompanyInputDto, CompanyServiceProxy } from "@shared/service-proxies/service-proxies";
 import { ModalDirective } from "ngx-bootstrap/modal";
@@ -51,7 +51,7 @@ export class CreateOrEditCompanyModalComponent extends AppComponentBase {
         let companyContactPersonItem : CompanyContactPersonDto = new CompanyContactPersonDto();
         this.companyForm = this.formBuilder.group({
             id: new FormControl(companyItem.id, []),
-            name: new FormControl(companyItem.name, []),
+            name: new FormControl(companyItem.name, [Validators.required]),
             companyAddresses: companyItem.companyAddresses && companyItem.companyAddresses.length > 0 ? this.formBuilder.array(
                 companyItem.companyAddresses.map((x: CompanyAddressDto) =>
                     this.createCompanyAddress(x)

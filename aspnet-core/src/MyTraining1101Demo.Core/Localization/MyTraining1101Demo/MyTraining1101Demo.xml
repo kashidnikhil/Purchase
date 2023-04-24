@@ -1274,5 +1274,6 @@
 	  <text name="CompaniesHeaderInfo">Manage companies.</text>
 	  <text name="CreateNewCompany">Create New Company</text>
 	  <text name="EditCompany">Edit Company</text>
+	  <text name="CompanyName">Company Name</text>
   </texts>
 </localizationDictionary>
