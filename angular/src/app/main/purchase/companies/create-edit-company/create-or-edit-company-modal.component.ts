@@ -1,8 +1,9 @@
-import { Component, Injector, ViewChild, ViewEncapsulation } from "@angular/core";
+import { Component, EventEmitter, Injector, Output, ViewChild, ViewEncapsulation } from "@angular/core";
 import { FormArray, FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { AppComponentBase } from "@shared/common/app-component-base";
-import { CompanyAddressDto, CompanyContactPersonDto, CompanyDto, CompanyServiceProxy } from "@shared/service-proxies/service-proxies";
+import { CompanyAddressDto, CompanyContactPersonDto, CompanyDto, CompanyInputDto, CompanyServiceProxy } from "@shared/service-proxies/service-proxies";
 import { ModalDirective } from "ngx-bootstrap/modal";
+import { finalize } from "rxjs/operators";
 
 @Component({
     selector: 'create-edit-company-modal',
@@ -12,6 +13,7 @@ import { ModalDirective } from "ngx-bootstrap/modal";
 })
 export class CreateOrEditCompanyModalComponent extends AppComponentBase {
     @ViewChild('createOrEditCompanyModal', { static: true }) modal: ModalDirective;
+    @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
     
     companyForm!: FormGroup;
     active: boolean = false;
@@ -105,7 +107,24 @@ export class CreateOrEditCompanyModalComponent extends AppComponentBase {
     }
 
     save(): void {
+        this.submitted = true;
+        if(this.companyForm.valid){
+            let input = new CompanyInputDto();
+            input = this.companyForm.value;
+            this.saving = true;
 
+            this._companyService.insertOrUpdateCompany(input)
+            .pipe(
+                finalize(() => {
+                    this.saving = false;
+                })
+            )
+            .subscribe(() => {
+                this.notify.info(this.l('SavedSuccessfully'));
+                this.close();
+                this.modalSave.emit(null);
+            });
+        }
     }
 
     close(): void {
