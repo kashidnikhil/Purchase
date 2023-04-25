@@ -20393,6 +20393,7 @@ export interface ICompanyInputDto {
 }
 
 export class CompanyListDto implements ICompanyListDto {
+    id!: string;
     name!: string | undefined;
 
     constructor(data?: ICompanyListDto) {
@@ -20406,6 +20407,7 @@ export class CompanyListDto implements ICompanyListDto {
 
     init(_data?: any) {
         if (_data) {
+            this.id = _data["id"];
             this.name = _data["name"];
         }
     }
@@ -20419,12 +20421,14 @@ export class CompanyListDto implements ICompanyListDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
         data["name"] = this.name;
         return data;
     }
 }
 
 export interface ICompanyListDto {
+    id: string;
     name: string | undefined;
 }
 

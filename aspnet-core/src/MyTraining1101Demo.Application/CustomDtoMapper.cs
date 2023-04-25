@@ -77,6 +77,7 @@ using MyTraining1101Demo.Purchase.Companies.Dto.CompanyMaster;
 using MyTraining1101Demo.Purchase.Companies.CompanyContactPersons;
 using MyTraining1101Demo.Purchase.Companies.CompanyAddresses;
 using MyTraining1101Demo.Purchase.Companies.Dto.CompanyAddresses;
+using MyTraining1101Demo.Purchase.Companies.Dto.CompanyContactPersons;
 
 namespace MyTraining1101Demo
 {
@@ -270,9 +271,13 @@ namespace MyTraining1101Demo
 
             configuration.CreateMap<Company, CompanyInputDto>().ReverseMap();
             configuration.CreateMap<Company, CompanyDto>().ReverseMap();
+            configuration.CreateMap<Company, CompanyListDto>()
+                .ForMember(dto => dto.Id, options => options.MapFrom(x => x.Id))
+                .ForMember(dto => dto.Name, options => options.MapFrom(x => x.Name))
+                .ReverseMap();
 
-            configuration.CreateMap<CompanyContactPerson, CompanyInputDto>().ReverseMap();
-            configuration.CreateMap<CompanyContactPerson, CompanyDto>().ReverseMap();
+            configuration.CreateMap<CompanyContactPerson, CompanyContactPersonDto>().ReverseMap();
+            configuration.CreateMap<CompanyContactPerson, CompanyContactPersonInputDto>().ReverseMap();
 
             configuration.CreateMap<CompanyAddress, CompanyAddressDto>().ReverseMap();
             configuration.CreateMap<CompanyAddress, CompanyAddressInputDto>().ReverseMap();

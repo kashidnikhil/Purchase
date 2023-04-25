@@ -119,9 +119,8 @@
                                                         <a
                                                             href="javascript:;"
                                                             class="dropdown-item"
-                                                            
+                                                            (click)="createOrEditCompanyModal.show(record.id)"
                                                         >
-                                                        <!-- (click)="createOrEditCompanyModal.show(record.id)" -->
                                                             {{ 'Edit' | localize }}
                                                         </a>
                                                     </li>
