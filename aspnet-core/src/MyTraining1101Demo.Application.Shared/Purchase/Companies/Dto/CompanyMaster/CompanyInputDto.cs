@@ -10,6 +10,8 @@ namespace MyTraining1101Demo.Purchase.Companies.Dto.CompanyMaster
     {
         public string Name { get; set; }
 
+        public string GSTNumber { get; set; }
+
         public List<CompanyContactPersonInputDto> CompanyContactPersons { get; set; }
 
         public List<CompanyAddressInputDto> CompanyAddresses { get; set; }    

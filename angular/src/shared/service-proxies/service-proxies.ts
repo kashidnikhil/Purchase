@@ -20271,6 +20271,7 @@ export interface ICompanyContactPersonInputDto {
 export class CompanyDto implements ICompanyDto {
     id!: string;
     name!: string | undefined;
+    gstNumber!: string | undefined;
     companyContactPersons!: CompanyContactPersonDto[] | undefined;
     companyAddresses!: CompanyAddressDto[] | undefined;
 
@@ -20287,6 +20288,7 @@ export class CompanyDto implements ICompanyDto {
         if (_data) {
             this.id = _data["id"];
             this.name = _data["name"];
+            this.gstNumber = _data["gstNumber"];
             if (Array.isArray(_data["companyContactPersons"])) {
                 this.companyContactPersons = [] as any;
                 for (let item of _data["companyContactPersons"])
@@ -20311,6 +20313,7 @@ export class CompanyDto implements ICompanyDto {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
         data["name"] = this.name;
+        data["gstNumber"] = this.gstNumber;
         if (Array.isArray(this.companyContactPersons)) {
             data["companyContactPersons"] = [];
             for (let item of this.companyContactPersons)
@@ -20328,12 +20331,14 @@ export class CompanyDto implements ICompanyDto {
 export interface ICompanyDto {
     id: string;
     name: string | undefined;
+    gstNumber: string | undefined;
     companyContactPersons: CompanyContactPersonDto[] | undefined;
     companyAddresses: CompanyAddressDto[] | undefined;
 }
 
 export class CompanyInputDto implements ICompanyInputDto {
     name!: string | undefined;
+    gstNumber!: string | undefined;
     companyContactPersons!: CompanyContactPersonInputDto[] | undefined;
     companyAddresses!: CompanyAddressInputDto[] | undefined;
 
@@ -20349,6 +20354,7 @@ export class CompanyInputDto implements ICompanyInputDto {
     init(_data?: any) {
         if (_data) {
             this.name = _data["name"];
+            this.gstNumber = _data["gstNumber"];
             if (Array.isArray(_data["companyContactPersons"])) {
                 this.companyContactPersons = [] as any;
                 for (let item of _data["companyContactPersons"])
@@ -20372,6 +20378,7 @@ export class CompanyInputDto implements ICompanyInputDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["name"] = this.name;
+        data["gstNumber"] = this.gstNumber;
         if (Array.isArray(this.companyContactPersons)) {
             data["companyContactPersons"] = [];
             for (let item of this.companyContactPersons)
@@ -20388,6 +20395,7 @@ export class CompanyInputDto implements ICompanyInputDto {
 
 export interface ICompanyInputDto {
     name: string | undefined;
+    gstNumber: string | undefined;
     companyContactPersons: CompanyContactPersonInputDto[] | undefined;
     companyAddresses: CompanyAddressInputDto[] | undefined;
 }

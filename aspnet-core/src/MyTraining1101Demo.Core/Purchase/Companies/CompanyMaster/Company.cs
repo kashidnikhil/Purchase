@@ -8,5 +8,7 @@
     public class Company : FullAuditedEntity<Guid>
     {
         public string Name { get; set; }
+
+        public string GSTNumber { get; set; }
     }
 }

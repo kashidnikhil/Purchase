@@ -10,6 +10,8 @@ namespace MyTraining1101Demo.Purchase.Companies.Dto.CompanyMaster
         public Guid Id { get; set; }
         public string Name { get; set; }
 
+        public string GSTNumber { get; set; }
+
         public IList<CompanyContactPersonDto> CompanyContactPersons { get; set; }
 
         public IList<CompanyAddressDto> CompanyAddresses { get; set; }
