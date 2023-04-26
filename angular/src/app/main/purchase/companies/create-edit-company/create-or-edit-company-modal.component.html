@@ -93,6 +93,13 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-6 row mb-4">
+                        <div class="form-group">
+                            <label>{{"GSTNumber" | localize}}</label>
+                            <input #gstNumberInput id="gstNumber" class="form-control" type="text" name="gstNumber"
+                                formControlName="gstNumber">
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button [disabled]="saving" type="button" class="btn btn-light-primary font-weight-bold"

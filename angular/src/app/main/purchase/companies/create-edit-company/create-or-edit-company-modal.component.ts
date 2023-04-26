@@ -52,6 +52,7 @@ export class CreateOrEditCompanyModalComponent extends AppComponentBase {
         this.companyForm = this.formBuilder.group({
             id: new FormControl(companyItem.id, []),
             name: new FormControl(companyItem.name, [Validators.required]),
+            gstNumber : new FormControl(companyItem.gstNumber, []),
             companyAddresses: companyItem.companyAddresses && companyItem.companyAddresses.length > 0 ? this.formBuilder.array(
                 companyItem.companyAddresses.map((x: CompanyAddressDto) =>
                     this.createCompanyAddress(x)
