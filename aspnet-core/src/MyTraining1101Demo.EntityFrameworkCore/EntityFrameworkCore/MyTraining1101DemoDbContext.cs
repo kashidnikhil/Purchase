@@ -22,6 +22,7 @@ using MyTraining1101Demo.Purchase.MaterialGrades;
 using MyTraining1101Demo.Purchase.Models;
 using MyTraining1101Demo.Purchase.POGeneralTerms;
 using MyTraining1101Demo.Purchase.SupplierCategories;
+using MyTraining1101Demo.Purchase.Suppliers.MappedSupplierCategories;
 using MyTraining1101Demo.Purchase.Suppliers.SupplierAddresses;
 using MyTraining1101Demo.Purchase.Suppliers.SupplierBanks;
 using MyTraining1101Demo.Purchase.Suppliers.SupplierContactPersons;
@@ -92,7 +93,8 @@ namespace MyTraining1101Demo.EntityFrameworkCore
 
         public virtual DbSet<CompanyContactPerson> CompanyContactPersons { get; set; }
 
-
+        public virtual DbSet<MappedSupplierCategory> MappedSupplierCategories { get; set; }
+        
         public MyTraining1101DemoDbContext(DbContextOptions<MyTraining1101DemoDbContext> options)
             : base(options)
         {
