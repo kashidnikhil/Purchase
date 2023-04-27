@@ -2,6 +2,7 @@
 {
     using Abp.Application.Services.Dto;
     using MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierMaster;
+    using MyTraining1101Demo.Purchase.Suppliers.MappedSupplierCategories;
     using MyTraining1101Demo.Purchase.Suppliers.SupplierAddresses;
     using MyTraining1101Demo.Purchase.Suppliers.SupplierBanks;
     using MyTraining1101Demo.Purchase.Suppliers.SupplierContactPersons;
@@ -15,18 +16,20 @@
         private readonly ISupplierBankManager _supplierBankManager;
         private readonly ISupplierContactPersonManager _supplierContactPersonManager;
         private readonly ISupplierAddressManager _supplierAddressManager;
-
+        private readonly IMappedSupplierCategoryManager _supplierCategoryManager;
         public SupplierAppService(
             ISupplierManager supplierManager,
             ISupplierBankManager supplierBankManager,
             ISupplierContactPersonManager supplierContactPersonManager,
-            ISupplierAddressManager supplierAddressManager
+            ISupplierAddressManager supplierAddressManager,
+            IMappedSupplierCategoryManager supplierCategoryManager
          )
         {
             _supplierManager = supplierManager;
             _supplierAddressManager = supplierAddressManager;
             _supplierContactPersonManager = supplierContactPersonManager;
             _supplierBankManager = supplierBankManager;
+            _supplierCategoryManager = supplierCategoryManager;
         }
 
         public async Task<PagedResultDto<SupplierListDto>> GetSuppliers(SupplierMasterSearchDto input)
@@ -78,6 +81,16 @@
                         await this._supplierBankManager.BulkInsertOrUpdateSupplierBanks(input.SupplierBanks);
                     }
 
+                    if (input.SupplierCategories != null && input.SupplierCategories.Count > 0)
+                    {
+                        input.SupplierCategories.ForEach(supplierCategoryItem =>
+                        {
+                            supplierCategoryItem.SupplierId = insertedOrUpdatedSupplierId;
+                        });
+
+                        await this._supplierCategoryManager.BulkInsertOrUpdateMappedSupplierCategories(input.SupplierCategories);
+                    }
+
                 }
                 return insertedOrUpdatedSupplierId;
             }
@@ -93,6 +106,8 @@
             try
             {
                 var isSupplierMasterDeleted = await this._supplierManager.DeleteSupplierMasterFromDB(supplierId);
+
+                var isSupplierCategoryDeleted = await this._supplierCategoryManager.BulkDeleteSupplierCategories(supplierId);
 
                 var isSupplierBanksDelete = await this._supplierBankManager.BulkDeleteSupplierBanks(supplierId);
 
