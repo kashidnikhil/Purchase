@@ -27590,8 +27590,10 @@ export interface ILocalizableComboboxItemSourceDto {
 
 export class MappedSupplierCategoryDto implements IMappedSupplierCategoryDto {
     id!: string;
+    supplierCategoryId!: string;
+    name!: string | undefined;
+    description!: string | undefined;
     supplierId!: string;
-    companyId!: string;
 
     constructor(data?: IMappedSupplierCategoryDto) {
         if (data) {
@@ -27605,8 +27607,10 @@ export class MappedSupplierCategoryDto implements IMappedSupplierCategoryDto {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
+            this.supplierCategoryId = _data["supplierCategoryId"];
+            this.name = _data["name"];
+            this.description = _data["description"];
             this.supplierId = _data["supplierId"];
-            this.companyId = _data["companyId"];
         }
     }
 
@@ -27620,22 +27624,26 @@ export class MappedSupplierCategoryDto implements IMappedSupplierCategoryDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
+        data["supplierCategoryId"] = this.supplierCategoryId;
+        data["name"] = this.name;
+        data["description"] = this.description;
         data["supplierId"] = this.supplierId;
-        data["companyId"] = this.companyId;
         return data;
     }
 }
 
 export interface IMappedSupplierCategoryDto {
     id: string;
+    supplierCategoryId: string;
+    name: string | undefined;
+    description: string | undefined;
     supplierId: string;
-    companyId: string;
 }
 
 export class MappedSupplierCategoryInputDto implements IMappedSupplierCategoryInputDto {
     id!: string | undefined;
+    supplierCategoryId!: string;
     supplierId!: string;
-    companyId!: string;
 
     constructor(data?: IMappedSupplierCategoryInputDto) {
         if (data) {
@@ -27649,8 +27657,8 @@ export class MappedSupplierCategoryInputDto implements IMappedSupplierCategoryIn
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
+            this.supplierCategoryId = _data["supplierCategoryId"];
             this.supplierId = _data["supplierId"];
-            this.companyId = _data["companyId"];
         }
     }
 
@@ -27664,16 +27672,16 @@ export class MappedSupplierCategoryInputDto implements IMappedSupplierCategoryIn
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
+        data["supplierCategoryId"] = this.supplierCategoryId;
         data["supplierId"] = this.supplierId;
-        data["companyId"] = this.companyId;
         return data;
     }
 }
 
 export interface IMappedSupplierCategoryInputDto {
     id: string | undefined;
+    supplierCategoryId: string;
     supplierId: string;
-    companyId: string;
 }
 
 export class MarkAllUnreadMessagesOfUserAsReadInput implements IMarkAllUnreadMessagesOfUserAsReadInput {
@@ -32294,6 +32302,7 @@ export class SupplierDto implements ISupplierDto {
     supplierAddresses!: SupplierAddressDto[] | undefined;
     supplierBanks!: SupplierBankDto[] | undefined;
     supplierContactPersons!: SupplierContactPersonDto[] | undefined;
+    supplierCategories!: MappedSupplierCategoryDto[] | undefined;
     legalEntityId!: string | undefined;
 
     constructor(data?: ISupplierDto) {
@@ -32336,6 +32345,11 @@ export class SupplierDto implements ISupplierDto {
                 this.supplierContactPersons = [] as any;
                 for (let item of _data["supplierContactPersons"])
                     this.supplierContactPersons!.push(SupplierContactPersonDto.fromJS(item));
+            }
+            if (Array.isArray(_data["supplierCategories"])) {
+                this.supplierCategories = [] as any;
+                for (let item of _data["supplierCategories"])
+                    this.supplierCategories!.push(MappedSupplierCategoryDto.fromJS(item));
             }
             this.legalEntityId = _data["legalEntityId"];
         }
@@ -32380,6 +32394,11 @@ export class SupplierDto implements ISupplierDto {
             for (let item of this.supplierContactPersons)
                 data["supplierContactPersons"].push(item.toJSON());
         }
+        if (Array.isArray(this.supplierCategories)) {
+            data["supplierCategories"] = [];
+            for (let item of this.supplierCategories)
+                data["supplierCategories"].push(item.toJSON());
+        }
         data["legalEntityId"] = this.legalEntityId;
         return data;
     }
@@ -32404,6 +32423,7 @@ export interface ISupplierDto {
     supplierAddresses: SupplierAddressDto[] | undefined;
     supplierBanks: SupplierBankDto[] | undefined;
     supplierContactPersons: SupplierContactPersonDto[] | undefined;
+    supplierCategories: MappedSupplierCategoryDto[] | undefined;
     legalEntityId: string | undefined;
 }
 

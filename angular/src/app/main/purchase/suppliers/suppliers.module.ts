@@ -5,6 +5,7 @@ import { SuppliersRoutingModule } from "./suppliers-routing.module";
 import { SupplierListComponent } from "./supplier-list/supplier-list.component";
 import { CreateOrEditSupplierModalComponent } from "./create-edit-supplier/create-or-edit-supplier-modal.component";
 import { ReactiveFormsModule } from "@angular/forms";
+import { MultiSelectModule } from 'primeng/multiselect';
 
 @NgModule({
     declarations: [
@@ -14,6 +15,7 @@ import { ReactiveFormsModule } from "@angular/forms";
     imports: [
         AppSharedModule,  
         SuppliersRoutingModule,
+        MultiSelectModule,
         ReactiveFormsModule,
         SubheaderModule,
     ],

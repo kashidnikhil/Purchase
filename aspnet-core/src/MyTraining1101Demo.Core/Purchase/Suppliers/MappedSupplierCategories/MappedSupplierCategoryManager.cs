@@ -2,7 +2,6 @@
 {
     using Abp.Domain.Repositories;
     using Abp.Domain.Uow;
-    using MyTraining1101Demo.Purchase.SupplierCategories.Dto;
     using MyTraining1101Demo.Purchase.Suppliers.Dto.MappedSupplierCategories;
     using System;
     using System.Collections.Generic;
@@ -99,14 +98,14 @@
             }
         }
 
-        public async Task<IList<SupplierCategoryDto>> GetSupplierCategoryListFromDB(Guid supplierId)
+        public async Task<IList<MappedSupplierCategoryDto>> GetSupplierCategoryListFromDB(Guid supplierId)
         {
             try
             {
-                var supplierCategoryQuery = this._supplierCategoryRepository.GetAll()
+                var supplierCategoryQuery = this._supplierCategoryRepository.GetAllIncluding(x=> x.SupplierCategory)
                     .Where(x => !x.IsDeleted && x.SupplierId == supplierId);
 
-                return new List<SupplierCategoryDto>(ObjectMapper.Map<List<SupplierCategoryDto>>(supplierCategoryQuery));
+                return new List<MappedSupplierCategoryDto>(ObjectMapper.Map<List<MappedSupplierCategoryDto>>(supplierCategoryQuery));
             }
             catch (Exception ex)
             {

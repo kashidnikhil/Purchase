@@ -1,4 +1,5 @@
-﻿using MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierAddresses;
+﻿using MyTraining1101Demo.Purchase.Suppliers.Dto.MappedSupplierCategories;
+using MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierAddresses;
 using MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierBanks;
 using MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierContactPersons;
 using System;
@@ -42,6 +43,8 @@ namespace MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierMaster
         public IList<SupplierBankDto> SupplierBanks { get; set; }
 
         public IList<SupplierContactPersonDto> SupplierContactPersons { get; set; }
+
+        public IList<MappedSupplierCategoryDto> SupplierCategories { get; set; }
 
         public Guid? LegalEntityId { get; set; }
     }

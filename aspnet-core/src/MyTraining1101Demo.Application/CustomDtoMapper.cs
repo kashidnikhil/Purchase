@@ -285,7 +285,10 @@ namespace MyTraining1101Demo
             configuration.CreateMap<CompanyAddress, CompanyAddressInputDto>().ReverseMap();
 
 
-            configuration.CreateMap<MappedSupplierCategory, MappedSupplierCategoryDto>().ReverseMap();
+            configuration.CreateMap<MappedSupplierCategory, MappedSupplierCategoryDto>()
+                .ForMember(dto => dto.Name, options => options.MapFrom(x => x.SupplierCategory.Name))
+                .ForMember(dto => dto.Description, options => options.MapFrom(x => x.SupplierCategory.Description))
+                .ReverseMap();
             configuration.CreateMap<MappedSupplierCategory, MappedSupplierCategoryInputDto>().ReverseMap();
 
 

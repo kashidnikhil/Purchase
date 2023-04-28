@@ -68,7 +68,6 @@ namespace MyTraining1101Demo.Purchase.Suppliers.SupplierAddresses
                         await this.DeleteSupplierAddressFromDB(supplierAddresses[i].Id);
                     }
                 }
-
                 return true;
             }
             catch (Exception ex)
@@ -94,7 +93,6 @@ namespace MyTraining1101Demo.Purchase.Suppliers.SupplierAddresses
                 throw ex;
             }
         }
-
         public async Task<IList<SupplierAddressDto>> GetSupplierAddressListFromDB(Guid supplierId)
         {
             try

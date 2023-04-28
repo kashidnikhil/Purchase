@@ -107,6 +107,8 @@
             {
                 var isSupplierMasterDeleted = await this._supplierManager.DeleteSupplierMasterFromDB(supplierId);
 
+                var isSupplierAddressDeleted = await this._supplierAddressManager.BulkDeleteSupplierAddresses(supplierId);
+
                 var isSupplierCategoryDeleted = await this._supplierCategoryManager.BulkDeleteSupplierCategories(supplierId);
 
                 var isSupplierBanksDelete = await this._supplierBankManager.BulkDeleteSupplierBanks(supplierId);
@@ -136,6 +138,7 @@
                     supplierMasterItem.SupplierAddresses = await this._supplierAddressManager.GetSupplierAddressListFromDB(supplierMasterItem.Id);
                     supplierMasterItem.SupplierContactPersons = await this._supplierContactPersonManager.GetSupplierContactPersonListFromDB(supplierMasterItem.Id);
                     supplierMasterItem.SupplierBanks = await this._supplierBankManager.GetSupplierBankListFromDB(supplierMasterItem.Id);
+                    supplierMasterItem.SupplierCategories = await this._supplierCategoryManager.GetSupplierCategoryListFromDB(supplierMasterItem.Id);
                 }
 
                 return supplierMasterItem;

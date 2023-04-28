@@ -13,6 +13,6 @@
 
         Task<bool> BulkDeleteSupplierCategories(Guid supplierId);
 
-        Task<IList<SupplierCategoryDto>> GetSupplierCategoryListFromDB(Guid supplierId);
+        Task<IList<MappedSupplierCategoryDto>> GetSupplierCategoryListFromDB(Guid supplierId);
     }
 }
