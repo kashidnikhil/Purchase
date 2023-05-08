@@ -17,6 +17,7 @@ using MyTraining1101Demo.Purchase.Companies.CompanyAddresses;
 using MyTraining1101Demo.Purchase.Companies.CompanyContactPersons;
 using MyTraining1101Demo.Purchase.Companies.CompanyMaster;
 using MyTraining1101Demo.Purchase.DeliveryTerms;
+using MyTraining1101Demo.Purchase.Items.ItemMaster;
 using MyTraining1101Demo.Purchase.LegalEntities;
 using MyTraining1101Demo.Purchase.MaterialGrades;
 using MyTraining1101Demo.Purchase.Models;
@@ -94,7 +95,9 @@ namespace MyTraining1101Demo.EntityFrameworkCore
         public virtual DbSet<CompanyContactPerson> CompanyContactPersons { get; set; }
 
         public virtual DbSet<MappedSupplierCategory> MappedSupplierCategories { get; set; }
-        
+
+        public virtual DbSet<Item> Items { get; set; }
+
         public MyTraining1101DemoDbContext(DbContextOptions<MyTraining1101DemoDbContext> options)
             : base(options)
         {
