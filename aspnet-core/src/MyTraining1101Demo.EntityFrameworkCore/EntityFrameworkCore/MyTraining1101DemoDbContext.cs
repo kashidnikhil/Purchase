@@ -17,6 +17,7 @@ using MyTraining1101Demo.Purchase.Companies.CompanyAddresses;
 using MyTraining1101Demo.Purchase.Companies.CompanyContactPersons;
 using MyTraining1101Demo.Purchase.Companies.CompanyMaster;
 using MyTraining1101Demo.Purchase.DeliveryTerms;
+using MyTraining1101Demo.Purchase.Items.CalibrationTypeMaster;
 using MyTraining1101Demo.Purchase.Items.ItemMaster;
 using MyTraining1101Demo.Purchase.LegalEntities;
 using MyTraining1101Demo.Purchase.MaterialGrades;
@@ -98,6 +99,8 @@ namespace MyTraining1101Demo.EntityFrameworkCore
 
         public virtual DbSet<Item> Items { get; set; }
 
+        public virtual DbSet<CalibrationType> CalibrationType { get; set; }
+        
         public MyTraining1101DemoDbContext(DbContextOptions<MyTraining1101DemoDbContext> options)
             : base(options)
         {
