@@ -81,9 +81,9 @@ export class CreateOrEditSupplierModalComponent extends AppComponentBase {
         this.supplierForm = this.formBuilder.group({
             id: new FormControl(supplierItem.id, []),
             name: new FormControl(supplierItem.name, [Validators.required]),
-            faxNumber: new FormControl(supplierItem.faxNumber, []),
-            email: new FormControl(supplierItem.email, []),
+            phoneNumber: new FormControl(supplierItem.telephoneNumber, []),
             mobile: new FormControl(supplierItem.mobile, []),
+            email: new FormControl(supplierItem.email, []),
             website: new FormControl(supplierItem.website, []),
             certifications: new FormControl(supplierItem.certifications, []),
             legalEntityId: new FormControl(supplierItem.legalEntityId, []),

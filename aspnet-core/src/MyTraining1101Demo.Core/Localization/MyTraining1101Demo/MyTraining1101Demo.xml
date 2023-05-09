@@ -1235,7 +1235,7 @@
 	  <text name="ExistingTermsOfPaymentErrorMessage">Terms of payment {0} cannot be added. Terms of payment already exists</text>
 	  <text name="NewTermsOfPaymentErrorMessage">No new instance of terms of payment with name {0} cannot be added.Terms of payment with name {0} already exists. Do you want to restore the terms of payment?</text>
 	  
-	  <!-- Terms of Payment section-->
+	  <!-- Supplier section-->
 	  <text name="Suppliers">Suppliers</text>
 	  <text name="SuppliersHeaderInfo">Manage suppliers.</text>
 	  <text name="CreateNewSupplier">Create new supplier</text>

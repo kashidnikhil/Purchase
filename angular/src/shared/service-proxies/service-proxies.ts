@@ -32287,7 +32287,6 @@ export class SupplierDto implements ISupplierDto {
     id!: string;
     name!: string | undefined;
     telephoneNumber!: string | undefined;
-    faxNumber!: string | undefined;
     email!: string | undefined;
     mobile!: string | undefined;
     website!: string | undefined;
@@ -32319,7 +32318,6 @@ export class SupplierDto implements ISupplierDto {
             this.id = _data["id"];
             this.name = _data["name"];
             this.telephoneNumber = _data["telephoneNumber"];
-            this.faxNumber = _data["faxNumber"];
             this.email = _data["email"];
             this.mobile = _data["mobile"];
             this.website = _data["website"];
@@ -32367,7 +32365,6 @@ export class SupplierDto implements ISupplierDto {
         data["id"] = this.id;
         data["name"] = this.name;
         data["telephoneNumber"] = this.telephoneNumber;
-        data["faxNumber"] = this.faxNumber;
         data["email"] = this.email;
         data["mobile"] = this.mobile;
         data["website"] = this.website;
@@ -32408,7 +32405,6 @@ export interface ISupplierDto {
     id: string;
     name: string | undefined;
     telephoneNumber: string | undefined;
-    faxNumber: string | undefined;
     email: string | undefined;
     mobile: string | undefined;
     website: string | undefined;
@@ -32431,7 +32427,6 @@ export class SupplierInputDto implements ISupplierInputDto {
     id!: string | undefined;
     name!: string | undefined;
     telephoneNumber!: string | undefined;
-    faxNumber!: string | undefined;
     email!: string | undefined;
     mobile!: string | undefined;
     website!: string | undefined;
@@ -32463,7 +32458,6 @@ export class SupplierInputDto implements ISupplierInputDto {
             this.id = _data["id"];
             this.name = _data["name"];
             this.telephoneNumber = _data["telephoneNumber"];
-            this.faxNumber = _data["faxNumber"];
             this.email = _data["email"];
             this.mobile = _data["mobile"];
             this.website = _data["website"];
@@ -32511,7 +32505,6 @@ export class SupplierInputDto implements ISupplierInputDto {
         data["id"] = this.id;
         data["name"] = this.name;
         data["telephoneNumber"] = this.telephoneNumber;
-        data["faxNumber"] = this.faxNumber;
         data["email"] = this.email;
         data["mobile"] = this.mobile;
         data["website"] = this.website;
@@ -32552,7 +32545,6 @@ export interface ISupplierInputDto {
     id: string | undefined;
     name: string | undefined;
     telephoneNumber: string | undefined;
-    faxNumber: string | undefined;
     email: string | undefined;
     mobile: string | undefined;
     website: string | undefined;
