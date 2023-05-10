@@ -1,7 +1,7 @@
 ﻿using Abp.Application.Services.Dto;
 using MyTraining1101Demo.Purchase.Shared;
-using MyTraining1101Demo.Purchase.Unit.Dto;
-using MyTraining1101Demo.Purchase.Unit;
+using MyTraining1101Demo.Purchase.Units.Dto;
+using MyTraining1101Demo.Purchase.Units;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using MyTraining1101Demo.Configuration;
 using MyTraining1101Demo.Purchase.Shared;
-using MyTraining1101Demo.Purchase.Unit.Dto;
+using MyTraining1101Demo.Purchase.Units.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;

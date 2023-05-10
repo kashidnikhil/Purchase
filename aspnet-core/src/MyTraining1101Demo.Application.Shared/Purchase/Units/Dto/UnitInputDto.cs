@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MyTraining1101Demo.Purchase.Unit.Dto
+namespace MyTraining1101Demo.Purchase.Units.Dto
 {
     public class UnitInputDto
     {

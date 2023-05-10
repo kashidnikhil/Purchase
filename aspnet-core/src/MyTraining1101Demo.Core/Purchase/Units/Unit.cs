@@ -1,6 +1,4 @@
-﻿
-
-namespace MyTraining1101Demo.Purchase.Units
+﻿namespace MyTraining1101Demo.Purchase.Units
 {
     using Abp.Domain.Entities.Auditing;
     using System;

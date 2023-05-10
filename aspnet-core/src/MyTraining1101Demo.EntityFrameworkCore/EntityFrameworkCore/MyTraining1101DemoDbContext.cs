@@ -17,8 +17,12 @@ using MyTraining1101Demo.Purchase.Companies.CompanyAddresses;
 using MyTraining1101Demo.Purchase.Companies.CompanyContactPersons;
 using MyTraining1101Demo.Purchase.Companies.CompanyMaster;
 using MyTraining1101Demo.Purchase.DeliveryTerms;
+using MyTraining1101Demo.Purchase.Items.CalibrationAgenciesMaster;
 using MyTraining1101Demo.Purchase.Items.CalibrationTypeMaster;
+using MyTraining1101Demo.Purchase.Items.ItemAttachmentsMaster;
 using MyTraining1101Demo.Purchase.Items.ItemMaster;
+using MyTraining1101Demo.Purchase.Items.ItemStorageConditionMaster;
+using MyTraining1101Demo.Purchase.Items.ProcurementMaster;
 using MyTraining1101Demo.Purchase.LegalEntities;
 using MyTraining1101Demo.Purchase.MaterialGrades;
 using MyTraining1101Demo.Purchase.Models;
@@ -100,7 +104,15 @@ namespace MyTraining1101Demo.EntityFrameworkCore
         public virtual DbSet<Item> Items { get; set; }
 
         public virtual DbSet<CalibrationType> CalibrationType { get; set; }
-        
+
+        //public virtual DbSet<Procurement> Procurements { get; set; }
+
+        public virtual DbSet<CalibrationAgency> CalibrationAgencies { get; set; }
+
+        public virtual DbSet<ItemAttachment> ItemAttachments { get; set; }
+
+        public virtual DbSet<ItemStorageCondition> ItemStorageConditions { get; set; }
+
         public MyTraining1101DemoDbContext(DbContextOptions<MyTraining1101DemoDbContext> options)
             : base(options)
         {

@@ -58,7 +58,7 @@ using MyTraining1101Demo.Purchase.SupplierCategories;
 using MyTraining1101Demo.Purchase.SupplierCategories.Dto;
 using MyTraining1101Demo.Purchase.TermsOfPayments;
 using MyTraining1101Demo.Purchase.TermsOfPayments.Dto;
-using MyTraining1101Demo.Purchase.Unit.Dto;
+using MyTraining1101Demo.Purchase.Units.Dto;
 using MyTraining1101Demo.Purchase.Units;
 using MyTraining1101Demo.Purchase.Models.Dto;
 using MyTraining1101Demo.Purchase.Models;

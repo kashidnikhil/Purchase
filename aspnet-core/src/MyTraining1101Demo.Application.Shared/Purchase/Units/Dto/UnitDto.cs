@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MyTraining1101Demo.Purchase.Unit.Dto
+namespace MyTraining1101Demo.Purchase.Units.Dto
 {
     public class UnitDto
     {
