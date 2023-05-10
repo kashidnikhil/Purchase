@@ -23,6 +23,7 @@ using MyTraining1101Demo.Purchase.Items.ItemAttachmentsMaster;
 using MyTraining1101Demo.Purchase.Items.ItemMaster;
 using MyTraining1101Demo.Purchase.Items.ItemStorageConditionMaster;
 using MyTraining1101Demo.Purchase.Items.ProcurementMaster;
+using MyTraining1101Demo.Purchase.Items.RequiredItemSparesMaster;
 using MyTraining1101Demo.Purchase.LegalEntities;
 using MyTraining1101Demo.Purchase.MaterialGrades;
 using MyTraining1101Demo.Purchase.Models;
@@ -112,6 +113,9 @@ namespace MyTraining1101Demo.EntityFrameworkCore
         public virtual DbSet<ItemAttachment> ItemAttachments { get; set; }
 
         public virtual DbSet<ItemStorageCondition> ItemStorageConditions { get; set; }
+
+        public virtual DbSet<ItemSpare> ItemSpares { get; set; }
+        
 
         public MyTraining1101DemoDbContext(DbContextOptions<MyTraining1101DemoDbContext> options)
             : base(options)
