@@ -244,20 +244,24 @@ export class CreateOrEditSupplierModalComponent extends AppComponentBase {
                 value: 1
             },
             {
-                title: "Public Limited",
+                title: "Card",
                 value: 2
             },
             {
-                title: "Private Limited",
+                title: "UPI",
                 value: 3
             },
             {
-                title: "Partnership",
+                title: "RTGS",
                 value: 4
             },
             {
-                title: "Proprietorship",
+                title: "NEFT",
                 value: 5
+            },
+            {
+                title: "CASH",
+                value: 6
             }
         ];
 

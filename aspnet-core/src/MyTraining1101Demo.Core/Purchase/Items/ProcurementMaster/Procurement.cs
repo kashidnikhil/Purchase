@@ -8,6 +8,9 @@ namespace MyTraining1101Demo.Purchase.Items.ProcurementMaster
     [Table("Procurements")]
     public class Procurement : FullAuditedEntity<Guid>
     {
+        public string Make { get; set; }
+        public string CatalogueNumber { get; set; }
+        
         public double RatePerPack { get; set; }
 
         public long QuantityPerOrderingUOM { get; set; }

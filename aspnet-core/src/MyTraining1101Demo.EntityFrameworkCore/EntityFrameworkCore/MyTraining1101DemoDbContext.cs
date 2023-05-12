@@ -21,7 +21,9 @@ using MyTraining1101Demo.Purchase.Items.CalibrationAgenciesMaster;
 using MyTraining1101Demo.Purchase.Items.CalibrationTypeMaster;
 using MyTraining1101Demo.Purchase.Items.ItemAttachmentsMaster;
 using MyTraining1101Demo.Purchase.Items.ItemMaster;
+using MyTraining1101Demo.Purchase.Items.ItemRateRevisionMaster;
 using MyTraining1101Demo.Purchase.Items.ItemStorageConditionMaster;
+using MyTraining1101Demo.Purchase.Items.ItemSupplierMaster;
 using MyTraining1101Demo.Purchase.Items.ProcurementMaster;
 using MyTraining1101Demo.Purchase.Items.RequiredItemSparesMaster;
 using MyTraining1101Demo.Purchase.LegalEntities;
@@ -106,7 +108,7 @@ namespace MyTraining1101Demo.EntityFrameworkCore
 
         public virtual DbSet<CalibrationType> CalibrationType { get; set; }
 
-        //public virtual DbSet<Procurement> Procurements { get; set; }
+        public virtual DbSet<Procurement> Procurements { get; set; }
 
         public virtual DbSet<CalibrationAgency> CalibrationAgencies { get; set; }
 
@@ -115,7 +117,12 @@ namespace MyTraining1101Demo.EntityFrameworkCore
         public virtual DbSet<ItemStorageCondition> ItemStorageConditions { get; set; }
 
         public virtual DbSet<ItemSpare> ItemSpares { get; set; }
+
+        public virtual DbSet<ItemSupplier> ItemSuppliers { get; set; }
+
+        public virtual DbSet<ItemRateRevision> ItemRateRevisions { get; set; }
         
+
 
         public MyTraining1101DemoDbContext(DbContextOptions<MyTraining1101DemoDbContext> options)
             : base(options)

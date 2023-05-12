@@ -47,22 +47,28 @@ namespace MyTraining1101Demo.Purchase.Items.ItemMaster
         public virtual Supplier Supplier { get; set; }
 
         public DateTime? PurchaseDate { get; set; }
-        public long? PurchaseValue { get; set; }
+       
+        [Precision(18, 2)]
+        public decimal? PurchaseValue { get; set; }
 
         [Precision(18, 2)]
         public decimal GST { get; set; }
 
         public string HSNCode { get; set; }
 
-        public double OrderingRate { get; set; }
+        [Precision(18, 2)]
+        public decimal OrderingRate { get; set; }
 
-        public double RatePerQuantity { get; set; }
+        [Precision(18, 2)]
+        public decimal RatePerQuantity { get; set; }
 
-        public DateTime? DateOfRate { get; set; }
+
+        [Precision(18, 2)]
+        public decimal? RateAsOnDate { get; set; }
 
         public long? Quantity { get; set; }
 
-        public DateTime? LeadTime { get; set; }
+        public int? LeadTime { get; set; }
 
         public string SupplierItemName { get; set; }
 
@@ -116,5 +122,12 @@ namespace MyTraining1101Demo.Purchase.Items.ItemMaster
         public SubjectCategory? SubjectCategory { get; set; }
 
         public long? PurchasedBy { get; set; }
+
+        [Precision(18, 2)]
+        public decimal? WeightPerUOM { get; set; }
+
+        [Precision(18, 2)]
+        public decimal? SellingPrice { get; set; }
+
     }
 }
