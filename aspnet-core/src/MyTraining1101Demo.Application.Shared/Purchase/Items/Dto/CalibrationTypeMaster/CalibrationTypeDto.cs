@@ -1,10 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MyTraining1101Demo.Purchase.Items.Dto.CalibrationTypeMaster
+﻿namespace MyTraining1101Demo.Purchase.Items.Dto.CalibrationTypeMaster
 {
-    internal class CalibrationTypeDto
+    using MyTraining1101Demo.Purchase.Items.Enums;
+    using System;
+    public class CalibrationTypeDto
     {
+        public Guid Id { get; set; }
+        public CalibrationTypeEnum Type { get; set; }
+
+        public CalibrationFrequency Frequency { get; set; }
+
+        public Guid ItemId { get; set; }
     }
 }

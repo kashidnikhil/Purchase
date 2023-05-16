@@ -1,11 +1,11 @@
-﻿using Abp.Domain.Entities.Auditing;
-using MyTraining1101Demo.Purchase.Items.Enums;
-using MyTraining1101Demo.Purchase.Items.ItemMaster;
-using System;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace MyTraining1101Demo.Purchase.Items.CalibrationTypeMaster
+﻿namespace MyTraining1101Demo.Purchase.Items.CalibrationTypeMaster
 {
+    using Abp.Domain.Entities.Auditing;
+    using MyTraining1101Demo.Purchase.Items.Enums;
+    using MyTraining1101Demo.Purchase.Items.ItemMaster;
+    using System;
+    using System.ComponentModel.DataAnnotations.Schema;
+
     [Table("CalibrationType")]
     public class CalibrationType : FullAuditedEntity<Guid>
     {
