@@ -80,6 +80,24 @@ using MyTraining1101Demo.Purchase.Companies.Dto.CompanyAddresses;
 using MyTraining1101Demo.Purchase.Companies.Dto.CompanyContactPersons;
 using MyTraining1101Demo.Purchase.Suppliers.MappedSupplierCategories;
 using MyTraining1101Demo.Purchase.Suppliers.Dto.MappedSupplierCategories;
+using MyTraining1101Demo.Purchase.Items.ItemMaster;
+using MyTraining1101Demo.Purchase.Items.Dto.ItemMaster;
+using MyTraining1101Demo.Purchase.Items.CalibrationAgenciesMaster;
+using MyTraining1101Demo.Purchase.Items.Dto.CalibrationAgenciesMaster;
+using MyTraining1101Demo.Purchase.Items.CalibrationTypeMaster;
+using MyTraining1101Demo.Purchase.Items.Dto.CalibrationTypeMaster;
+using MyTraining1101Demo.Purchase.Items.ItemAttachmentsMaster;
+using MyTraining1101Demo.Purchase.Items.Dto.ItemAttachmentsMaster;
+using MyTraining1101Demo.Purchase.Items.ItemRateRevisionMaster;
+using MyTraining1101Demo.Purchase.Items.Dto.ItemRateRevisionMaster;
+using MyTraining1101Demo.Purchase.Items.ItemStorageConditionMaster;
+using MyTraining1101Demo.Purchase.Items.Dto.ItemStorageConditionMaster;
+using MyTraining1101Demo.Purchase.Items.ItemSupplierMaster;
+using MyTraining1101Demo.Purchase.Items.Dto.ItemSupplierMaster;
+using MyTraining1101Demo.Purchase.Items.ProcurementMaster;
+using MyTraining1101Demo.Purchase.Items.Dto.ProcurementMaster;
+using MyTraining1101Demo.Purchase.Items.RequiredItemSparesMaster;
+using MyTraining1101Demo.Purchase.Items.Dto.RequiredItemSparesMaster;
 
 namespace MyTraining1101Demo
 {
@@ -291,6 +309,33 @@ namespace MyTraining1101Demo
                 .ReverseMap();
             configuration.CreateMap<MappedSupplierCategory, MappedSupplierCategoryInputDto>().ReverseMap();
 
+
+            configuration.CreateMap<Item, ItemMasterDto>().ReverseMap();
+            configuration.CreateMap<Item, ItemMasterInputDto>().ReverseMap();
+
+            configuration.CreateMap<CalibrationAgency, CalibrationAgencyDto>().ReverseMap();
+            configuration.CreateMap<CalibrationAgency, CalibrationAgencyInputDto>().ReverseMap();
+
+            configuration.CreateMap<CalibrationType, CalibrationTypeDto>().ReverseMap();
+            configuration.CreateMap<CalibrationType, CalibrationTypeInputDto>().ReverseMap();
+
+            configuration.CreateMap<ItemAttachment, ItemAttachmentDto>().ReverseMap();
+            configuration.CreateMap<ItemAttachment, ItemAttachmentInputDto>().ReverseMap();
+
+            configuration.CreateMap<ItemRateRevision, ItemRateRevisionDto>().ReverseMap();
+            configuration.CreateMap<ItemRateRevision, ItemRateRevisionInputDto>().ReverseMap();
+
+            configuration.CreateMap<ItemStorageCondition, ItemStorageConditionDto>().ReverseMap();
+            configuration.CreateMap<ItemStorageCondition, ItemStorageConditionInputDto>().ReverseMap();
+            
+            configuration.CreateMap<ItemSupplier, ItemSupplierDto>().ReverseMap();
+            configuration.CreateMap<ItemSupplier, ItemSupplierInputDto>().ReverseMap();
+
+            configuration.CreateMap<Procurement, ProcurementDto>().ReverseMap();
+            configuration.CreateMap<Procurement, ProcurementInputDto>().ReverseMap();
+
+            configuration.CreateMap<ItemSpare, ItemSpareDto>().ReverseMap();
+            configuration.CreateMap<ItemSpare, ItemSpareInputDto>().ReverseMap();
 
             /* ADD YOUR OWN CUSTOM AUTOMAPPER MAPPINGS HERE */
         }
