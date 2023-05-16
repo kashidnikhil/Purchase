@@ -6929,6 +6929,146 @@ export class InvoiceServiceProxy {
 }
 
 @Injectable()
+export class ItemServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @param searchString (optional) 
+     * @param sorting (optional) 
+     * @param maxResultCount (optional) 
+     * @param skipCount (optional) 
+     * @return Success
+     */
+    getItems(searchString: string | undefined, sorting: string | undefined, maxResultCount: number | undefined, skipCount: number | undefined): Observable<PagedResultDtoOfItemMasterListDto> {
+        let url_ = this.baseUrl + "/api/services/app/Item/GetItems?";
+        if (searchString === null)
+            throw new Error("The parameter 'searchString' cannot be null.");
+        else if (searchString !== undefined)
+            url_ += "SearchString=" + encodeURIComponent("" + searchString) + "&";
+        if (sorting === null)
+            throw new Error("The parameter 'sorting' cannot be null.");
+        else if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetItems(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetItems(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PagedResultDtoOfItemMasterListDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PagedResultDtoOfItemMasterListDto>;
+        }));
+    }
+
+    protected processGetItems(response: HttpResponseBase): Observable<PagedResultDtoOfItemMasterListDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PagedResultDtoOfItemMasterListDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PagedResultDtoOfItemMasterListDto>(null as any);
+    }
+
+    /**
+     * @param itemId (optional) 
+     * @return Success
+     */
+    deleteItemMasterData(itemId: string | undefined): Observable<boolean> {
+        let url_ = this.baseUrl + "/api/services/app/Item/DeleteItemMasterData?";
+        if (itemId === null)
+            throw new Error("The parameter 'itemId' cannot be null.");
+        else if (itemId !== undefined)
+            url_ += "itemId=" + encodeURIComponent("" + itemId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDeleteItemMasterData(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDeleteItemMasterData(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<boolean>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<boolean>;
+        }));
+    }
+
+    protected processDeleteItemMasterData(response: HttpResponseBase): Observable<boolean> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+    
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<boolean>(null as any);
+    }
+}
+
+@Injectable()
 export class LanguageServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -26300,6 +26440,66 @@ export interface IIsTenantAvailableOutput {
     serverRootAddress: string | undefined;
 }
 
+export class ItemMasterListDto implements IItemMasterListDto {
+    id!: string;
+    categoryId!: number;
+    itemId!: number;
+    genericName!: string | undefined;
+    itemName!: string | undefined;
+    make!: string | undefined;
+    unitName!: string | undefined;
+
+    constructor(data?: IItemMasterListDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.categoryId = _data["categoryId"];
+            this.itemId = _data["itemId"];
+            this.genericName = _data["genericName"];
+            this.itemName = _data["itemName"];
+            this.make = _data["make"];
+            this.unitName = _data["unitName"];
+        }
+    }
+
+    static fromJS(data: any): ItemMasterListDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ItemMasterListDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["categoryId"] = this.categoryId;
+        data["itemId"] = this.itemId;
+        data["genericName"] = this.genericName;
+        data["itemName"] = this.itemName;
+        data["make"] = this.make;
+        data["unitName"] = this.unitName;
+        return data;
+    }
+}
+
+export interface IItemMasterListDto {
+    id: string;
+    categoryId: number;
+    itemId: number;
+    genericName: string | undefined;
+    itemName: string | undefined;
+    make: string | undefined;
+    unitName: string | undefined;
+}
+
 export class IValueValidator implements IIValueValidator {
     readonly name!: string | undefined;
     readonly attributes!: { [key: string]: any; } | undefined;
@@ -28946,6 +29146,54 @@ export class PagedResultDtoOfGetAllSendAttemptsOutput implements IPagedResultDto
 export interface IPagedResultDtoOfGetAllSendAttemptsOutput {
     totalCount: number;
     items: GetAllSendAttemptsOutput[] | undefined;
+}
+
+export class PagedResultDtoOfItemMasterListDto implements IPagedResultDtoOfItemMasterListDto {
+    totalCount!: number;
+    items!: ItemMasterListDto[] | undefined;
+
+    constructor(data?: IPagedResultDtoOfItemMasterListDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.totalCount = _data["totalCount"];
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(ItemMasterListDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfItemMasterListDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfItemMasterListDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IPagedResultDtoOfItemMasterListDto {
+    totalCount: number;
+    items: ItemMasterListDto[] | undefined;
 }
 
 export class PagedResultDtoOfLanguageTextListDto implements IPagedResultDtoOfLanguageTextListDto {
