@@ -79,9 +79,9 @@
         {
             try
             {
-                var supplierContactPersonItem = await this._supplierBankRepository.GetAsync(supplierBankId);
+                var supplierBankItem = await this._supplierBankRepository.GetAsync(supplierBankId);
 
-                await this._supplierBankRepository.DeleteAsync(supplierContactPersonItem);
+                await this._supplierBankRepository.DeleteAsync(supplierBankItem);
 
                 await CurrentUnitOfWork.SaveChangesAsync();
             }
