@@ -1,22 +1,19 @@
-﻿using Abp.Application.Services.Dto;
-using Abp.Domain.Repositories;
-using Abp.Domain.Uow;
-using Abp.Extensions;
-using Abp.Linq.Extensions;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using MyTraining1101Demo.Configuration;
-using MyTraining1101Demo.Purchase.Items.Dto.ItemMaster;
-using MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierMaster;
-using MyTraining1101Demo.Purchase.Suppliers.SupplierMaster;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Linq.Dynamic.Core;
-
-namespace MyTraining1101Demo.Purchase.Items.ItemMaster
+﻿namespace MyTraining1101Demo.Purchase.Items.ItemMaster
 {
+    using Abp.Application.Services.Dto;
+    using Abp.Domain.Repositories;
+    using Abp.Domain.Uow;
+    using Abp.Extensions;
+    using Abp.Linq.Extensions;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+    using MyTraining1101Demo.Configuration;
+    using MyTraining1101Demo.Purchase.Items.Dto.ItemMaster;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Linq.Dynamic.Core;
+    using System.Threading.Tasks;
     public class ItemManager : MyTraining1101DemoDomainServiceBase, IItemManager
     {
         private readonly IRepository<Item, Guid> _itemMasterRepository;
@@ -107,6 +104,4 @@ namespace MyTraining1101Demo.Purchase.Items.ItemMaster
             }
         }
     }
-
-
 }
