@@ -66,6 +66,10 @@ import { RouterModule } from '@angular/router';
                         path: 'companies',
                         loadChildren: () => import('./purchase/companies/companies.module').then(m => m.CompaniesModule)
                     },
+                    {
+                        path: 'item-masters',
+                        loadChildren: () => import('./purchase/item-masters/item-masters.module').then(m => m.ItemMastersModule)
+                    },
                        
                                       
                     { path: '', redirectTo: 'dashboard', pathMatch: 'full' },

@@ -194,5 +194,30 @@
 
         }
 
+        public async Task<ItemMasterDto> GetItemMasterById(Guid itemId)
+        {
+            try
+            {
+                var itemMasterData = await this._itemManager.GetItemMasterByIdFromDB(itemId);
+                
+                if (itemMasterData.Id != Guid.Empty)
+                {
+                    itemMasterData.ItemCalibrationAgencies = await this._calibrationAgencyManager.GetItemCalibrationAgencyListFromDB(itemMasterData.Id);
+                    itemMasterData.ItemCalibrationTypes = await this._calibrationTypeManager.GetItemCalibrationTypeListFromDB(itemMasterData.Id);
+                    itemMasterData.ItemAttachments = await this._itemAttachmentManager.GetItemAttachmentListFromDB(itemMasterData.Id);
+                    itemMasterData.ItemStorageConditions = await this._itemStorageConditionManager.GetItemStorageConditionListFromDB(itemMasterData.Id);
+                    itemMasterData.ItemSuppliers = await this._itemSupplierManager.GetItemSupplierListFromDB(itemMasterData.Id);
+                    itemMasterData.ItemProcurements = await this._itemProcurementManager.GetItemProcurementListFromDB(itemMasterData.Id);
+                    itemMasterData.ItemSpares = await this._itemSpareManager.GetItemSpareListFromDB(itemMasterData.Id);    
+                }
+                return itemMasterData;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.Message, ex);
+                throw ex;
+            }
+        }
+
     }
 }

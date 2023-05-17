@@ -1270,10 +1270,18 @@
 	  <text name="ExistingSupplierErrorMessage">Supplier {0} cannot be added. Supplier already exists</text>
 	  <text name="NewSupplierErrorMessage">No new instance of supplier with name {0} cannot be added.Supplier with name {0} already exists. Do you want to restore the supplier?</text>
 
+	  <!-- Comapnies section-->
 	  <text name="Companies">Companies</text>
 	  <text name="CompaniesHeaderInfo">Manage companies.</text>
 	  <text name="CreateNewCompany">Create New Company</text>
 	  <text name="EditCompany">Edit Company</text>
 	  <text name="CompanyName">Company Name</text>
+
+	  <!-- Item master section-->
+	  <text name="CreateNewItem">Create New Item</text>
+	  <text name="EditItem">Edit Item</text>
+	  <text name="ItemsHeaderInfo">Manage item masters.</text>
+	  <text name="ItemMasters">Item Masters</text>
+	  
   </texts>
 </localizationDictionary>

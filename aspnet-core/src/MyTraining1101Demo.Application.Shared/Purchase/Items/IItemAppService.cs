@@ -9,8 +9,10 @@ namespace MyTraining1101Demo.Purchase.Items
     {
         Task<PagedResultDto<ItemMasterListDto>> GetItems(ItemMasterSearchDto input);
 
-        //Task<Guid> InsertOrUpdateItem(ItemMasterInputDto input);
+        Task<Guid> InsertOrUpdateItem(ItemMasterInputDto input);
 
         Task<bool> DeleteItemMasterData(Guid itemId);
+
+        Task<ItemMasterDto> GetItemMasterById(Guid itemId);
     }
 }

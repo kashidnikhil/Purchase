@@ -7123,6 +7123,62 @@ export class ItemServiceProxy {
         }
         return _observableOf<boolean>(null as any);
     }
+
+    /**
+     * @param itemId (optional) 
+     * @return Success
+     */
+    getItemMasterById(itemId: string | undefined): Observable<ItemMasterDto> {
+        let url_ = this.baseUrl + "/api/services/app/Item/GetItemMasterById?";
+        if (itemId === null)
+            throw new Error("The parameter 'itemId' cannot be null.");
+        else if (itemId !== undefined)
+            url_ += "itemId=" + encodeURIComponent("" + itemId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetItemMasterById(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetItemMasterById(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ItemMasterDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ItemMasterDto>;
+        }));
+    }
+
+    protected processGetItemMasterById(response: HttpResponseBase): Observable<ItemMasterDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ItemMasterDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ItemMasterDto>(null as any);
+    }
 }
 
 @Injectable()
@@ -19941,6 +19997,50 @@ export interface ICacheDto {
     name: string | undefined;
 }
 
+export class CalibrationAgencyDto implements ICalibrationAgencyDto {
+    id!: string;
+    supplierId!: string;
+    itemId!: string;
+
+    constructor(data?: ICalibrationAgencyDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.supplierId = _data["supplierId"];
+            this.itemId = _data["itemId"];
+        }
+    }
+
+    static fromJS(data: any): CalibrationAgencyDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CalibrationAgencyDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["supplierId"] = this.supplierId;
+        data["itemId"] = this.itemId;
+        return data;
+    }
+}
+
+export interface ICalibrationAgencyDto {
+    id: string;
+    supplierId: string;
+    itemId: string;
+}
+
 export class CalibrationAgencyInputDto implements ICalibrationAgencyInputDto {
     id!: string | undefined;
     supplierId!: string;
@@ -19993,6 +20093,54 @@ export enum CalibrationFrequency {
 export enum CalibrationRequirement {
     Yes = 1,
     No = 2,
+}
+
+export class CalibrationTypeDto implements ICalibrationTypeDto {
+    id!: string;
+    type!: CalibrationTypeEnum;
+    frequency!: CalibrationFrequency;
+    itemId!: string;
+
+    constructor(data?: ICalibrationTypeDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.type = _data["type"];
+            this.frequency = _data["frequency"];
+            this.itemId = _data["itemId"];
+        }
+    }
+
+    static fromJS(data: any): CalibrationTypeDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CalibrationTypeDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["type"] = this.type;
+        data["frequency"] = this.frequency;
+        data["itemId"] = this.itemId;
+        return data;
+    }
+}
+
+export interface ICalibrationTypeDto {
+    id: string;
+    type: CalibrationTypeEnum;
+    frequency: CalibrationFrequency;
+    itemId: string;
 }
 
 export enum CalibrationTypeEnum {
@@ -26625,6 +26773,54 @@ export enum ItemAMCRequirement {
     No = 2,
 }
 
+export class ItemAttachmentDto implements IItemAttachmentDto {
+    id!: string;
+    path!: string | undefined;
+    description!: string | undefined;
+    itemId!: string;
+
+    constructor(data?: IItemAttachmentDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.path = _data["path"];
+            this.description = _data["description"];
+            this.itemId = _data["itemId"];
+        }
+    }
+
+    static fromJS(data: any): ItemAttachmentDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ItemAttachmentDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["path"] = this.path;
+        data["description"] = this.description;
+        data["itemId"] = this.itemId;
+        return data;
+    }
+}
+
+export interface IItemAttachmentDto {
+    id: string;
+    path: string | undefined;
+    description: string | undefined;
+    itemId: string;
+}
+
 export class ItemAttachmentInputDto implements IItemAttachmentInputDto {
     id!: string | undefined;
     path!: string | undefined;
@@ -26683,6 +26879,334 @@ export enum ItemCategory {
     Material = 70001,
     FurnitureAndFixtures = 80001,
     ToolsAndTackles = 90001,
+}
+
+export class ItemMasterDto implements IItemMasterDto {
+    id!: string;
+    itemCategory!: ItemCategory;
+    categoryId!: number;
+    itemId!: number;
+    genericName!: string | undefined;
+    itemName!: string | undefined;
+    itemType!: ItemType;
+    amcRequired!: ItemAMCRequirement;
+    itemMobility!: ItemMobility;
+    calibrationRequirement!: CalibrationRequirement;
+    alias!: string | undefined;
+    make!: string | undefined;
+    model!: string | undefined;
+    serialNumber!: string | undefined;
+    specifications!: string | undefined;
+    storageConditions!: string | undefined;
+    supplierId!: string | undefined;
+    purchaseDate!: DateTime | undefined;
+    purchaseValue!: number | undefined;
+    gst!: number;
+    hsnCode!: string | undefined;
+    orderingRate!: number;
+    ratePerQuantity!: number;
+    rateAsOnDate!: number | undefined;
+    quantity!: number | undefined;
+    leadTime!: number | undefined;
+    supplierItemName!: string | undefined;
+    status!: ItemStatus;
+    attachments!: string | undefined;
+    recordedBy!: number;
+    approvedBy!: number;
+    discardedOn!: DateTime | undefined;
+    discardApprovedBy!: number;
+    discardedReason!: string | undefined;
+    materialGradeId!: string | undefined;
+    comment!: string | undefined;
+    msl!: string | undefined;
+    unitOrderId!: string | undefined;
+    unitStockId!: string | undefined;
+    orderingUOMId!: string | undefined;
+    stockUOMId!: string | undefined;
+    quantityPerOrderingUOM!: number;
+    ctqRequirement!: CTQRequirement;
+    ctqSpecifications!: string | undefined;
+    expiryApplicable!: ExpiryApplicable;
+    minimumOrderQuantity!: number | undefined;
+    author!: string | undefined;
+    publication!: string | undefined;
+    publicationYear!: number;
+    subjectCategory!: SubjectCategory;
+    purchasedBy!: number | undefined;
+    weightPerUOM!: number | undefined;
+    sellingPrice!: number | undefined;
+    itemCalibrationAgencies!: CalibrationAgencyDto[] | undefined;
+    itemCalibrationTypes!: CalibrationTypeDto[] | undefined;
+    itemAttachments!: ItemAttachmentDto[] | undefined;
+    itemStorageConditions!: ItemStorageConditionDto[] | undefined;
+    itemSuppliers!: ItemSupplierDto[] | undefined;
+    itemProcurements!: ProcurementDto[] | undefined;
+    itemSpares!: ItemSpareDto[] | undefined;
+
+    constructor(data?: IItemMasterDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.itemCategory = _data["itemCategory"];
+            this.categoryId = _data["categoryId"];
+            this.itemId = _data["itemId"];
+            this.genericName = _data["genericName"];
+            this.itemName = _data["itemName"];
+            this.itemType = _data["itemType"];
+            this.amcRequired = _data["amcRequired"];
+            this.itemMobility = _data["itemMobility"];
+            this.calibrationRequirement = _data["calibrationRequirement"];
+            this.alias = _data["alias"];
+            this.make = _data["make"];
+            this.model = _data["model"];
+            this.serialNumber = _data["serialNumber"];
+            this.specifications = _data["specifications"];
+            this.storageConditions = _data["storageConditions"];
+            this.supplierId = _data["supplierId"];
+            this.purchaseDate = _data["purchaseDate"] ? DateTime.fromISO(_data["purchaseDate"].toString()) : <any>undefined;
+            this.purchaseValue = _data["purchaseValue"];
+            this.gst = _data["gst"];
+            this.hsnCode = _data["hsnCode"];
+            this.orderingRate = _data["orderingRate"];
+            this.ratePerQuantity = _data["ratePerQuantity"];
+            this.rateAsOnDate = _data["rateAsOnDate"];
+            this.quantity = _data["quantity"];
+            this.leadTime = _data["leadTime"];
+            this.supplierItemName = _data["supplierItemName"];
+            this.status = _data["status"];
+            this.attachments = _data["attachments"];
+            this.recordedBy = _data["recordedBy"];
+            this.approvedBy = _data["approvedBy"];
+            this.discardedOn = _data["discardedOn"] ? DateTime.fromISO(_data["discardedOn"].toString()) : <any>undefined;
+            this.discardApprovedBy = _data["discardApprovedBy"];
+            this.discardedReason = _data["discardedReason"];
+            this.materialGradeId = _data["materialGradeId"];
+            this.comment = _data["comment"];
+            this.msl = _data["msl"];
+            this.unitOrderId = _data["unitOrderId"];
+            this.unitStockId = _data["unitStockId"];
+            this.orderingUOMId = _data["orderingUOMId"];
+            this.stockUOMId = _data["stockUOMId"];
+            this.quantityPerOrderingUOM = _data["quantityPerOrderingUOM"];
+            this.ctqRequirement = _data["ctqRequirement"];
+            this.ctqSpecifications = _data["ctqSpecifications"];
+            this.expiryApplicable = _data["expiryApplicable"];
+            this.minimumOrderQuantity = _data["minimumOrderQuantity"];
+            this.author = _data["author"];
+            this.publication = _data["publication"];
+            this.publicationYear = _data["publicationYear"];
+            this.subjectCategory = _data["subjectCategory"];
+            this.purchasedBy = _data["purchasedBy"];
+            this.weightPerUOM = _data["weightPerUOM"];
+            this.sellingPrice = _data["sellingPrice"];
+            if (Array.isArray(_data["itemCalibrationAgencies"])) {
+                this.itemCalibrationAgencies = [] as any;
+                for (let item of _data["itemCalibrationAgencies"])
+                    this.itemCalibrationAgencies!.push(CalibrationAgencyDto.fromJS(item));
+            }
+            if (Array.isArray(_data["itemCalibrationTypes"])) {
+                this.itemCalibrationTypes = [] as any;
+                for (let item of _data["itemCalibrationTypes"])
+                    this.itemCalibrationTypes!.push(CalibrationTypeDto.fromJS(item));
+            }
+            if (Array.isArray(_data["itemAttachments"])) {
+                this.itemAttachments = [] as any;
+                for (let item of _data["itemAttachments"])
+                    this.itemAttachments!.push(ItemAttachmentDto.fromJS(item));
+            }
+            if (Array.isArray(_data["itemStorageConditions"])) {
+                this.itemStorageConditions = [] as any;
+                for (let item of _data["itemStorageConditions"])
+                    this.itemStorageConditions!.push(ItemStorageConditionDto.fromJS(item));
+            }
+            if (Array.isArray(_data["itemSuppliers"])) {
+                this.itemSuppliers = [] as any;
+                for (let item of _data["itemSuppliers"])
+                    this.itemSuppliers!.push(ItemSupplierDto.fromJS(item));
+            }
+            if (Array.isArray(_data["itemProcurements"])) {
+                this.itemProcurements = [] as any;
+                for (let item of _data["itemProcurements"])
+                    this.itemProcurements!.push(ProcurementDto.fromJS(item));
+            }
+            if (Array.isArray(_data["itemSpares"])) {
+                this.itemSpares = [] as any;
+                for (let item of _data["itemSpares"])
+                    this.itemSpares!.push(ItemSpareDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ItemMasterDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ItemMasterDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["itemCategory"] = this.itemCategory;
+        data["categoryId"] = this.categoryId;
+        data["itemId"] = this.itemId;
+        data["genericName"] = this.genericName;
+        data["itemName"] = this.itemName;
+        data["itemType"] = this.itemType;
+        data["amcRequired"] = this.amcRequired;
+        data["itemMobility"] = this.itemMobility;
+        data["calibrationRequirement"] = this.calibrationRequirement;
+        data["alias"] = this.alias;
+        data["make"] = this.make;
+        data["model"] = this.model;
+        data["serialNumber"] = this.serialNumber;
+        data["specifications"] = this.specifications;
+        data["storageConditions"] = this.storageConditions;
+        data["supplierId"] = this.supplierId;
+        data["purchaseDate"] = this.purchaseDate ? this.purchaseDate.toString() : <any>undefined;
+        data["purchaseValue"] = this.purchaseValue;
+        data["gst"] = this.gst;
+        data["hsnCode"] = this.hsnCode;
+        data["orderingRate"] = this.orderingRate;
+        data["ratePerQuantity"] = this.ratePerQuantity;
+        data["rateAsOnDate"] = this.rateAsOnDate;
+        data["quantity"] = this.quantity;
+        data["leadTime"] = this.leadTime;
+        data["supplierItemName"] = this.supplierItemName;
+        data["status"] = this.status;
+        data["attachments"] = this.attachments;
+        data["recordedBy"] = this.recordedBy;
+        data["approvedBy"] = this.approvedBy;
+        data["discardedOn"] = this.discardedOn ? this.discardedOn.toString() : <any>undefined;
+        data["discardApprovedBy"] = this.discardApprovedBy;
+        data["discardedReason"] = this.discardedReason;
+        data["materialGradeId"] = this.materialGradeId;
+        data["comment"] = this.comment;
+        data["msl"] = this.msl;
+        data["unitOrderId"] = this.unitOrderId;
+        data["unitStockId"] = this.unitStockId;
+        data["orderingUOMId"] = this.orderingUOMId;
+        data["stockUOMId"] = this.stockUOMId;
+        data["quantityPerOrderingUOM"] = this.quantityPerOrderingUOM;
+        data["ctqRequirement"] = this.ctqRequirement;
+        data["ctqSpecifications"] = this.ctqSpecifications;
+        data["expiryApplicable"] = this.expiryApplicable;
+        data["minimumOrderQuantity"] = this.minimumOrderQuantity;
+        data["author"] = this.author;
+        data["publication"] = this.publication;
+        data["publicationYear"] = this.publicationYear;
+        data["subjectCategory"] = this.subjectCategory;
+        data["purchasedBy"] = this.purchasedBy;
+        data["weightPerUOM"] = this.weightPerUOM;
+        data["sellingPrice"] = this.sellingPrice;
+        if (Array.isArray(this.itemCalibrationAgencies)) {
+            data["itemCalibrationAgencies"] = [];
+            for (let item of this.itemCalibrationAgencies)
+                data["itemCalibrationAgencies"].push(item.toJSON());
+        }
+        if (Array.isArray(this.itemCalibrationTypes)) {
+            data["itemCalibrationTypes"] = [];
+            for (let item of this.itemCalibrationTypes)
+                data["itemCalibrationTypes"].push(item.toJSON());
+        }
+        if (Array.isArray(this.itemAttachments)) {
+            data["itemAttachments"] = [];
+            for (let item of this.itemAttachments)
+                data["itemAttachments"].push(item.toJSON());
+        }
+        if (Array.isArray(this.itemStorageConditions)) {
+            data["itemStorageConditions"] = [];
+            for (let item of this.itemStorageConditions)
+                data["itemStorageConditions"].push(item.toJSON());
+        }
+        if (Array.isArray(this.itemSuppliers)) {
+            data["itemSuppliers"] = [];
+            for (let item of this.itemSuppliers)
+                data["itemSuppliers"].push(item.toJSON());
+        }
+        if (Array.isArray(this.itemProcurements)) {
+            data["itemProcurements"] = [];
+            for (let item of this.itemProcurements)
+                data["itemProcurements"].push(item.toJSON());
+        }
+        if (Array.isArray(this.itemSpares)) {
+            data["itemSpares"] = [];
+            for (let item of this.itemSpares)
+                data["itemSpares"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IItemMasterDto {
+    id: string;
+    itemCategory: ItemCategory;
+    categoryId: number;
+    itemId: number;
+    genericName: string | undefined;
+    itemName: string | undefined;
+    itemType: ItemType;
+    amcRequired: ItemAMCRequirement;
+    itemMobility: ItemMobility;
+    calibrationRequirement: CalibrationRequirement;
+    alias: string | undefined;
+    make: string | undefined;
+    model: string | undefined;
+    serialNumber: string | undefined;
+    specifications: string | undefined;
+    storageConditions: string | undefined;
+    supplierId: string | undefined;
+    purchaseDate: DateTime | undefined;
+    purchaseValue: number | undefined;
+    gst: number;
+    hsnCode: string | undefined;
+    orderingRate: number;
+    ratePerQuantity: number;
+    rateAsOnDate: number | undefined;
+    quantity: number | undefined;
+    leadTime: number | undefined;
+    supplierItemName: string | undefined;
+    status: ItemStatus;
+    attachments: string | undefined;
+    recordedBy: number;
+    approvedBy: number;
+    discardedOn: DateTime | undefined;
+    discardApprovedBy: number;
+    discardedReason: string | undefined;
+    materialGradeId: string | undefined;
+    comment: string | undefined;
+    msl: string | undefined;
+    unitOrderId: string | undefined;
+    unitStockId: string | undefined;
+    orderingUOMId: string | undefined;
+    stockUOMId: string | undefined;
+    quantityPerOrderingUOM: number;
+    ctqRequirement: CTQRequirement;
+    ctqSpecifications: string | undefined;
+    expiryApplicable: ExpiryApplicable;
+    minimumOrderQuantity: number | undefined;
+    author: string | undefined;
+    publication: string | undefined;
+    publicationYear: number;
+    subjectCategory: SubjectCategory;
+    purchasedBy: number | undefined;
+    weightPerUOM: number | undefined;
+    sellingPrice: number | undefined;
+    itemCalibrationAgencies: CalibrationAgencyDto[] | undefined;
+    itemCalibrationTypes: CalibrationTypeDto[] | undefined;
+    itemAttachments: ItemAttachmentDto[] | undefined;
+    itemStorageConditions: ItemStorageConditionDto[] | undefined;
+    itemSuppliers: ItemSupplierDto[] | undefined;
+    itemProcurements: ProcurementDto[] | undefined;
+    itemSpares: ItemSpareDto[] | undefined;
 }
 
 export class ItemMasterInputDto implements IItemMasterInputDto {
@@ -27078,6 +27602,46 @@ export enum ItemMobility {
     Field = 2,
 }
 
+export class ItemSpareDto implements IItemSpareDto {
+    id!: string;
+    itemId!: string;
+
+    constructor(data?: IItemSpareDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.itemId = _data["itemId"];
+        }
+    }
+
+    static fromJS(data: any): ItemSpareDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ItemSpareDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["itemId"] = this.itemId;
+        return data;
+    }
+}
+
+export interface IItemSpareDto {
+    id: string;
+    itemId: string;
+}
+
 export class ItemSpareInputDto implements IItemSpareInputDto {
     id!: string | undefined;
     itemId!: string;
@@ -27121,6 +27685,58 @@ export interface IItemSpareInputDto {
 export enum ItemStatus {
     Active = 1,
     Inactive = 2,
+}
+
+export class ItemStorageConditionDto implements IItemStorageConditionDto {
+    id!: string;
+    hazardous!: HazardousEnum;
+    thresholdQuantity!: number;
+    location!: string | undefined;
+    itemId!: string;
+
+    constructor(data?: IItemStorageConditionDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.hazardous = _data["hazardous"];
+            this.thresholdQuantity = _data["thresholdQuantity"];
+            this.location = _data["location"];
+            this.itemId = _data["itemId"];
+        }
+    }
+
+    static fromJS(data: any): ItemStorageConditionDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ItemStorageConditionDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["hazardous"] = this.hazardous;
+        data["thresholdQuantity"] = this.thresholdQuantity;
+        data["location"] = this.location;
+        data["itemId"] = this.itemId;
+        return data;
+    }
+}
+
+export interface IItemStorageConditionDto {
+    id: string;
+    hazardous: HazardousEnum;
+    thresholdQuantity: number;
+    location: string | undefined;
+    itemId: string;
 }
 
 export class ItemStorageConditionInputDto implements IItemStorageConditionInputDto {
@@ -27172,6 +27788,50 @@ export interface IItemStorageConditionInputDto {
     hazardous: HazardousEnum;
     thresholdQuantity: number;
     location: string | undefined;
+    itemId: string;
+}
+
+export class ItemSupplierDto implements IItemSupplierDto {
+    id!: string;
+    supplierId!: string;
+    itemId!: string;
+
+    constructor(data?: IItemSupplierDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.supplierId = _data["supplierId"];
+            this.itemId = _data["itemId"];
+        }
+    }
+
+    static fromJS(data: any): ItemSupplierDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ItemSupplierDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["supplierId"] = this.supplierId;
+        data["itemId"] = this.itemId;
+        return data;
+    }
+}
+
+export interface IItemSupplierDto {
+    id: string;
+    supplierId: string;
     itemId: string;
 }
 
@@ -31211,6 +31871,66 @@ export interface IPOGeneralTermInputDto {
     id: string | undefined;
     name: string | undefined;
     description: string | undefined;
+}
+
+export class ProcurementDto implements IProcurementDto {
+    id!: string;
+    make!: string | undefined;
+    catalogueNumber!: string | undefined;
+    ratePerPack!: number;
+    quantityPerOrderingUOM!: number;
+    ratePerStockUOM!: number;
+    itemId!: string;
+
+    constructor(data?: IProcurementDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.make = _data["make"];
+            this.catalogueNumber = _data["catalogueNumber"];
+            this.ratePerPack = _data["ratePerPack"];
+            this.quantityPerOrderingUOM = _data["quantityPerOrderingUOM"];
+            this.ratePerStockUOM = _data["ratePerStockUOM"];
+            this.itemId = _data["itemId"];
+        }
+    }
+
+    static fromJS(data: any): ProcurementDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ProcurementDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["make"] = this.make;
+        data["catalogueNumber"] = this.catalogueNumber;
+        data["ratePerPack"] = this.ratePerPack;
+        data["quantityPerOrderingUOM"] = this.quantityPerOrderingUOM;
+        data["ratePerStockUOM"] = this.ratePerStockUOM;
+        data["itemId"] = this.itemId;
+        return data;
+    }
+}
+
+export interface IProcurementDto {
+    id: string;
+    make: string | undefined;
+    catalogueNumber: string | undefined;
+    ratePerPack: number;
+    quantityPerOrderingUOM: number;
+    ratePerStockUOM: number;
+    itemId: string;
 }
 
 export class ProcurementInputDto implements IProcurementInputDto {

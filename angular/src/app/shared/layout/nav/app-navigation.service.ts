@@ -92,6 +92,12 @@ export class AppNavigationService {
                         'Pages.Administration.AuditLogs',
                         'flaticon-folder-1',
                         '/app/main/companies'
+                    ),
+                    new AppMenuItem(
+                        'Item Masters',
+                        'Pages.Administration.AuditLogs',
+                        'flaticon-folder-1',
+                        '/app/main/item-masters'
                     )
 
                     
