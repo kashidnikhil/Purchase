@@ -1282,6 +1282,10 @@
 	  <text name="EditItem">Edit Item</text>
 	  <text name="ItemsHeaderInfo">Manage item masters.</text>
 	  <text name="ItemMasters">Item Masters</text>
+	  <text name="ItemName">Item Name</text>
+	  <text name="GenericName">Generic Name</text>
+	  <text name="ItemCode">Item Code</text>
 	  
+  
   </texts>
 </localizationDictionary>

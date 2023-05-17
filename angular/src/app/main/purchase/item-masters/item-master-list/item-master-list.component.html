@@ -58,7 +58,7 @@
                             >
                                 <ng-template pTemplate="header">
                                     <tr>
-                                        <th style="width: 130px">
+                                        <th style="width: 120px">
                                         <!-- [hidden]="
                                                 !(
                                                     [
@@ -71,20 +71,32 @@
                                             " -->
                                             {{ 'Actions' | localize }}
                                         </th>
-                                        <th style="width: 150px" pSortableColumn="name">
-                                            {{ 'Name' | localize }}
-                                            <p-sortIcon field="name"></p-sortIcon>
+                                        <th style="width: 130px" pSortableColumn="ItemName">
+                                            {{ 'ItemCode' | localize }}
+                                            <!-- <p-sortIcon field="ItemName"></p-sortIcon> -->
                                         </th>
-                                        <!-- <th style="width: 150px" pSortableColumn="description">
-                                            {{ 'Description' | localize }}
-                                            <p-sortIcon field="description"></p-sortIcon>
-                                        </th> -->
+                                        <th style="width: 160px" pSortableColumn="ItemName">
+                                            {{ 'ItemName' | localize }}
+                                            <p-sortIcon field="ItemName"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 170px" pSortableColumn="GenericName">
+                                            {{ 'GenericName' | localize }}
+                                            <p-sortIcon field="GenericName"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 150px" pSortableColumn="Make">
+                                            {{ 'Make' | localize }}
+                                            <p-sortIcon field="Make"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 150px" pSortableColumn="UnitName">
+                                            {{ 'Unit' | localize }}
+                                            <p-sortIcon field="UnitName"></p-sortIcon>
+                                        </th>
                                        
                                     </tr>
                                 </ng-template>
                                 <ng-template pTemplate="body" let-record="$implicit">
                                     <tr>
-                                        <td  style="width: 130px">
+                                        <td  style="width: 120px">
                                         <!-- [hidden]="
                                                 !(
                                                     [
