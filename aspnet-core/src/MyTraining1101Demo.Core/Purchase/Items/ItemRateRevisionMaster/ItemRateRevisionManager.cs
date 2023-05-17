@@ -49,7 +49,7 @@
         {
             try
             {
-                var itemStorageConditionId = await this._itemRateRevisionRepository.InsertOrUpdateAndGetIdAsync(input);
+                var itemRateRevisionId = await this._itemRateRevisionRepository.InsertOrUpdateAndGetIdAsync(input);
                 await CurrentUnitOfWork.SaveChangesAsync();
             }
             catch (Exception ex)
