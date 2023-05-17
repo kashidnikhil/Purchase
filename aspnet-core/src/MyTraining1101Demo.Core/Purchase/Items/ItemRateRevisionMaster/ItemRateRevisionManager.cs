@@ -4,6 +4,7 @@
     using Abp.Domain.Uow;
     using Microsoft.Extensions.Configuration;
     using MyTraining1101Demo.Configuration;
+    using MyTraining1101Demo.Purchase.Items.Dto.ItemMaster;
     using MyTraining1101Demo.Purchase.Items.Dto.ItemRateRevisionMaster;
     using System;
     using System.Collections.Generic;
@@ -25,31 +26,37 @@
             _appConfiguration = configurationAccessor.Configuration;
         }
 
-        public async Task<Guid> BulkInsertOrUpdateItemRateRevisions(List<ItemRateRevisionInputDto> itemRateRevisionInputList)
-        {
-            try
-            {
-                Guid itemId = Guid.Empty;
-                var mappedItemRateRevisions = ObjectMapper.Map<List<ItemRateRevision>>(itemRateRevisionInputList);
-                for (int i = 0; i < mappedItemRateRevisions.Count; i++)
-                {
-                    itemId = (Guid)mappedItemRateRevisions[i].ItemId;
-                    await this.InsertOrUpdateItemRateRevisionIntoDB(mappedItemRateRevisions[i]);
-                }
-                return itemId;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
+        //public async Task<Guid> BulkInsertOrUpdateItemRateRevisions(List<ItemRateRevisionInputDto> itemRateRevisionInputList)
+        //{
+        //    try
+        //    {
+        //        Guid itemId = Guid.Empty;
+        //        var mappedItemRateRevisions = ObjectMapper.Map<List<ItemRateRevision>>(itemRateRevisionInputList);
+        //        for (int i = 0; i < mappedItemRateRevisions.Count; i++)
+        //        {
+        //            itemId = (Guid)mappedItemRateRevisions[i].ItemId;
+        //            await this.InsertOrUpdateItemRateRevisionIntoDB(mappedItemRateRevisions[i]);
+        //        }
+        //        return itemId;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //}
 
         [UnitOfWork]
-        public async Task InsertOrUpdateItemRateRevisionIntoDB(ItemRateRevision input)
+        public async Task InsertItemRateRevisionIntoDB(ItemMasterInputDto input,Guid ItemMasterId)
         {
             try
             {
-                var itemRateRevisionId = await this._itemRateRevisionRepository.InsertOrUpdateAndGetIdAsync(input);
+                var mappedItemRateRevision = ObjectMapper.Map<ItemRateRevision>(input);
+               
+                mappedItemRateRevision.Id = Guid.Empty;
+                mappedItemRateRevision.CreationTime = DateTime.UtcNow;
+                mappedItemRateRevision.ItemId = ItemMasterId;
+
+                var itemRateRevisionId = await this._itemRateRevisionRepository.InsertOrUpdateAndGetIdAsync(mappedItemRateRevision);
                 await CurrentUnitOfWork.SaveChangesAsync();
             }
             catch (Exception ex)

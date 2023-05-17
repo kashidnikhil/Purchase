@@ -98,6 +98,7 @@ using MyTraining1101Demo.Purchase.Items.ProcurementMaster;
 using MyTraining1101Demo.Purchase.Items.Dto.ProcurementMaster;
 using MyTraining1101Demo.Purchase.Items.RequiredItemSparesMaster;
 using MyTraining1101Demo.Purchase.Items.Dto.RequiredItemSparesMaster;
+using Abp.ObjectMapping;
 
 namespace MyTraining1101Demo
 {
@@ -327,7 +328,12 @@ namespace MyTraining1101Demo
             configuration.CreateMap<ItemAttachment, ItemAttachmentInputDto>().ReverseMap();
 
             configuration.CreateMap<ItemRateRevision, ItemRateRevisionDto>().ReverseMap();
-            configuration.CreateMap<ItemRateRevision, ItemRateRevisionInputDto>().ReverseMap();
+            //configuration.CreateMap<ItemRateRevision, ItemRateRevisionInputDto>().ReverseMap();
+            configuration.CreateMap<ItemRateRevision, ItemMasterInputDto>()
+                .ForMember(dto => dto.Make, options => options.MapFrom(x => x.Make))
+                //.ForMember(dto => dto, options => options.MapFrom(x => x.))
+                .ReverseMap();
+
 
             configuration.CreateMap<ItemStorageCondition, ItemStorageConditionDto>().ReverseMap();
             configuration.CreateMap<ItemStorageCondition, ItemStorageConditionInputDto>().ReverseMap();

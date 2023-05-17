@@ -89,42 +89,70 @@
                 {
                     if (input.ItemCalibrationAgencies != null && input.ItemCalibrationAgencies.Count > 0)
                     {
-                        //Code to be implemented for insertions of item Item Calibration Agencies
+                        input.ItemCalibrationAgencies.ForEach(itemCalibrationAgency =>
+                        {
+                            itemCalibrationAgency.ItemId = insertedOrUpdatedItemId;
+                        });
+                        await this._calibrationAgencyManager.BulkInsertOrUpdateItemCalibrationAgencies(input.ItemCalibrationAgencies);
                     }
 
                     if (input.ItemCalibrationTypes != null && input.ItemCalibrationTypes.Count > 0)
                     {
-                        //Code to be implemented for insertions of item Item Calibration Types
+                        input.ItemCalibrationTypes.ForEach(ItemCalibrationType =>
+                        {
+                            ItemCalibrationType.ItemId = insertedOrUpdatedItemId;
+                        });
+                        await this._calibrationTypeManager.BulkInsertOrUpdateItemCalibrationTypes(input.ItemCalibrationTypes);
+
                     }
 
                     if (input.ItemAttachments != null && input.ItemAttachments.Count > 0)
                     {
-                        //Code to be implemented for insertions of item attachments
+                        input.ItemAttachments.ForEach(ItemAttachment =>
+                        {
+                            ItemAttachment.ItemId = insertedOrUpdatedItemId;
+                        });
+                        await this._itemAttachmentManager.BulkInsertOrUpdateItemAttachments(input.ItemAttachments);
                     }
 
                     if (input.ItemStorageConditions != null && input.ItemStorageConditions.Count > 0)
                     {
-                        //Code to be implemented for insertions of Item Storage Conditions
+                        input.ItemStorageConditions.ForEach(ItemStorageCondition =>
+                        {
+                            ItemStorageCondition.ItemId = insertedOrUpdatedItemId;
+                        });
+                        await this._itemStorageConditionManager.BulkInsertOrUpdateItemStorageConditions(input.ItemStorageConditions);
                     }
 
                     if (input.ItemSuppliers != null && input.ItemSuppliers.Count > 0)
                     {
-                        //Code to be implemented for insertions of Item Suppliers
+                        input.ItemSuppliers.ForEach(ItemSupplier =>
+                        {
+                            ItemSupplier.ItemId = insertedOrUpdatedItemId;
+                        });
+                        await this._itemSupplierManager.BulkInsertOrUpdateItemSuppliers(input.ItemSuppliers);
                     }
 
                     if (input.ItemProcurements != null && input.ItemProcurements.Count > 0)
                     {
-                        //Code to be implemented for insertions of Item Procurements
+                        input.ItemProcurements.ForEach(ItemProcurement =>
+                        {
+                            ItemProcurement.ItemId = insertedOrUpdatedItemId;
+                        });
+                        await this._itemProcurementManager.BulkInsertOrUpdateItemProcurements(input.ItemProcurements);
                     }
 
                     if (input.ItemSpares != null && input.ItemSpares.Count > 0)
                     {
-                        //Code to be implemented for insertions of Item Spares
+                        input.ItemSpares.ForEach(ItemSpare =>
+                        {
+                            ItemSpare.ItemId = insertedOrUpdatedItemId;
+                        });
+                        await this._itemSpareManager.BulkInsertOrUpdateItemSpares(input.ItemSpares);
                     }
 
-
-
-
+                    //This is used for inserting item rate. Used for maintaining rate history
+                    await this._itemRateRevisionManager.InsertItemRateRevisionIntoDB(input, insertedOrUpdatedItemId);
                 }
                 return insertedOrUpdatedItemId;
             }
