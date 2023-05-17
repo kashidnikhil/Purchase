@@ -1,5 +1,14 @@
-﻿using MyTraining1101Demo.Purchase.Items.Enums;
+﻿using MyTraining1101Demo.Purchase.Items.Dto.CalibrationAgenciesMaster;
+using MyTraining1101Demo.Purchase.Items.Dto.CalibrationTypeMaster;
+using MyTraining1101Demo.Purchase.Items.Dto.ItemAttachmentsMaster;
+using MyTraining1101Demo.Purchase.Items.Dto.ItemStorageConditionMaster;
+using MyTraining1101Demo.Purchase.Items.Dto.ItemSupplierMaster;
+using MyTraining1101Demo.Purchase.Items.Dto.ProcurementMaster;
+using MyTraining1101Demo.Purchase.Items.Dto.RequiredItemSparesMaster;
+using MyTraining1101Demo.Purchase.Items.Enums;
+using MyTraining1101Demo.Purchase.Suppliers.Dto.MappedSupplierCategories;
 using System;
+using System.Collections.Generic;
 
 namespace MyTraining1101Demo.Purchase.Items.Dto.ItemMaster
 {
@@ -108,5 +117,20 @@ namespace MyTraining1101Demo.Purchase.Items.Dto.ItemMaster
         public decimal? WeightPerUOM { get; set; }
 
         public decimal? SellingPrice { get; set; }
+
+        public List<CalibrationAgencyInputDto> ItemCalibrationAgencies { get; set; }
+
+        public List<CalibrationTypeInputDto> ItemCalibrationTypes { get; set; }
+
+        public List<ItemAttachmentInputDto> ItemAttachments { get; set; }
+
+        public List<ItemStorageConditionInputDto> ItemStorageConditions { get; set; }
+
+        public List<ItemSupplierInputDto> ItemSuppliers { get; set; }
+
+        public List<ProcurementInputDto> ItemProcurements { get; set; }
+
+        public List<ItemSpareInputDto> ItemSpares { get; set; }
+        
     }
 }

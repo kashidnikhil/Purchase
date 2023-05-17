@@ -5,6 +5,7 @@
     using System.Threading.Tasks;
     using System;
     using Abp.Application.Services.Dto;
+    using MyTraining1101Demo.Purchase.Items.Enums;
 
     public interface IItemManager : IDomainService
     {
@@ -13,5 +14,9 @@
         Task<bool> DeleteItemMasterFromDB(Guid itemId);
 
         Task<ItemMasterDto> GetItemMasterByIdFromDB(Guid itemId);
+
+        Task<ItemMasterDto?> GetItemMasterByNameFromDB(ItemCategory itemCategory, string itemName);
+
+        Task<ItemMasterDto?> FindItemMasterByCategoryIdFromDB(ItemCategory itemCategory);
     }
 }

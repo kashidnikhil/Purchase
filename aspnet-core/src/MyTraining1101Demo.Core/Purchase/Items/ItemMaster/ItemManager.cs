@@ -9,6 +9,7 @@
     using Microsoft.Extensions.Configuration;
     using MyTraining1101Demo.Configuration;
     using MyTraining1101Demo.Purchase.Items.Dto.ItemMaster;
+    using MyTraining1101Demo.Purchase.Items.Enums;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -95,6 +96,44 @@
                 var itemMasterItem = await this._itemMasterRepository.GetAsync(itemId);
 
                 return ObjectMapper.Map<ItemMasterDto>(itemMasterItem);
+
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.Message, ex);
+                throw ex;
+            }
+        }
+
+        public async Task<ItemMasterDto?> GetItemMasterByNameFromDB(ItemCategory itemCategory, string itemName)
+        {
+            try
+            {
+                var itemMaster = await this._itemMasterRepository.GetAll()
+                    .Where(x => x.ItemCategory == itemCategory && x.ItemName.ToLower().Trim() == itemName.Trim().ToLower())
+                    .OrderByDescending(x=> x.ItemId)
+                    .FirstOrDefaultAsync();
+
+                return ObjectMapper.Map<ItemMasterDto?>(itemMaster);
+
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.Message, ex);
+                throw ex;
+            }
+        }
+
+        public async Task<ItemMasterDto?> FindItemMasterByCategoryIdFromDB(ItemCategory itemCategory)
+        {
+            try
+            {
+                var itemMaster = await this._itemMasterRepository.GetAll()
+                    .Where(x => x.ItemCategory == itemCategory)
+                    .OrderByDescending(x=> x.CategoryId)
+                    .FirstOrDefaultAsync();
+
+                return ObjectMapper.Map<ItemMasterDto?>(itemMaster);
 
             }
             catch (Exception ex)

@@ -62,60 +62,77 @@
                 throw ex;
             }
         }
-        //public async Task<Guid> InsertOrUpdateItem(ItemMasterInputDto input)
-        //{
-        //    try
-        //    {
-        //        var insertedOrUpdatedSupplierId = await this._supplierManager.InsertOrUpdateSupplierMasterIntoDB(input);
 
-        //        if (insertedOrUpdatedSupplierId != Guid.Empty)
-        //        {
-        //            if (input.SupplierAddresses != null && input.SupplierAddresses.Count > 0)
-        //            {
-        //                input.SupplierAddresses.ForEach(supplierAddressItem =>
-        //                {
-        //                    supplierAddressItem.SupplierId = insertedOrUpdatedSupplierId;
-        //                });
-        //                await this._supplierAddressManager.BulkInsertOrUpdateSupplierAddresses(input.SupplierAddresses);
-        //            }
+        public async Task<Guid> InsertOrUpdateItem(ItemMasterInputDto input)
+        {
+            try
+            {
+                var existingItem = await this._itemManager.GetItemMasterByNameFromDB(input.ItemCategory, input.ItemName);
+                if (existingItem == null)
+                {
+                    var maximumCategoryExistingItem = await this._itemManager.FindItemMasterByCategoryIdFromDB(input.ItemCategory);
+                    if (maximumCategoryExistingItem != null) {
+                        input.CategoryId = maximumCategoryExistingItem.CategoryId + 1;
+                    }
+                    else { 
+                        input.CategoryId = (int)input.ItemCategory;
+                    }
+                    input.ItemId = 1;
+                }
+                else {
+                    input.CategoryId = existingItem.CategoryId;
+                    input.ItemId = existingItem.ItemId + 1;
+                }
 
-        //            if (input.SupplierContactPersons != null && input.SupplierContactPersons.Count > 0)
-        //            {
-        //                input.SupplierContactPersons.ForEach(supplierContactPersonItem =>
-        //                {
-        //                    supplierContactPersonItem.SupplierId = insertedOrUpdatedSupplierId;
-        //                });
-        //                await this._supplierContactPersonManager.BulkInsertOrUpdateSupplierContactPersons(input.SupplierContactPersons);
-        //            }
+                var insertedOrUpdatedItemId = await this._itemManager.InsertOrUpdateItemMasterIntoDB(input);
+                if (insertedOrUpdatedItemId != Guid.Empty)
+                {
+                    if (input.SupplierAddresses != null && input.SupplierAddresses.Count > 0)
+                    {
+                        input.SupplierAddresses.ForEach(supplierAddressItem =>
+                        {
+                            supplierAddressItem.SupplierId = insertedOrUpdatedSupplierId;
+                        });
+                        await this._supplierAddressManager.BulkInsertOrUpdateSupplierAddresses(input.SupplierAddresses);
+                    }
 
-        //            if (input.SupplierBanks != null && input.SupplierBanks.Count > 0)
-        //            {
-        //                input.SupplierBanks.ForEach(supplierBankItem =>
-        //                {
-        //                    supplierBankItem.SupplierId = insertedOrUpdatedSupplierId;
-        //                });
-        //                await this._supplierBankManager.BulkInsertOrUpdateSupplierBanks(input.SupplierBanks);
-        //            }
+                    //if (input.SupplierContactPersons != null && input.SupplierContactPersons.Count > 0)
+                    //{
+                    //    input.SupplierContactPersons.ForEach(supplierContactPersonItem =>
+                    //    {
+                    //        supplierContactPersonItem.SupplierId = insertedOrUpdatedSupplierId;
+                    //    });
+                    //    await this._supplierContactPersonManager.BulkInsertOrUpdateSupplierContactPersons(input.SupplierContactPersons);
+                    //}
 
-        //            if (input.SupplierCategories != null && input.SupplierCategories.Count > 0)
-        //            {
-        //                input.SupplierCategories.ForEach(supplierCategoryItem =>
-        //                {
-        //                    supplierCategoryItem.SupplierId = insertedOrUpdatedSupplierId;
-        //                });
+                    //if (input.SupplierBanks != null && input.SupplierBanks.Count > 0)
+                    //{
+                    //    input.SupplierBanks.ForEach(supplierBankItem =>
+                    //    {
+                    //        supplierBankItem.SupplierId = insertedOrUpdatedSupplierId;
+                    //    });
+                    //    await this._supplierBankManager.BulkInsertOrUpdateSupplierBanks(input.SupplierBanks);
+                    //}
 
-        //                await this._supplierCategoryManager.BulkInsertOrUpdateMappedSupplierCategories(input.SupplierCategories);
-        //            }
+                    //if (input.SupplierCategories != null && input.SupplierCategories.Count > 0)
+                    //{
+                    //    input.SupplierCategories.ForEach(supplierCategoryItem =>
+                    //    {
+                    //        supplierCategoryItem.SupplierId = insertedOrUpdatedSupplierId;
+                    //    });
 
-        //        }
-        //        return insertedOrUpdatedSupplierId;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Logger.Error(ex.Message, ex);
-        //        throw ex;
-        //    }
-        //}
+                    //    await this._supplierCategoryManager.BulkInsertOrUpdateMappedSupplierCategories(input.SupplierCategories);
+                    //}
+
+                }
+                return insertedOrUpdatedItemId;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.Message, ex);
+                throw ex;
+            }
+        }
 
         public async Task<bool> DeleteItemMasterData(Guid itemId)
         {
