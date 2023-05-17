@@ -131,7 +131,7 @@
                                                         <a
                                                             href="javascript:;"
                                                             class="dropdown-item"
-                                                            (click)="createOrEditSupplierModal.show(record.id)"
+                                                            (click)="createOrEditItemMasterModal.show(record.id)"
                                                         >
                                                             {{ 'Edit' | localize }}
                                                         </a>
@@ -156,14 +156,26 @@
                                                 </ul>
                                             </div>
                                         </td>
-                                        <td style="width: 150px">
-                                            <span class="p-column-title">{{ 'Name' | localize }}</span>
-                                            {{ record.name }}
+                                        <td style="width: 130px">
+                                            <span class="p-column-title">{{ 'ItemCode' | localize }}</span>
+                                            {{ record.categoryId }} - {{ record.itemId }}
                                         </td>
-                                        <!-- <td style="width: 150px">
-                                            <span class="p-column-title">{{ 'Description' | localize }}</span>
-                                            {{ record.description }}
-                                        </td> -->
+                                        <td style="width: 160px">
+                                            <span class="p-column-title">{{ 'ItemName' | localize }}</span>
+                                            {{ record.itemName }}
+                                        </td>
+                                        <td style="width: 170px">
+                                            <span class="p-column-title">{{ 'GenericName' | localize }}</span>
+                                            {{ record.genericName }}
+                                        </td>
+                                        <td style="width: 150px">
+                                            <span class="p-column-title">{{ 'Make' | localize }}</span>
+                                            {{ record.make }}
+                                        </td>
+                                        <td style="width: 150px">
+                                            <span class="p-column-title">{{ 'Unit' | localize }}</span>
+                                            {{ record.unitName }}
+                                        </td>
                                     </tr>
                                 </ng-template>
                             </p-table>

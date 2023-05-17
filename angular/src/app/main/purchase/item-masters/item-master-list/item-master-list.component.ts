@@ -2,7 +2,7 @@ import { Component, Injector, ViewChild, ViewEncapsulation, AfterViewInit } from
 import { ActivatedRoute } from '@angular/router';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { AppComponentBase } from '@shared/common/app-component-base';
-import { ItemMasterDto, ItemServiceProxy, SupplierDto, SupplierServiceProxy } from '@shared/service-proxies/service-proxies';
+import { ItemMasterDto, ItemServiceProxy } from '@shared/service-proxies/service-proxies';
 import { LazyLoadEvent } from 'primeng/api';
 import { Paginator } from 'primeng/paginator';
 import { Table } from 'primeng/table';
@@ -16,7 +16,7 @@ import { finalize } from 'rxjs/operators';
     animations: [appModuleAnimation()],
 })
 export class ItemMasterListComponent extends AppComponentBase implements AfterViewInit {
-    @ViewChild('createOrEditItemMasterModal', { static: true }) createOrEditSupplierModal: any; //CreateOrEditSupplierModalComponent;
+    @ViewChild('createOrEditItemMasterModal', { static: true }) createOrEditItemMasterModal: any; //CreateOrEditSupplierModalComponent;
     @ViewChild('dataTable', { static: true }) dataTable: Table;
     @ViewChild('paginator', { static: true }) paginator: Paginator;
     
@@ -63,11 +63,11 @@ export class ItemMasterListComponent extends AppComponentBase implements AfterVi
     }
 
     createItem(): void {
-        this.createOrEditSupplierModal.show();
+        this.createOrEditItemMasterModal.show();
     }
 
     deleteItem(itemMaster: ItemMasterDto): void {
-        this.message.confirm(this.l('SupplierDeleteWarningMessage', itemMaster.itemName), this.l('AreYouSure'), (isConfirmed) => {
+        this.message.confirm(this.l('ItemMasterDeleteWarningMessage', itemMaster.itemName), this.l('AreYouSure'), (isConfirmed) => {
             if (isConfirmed) {
                 this._itemMasterService.deleteItemMasterData(itemMaster.id).subscribe(() => {
                     this.reloadPage();
