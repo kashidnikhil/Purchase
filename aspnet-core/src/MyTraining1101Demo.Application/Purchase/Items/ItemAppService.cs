@@ -87,42 +87,40 @@
                 var insertedOrUpdatedItemId = await this._itemManager.InsertOrUpdateItemMasterIntoDB(input);
                 if (insertedOrUpdatedItemId != Guid.Empty)
                 {
-                    if (input.SupplierAddresses != null && input.SupplierAddresses.Count > 0)
+                    if (input.ItemCalibrationAgencies != null && input.ItemCalibrationAgencies.Count > 0)
                     {
-                        input.SupplierAddresses.ForEach(supplierAddressItem =>
-                        {
-                            supplierAddressItem.SupplierId = insertedOrUpdatedSupplierId;
-                        });
-                        await this._supplierAddressManager.BulkInsertOrUpdateSupplierAddresses(input.SupplierAddresses);
+                        //Code to be implemented for insertions of item Item Calibration Agencies
                     }
 
-                    //if (input.SupplierContactPersons != null && input.SupplierContactPersons.Count > 0)
-                    //{
-                    //    input.SupplierContactPersons.ForEach(supplierContactPersonItem =>
-                    //    {
-                    //        supplierContactPersonItem.SupplierId = insertedOrUpdatedSupplierId;
-                    //    });
-                    //    await this._supplierContactPersonManager.BulkInsertOrUpdateSupplierContactPersons(input.SupplierContactPersons);
-                    //}
+                    if (input.ItemCalibrationTypes != null && input.ItemCalibrationTypes.Count > 0)
+                    {
+                        //Code to be implemented for insertions of item Item Calibration Types
+                    }
 
-                    //if (input.SupplierBanks != null && input.SupplierBanks.Count > 0)
-                    //{
-                    //    input.SupplierBanks.ForEach(supplierBankItem =>
-                    //    {
-                    //        supplierBankItem.SupplierId = insertedOrUpdatedSupplierId;
-                    //    });
-                    //    await this._supplierBankManager.BulkInsertOrUpdateSupplierBanks(input.SupplierBanks);
-                    //}
+                    if (input.ItemAttachments != null && input.ItemAttachments.Count > 0)
+                    {
+                        //Code to be implemented for insertions of item attachments
+                    }
 
-                    //if (input.SupplierCategories != null && input.SupplierCategories.Count > 0)
-                    //{
-                    //    input.SupplierCategories.ForEach(supplierCategoryItem =>
-                    //    {
-                    //        supplierCategoryItem.SupplierId = insertedOrUpdatedSupplierId;
-                    //    });
+                    if (input.ItemStorageConditions != null && input.ItemStorageConditions.Count > 0)
+                    {
+                        //Code to be implemented for insertions of Item Storage Conditions
+                    }
 
-                    //    await this._supplierCategoryManager.BulkInsertOrUpdateMappedSupplierCategories(input.SupplierCategories);
-                    //}
+                    if (input.ItemSuppliers != null && input.ItemSuppliers.Count > 0)
+                    {
+                        //Code to be implemented for insertions of Item Suppliers
+                    }
+
+                    if (input.ItemProcurements != null && input.ItemProcurements.Count > 0)
+                    {
+                        //Code to be implemented for insertions of Item Procurements
+                    }
+
+                    if (input.ItemSpares != null && input.ItemSpares.Count > 0)
+                    {
+                        //Code to be implemented for insertions of Item Spares
+                    }
 
                 }
                 return insertedOrUpdatedItemId;
