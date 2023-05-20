@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Injector, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import {
-    LegalEntityDto,
+    ItemMasterDto,
     LegalEntityServiceProxy,
     MappedSupplierCategoryDto,
     MappedSupplierCategoryInputDto,
@@ -37,78 +37,86 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
     active: boolean = false;
     submitted: boolean = false;
     saving: boolean = false;
-    currentTab: number = 0;
-
+    
     itemCategoriesList: DropdownDto[] = [];
 
     constructor(
         injector: Injector,
         private formBuilder: FormBuilder,
         private _supplierService: SupplierServiceProxy,
-        private _supplierCategoryService: SupplierCategoryServiceProxy,
-        private _legalEntityService: LegalEntityServiceProxy,
         private _itemMockService : ItemMockService
     ) {
         super(injector);
     }
 
-    async show(supplierId?: string) {
+    async show(itemMasterId?: string) {
         await this.loadDropdownList();
-        if (!supplierId) {
-            let supplierItem = new SupplierDto();
-            this.initialiseSupplierForm(supplierItem);
+        let itemMaster = new ItemMasterDto();
+        if (!itemMasterId) {
+            this.initialiseItemMasterForm(itemMaster);
+            // this.initialiseSupplierForm(supplierItem);
             this.active = true;
             this.modal.show();
         }
         else {
-            this._supplierService.getSupplierMasterById(supplierId).subscribe((response: SupplierDto) => {
+            this._supplierService.getSupplierMasterById(itemMasterId).subscribe((response: SupplierDto) => {
                 let supplierItem = response;
-                this.initialiseSupplierForm(supplierItem);
+                // this.initialiseSupplierForm(supplierItem);
                 this.active = true;
                 this.modal.show();
             });
         }
     }
 
-    initialiseSupplierForm(supplierItem: SupplierDto) {
-        let supplierAddressItem: SupplierAddressDto = new SupplierAddressDto();
-        let supplierContactPersonItem: SupplierContactPersonDto = new SupplierContactPersonDto();
-        let supplierBankItem: SupplierBankDto = new SupplierBankDto();
+    initialiseItemMasterForm(itemMaster : ItemMasterDto){
         this.itemMasterForm = this.formBuilder.group({
-            id: new FormControl(supplierItem.id, []),
-            name: new FormControl(supplierItem.name, [Validators.required]),
-            phoneNumber: new FormControl(supplierItem.telephoneNumber, []),
-            mobile: new FormControl(supplierItem.mobile, []),
-            email: new FormControl(supplierItem.email, []),
-            website: new FormControl(supplierItem.website, []),
-            certifications: new FormControl(supplierItem.certifications, []),
-            legalEntityId: new FormControl(supplierItem.legalEntityId, []),
-            gstNumber: new FormControl(supplierItem.gstNumber, []),
-            yearOfEstablishment: new FormControl(supplierItem.yearOfEstablishment, []),
-            deliveryBy: new FormControl(supplierItem.deliveryBy, []),
-            category: new FormControl(supplierItem.category, []),
-            paymentMode: new FormControl(supplierItem.paymentMode, []),
-            supplierCategories : [this.unMapSupplierCategories(supplierItem.supplierCategories), []],
-            // supplierCategories: new FormControl(<SupplierCategoryDto[]>(this.unMapSupplierCategories(supplierItem.supplierCategories)), []),
-            supplierAddresses: supplierItem.supplierAddresses && supplierItem.supplierAddresses.length > 0 ? this.formBuilder.array(
-                supplierItem.supplierAddresses.map((x: SupplierAddressDto) =>
-                    this.createSupplierAddress(x)
-                )
-            ) : this.formBuilder.array([this.createSupplierAddress(supplierAddressItem)]),
-            supplierContactPersons: supplierItem.supplierContactPersons && supplierItem.supplierContactPersons.length > 0 ? this.formBuilder.array(
-                supplierItem.supplierContactPersons.map((x: SupplierContactPersonDto) =>
-                    this.createSupplierContactPerson(x)
-                )
-            ) : this.formBuilder.array([this.createSupplierContactPerson(supplierContactPersonItem)]),
-            supplierBanks: supplierItem.supplierBanks && supplierItem.supplierBanks.length > 0 ? this.formBuilder.array(
-                supplierItem.supplierBanks.map((x: SupplierBankDto) =>
-                    this.createSupplierBank(x)
-                )
-            ) : this.formBuilder.array([this.createSupplierBank(supplierBankItem)])
-
+            id: new FormControl(itemMaster.id, []),
+            itemCategory : new FormControl(itemMaster.itemCategory, []),
+            genericName : new FormControl(itemMaster.genericName, []),
+            itemName : new FormControl(itemMaster.itemName, []),
+            alias : new FormControl(itemMaster.alias, []),
         });
-        console.log(this.itemMasterForm.value);
     }
+
+    // initialiseSupplierForm(supplierItem: SupplierDto) {
+    //     let supplierAddressItem: SupplierAddressDto = new SupplierAddressDto();
+    //     let supplierContactPersonItem: SupplierContactPersonDto = new SupplierContactPersonDto();
+    //     let supplierBankItem: SupplierBankDto = new SupplierBankDto();
+    //     this.itemMasterForm = this.formBuilder.group({
+    //         id: new FormControl(supplierItem.id, []),
+    //         name: new FormControl(supplierItem.name, [Validators.required]),
+    //         phoneNumber: new FormControl(supplierItem.telephoneNumber, []),
+    //         mobile: new FormControl(supplierItem.mobile, []),
+    //         email: new FormControl(supplierItem.email, []),
+    //         website: new FormControl(supplierItem.website, []),
+    //         certifications: new FormControl(supplierItem.certifications, []),
+    //         legalEntityId: new FormControl(supplierItem.legalEntityId, []),
+    //         gstNumber: new FormControl(supplierItem.gstNumber, []),
+    //         yearOfEstablishment: new FormControl(supplierItem.yearOfEstablishment, []),
+    //         deliveryBy: new FormControl(supplierItem.deliveryBy, []),
+    //         category: new FormControl(supplierItem.category, []),
+    //         paymentMode: new FormControl(supplierItem.paymentMode, []),
+    //         supplierCategories : [this.unMapSupplierCategories(supplierItem.supplierCategories), []],
+    //         // supplierCategories: new FormControl(<SupplierCategoryDto[]>(this.unMapSupplierCategories(supplierItem.supplierCategories)), []),
+    //         supplierAddresses: supplierItem.supplierAddresses && supplierItem.supplierAddresses.length > 0 ? this.formBuilder.array(
+    //             supplierItem.supplierAddresses.map((x: SupplierAddressDto) =>
+    //                 this.createSupplierAddress(x)
+    //             )
+    //         ) : this.formBuilder.array([this.createSupplierAddress(supplierAddressItem)]),
+    //         supplierContactPersons: supplierItem.supplierContactPersons && supplierItem.supplierContactPersons.length > 0 ? this.formBuilder.array(
+    //             supplierItem.supplierContactPersons.map((x: SupplierContactPersonDto) =>
+    //                 this.createSupplierContactPerson(x)
+    //             )
+    //         ) : this.formBuilder.array([this.createSupplierContactPerson(supplierContactPersonItem)]),
+    //         supplierBanks: supplierItem.supplierBanks && supplierItem.supplierBanks.length > 0 ? this.formBuilder.array(
+    //             supplierItem.supplierBanks.map((x: SupplierBankDto) =>
+    //                 this.createSupplierBank(x)
+    //             )
+    //         ) : this.formBuilder.array([this.createSupplierBank(supplierBankItem)])
+
+    //     });
+    //     console.log(this.itemMasterForm.value);
+    // }
 
     get supplierAddresses(): FormArray {
         return (<FormArray>this.itemMasterForm.get('supplierAddresses'));
@@ -264,16 +272,9 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
         return tempSupplierList;
     }
 
-
-
     close(): void {
         this.submitted = false;
         this.active = false;
         this.modal.hide();
-    }
-
-    changeTab(tabIndex: number) {
-        this.currentTab = tabIndex;
-        this.tabSet.tabs[tabIndex].active = true;
     }
 }
