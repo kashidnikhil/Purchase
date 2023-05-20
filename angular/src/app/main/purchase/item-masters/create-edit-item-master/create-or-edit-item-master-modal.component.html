@@ -1,0 +1,437 @@
+<div appBsModal #createOrEditItemMasterModal="bs-modal" (onShown)="onShown()" class="modal fade create-or-edit-user-modal"
+    tabindex="-1" role="dialog" aria-labelledby="createOrEditItemMasterModal" aria-hidden="true"
+    [config]="{ backdrop: 'static', keyboard: !saving }">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active && itemMasterForm" [formGroup]="itemMasterForm" novalidate (ngSubmit)="save()">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="itemMasterForm.get('id').value">{{ 'EditItem' | localize }}: {{ itemMasterForm.get('name').value }}</span>
+                        <span *ngIf="!itemMasterForm.get('id').value">{{ 'CreateNewItem' | localize }}</span>
+                    </h4>
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        [attr.aria-label]="l('Close')"
+                        [disabled]="saving"
+                    >
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>{{"Name" | localize}}</label>
+                        <input #nameInput id="name" class="form-control" type="text" name="name">
+                    </div>
+                    <div class="form-group">
+                        <label>{{"Description" | localize}}</label>
+                         <input class="form-control" type="text" name="description" >
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-light-primary font-weight-bold"
+                        (click)="close()">
+                        {{ 'Cancel' | localize }}
+                    </button>
+                    <button type="submit" class="btn btn-primary font-weight-bold" [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')">
+                        <i class="fa fa-save"></i>
+                        <span>{{ 'Save' | localize }}</span>
+                    </button>
+                </div>
+            </form>
+            <!-- <form *ngIf="active && itemMasterForm" [formGroup]="itemMasterForm" novalidate (ngSubmit)="save()">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="itemMasterForm.get('id').value">{{ 'EditItem' | localize }} : {{
+                            itemMasterForm.get('name').value }}</span>
+                        <span *ngIf="!itemMasterForm.get('name').value">{{ 'CreateNewItem' | localize }}</span>
+                    </h4>
+                    <button type="button" class="btn-close" (click)="close()" [attr.aria-label]="l('Close')"
+                        [disabled]="saving">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <tabset #tabs class="nav-tabs">
+                        <tab class="pt-5" (selectTab)="changeTab(0)"   heading="{{ 'GeneralInfo' | localize }}">
+                            <div class="col-md-12 row mb-4">
+                                <div class="form-group mb-1">
+                                    <label>{{"SupplierName" | localize}}</label>
+                                    <input #nameInput id="name" class="form-control" type="text" formControlName="name"
+                                        name="name"
+                                        [ngClass]="{ 'is-invalid': submitted && itemMasterForm.get('name').errors }" />
+                                    <div *ngIf="submitted && itemMasterForm.get('name').errors" class="invalid-feedback">
+                                        <div *ngIf="itemMasterForm.get('name').errors.required">
+                                            Supplier name is required</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <button type="button" class="btn btn-primary" (click)="addSupplierAddress()">
+                                    <i class="fa fa-plus"></i>
+                                    {{ 'AddNewAddress' | localize }}
+                                </button>
+                            </div>
+                            <div formArrayName="supplierAddresses" class="mb-4">
+                                <div class="card mb-3"
+                                    *ngFor="let addressGroup of supplierAddresses.controls; let index = index">
+                                    <div [formGroupName]="index" class="p-3">
+
+                                        <div class="col-md-12 row mb-4">
+                                            <div class="col-md-8">
+                                                <div class="form-group">
+                                                    <label>{{"Address" | localize}}</label>
+                                                    <input #addressInput id="address" class="form-control" type="text"
+                                                        name="address" formControlName="address"
+                                                        [ngClass]="{ 'is-invalid': submitted && addressGroup.get('address').errors }">
+                                                    <div *ngIf="submitted && addressGroup.get('address').errors"
+                                                        class="invalid-feedback">
+                                                        <div *ngIf="addressGroup.get('address').errors.required">
+                                                            Address is required</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label>{{"AddressType" | localize}}</label>
+                                                    <input #addressTypeInput id="addressType" class="form-control"
+                                                        type="text" name="addressType" formControlName="addressType">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <div class="mt-5 text-center">
+                                                    <h3>
+                                                        <i class="fa fa-trash"
+                                                            *ngIf="!addressGroup.value.id && supplierAddresses.controls.length > 1"
+                                                            (click)="deleteSupplierAddressItem(index)"></i>
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 row mb-4">
+                                <div class="col-md-4 row">
+                                    <div class="form-group mb-1">
+                                        <label>{{"MobileNumber" | localize}}</label>
+                                        <input #mobileInput id="mobile" class="form-control" type="text"
+                                            formControlName="mobile" name="mobile" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>{{"Email" | localize}}</label>
+                                        <input #emailInput id="email" class="form-control" type="text"
+                                            formControlName="email" name="email" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>{{"Phone" | localize}}</label>
+                                        <input #phoneNumberInput id="phoneNumber" class="form-control" type="text"
+                                            formControlName="phoneNumber" name="phoneNumber" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 row mb-4">
+                                <div class="col-md-5 row">
+                                    <div class="form-group mb-1">
+                                        <label>{{"Website" | localize}}</label>
+                                        <input #websiteInput id="website" class="form-control" type="text"
+                                            formControlName="website" name="website" />
+                                    </div>
+                                </div>
+                                <div class="col-md-7">
+                                    <div class="form-group">
+                                        <label>{{"AccreditionsOrCertifications" | localize}}</label>
+                                        <input #certificationsInput id="certifications" class="form-control" type="text"
+                                            formControlName="certifications" name="certifications" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 row mb-5">
+                                <div class="col-md-4 row">
+                                    <div class="form-group mb-1">
+                                        <label>{{"LegalEntity" | localize}}</label>
+                                        <select placeholder="Select Legal Entity" class="form-control"
+                                            #legalEntityIdInput formControlName="legalEntityId" id="legalEntityId"
+                                            name="legalEntityId">
+                                            <option *ngFor="let legalEntityItem of legalEntityList"
+                                                value="{{ legalEntityItem.id }}">
+                                                {{ legalEntityItem.name }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>{{"YearOfEstablishment" | localize}}</label>
+                                        <select placeholder="Select Year" class="form-control" #yearOfEstablishmentInput
+                                            formControlName="yearOfEstablishment" id="yearOfEstablishment"
+                                            name="yearOfEstablishment">
+                                            <option *ngFor="let yearItem of yearList" value="{{ yearItem.value }}">
+                                                {{ yearItem.title }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>{{"GSTNumber" | localize}}</label>
+                                        <input #gstNumberInput id="gstNumber" class="form-control" type="text"
+                                            formControlName="gstNumber" name="gstNumber" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <div class="col-md-8 mt-5">
+                                    <div class="form-group">
+                                        <label>{{"Category" | localize}}</label> &nbsp;&nbsp;
+                                        <p-multiSelect [options]="supplierCategoryList" formControlName="supplierCategories"  optionLabel="name" display="chip"></p-multiSelect>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>{{"PaymentMode" | localize}}</label>
+                                        <select placeholder="Select Mode of Payment" class="form-control"
+                                            #paymentModeInput formControlName="paymentMode" id="paymentMode"
+                                            name="paymentMode">
+                                            <option *ngFor="let paymentModeItem of paymentModeList"
+                                                value="{{ paymentModeItem.value }}">
+                                                {{ paymentModeItem.title }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>{{"DeliveryBy" | localize}}</label>
+                                        <select placeholder="Select Delivery Type" class="form-control" #deliveryByInput
+                                            formControlName="deliveryBy" id="deliveryBy" name="deliveryBy">
+                                            <option *ngFor="let deliveryTypeItem of deliveryList"
+                                                value="{{ deliveryTypeItem.value }}">
+                                                {{ deliveryTypeItem.title }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="float-end">
+
+                                        <button type="button" class="btn btn-success mt-5" (click)="changeTab(1)">
+                                            {{ 'Next' | localize }} &nbsp;
+                                            <i class="fa fa-arrow-right"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </tab>
+                        <tab class="pt-5" (selectTab)="changeTab(1)" heading="{{ 'ContactPerson' | localize }}">
+                            <div class="mb-4">
+                                <button type="button" class="btn btn-primary" (click)="addSupplierContactPerson()">
+                                    <i class="fa fa-plus"></i>
+                                    {{ 'AddNewContactPerson' | localize }}
+                                </button>
+                            </div>
+                            <div formArrayName="supplierContactPersons" class="mb-4">
+                                <div class="card mb-3"
+                                    *ngFor="let supplierContactPersonGroup of supplierContactPersons.controls; let index = index">
+                                    <div [formGroupName]="index" class="p-3">
+
+                                        <div class="col-md-12 row mb-4">
+                                            <div class="col-md-10">
+                                                <div class="form-group">
+                                                    <label>{{"ContactPersonName" | localize}}</label>
+                                                    <input #contactPersonNameInput id="contactPersonName"
+                                                        class="form-control" type="text" name="contactPersonName"
+                                                        formControlName="contactPersonName"
+                                                        [ngClass]="{ 'is-invalid': submitted && supplierContactPersonGroup.get('contactPersonName').errors }">
+                                                    <div *ngIf="submitted && supplierContactPersonGroup.get('contactPersonName').errors"
+                                                        class="invalid-feedback">
+                                                        <div
+                                                            *ngIf="supplierContactPersonGroup.get('contactPersonName').errors.required">
+                                                            Contact person name is required</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 row mb-4">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>{{"Designation" | localize}}</label>
+                                                    <input #designationInput id="designation" class="form-control"
+                                                        type="text" name="designation" formControlName="designation" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <div class="form-group">
+                                                    <label>{{"EmailId" | localize}}</label>
+                                                    <input #emailIdInput id="emailId" class="form-control" type="text"
+                                                        name="emailId" formControlName="emailId" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label>{{"MobileNumber" | localize}}</label>
+                                                    <input #mobileNumberInput id="mobileNumber" class="form-control"
+                                                        type="text" name="mobileNumber"
+                                                        formControlName="mobileNumber" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-4">
+                                            <div class="col-md-6">
+                                                <div class="float-start">
+            
+                                                    <button type="button" class="btn btn-success mt-5" (click)="changeTab(0)">
+                                                        <i class="fa fa-arrow-left"></i> &nbsp;
+                                                        {{ 'Previous' | localize }} 
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="float-end">
+            
+                                                    <button type="button" class="btn btn-success mt-5" (click)="changeTab(2)">
+                                                        {{ 'Next' | localize }} &nbsp;
+                                                        <i class="fa fa-arrow-right"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </tab>
+                        <tab class="pt-5" (selectTab)="changeTab(2)" heading="{{ 'SupplierBankDetails' | localize }}">
+                            <div class="mb-4">
+                                <button type="button" class="btn btn-primary" (click)="addSupplierBank()">
+                                    <i class="fa fa-plus"></i>
+                                    {{ 'AddNewBank' | localize }}
+                                </button>
+                            </div>
+                            <div formArrayName="supplierBanks" class="mb-4">
+                                <div class="card mb-3"
+                                    *ngFor="let supplierBankGroup of supplierBanks.controls; let index = index">
+                                    <div [formGroupName]="index" class="p-3">
+
+                                        <div class="col-md-12 row mb-4">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>{{"BankName" | localize}}</label>
+                                                    <input #bankNameInput id="bankName" class="form-control" type="text"
+                                                        name="bankName" formControlName="bankName"
+                                                        [ngClass]="{ 'is-invalid': submitted && supplierBankGroup.get('bankName').errors }">
+                                                    <div *ngIf="submitted && supplierBankGroup.get('bankName').errors"
+                                                        class="invalid-feedback">
+                                                        <div *ngIf="supplierBankGroup.get('bankName').errors.required">
+                                                            Bank name is required</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>{{"BranchName" | localize}}</label>
+                                                    <input #branchNameInput id="branchName" class="form-control"
+                                                        type="text" name="branchName" formControlName="branchName">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 row mb-4">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>{{"Address" | localize}}</label>
+                                                    <textarea #addressInput id="address" class="form-control"
+                                                        type="text" rows="3" name="address"
+                                                        formControlName="address"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 row mb-4">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>{{"AccountNumber" | localize}}</label>
+                                                    <input #accountNumberInput id="accountNumber" class="form-control"
+                                                        type="text" name="accountNumber" formControlName="accountNumber"
+                                                        [ngClass]="{ 'is-invalid': submitted && supplierBankGroup.get('accountNumber').errors }">
+                                                    <div *ngIf="submitted && supplierBankGroup.get('accountNumber').errors"
+                                                        class="invalid-feedback">
+                                                        <div
+                                                            *ngIf="supplierBankGroup.get('accountNumber').errors.required">
+                                                            Account number is required</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>{{"IFSCCode" | localize}}</label>
+                                                    <input #ifscCodeInput id="ifscCode" class="form-control" type="text"
+                                                        name="ifscCode" formControlName="ifscCode">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>{{"MICRCode" | localize}}</label>
+                                                    <input #micrCodeInput id="micrCode" class="form-control" type="text"
+                                                        name="micrCode" formControlName="micrCode">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 row mb-4">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>{{"RTGS" | localize}}</label>
+                                                    <input #rtgsInput id="rtgs" class="form-control" type="text"
+                                                        name="rtgs" formControlName="rtgs">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>{{"PaymentMode" | localize}}</label>
+                                                    <select placeholder="Select Payment Mode" class="form-control"
+                                                        #paymentModeInput formControlName="paymentMode" id="paymentMode"
+                                                        name="paymentMode">
+                                                        <option *ngFor="let bankPaymentModeItem of bankPaymentModeList"
+                                                            value="{{ bankPaymentModeItem.value }}">
+                                                            {{ bankPaymentModeItem.title }}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <div class="float-start">
+                                        <button type="button" class="btn btn-success mt-5" (click)="changeTab(1)">
+                                            <i class="fa fa-arrow-left"></i> &nbsp;
+                                            {{ 'Previous' | localize }} 
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </tab>
+                    </tabset>
+                </div>
+                <div class="modal-footer" >
+                    <div *ngIf="currentTab == 2">
+                        <button [disabled]="saving" type="button" class="btn btn-light-primary font-weight-bold"
+                        (click)="close()">
+                        {{ 'Cancel' | localize }}
+                    </button>
+                    <button type="submit" class="btn btn-primary font-weight-bold" [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')">
+                        <i class="fa fa-save"></i>
+                        <span>{{ 'Save' | localize }}</span>
+                    </button>
+                    </div>
+                </div>
+            </form> -->
+        </div>
+    </div>
+</div>

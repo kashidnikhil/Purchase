@@ -7,7 +7,7 @@ import { LazyLoadEvent } from 'primeng/api';
 import { Paginator } from 'primeng/paginator';
 import { Table } from 'primeng/table';
 import { finalize } from 'rxjs/operators';
-// import { CreateOrEditSupplierModalComponent } from '../create-edit-supplier/create-or-edit-supplier-modal.component';
+import { CreateOrEditItemMasterModalComponent } from '../create-edit-item-master/create-or-edit-item-master-modal.component';
 
 @Component({
     templateUrl: './item-master-list.component.html',
@@ -16,7 +16,7 @@ import { finalize } from 'rxjs/operators';
     animations: [appModuleAnimation()],
 })
 export class ItemMasterListComponent extends AppComponentBase implements AfterViewInit {
-    @ViewChild('createOrEditItemMasterModal', { static: true }) createOrEditItemMasterModal: any; //CreateOrEditSupplierModalComponent;
+    @ViewChild('createOrEditItemMasterModal', { static: true }) createOrEditItemMasterModal: CreateOrEditItemMasterModalComponent
     @ViewChild('dataTable', { static: true }) dataTable: Table;
     @ViewChild('paginator', { static: true }) paginator: Paginator;
     
