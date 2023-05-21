@@ -39,6 +39,7 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
     saving: boolean = false;
     
     itemCategoriesList: DropdownDto[] = [];
+    itemTypeList: DropdownDto[] = [];
 
     constructor(
         injector: Injector,
@@ -71,10 +72,18 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
     initialiseItemMasterForm(itemMaster : ItemMasterDto){
         this.itemMasterForm = this.formBuilder.group({
             id: new FormControl(itemMaster.id, []),
-            itemCategory : new FormControl(itemMaster.itemCategory, []),
+            categoryId: new FormControl(itemMaster.categoryId, []),
+            itemId: new FormControl(itemMaster.itemId, []),
+            itemCategory : new FormControl(<number>itemMaster.itemCategory, []),
             genericName : new FormControl(itemMaster.genericName, []),
             itemName : new FormControl(itemMaster.itemName, []),
             alias : new FormControl(itemMaster.alias, []),
+            itemType : new FormControl(itemMaster.itemType, []),
+            amcRequired : new FormControl(itemMaster.amcRequired, []),
+            make: new FormControl(itemMaster.make, []),
+            model : new FormControl(itemMaster.model, []),
+            serialNumber : new FormControl(itemMaster.serialNumber, []),
+            specifications : new FormControl(itemMaster.specifications, []),
         });
     }
 
@@ -197,10 +206,15 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
 
     async loadDropdownList() {
         this.loadItemCategories();
+        this.loadItemTypes();
     }
 
     loadItemCategories(){
         this.itemCategoriesList = this._itemMockService.loadItemCategories();
+    }
+
+    loadItemTypes(){
+        this.itemTypeList = this._itemMockService.loadItemTypes();
     }
 
     onShown(): void {

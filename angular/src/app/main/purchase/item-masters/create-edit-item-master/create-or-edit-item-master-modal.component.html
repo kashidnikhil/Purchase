@@ -19,14 +19,47 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label>{{"Name" | localize}}</label>
-                        <input #nameInput id="name" class="form-control" type="text" name="name">
+
+                    <div class="col-md-12 row mb-4">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>{{"ItemCategory" | localize}}</label>
+                                <select placeholder="Select Item Category" class="form-control"
+                                                                #itemCategoryInput formControlName="itemCategory" id="itemCategory"
+                                                                name="itemCategory">
+                                                                <option *ngFor="let itemCategory of itemCategoriesList"
+                                                                    value="{{ itemCategory.value }}">
+                                                                    {{ itemCategory.title }}
+                                                                </option>
+                                                            </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>{{"ItemName" | localize}}</label>
+                                <input #itemNameInput id="itemName" class="form-control" type="text"
+                                    name="itemName" formControlName="itemName">
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>{{"Description" | localize}}</label>
-                         <input class="form-control" type="text" name="description" >
+                    
+                    <div class="col-md-12 row mb-4">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>{{"GenericName" | localize}}</label>
+                                <input #genericNameInput id="genericName" class="form-control" type="text"
+                                    name="genericName" formControlName="genericName">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>{{"Alias" | localize}}</label>
+                                <input #aliasInput id="alias" class="form-control" type="text"
+                                    name="alias" formControlName="alias">
+                            </div>
+                        </div>
                     </div>
+                    
                 </div>
                 <div class="modal-footer">
                     <button [disabled]="saving" type="button" class="btn btn-light-primary font-weight-bold"

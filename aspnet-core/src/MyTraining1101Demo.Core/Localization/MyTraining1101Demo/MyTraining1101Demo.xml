@@ -1286,7 +1286,7 @@
 	  <text name="GenericName">Generic Name</text>
 	  <text name="ItemCode">Item Code</text>
 	  <text name="ItemMasterDeleteWarningMessage">Item master {0} will be deleted.</text>
-	  
+	  <text name="ItemCategory">Item Category</text>
   
   </texts>
 </localizationDictionary>

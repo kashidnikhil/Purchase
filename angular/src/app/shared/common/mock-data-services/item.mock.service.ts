@@ -5,7 +5,7 @@ export class ItemMockService{
     constructor(){}
 
     loadItemCategories(): DropdownDto[] {
-        let paymentModeList = [
+        let itemCategoryList = [
             {
                 title: "Lab Instruments",
                 value: 10001
@@ -44,6 +44,20 @@ export class ItemMockService{
             }
         ];
     
-        return paymentModeList;
+        return itemCategoryList;
+    }
+
+    loadItemTypes(): DropdownDto[] {
+        let itemTypesList = [
+            {
+                title: "Analogue",
+                value: 1
+            },
+            {
+                title: "Digital",
+                value: 2
+            }       
+        ];
+        return itemTypesList;
     }
 }
