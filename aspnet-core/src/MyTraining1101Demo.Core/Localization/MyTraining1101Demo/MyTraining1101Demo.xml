@@ -1287,6 +1287,9 @@
 	  <text name="ItemCode">Item Code</text>
 	  <text name="ItemMasterDeleteWarningMessage">Item master {0} will be deleted.</text>
 	  <text name="ItemCategory">Item Category</text>
-  
+	  <text name="Alias">Alias</text>
+	  <text name="ItemType">Item Type</text>
+	  <text name="AMCRequired">AMC Required</text>
+	  
   </texts>
 </localizationDictionary>

@@ -42,7 +42,6 @@
                             </div>
                         </div>
                     </div>
-                    
                     <div class="col-md-12 row mb-4">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -59,7 +58,34 @@
                             </div>
                         </div>
                     </div>
-                    
+                    <div class="col-md-12 row mb-4">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>{{"ItemType" | localize}}</label>
+                                <select placeholder="Select Item Type" class="form-control"
+                                                                #itemTypeInput formControlName="itemType" id="itemType"
+                                                                name="itemType">
+                                                                <option *ngFor="let itemType of itemTypeList"
+                                                                    value="{{ itemType.value }}">
+                                                                    {{ itemType.title }}
+                                                                </option>
+                                                            </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>{{"AMCRequired" | localize}}</label>
+                                <select placeholder="Select Option" class="form-control"
+                                                                #amcRequiredInput formControlName="amcRequired" id="amcRequired"
+                                                                name="amcRequired">
+                                                                <option *ngFor="let option of amcRequirementList"
+                                                                    value="{{ option.value }}">
+                                                                    {{ option.title }}
+                                                                </option>
+                                                            </select>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button [disabled]="saving" type="button" class="btn btn-light-primary font-weight-bold"

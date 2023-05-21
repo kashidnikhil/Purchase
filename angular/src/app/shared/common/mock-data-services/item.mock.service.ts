@@ -60,4 +60,33 @@ export class ItemMockService{
         ];
         return itemTypesList;
     }
+
+    loadYesOrNoTypeDropdownData() :DropdownDto[] {
+        let options = [
+            {
+                title: "Yes",
+                value: 1
+            },
+            {
+                title: "No",
+                value: 2
+            }       
+        ];
+
+        return options;
+    } 
+
+    loadAMCRequiredList(): DropdownDto[] {
+        let itemTypesList = [
+            {
+                title: "Analogue",
+                value: 1
+            },
+            {
+                title: "Digital",
+                value: 2
+            }       
+        ];
+        return itemTypesList;
+    }
 }

@@ -40,6 +40,7 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
     
     itemCategoriesList: DropdownDto[] = [];
     itemTypeList: DropdownDto[] = [];
+    amcRequirementList : DropdownDto[] = [];
 
     constructor(
         injector: Injector,
@@ -207,6 +208,7 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
     async loadDropdownList() {
         this.loadItemCategories();
         this.loadItemTypes();
+        this.loadAMCRequirementList();
     }
 
     loadItemCategories(){
@@ -216,6 +218,12 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
     loadItemTypes(){
         this.itemTypeList = this._itemMockService.loadItemTypes();
     }
+
+    loadAMCRequirementList(){
+        this.amcRequirementList = this._itemMockService.loadYesOrNoTypeDropdownData();
+    }
+
+    
 
     onShown(): void {
         // document.getElementById('name').focus();
