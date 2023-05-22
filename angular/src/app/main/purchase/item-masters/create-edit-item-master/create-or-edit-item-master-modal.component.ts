@@ -44,6 +44,8 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
     amcRequirementList : DropdownDto[] = [];
     itemMobilityList : DropdownDto[] = [];
     calibrationRequirementList : DropdownDto[] = [];
+    calibrationTypeList : DropdownDto[] = [];
+    calibrationFrequencyList : DropdownDto[] = [];
 
     constructor(
         injector: Injector,
@@ -229,6 +231,8 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
         this.loadAMCRequirementList();
         this.loadItemMobilityList();
         this.loadCalibrationRequirementList();
+        this.loadCalibrationTypeList();
+        this.loadCalibrationFrequencyList();
     }
 
     loadItemCategories(){
@@ -249,6 +253,14 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
 
     loadCalibrationRequirementList(){
         this.calibrationRequirementList = this._itemMockService.loadYesOrNoTypeDropdownData();
+    }
+
+    loadCalibrationTypeList(){
+        this.calibrationTypeList = this._itemMockService.loadCalibrationTypeList();
+    }
+
+    loadCalibrationFrequencyList(){
+        this.calibrationFrequencyList = this._itemMockService.loadCalibrationFrequencyList();
     }
 
     

@@ -115,7 +115,8 @@
                                 <label>{{"ItemMobility" | localize}}</label>
                                 <select placeholder="Select Option" class="form-control" #itemMobilityInput
                                     formControlName="itemMobility" id="itemMobility" name="itemMobility">
-                                    <option *ngFor="let itemMobility of itemMobilityList" value="{{ itemMobility.value }}">
+                                    <option *ngFor="let itemMobility of itemMobilityList"
+                                        value="{{ itemMobility.value }}">
                                         {{ itemMobility.title }}
                                     </option>
                                 </select>
@@ -127,15 +128,77 @@
                             <div class="form-group">
                                 <label>{{"CalibrationRequirement" | localize}}</label>
                                 <select placeholder="Select Option" class="form-control" #calibrationRequirementInput
-                                    formControlName="calibrationRequirement" id="calibrationRequirement" name="calibrationRequirement">
-                                    <option *ngFor="let calibrationRequirement of calibrationRequirementList" value="{{ calibrationRequirement.value }}">
+                                    formControlName="calibrationRequirement" id="calibrationRequirement"
+                                    name="calibrationRequirement">
+                                    <option *ngFor="let calibrationRequirement of calibrationRequirementList"
+                                        value="{{ calibrationRequirement.value }}">
                                         {{ calibrationRequirement.title }}
                                     </option>
                                 </select>
                             </div>
                         </div>
                     </div>
-                    
+                    <div class="mb-4">
+                        <button type="button" class="btn btn-primary" (click)="addCalibrationType()">
+                            <i class="fa fa-plus"></i>
+                            {{ 'AddCalibrationType' | localize }}
+                        </button>
+                    </div>
+                    <div formArrayName="itemCalibrationTypes" class="mb-4">
+                        <div class="card mb-3"
+                            *ngFor="let calibrationTypeItem of itemCalibrationTypes.controls; let index = index">
+                            <div [formGroupName]="index" class="p-3">
+                                <div class="col-md-12 row mb-4">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>{{"CalibrationType" | localize}}</label>
+                                            <select placeholder="Select Item Category" class="form-control" #typeInput
+                                                formControlName="type" id="type" name="type"
+                                                [ngClass]="{ 'is-invalid': submitted && calibrationTypeItem.get('type').errors }">
+                                                <option *ngFor="let calibrationType of calibrationTypeList"
+                                                    value="{{ calibrationType.value }}">
+                                                    {{ calibrationType.title }}
+                                                </option>
+                                            </select>
+                                            <div *ngIf="submitted && calibrationTypeItem.get('type').errors"
+                                                class="invalid-feedback">
+                                                <div *ngIf="calibrationTypeItem.get('type').errors.required">
+                                                    Calibration Type is required</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label>{{"CalibrationFrequency" | localize}}</label>
+                                            <select placeholder="Select Item Category" class="form-control"
+                                                #frequencyInput formControlName="frequency" id="frequency"
+                                                name="frequency"
+                                                [ngClass]="{ 'is-invalid': submitted && calibrationTypeItem.get('frequency').errors }">
+                                                <option *ngFor="let calibrationFrequency of calibrationFrequencyList"
+                                                    value="{{ calibrationFrequency.value }}">
+                                                    {{ calibrationFrequency.title }}
+                                                </option>
+                                            </select>
+                                            <div *ngIf="submitted && calibrationTypeItem.get('frequency').errors"
+                                                class="invalid-feedback">
+                                                <div *ngIf="calibrationTypeItem.get('frequency').errors.required">
+                                                    Calibration Frequency is required</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <div class="mt-5 text-center">
+                                            <h3>
+                                                <i class="fa fa-trash"
+                                                    *ngIf="!calibrationTypeItem.value.id && itemCalibrationTypes.controls.length > 1"
+                                                    (click)="deleteCalibrationTypeItem(index)"></i>
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button [disabled]="saving" type="button" class="btn btn-light-primary font-weight-bold"

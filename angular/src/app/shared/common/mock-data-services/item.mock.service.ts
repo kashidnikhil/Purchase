@@ -92,4 +92,40 @@ export class ItemMockService{
         return options;
     }
 
+    loadCalibrationTypeList() : DropdownDto[]{
+        let options = [
+            {
+                title: "External",
+                value: 1
+            },
+            {
+                title: "Internal",
+                value: 2
+            },
+            {
+                title: "Intermediate",
+                value: 3
+            }      
+        ];
+
+        return options;
+
+    }
+
+    loadCalibrationFrequencyList() : DropdownDto[]{
+        let options = [
+            {
+                title: "Monthly",
+                value: 1
+            },
+            {
+                title: "Yearly",
+                value: 2
+            }   
+        ];
+
+        return options;
+
+    }
+
 }

@@ -1296,5 +1296,9 @@
 	  <text name="StorageConditions">Storage Conditions</text>
 	  <text name="ItemMobility">Item Mobility</text>
 	  <text name="CalibrationRequirement">Calibration Requirement</text>
+	  <text name="AddCalibrationType">Add Calibration Type</text>
+	  <text name="CalibrationType">Calibration Type</text>
+	  <text name="CalibrationFrequency">Calibration Frequency</text>
+	  
   </texts>
 </localizationDictionary>
