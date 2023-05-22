@@ -1300,6 +1300,6 @@
 	  <text name="CalibrationType">Calibration Type</text>
 	  <text name="CalibrationFrequency">Calibration Frequency</text>
 	  <text name="AddCalibrationAgency">Add Calibration Agency</text>
-	  
+	  <text name="SuppliedBy">Supplied By</text>
   </texts>
 </localizationDictionary>

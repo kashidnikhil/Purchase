@@ -137,6 +137,19 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>{{"SuppliedBy" | localize}}</label>
+                                <select placeholder="Select Option" class="form-control" #supplierIdInput
+                                    formControlName="supplierId" id="supplierId"
+                                    name="supplierId">
+                                    <option *ngFor="let supplierItem of supplierList"
+                                        value="{{ supplierItem.id }}">
+                                        {{ supplierItem.name }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                     <div class="mb-4">
                         <button type="button" class="btn btn-primary" (click)="addCalibrationType()">
