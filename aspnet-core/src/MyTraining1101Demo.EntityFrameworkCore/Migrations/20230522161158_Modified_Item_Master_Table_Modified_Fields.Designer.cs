@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyTraining1101Demo.EntityFrameworkCore;
 
@@ -11,9 +12,10 @@ using MyTraining1101Demo.EntityFrameworkCore;
 namespace MyTraining1101Demo.Migrations
 {
     [DbContext(typeof(MyTraining1101DemoDbContext))]
-    partial class MyTraining1101DemoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230522161158_Modified_Item_Master_Table_Modified_Fields")]
+    partial class Modified_Item_Master_Table_Modified_Fields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2594,7 +2596,7 @@ namespace MyTraining1101Demo.Migrations
                     b.Property<string>("Model")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal?>("OrderingRate")
+                    b.Property<decimal>("OrderingRate")
                         .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
@@ -2627,7 +2629,7 @@ namespace MyTraining1101Demo.Migrations
                         .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<decimal?>("RatePerQuantity")
+                    b.Property<decimal>("RatePerQuantity")
                         .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
@@ -2734,7 +2736,7 @@ namespace MyTraining1101Demo.Migrations
                     b.Property<Guid?>("OrderingUOMId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<decimal?>("RatePerOrderingQuantity")
+                    b.Property<decimal>("RatePerOrderingQuantity")
                         .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 

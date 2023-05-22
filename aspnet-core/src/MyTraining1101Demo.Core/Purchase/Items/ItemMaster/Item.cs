@@ -14,9 +14,9 @@ namespace MyTraining1101Demo.Purchase.Items.ItemMaster
     {
         public ItemCategory ItemCategory { get; set; }
 
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
 
-        public int ItemId { get; set; }
+        public int? ItemId { get; set; }
 
 
         public string GenericName { get; set; }
@@ -57,10 +57,10 @@ namespace MyTraining1101Demo.Purchase.Items.ItemMaster
         public string HSNCode { get; set; }
 
         [Precision(18, 2)]
-        public decimal OrderingRate { get; set; }
+        public decimal? OrderingRate { get; set; }
 
         [Precision(18, 2)]
-        public decimal RatePerQuantity { get; set; }
+        public decimal? RatePerQuantity { get; set; }
 
 
         [Precision(18, 2)]

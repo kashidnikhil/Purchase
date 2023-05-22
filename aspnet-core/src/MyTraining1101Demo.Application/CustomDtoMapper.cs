@@ -329,9 +329,10 @@ namespace MyTraining1101Demo
 
             configuration.CreateMap<ItemRateRevision, ItemRateRevisionDto>().ReverseMap();
             //configuration.CreateMap<ItemRateRevision, ItemRateRevisionInputDto>().ReverseMap();
+            
             configuration.CreateMap<ItemRateRevision, ItemMasterInputDto>()
                 .ForMember(dto => dto.Make, options => options.MapFrom(x => x.Make))
-                //.ForMember(dto => dto, options => options.MapFrom(x => x.))
+                .ForMember(dto => dto.RatePerQuantity, options => options.MapFrom(x => x.RatePerOrderingQuantity))
                 .ReverseMap();
 
 

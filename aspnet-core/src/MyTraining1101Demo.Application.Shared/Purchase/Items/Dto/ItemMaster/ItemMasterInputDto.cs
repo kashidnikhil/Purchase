@@ -6,7 +6,6 @@ using MyTraining1101Demo.Purchase.Items.Dto.ItemSupplierMaster;
 using MyTraining1101Demo.Purchase.Items.Dto.ProcurementMaster;
 using MyTraining1101Demo.Purchase.Items.Dto.RequiredItemSparesMaster;
 using MyTraining1101Demo.Purchase.Items.Enums;
-using MyTraining1101Demo.Purchase.Suppliers.Dto.MappedSupplierCategories;
 using System;
 using System.Collections.Generic;
 
@@ -17,9 +16,9 @@ namespace MyTraining1101Demo.Purchase.Items.Dto.ItemMaster
         public Guid? Id { get; set; }
         public ItemCategory ItemCategory { get; set; }
 
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
 
-        public int ItemId { get; set; }
+        public int? ItemId { get; set; }
 
         public string GenericName { get; set; }
 
@@ -55,9 +54,9 @@ namespace MyTraining1101Demo.Purchase.Items.Dto.ItemMaster
 
         public string HSNCode { get; set; }
 
-        public decimal OrderingRate { get; set; }
+        public decimal? OrderingRate { get; set; }
 
-        public decimal RatePerQuantity { get; set; }
+        public decimal? RatePerQuantity { get; set; }
 
         public decimal? RateAsOnDate { get; set; }
 

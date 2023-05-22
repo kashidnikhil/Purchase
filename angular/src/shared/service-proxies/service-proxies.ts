@@ -27270,8 +27270,8 @@ export interface IItemMasterDto {
 export class ItemMasterInputDto implements IItemMasterInputDto {
     id!: string | undefined;
     itemCategory!: ItemCategory;
-    categoryId!: number;
-    itemId!: number;
+    categoryId!: number | undefined;
+    itemId!: number | undefined;
     genericName!: string | undefined;
     itemName!: string | undefined;
     itemType!: ItemType;
@@ -27289,8 +27289,8 @@ export class ItemMasterInputDto implements IItemMasterInputDto {
     purchaseValue!: number | undefined;
     gst!: number;
     hsnCode!: string | undefined;
-    orderingRate!: number;
-    ratePerQuantity!: number;
+    orderingRate!: number | undefined;
+    ratePerQuantity!: number | undefined;
     rateAsOnDate!: number | undefined;
     quantity!: number | undefined;
     leadTime!: number | undefined;
@@ -27535,8 +27535,8 @@ export class ItemMasterInputDto implements IItemMasterInputDto {
 export interface IItemMasterInputDto {
     id: string | undefined;
     itemCategory: ItemCategory;
-    categoryId: number;
-    itemId: number;
+    categoryId: number | undefined;
+    itemId: number | undefined;
     genericName: string | undefined;
     itemName: string | undefined;
     itemType: ItemType;
@@ -27554,8 +27554,8 @@ export interface IItemMasterInputDto {
     purchaseValue: number | undefined;
     gst: number;
     hsnCode: string | undefined;
-    orderingRate: number;
-    ratePerQuantity: number;
+    orderingRate: number | undefined;
+    ratePerQuantity: number | undefined;
     rateAsOnDate: number | undefined;
     quantity: number | undefined;
     leadTime: number | undefined;

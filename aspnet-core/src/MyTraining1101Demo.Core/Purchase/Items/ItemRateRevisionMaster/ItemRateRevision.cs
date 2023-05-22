@@ -18,7 +18,7 @@
         public int OrderingQuantity { get; set; }
        
         [Precision(18, 2)]
-        public decimal RatePerOrderingQuantity { get; set; }
+        public decimal? RatePerOrderingQuantity { get; set; }
 
         public int StockQuantityPerOrderingUOM { get; set; }
 

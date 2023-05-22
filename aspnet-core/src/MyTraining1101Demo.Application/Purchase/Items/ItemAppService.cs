@@ -152,7 +152,9 @@
                     }
 
                     //This is used for inserting item rate. Used for maintaining rate history
-                    await this._itemRateRevisionManager.InsertItemRateRevisionIntoDB(input, insertedOrUpdatedItemId);
+                    if (input.RatePerQuantity != null) { 
+                        await this._itemRateRevisionManager.InsertItemRateRevisionIntoDB(input, insertedOrUpdatedItemId);
+                    }
                 }
                 return insertedOrUpdatedItemId;
             }

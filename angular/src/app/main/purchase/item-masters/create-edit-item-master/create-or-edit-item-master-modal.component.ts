@@ -4,6 +4,8 @@ import {
     CalibrationAgencyDto,
     CalibrationTypeDto,
     ItemMasterDto,
+    ItemMasterInputDto,
+    ItemServiceProxy,
     LegalEntityServiceProxy,
     MappedSupplierCategoryDto,
     MappedSupplierCategoryInputDto,
@@ -53,6 +55,7 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
         injector: Injector,
         private formBuilder: FormBuilder,
         private _supplierService: SupplierServiceProxy,
+        private _itemMasterService: ItemServiceProxy,
         private _itemMockService : ItemMockService
     ) {
         super(injector);
@@ -97,6 +100,7 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
             storageConditions : new FormControl(itemMaster.storageConditions, []),
             itemMobility : new FormControl(itemMaster.itemMobility, []),
             calibrationRequirement : new FormControl(itemMaster.calibrationRequirement, []),
+            supplierId : new FormControl(itemMaster.supplierId, []),
             itemCalibrationTypes: itemMaster.itemCalibrationTypes && itemMaster.itemCalibrationTypes.length > 0 ? this.formBuilder.array(
                 itemMaster.itemCalibrationTypes.map((x: CalibrationTypeDto) =>
                     this.createCalibrationType(x)
@@ -252,15 +256,21 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
     save(): void {
         this.submitted = true;
         if (this.itemMasterForm.valid) {
-            let input = new SupplierInputDto();
+            let input = new ItemMasterInputDto();
             this.saving = true;
             input = this.itemMasterForm.value;
-            if (input.supplierCategories && input.supplierCategories.length > 0) {
-                let tempSupplierCategories = this.mapSupplierCategories(input.supplierCategories);
-                input.supplierCategories = tempSupplierCategories;
+            if (input.itemCalibrationAgencies && input.itemCalibrationAgencies.length > 0) {
+                // let tempSupplierCategories = this.mapSupplierCategories(input.itemCalibrationAgencies);
+                // input.supplierCategories = tempSupplierCategories;
             }
-            this._supplierService
-                .insertOrUpdateSupplier(input)
+
+            if (input.itemCalibrationTypes && input.itemCalibrationTypes.length > 0) {
+                // let tempSupplierCategories = this.mapSupplierCategories(input.supplierCategories);
+                // input.supplierCategories = tempSupplierCategories;
+            }
+
+            this._itemMasterService
+                .insertOrUpdateItem(input)
                 .pipe(
                     finalize(() => {
                         this.saving = false;
