@@ -2,7 +2,6 @@
 using MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierMaster;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MyTraining1101Demo.Purchase.Suppliers
@@ -15,5 +14,7 @@ namespace MyTraining1101Demo.Purchase.Suppliers
 
         Task<bool> DeleteSupplierMasterData(Guid supplierId);
         Task<SupplierDto> GetSupplierMasterById(Guid supplierId);
+
+        Task<IList<SupplierDto>> GetSupplierList();
     }
 }

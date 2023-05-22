@@ -8,6 +8,7 @@
     using MyTraining1101Demo.Purchase.Suppliers.SupplierContactPersons;
     using MyTraining1101Demo.Purchase.Suppliers.SupplierMaster;
     using System;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     public class SupplierAppService : MyTraining1101DemoAppServiceBase, ISupplierAppService
@@ -142,6 +143,20 @@
                 }
 
                 return supplierMasterItem;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.Message, ex);
+                throw ex;
+            }
+        }
+
+        public async Task<IList<SupplierDto>> GetSupplierList()
+        {
+            try
+            {
+                var response = await this._supplierManager.GetSupplierListFromDB();
+                return response;
             }
             catch (Exception ex)
             {

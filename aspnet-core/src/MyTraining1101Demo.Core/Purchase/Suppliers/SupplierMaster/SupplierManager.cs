@@ -5,6 +5,7 @@ using Abp.Extensions;
 using Abp.Linq.Extensions;
 using Microsoft.EntityFrameworkCore;
 using MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierMaster;
+using MyTraining1101Demo.Purchase.TermsOfPayments.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -98,5 +99,21 @@ namespace MyTraining1101Demo.Purchase.Suppliers.SupplierMaster
             }
         }
 
+        public async Task<IList<SupplierDto>> GetSupplierListFromDB()
+        {
+            try
+            {
+                var supplierQuery = this._supplierRepository.GetAll()
+                    .Where(x => !x.IsDeleted);
+
+                return new List<SupplierDto>(ObjectMapper.Map<List<SupplierDto>>(supplierQuery));
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.Message, ex);
+                throw ex;
+            }
+
+        }
     }
 }

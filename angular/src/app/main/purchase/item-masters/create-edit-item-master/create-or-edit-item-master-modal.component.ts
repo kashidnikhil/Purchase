@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Injector, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import {
+    CalibrationAgencyDto,
     CalibrationTypeDto,
     ItemMasterDto,
     LegalEntityServiceProxy,
@@ -46,6 +47,7 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
     calibrationRequirementList : DropdownDto[] = [];
     calibrationTypeList : DropdownDto[] = [];
     calibrationFrequencyList : DropdownDto[] = [];
+    supplierList : SupplierDto[] = [];
 
     constructor(
         injector: Injector,
@@ -77,6 +79,7 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
 
     initialiseItemMasterForm(itemMaster : ItemMasterDto){
         let itemCalibrationType: CalibrationTypeDto = new CalibrationTypeDto();
+        let itemCalibrationAgency: CalibrationAgencyDto = new CalibrationAgencyDto();
         this.itemMasterForm = this.formBuilder.group({
             id: new FormControl(itemMaster.id, []),
             categoryId: new FormControl(itemMaster.categoryId, []),
@@ -99,6 +102,11 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
                     this.createCalibrationType(x)
                 )
             ) : this.formBuilder.array([this.createCalibrationType(itemCalibrationType)]),
+            itemCalibrationAgencies: itemMaster.itemCalibrationAgencies && itemMaster.itemCalibrationAgencies.length > 0 ? this.formBuilder.array(
+                itemMaster.itemCalibrationAgencies.map((x: CalibrationAgencyDto) =>
+                    this.createCalibrationAgency(x)
+                )
+            ) : this.formBuilder.array([this.createCalibrationAgency(itemCalibrationAgency)]),
         });
 
     }
@@ -143,19 +151,12 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
     //     console.log(this.itemMasterForm.value);
     // }
 
-    get supplierBanks(): FormArray {
-        return (<FormArray>this.itemMasterForm.get('supplierBanks'));
-    }
-
-    get supplierContactPersons(): FormArray {
-        return (<FormArray>this.itemMasterForm.get('supplierContactPersons'));
-    }
-
+    // Calibration Type related functions
     get itemCalibrationTypes(): FormArray {
         return (<FormArray>this.itemMasterForm.get('itemCalibrationTypes'));
     }
 
-    // Calibration Type related functions
+   
     addCalibrationType() {
         let calibrationTypeItem: CalibrationTypeDto = new CalibrationTypeDto();
         let calibrationTypeForm = this.createCalibrationType(calibrationTypeItem);
@@ -175,57 +176,32 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
         itemCalibrationTypeArray.removeAt(indexValue);
     }
 
-
-
-    addSupplierContactPerson() {
-        let supplierContactPersonItem: SupplierContactPersonDto = new SupplierContactPersonDto();
-        let contactPersonForm = this.createSupplierContactPerson(supplierContactPersonItem);
-        this.supplierContactPersons.push(contactPersonForm);
+    // Calibration Type related functions
+    get itemCalibrationAgencies(): FormArray {
+        return (<FormArray>this.itemMasterForm.get('itemCalibrationAgencies'));
     }
-
-    addSupplierBank() {
-        let suppplierBankItem: SupplierBankDto = new SupplierBankDto();
-        let bankForm = this.createSupplierBank(suppplierBankItem);
-        this.supplierBanks.push(bankForm);
-    }
-
-    deleteSupplierContactPersonItem(indexValue: number) {
-        const supplierContactPersonArray = this.supplierContactPersons;
-        supplierContactPersonArray.removeAt(indexValue);
-    }
-
-    deleteSupplierBankItem(indexValue: number) {
-        const supplierBankArray = this.supplierBanks;
-        supplierBankArray.removeAt(indexValue);
-    }
-
    
+    addCalibrationAgency() {
+        let calibrationAgencyItem: CalibrationAgencyDto = new CalibrationAgencyDto();
+        let calibrationAgencyForm = this.createCalibrationAgency(calibrationAgencyItem);
+        this.itemCalibrationAgencies.push(calibrationAgencyForm);
+    }
 
-    createSupplierBank(supplierBank: SupplierBankDto): FormGroup {
+    createCalibrationAgency(calibrationAgencyItem: CalibrationAgencyDto): FormGroup {
         return this.formBuilder.group({
-            id: new FormControl(supplierBank.id, []),
-            bankName: new FormControl(supplierBank.bankName, [Validators.required]),
-            branchName: new FormControl(supplierBank.branchName, []),
-            address: new FormControl(supplierBank.address, []),
-            accountNumber: new FormControl(supplierBank.accountNumber, [Validators.required]),
-            micrCode: new FormControl(supplierBank.micrCode, []),
-            ifscCode: new FormControl(supplierBank.ifscCode, []),
-            rtgs: new FormControl(supplierBank.rtgs, []),
-            paymentMode: new FormControl(supplierBank.paymentMode, []),
+            id: new FormControl(calibrationAgencyItem.id, []),
+            supplierId: new FormControl(calibrationAgencyItem.supplierId, [])
         });
     }
 
-    createSupplierContactPerson(supplierContactPerson: SupplierContactPersonDto): FormGroup {
-        return this.formBuilder.group({
-            id: new FormControl(supplierContactPerson.id, []),
-            contactPersonName: new FormControl(supplierContactPerson.contactPersonName, [Validators.required]),
-            designation: new FormControl(supplierContactPerson.designation, []),
-            emailId: new FormControl(supplierContactPerson.emailId, []),
-            mobileNumber: new FormControl(supplierContactPerson.mobileNumber, [])
-        });
+    deleteCalibrationAgencyItem(indexValue: number) {
+        const itemCalibrationAgencyArray = this.itemCalibrationAgencies;
+        itemCalibrationAgencyArray.removeAt(indexValue);
     }
+
 
     async loadDropdownList() {
+        await this.loadSuppliers();
         this.loadItemCategories();
         this.loadItemTypes();
         this.loadAMCRequirementList();
@@ -233,6 +209,10 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
         this.loadCalibrationRequirementList();
         this.loadCalibrationTypeList();
         this.loadCalibrationFrequencyList();
+    }
+
+    async loadSuppliers(){
+        this.supplierList = await this._supplierService.getSupplierList().toPromise();
     }
 
     loadItemCategories(){

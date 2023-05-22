@@ -13350,6 +13350,64 @@ export class SupplierServiceProxy {
         }
         return _observableOf<SupplierDto>(null as any);
     }
+
+    /**
+     * @return Success
+     */
+    getSupplierList(): Observable<SupplierDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/Supplier/GetSupplierList";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetSupplierList(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetSupplierList(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<SupplierDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<SupplierDto[]>;
+        }));
+    }
+
+    protected processGetSupplierList(response: HttpResponseBase): Observable<SupplierDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(SupplierDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<SupplierDto[]>(null as any);
+    }
 }
 
 @Injectable()
