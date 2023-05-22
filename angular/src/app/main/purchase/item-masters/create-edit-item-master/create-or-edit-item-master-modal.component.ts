@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Injector, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import {
+    CalibrationTypeDto,
     ItemMasterDto,
     LegalEntityServiceProxy,
     MappedSupplierCategoryDto,
@@ -73,6 +74,7 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
     }
 
     initialiseItemMasterForm(itemMaster : ItemMasterDto){
+        let itemCalibrationType: CalibrationTypeDto = new CalibrationTypeDto();
         this.itemMasterForm = this.formBuilder.group({
             id: new FormControl(itemMaster.id, []),
             categoryId: new FormControl(itemMaster.categoryId, []),
@@ -90,6 +92,11 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
             storageConditions : new FormControl(itemMaster.storageConditions, []),
             itemMobility : new FormControl(itemMaster.itemMobility, []),
             calibrationRequirement : new FormControl(itemMaster.calibrationRequirement, []),
+            itemCalibrationTypes: itemMaster.itemCalibrationTypes && itemMaster.itemCalibrationTypes.length > 0 ? this.formBuilder.array(
+                itemMaster.itemCalibrationTypes.map((x: CalibrationTypeDto) =>
+                    this.createCalibrationType(x)
+                )
+            ) : this.formBuilder.array([this.createCalibrationType(itemCalibrationType)]),
         });
 
     }
@@ -134,10 +141,6 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
     //     console.log(this.itemMasterForm.value);
     // }
 
-    get supplierAddresses(): FormArray {
-        return (<FormArray>this.itemMasterForm.get('supplierAddresses'));
-    }
-
     get supplierBanks(): FormArray {
         return (<FormArray>this.itemMasterForm.get('supplierBanks'));
     }
@@ -146,11 +149,31 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
         return (<FormArray>this.itemMasterForm.get('supplierContactPersons'));
     }
 
-    addSupplierAddress() {
-        let suppplierAddressItem: SupplierAddressDto = new SupplierAddressDto();
-        let addressForm = this.createSupplierAddress(suppplierAddressItem);
-        this.supplierAddresses.push(addressForm);
+    get itemCalibrationTypes(): FormArray {
+        return (<FormArray>this.itemMasterForm.get('itemCalibrationTypes'));
     }
+
+    // Calibration Type related functions
+    addCalibrationType() {
+        let calibrationTypeItem: CalibrationTypeDto = new CalibrationTypeDto();
+        let calibrationTypeForm = this.createCalibrationType(calibrationTypeItem);
+        this.itemCalibrationTypes.push(calibrationTypeForm);
+    }
+
+    createCalibrationType(calibrationTypeItem: CalibrationTypeDto): FormGroup {
+        return this.formBuilder.group({
+            id: new FormControl(calibrationTypeItem.id, []),
+            frequency: new FormControl(calibrationTypeItem.frequency, []),
+            type: new FormControl(calibrationTypeItem.type, [])
+        });
+    }
+
+    deleteCalibrationTypeItem(indexValue: number) {
+        const itemCalibrationTypeArray = this.itemCalibrationTypes;
+        itemCalibrationTypeArray.removeAt(indexValue);
+    }
+
+
 
     addSupplierContactPerson() {
         let supplierContactPersonItem: SupplierContactPersonDto = new SupplierContactPersonDto();
@@ -164,14 +187,6 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
         this.supplierBanks.push(bankForm);
     }
 
-    createSupplierAddress(supplierAddressItem: SupplierAddressDto): FormGroup {
-        return this.formBuilder.group({
-            id: new FormControl(supplierAddressItem.id, []),
-            address: new FormControl(supplierAddressItem.address, [Validators.required]),
-            addressType: new FormControl(supplierAddressItem.addressType, [])
-        });
-    }
-
     deleteSupplierContactPersonItem(indexValue: number) {
         const supplierContactPersonArray = this.supplierContactPersons;
         supplierContactPersonArray.removeAt(indexValue);
@@ -182,10 +197,7 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
         supplierBankArray.removeAt(indexValue);
     }
 
-    deleteSupplierAddressItem(indexValue: number) {
-        const supplierAddressArray = this.supplierAddresses;
-        supplierAddressArray.removeAt(indexValue);
-    }
+   
 
     createSupplierBank(supplierBank: SupplierBankDto): FormGroup {
         return this.formBuilder.group({
