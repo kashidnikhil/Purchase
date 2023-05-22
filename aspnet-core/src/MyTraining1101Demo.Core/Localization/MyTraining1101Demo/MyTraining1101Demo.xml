@@ -1293,6 +1293,7 @@
 	  <text name="Model">Model</text>
 	  <text name="SerialNumber">Serial Number</text>
 	  <text name="Specifications">Specifications</text>
-
+	  <text name="StorageConditions">Storage Conditions</text>
+	  <text name="ItemMobility">Item Mobility</text>
   </texts>
 </localizationDictionary>

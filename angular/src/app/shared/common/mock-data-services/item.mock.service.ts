@@ -76,4 +76,20 @@ export class ItemMockService{
         return options;
     } 
 
+    loadItemMobilityList() : DropdownDto[] {
+
+        let options = [
+            {
+                title: "Fixed",
+                value: 1
+            },
+            {
+                title: "Field",
+                value: 2
+            }       
+        ];
+
+        return options;
+    }
+
 }

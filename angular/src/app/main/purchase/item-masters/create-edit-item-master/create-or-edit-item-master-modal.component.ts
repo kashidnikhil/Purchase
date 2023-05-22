@@ -41,6 +41,7 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
     itemCategoriesList: DropdownDto[] = [];
     itemTypeList: DropdownDto[] = [];
     amcRequirementList : DropdownDto[] = [];
+    itemMobilityList : DropdownDto[] = [];
 
     constructor(
         injector: Injector,
@@ -85,7 +86,10 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
             model : new FormControl(itemMaster.model, []),
             serialNumber : new FormControl(itemMaster.serialNumber, []),
             specifications : new FormControl(itemMaster.specifications, []),
+            storageConditions : new FormControl(itemMaster.storageConditions, []),
+            itemMobility : new FormControl(itemMaster.itemMobility, []),
         });
+
     }
 
     // initialiseSupplierForm(supplierItem: SupplierDto) {
@@ -209,6 +213,8 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
         this.loadItemCategories();
         this.loadItemTypes();
         this.loadAMCRequirementList();
+        this.loadItemMobilityList();
+
     }
 
     loadItemCategories(){
@@ -221,6 +227,10 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
 
     loadAMCRequirementList(){
         this.amcRequirementList = this._itemMockService.loadYesOrNoTypeDropdownData();
+    }
+
+    loadItemMobilityList(){
+        this.itemMobilityList = this._itemMockService.loadItemMobilityList();
     }
 
     

@@ -1,21 +1,18 @@
-<div appBsModal #createOrEditItemMasterModal="bs-modal" (onShown)="onShown()" class="modal fade create-or-edit-user-modal"
-    tabindex="-1" role="dialog" aria-labelledby="createOrEditItemMasterModal" aria-hidden="true"
+<div appBsModal #createOrEditItemMasterModal="bs-modal" (onShown)="onShown()"
+    class="modal fade create-or-edit-user-modal" tabindex="-1" role="dialog"
+    aria-labelledby="createOrEditItemMasterModal" aria-hidden="true"
     [config]="{ backdrop: 'static', keyboard: !saving }">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form *ngIf="active && itemMasterForm" [formGroup]="itemMasterForm" novalidate (ngSubmit)="save()">
                 <div class="modal-header">
                     <h4 class="modal-title">
-                        <span *ngIf="itemMasterForm.get('id').value">{{ 'EditItem' | localize }}: {{ itemMasterForm.get('name').value }}</span>
+                        <span *ngIf="itemMasterForm.get('id').value">{{ 'EditItem' | localize }}: {{
+                            itemMasterForm.get('name').value }}</span>
                         <span *ngIf="!itemMasterForm.get('id').value">{{ 'CreateNewItem' | localize }}</span>
                     </h4>
-                    <button
-                        type="button"
-                        class="btn-close"
-                        (click)="close()"
-                        [attr.aria-label]="l('Close')"
-                        [disabled]="saving"
-                    >
+                    <button type="button" class="btn-close" (click)="close()" [attr.aria-label]="l('Close')"
+                        [disabled]="saving">
                     </button>
                 </div>
                 <div class="modal-body">
@@ -23,21 +20,20 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>{{"ItemCategory" | localize}}</label>
-                                <select placeholder="Select Item Category" class="form-control"
-                                                                #itemCategoryInput formControlName="itemCategory" id="itemCategory"
-                                                                name="itemCategory">
-                                                                <option *ngFor="let itemCategory of itemCategoriesList"
-                                                                    value="{{ itemCategory.value }}">
-                                                                    {{ itemCategory.title }}
-                                                                </option>
-                                                            </select>
+                                <select placeholder="Select Item Category" class="form-control" #itemCategoryInput
+                                    formControlName="itemCategory" id="itemCategory" name="itemCategory">
+                                    <option *ngFor="let itemCategory of itemCategoriesList"
+                                        value="{{ itemCategory.value }}">
+                                        {{ itemCategory.title }}
+                                    </option>
+                                </select>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>{{"ItemName" | localize}}</label>
-                                <input #itemNameInput id="itemName" class="form-control" type="text"
-                                    name="itemName" formControlName="itemName">
+                                <input #itemNameInput id="itemName" class="form-control" type="text" name="itemName"
+                                    formControlName="itemName">
                             </div>
                         </div>
                     </div>
@@ -52,8 +48,8 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>{{"Alias" | localize}}</label>
-                                <input #aliasInput id="alias" class="form-control" type="text"
-                                    name="alias" formControlName="alias">
+                                <input #aliasInput id="alias" class="form-control" type="text" name="alias"
+                                    formControlName="alias">
                             </div>
                         </div>
                     </div>
@@ -61,27 +57,23 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>{{"ItemType" | localize}}</label>
-                                <select placeholder="Select Item Type" class="form-control"
-                                                                #itemTypeInput formControlName="itemType" id="itemType"
-                                                                name="itemType">
-                                                                <option *ngFor="let itemType of itemTypeList"
-                                                                    value="{{ itemType.value }}">
-                                                                    {{ itemType.title }}
-                                                                </option>
-                                                            </select>
+                                <select placeholder="Select Item Type" class="form-control" #itemTypeInput
+                                    formControlName="itemType" id="itemType" name="itemType">
+                                    <option *ngFor="let itemType of itemTypeList" value="{{ itemType.value }}">
+                                        {{ itemType.title }}
+                                    </option>
+                                </select>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>{{"AMCRequired" | localize}}</label>
-                                <select placeholder="Select Option" class="form-control"
-                                                                #amcRequiredInput formControlName="amcRequired" id="amcRequired"
-                                                                name="amcRequired">
-                                                                <option *ngFor="let option of amcRequirementList"
-                                                                    value="{{ option.value }}">
-                                                                    {{ option.title }}
-                                                                </option>
-                                                            </select>
+                                <select placeholder="Select Option" class="form-control" #amcRequiredInput
+                                    formControlName="amcRequired" id="amcRequired" name="amcRequired">
+                                    <option *ngFor="let option of amcRequirementList" value="{{ option.value }}">
+                                        {{ option.title }}
+                                    </option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -89,15 +81,15 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>{{"Model" | localize}}</label>
-                                <input #modelInput id="model" class="form-control" type="text"
-                                    name="model" formControlName="model">
+                                <input #modelInput id="model" class="form-control" type="text" name="model"
+                                    formControlName="model">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>{{"SerialNumber" | localize}}</label>
                                 <input #serialNumberInput id="serialNumber" class="form-control" type="text"
-                                name="serialNumber" formControlName="serialNumber">
+                                    name="serialNumber" formControlName="serialNumber">
                             </div>
                         </div>
                     </div>
@@ -105,9 +97,28 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>{{"Specifications" | localize}}</label>
-                                <textarea #specificationsInput id="specifications" class="form-control"
-                                    type="text" rows="3" name="specifications"
-                                    formControlName="specifications"></textarea>
+                                <textarea #specificationsInput id="specifications" class="form-control" type="text"
+                                    rows="3" name="specifications" formControlName="specifications"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row mb-4">
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label>{{"StorageConditions" | localize}}</label>
+                                <input #storageConditionsInput id="storageConditions" class="form-control" type="text"
+                                    name="storageConditions" formControlName="storageConditions">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>{{"ItemMobility" | localize}}</label>
+                                <select placeholder="Select Option" class="form-control" #itemMobilityInput
+                                    formControlName="itemMobility" id="itemMobility" name="itemMobility">
+                                    <option *ngFor="let itemMobility of itemMobilityList" value="{{ itemMobility.value }}">
+                                        {{ itemMobility.title }}
+                                    </option>
+                                </select>
                             </div>
                         </div>
                     </div>
