@@ -21,19 +21,31 @@
                             <div class="form-group">
                                 <label>{{"ItemCategory" | localize}}</label>
                                 <select placeholder="Select Item Category" class="form-control" #itemCategoryInput
-                                    formControlName="itemCategory" id="itemCategory" name="itemCategory">
+                                    formControlName="itemCategory" id="itemCategory" name="itemCategory"
+                                    [ngClass]="{ 'is-invalid': submitted && itemMasterForm.get('itemCategory').errors }">
                                     <option *ngFor="let itemCategory of itemCategoriesList"
                                         value="{{ itemCategory.value }}">
                                         {{ itemCategory.title }}
                                     </option>
                                 </select>
+                                <div *ngIf="submitted && itemMasterForm.get('itemCategory').errors"
+                                    class="invalid-feedback">
+                                    <div *ngIf="itemMasterForm.get('itemCategory').errors.required">
+                                        Item Category is required</div>
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>{{"ItemName" | localize}}</label>
                                 <input #itemNameInput id="itemName" class="form-control" type="text" name="itemName"
-                                    formControlName="itemName">
+                                    formControlName="itemName"
+                                    [ngClass]="{ 'is-invalid': submitted && itemMasterForm.get('itemName').errors }">
+                                <div *ngIf="submitted && itemMasterForm.get('itemName').errors"
+                                    class="invalid-feedback">
+                                    <div *ngIf="itemMasterForm.get('itemName').errors.required">
+                                        Item Name is required</div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -141,10 +153,8 @@
                             <div class="form-group">
                                 <label>{{"SuppliedBy" | localize}}</label>
                                 <select placeholder="Select Option" class="form-control" #supplierIdInput
-                                    formControlName="supplierId" id="supplierId"
-                                    name="supplierId">
-                                    <option *ngFor="let supplierItem of supplierList"
-                                        value="{{ supplierItem.id }}">
+                                    formControlName="supplierId" id="supplierId" name="supplierId">
+                                    <option *ngFor="let supplierItem of supplierList" value="{{ supplierItem.id }}">
                                         {{ supplierItem.name }}
                                     </option>
                                 </select>
@@ -226,8 +236,9 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>{{"Supplier" | localize}}</label>
-                                            <select placeholder="Select Item Category" class="form-control" #supplierIdInput
-                                                formControlName="supplierId" id="supplierId" name="supplierId"
+                                            <select placeholder="Select Item Category" class="form-control"
+                                                #supplierIdInput formControlName="supplierId" id="supplierId"
+                                                name="supplierId"
                                                 [ngClass]="{ 'is-invalid': submitted && calibrationAgencyItem.get('supplierId').errors }">
                                                 <option *ngFor="let supplierItem of supplierList"
                                                     value="{{ supplierItem.id }}">
@@ -237,7 +248,7 @@
                                             <div *ngIf="submitted && calibrationAgencyItem.get('supplierId').errors"
                                                 class="invalid-feedback">
                                                 <div *ngIf="calibrationAgencyItem.get('supplierId').errors.required">
-                                                   Supplier is required</div>
+                                                    Supplier is required</div>
                                             </div>
                                         </div>
                                     </div>

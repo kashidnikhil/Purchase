@@ -16,9 +16,9 @@ namespace MyTraining1101Demo.Purchase.Items.Dto.ItemMaster
         public Guid Id { get; set; }
         public ItemCategory ItemCategory { get; set; }
 
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
 
-        public int ItemId { get; set; }
+        public int? ItemId { get; set; }
 
         public string GenericName { get; set; }
 

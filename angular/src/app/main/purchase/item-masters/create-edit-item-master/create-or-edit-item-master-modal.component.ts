@@ -2,6 +2,7 @@ import { Component, EventEmitter, Injector, Output, ViewChild, ViewEncapsulation
 import { AppComponentBase } from '@shared/common/app-component-base';
 import {
     CalibrationAgencyDto,
+    CalibrationAgencyInputDto,
     CalibrationTypeDto,
     ItemMasterDto,
     ItemMasterInputDto,
@@ -87,19 +88,19 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
             id: new FormControl(itemMaster.id, []),
             categoryId: new FormControl(itemMaster.categoryId, []),
             itemId: new FormControl(itemMaster.itemId, []),
-            itemCategory : new FormControl(<number>itemMaster.itemCategory, []),
+            itemCategory : new FormControl(itemMaster.itemCategory? <number>itemMaster.itemCategory: null, [Validators.required]),
             genericName : new FormControl(itemMaster.genericName, []),
-            itemName : new FormControl(itemMaster.itemName, []),
+            itemName : new FormControl(itemMaster.itemName, [Validators.required]),
             alias : new FormControl(itemMaster.alias, []),
-            itemType : new FormControl(itemMaster.itemType, []),
-            amcRequired : new FormControl(itemMaster.amcRequired, []),
+            itemType : new FormControl(itemMaster.itemType ? <number>itemMaster.itemType : null, []),
+            amcRequired : new FormControl(itemMaster.amcRequired? <number>itemMaster.amcRequired : null, []),
             make: new FormControl(itemMaster.make, []),
             model : new FormControl(itemMaster.model, []),
             serialNumber : new FormControl(itemMaster.serialNumber, []),
             specifications : new FormControl(itemMaster.specifications, []),
             storageConditions : new FormControl(itemMaster.storageConditions, []),
-            itemMobility : new FormControl(itemMaster.itemMobility, []),
-            calibrationRequirement : new FormControl(itemMaster.calibrationRequirement, []),
+            itemMobility : new FormControl(itemMaster.itemMobility? <number>itemMaster.itemMobility : null, []),
+            calibrationRequirement : new FormControl(itemMaster.calibrationRequirement? <number>itemMaster.calibrationRequirement : null, []),
             supplierId : new FormControl(itemMaster.supplierId, []),
             itemCalibrationTypes: itemMaster.itemCalibrationTypes && itemMaster.itemCalibrationTypes.length > 0 ? this.formBuilder.array(
                 itemMaster.itemCalibrationTypes.map((x: CalibrationTypeDto) =>
@@ -260,8 +261,8 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
             this.saving = true;
             input = this.itemMasterForm.value;
             if (input.itemCalibrationAgencies && input.itemCalibrationAgencies.length > 0) {
-                // let tempSupplierCategories = this.mapSupplierCategories(input.itemCalibrationAgencies);
-                // input.supplierCategories = tempSupplierCategories;
+                let temptemCalibrationAgencies = this.mapCalibrationAgencies(input.itemCalibrationAgencies);
+                input.itemCalibrationAgencies = temptemCalibrationAgencies;
             }
 
             if (input.itemCalibrationTypes && input.itemCalibrationTypes.length > 0) {
@@ -290,22 +291,25 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
         }
     }
 
-    mapSupplierCategories(supplierCategoryList: MappedSupplierCategoryInputDto[]): MappedSupplierCategoryInputDto[] {
-        let tempSupplierList: MappedSupplierCategoryInputDto[] = [];
-        supplierCategoryList.forEach(item => {
-            let tempSupplierCategoryItem: MappedSupplierCategoryInputDto = new MappedSupplierCategoryInputDto(
-                {
-                    id: "",
-                    supplierCategoryId: item.id,
-                    supplierId: item.supplierId,
-                }
-            );
-            // tempSupplierCategoryItem.id = "";
-            // tempSupplierCategoryItem.supplierCategoryId = item.id;
-            tempSupplierList.push(tempSupplierCategoryItem);
+    mapCalibrationAgencies(calibrationAgencyList: CalibrationAgencyInputDto[]): CalibrationAgencyInputDto[]|null {
+        
+        let tempCalibrationAgencyList: CalibrationAgencyInputDto[] = [];
+        calibrationAgencyList.forEach(item => {
+            if(item.supplierId != null){
+                let tempCalibrationAgencyItem: CalibrationAgencyInputDto = new CalibrationAgencyInputDto(
+                    {
+                        id: "",
+                        itemId: item.itemId,
+                        supplierId: item.supplierId,
+                    }
+                );
+                tempCalibrationAgencyList.push(tempCalibrationAgencyItem);
+            }
+            
         });
-        return tempSupplierList;
-    }
+        let result = tempCalibrationAgencyList.length>1 ? tempCalibrationAgencyList : null;
+        return result;
+    }   
 
     unMapSupplierCategories(supplierCategoryList: MappedSupplierCategoryDto[]): SupplierCategoryDto[] {
         let tempSupplierList: SupplierCategoryDto[] = [];

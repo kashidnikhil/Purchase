@@ -26942,8 +26942,8 @@ export enum ItemCategory {
 export class ItemMasterDto implements IItemMasterDto {
     id!: string;
     itemCategory!: ItemCategory;
-    categoryId!: number;
-    itemId!: number;
+    categoryId!: number | undefined;
+    itemId!: number | undefined;
     genericName!: string | undefined;
     itemName!: string | undefined;
     itemType!: ItemType;
@@ -27207,8 +27207,8 @@ export class ItemMasterDto implements IItemMasterDto {
 export interface IItemMasterDto {
     id: string;
     itemCategory: ItemCategory;
-    categoryId: number;
-    itemId: number;
+    categoryId: number | undefined;
+    itemId: number | undefined;
     genericName: string | undefined;
     itemName: string | undefined;
     itemType: ItemType;

@@ -9,9 +9,9 @@
     [Table("CalibrationType")]
     public class CalibrationType : FullAuditedEntity<Guid>
     {
-        public CalibrationTypeEnum Type { get; set; }
+        public CalibrationTypeEnum? Type { get; set; }
 
-        public CalibrationFrequency Frequency { get; set; }
+        public CalibrationFrequency? Frequency { get; set; }
 
         public virtual Guid? ItemId { get; set; }
         public virtual Item Item { get; set; }

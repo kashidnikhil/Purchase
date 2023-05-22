@@ -5,9 +5,9 @@
     public class CalibrationTypeDto
     {
         public Guid Id { get; set; }
-        public CalibrationTypeEnum Type { get; set; }
+        public CalibrationTypeEnum? Type { get; set; }
 
-        public CalibrationFrequency Frequency { get; set; }
+        public CalibrationFrequency? Frequency { get; set; }
 
         public Guid ItemId { get; set; }
     }
