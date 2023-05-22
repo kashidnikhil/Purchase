@@ -122,6 +122,19 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-12 row mb-4">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>{{"CalibrationRequirement" | localize}}</label>
+                                <select placeholder="Select Option" class="form-control" #calibrationRequirementInput
+                                    formControlName="calibrationRequirement" id="calibrationRequirement" name="calibrationRequirement">
+                                    <option *ngFor="let calibrationRequirement of calibrationRequirementList" value="{{ calibrationRequirement.value }}">
+                                        {{ calibrationRequirement.title }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button [disabled]="saving" type="button" class="btn btn-light-primary font-weight-bold"

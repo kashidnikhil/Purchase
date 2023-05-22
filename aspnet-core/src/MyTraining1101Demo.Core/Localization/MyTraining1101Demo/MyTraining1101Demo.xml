@@ -1295,5 +1295,6 @@
 	  <text name="Specifications">Specifications</text>
 	  <text name="StorageConditions">Storage Conditions</text>
 	  <text name="ItemMobility">Item Mobility</text>
+	  <text name="CalibrationRequirement">Calibration Requirement</text>
   </texts>
 </localizationDictionary>

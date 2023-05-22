@@ -42,6 +42,7 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
     itemTypeList: DropdownDto[] = [];
     amcRequirementList : DropdownDto[] = [];
     itemMobilityList : DropdownDto[] = [];
+    calibrationRequirementList : DropdownDto[] = [];
 
     constructor(
         injector: Injector,
@@ -88,6 +89,7 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
             specifications : new FormControl(itemMaster.specifications, []),
             storageConditions : new FormControl(itemMaster.storageConditions, []),
             itemMobility : new FormControl(itemMaster.itemMobility, []),
+            calibrationRequirement : new FormControl(itemMaster.calibrationRequirement, []),
         });
 
     }
@@ -214,7 +216,7 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
         this.loadItemTypes();
         this.loadAMCRequirementList();
         this.loadItemMobilityList();
-
+        this.loadCalibrationRequirementList();
     }
 
     loadItemCategories(){
@@ -231,6 +233,10 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
 
     loadItemMobilityList(){
         this.itemMobilityList = this._itemMockService.loadItemMobilityList();
+    }
+
+    loadCalibrationRequirementList(){
+        this.calibrationRequirementList = this._itemMockService.loadYesOrNoTypeDropdownData();
     }
 
     
