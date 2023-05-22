@@ -76,17 +76,4 @@ export class ItemMockService{
         return options;
     } 
 
-    loadAMCRequiredList(): DropdownDto[] {
-        let itemTypesList = [
-            {
-                title: "Analogue",
-                value: 1
-            },
-            {
-                title: "Digital",
-                value: 2
-            }       
-        ];
-        return itemTypesList;
-    }
 }

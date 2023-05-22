@@ -19,7 +19,6 @@
                     </button>
                 </div>
                 <div class="modal-body">
-
                     <div class="col-md-12 row mb-4">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -83,6 +82,32 @@
                                                                     {{ option.title }}
                                                                 </option>
                                                             </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row mb-4">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>{{"Model" | localize}}</label>
+                                <input #modelInput id="model" class="form-control" type="text"
+                                    name="model" formControlName="model">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>{{"SerialNumber" | localize}}</label>
+                                <input #serialNumberInput id="serialNumber" class="form-control" type="text"
+                                name="serialNumber" formControlName="serialNumber">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row mb-4">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>{{"Specifications" | localize}}</label>
+                                <textarea #specificationsInput id="specifications" class="form-control"
+                                    type="text" rows="3" name="specifications"
+                                    formControlName="specifications"></textarea>
                             </div>
                         </div>
                     </div>
