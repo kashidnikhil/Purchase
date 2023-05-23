@@ -126,6 +126,11 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
             leadTime: new FormControl(itemMaster.leadTime ? <number>itemMaster.leadTime : null, []),
             supplierItemName: new FormControl(itemMaster.supplierItemName ? itemMaster.supplierItemName : null, []),
             status : new FormControl(itemMaster.status ? <number>itemMaster.status : null, []),
+            recordedBy : new FormControl(itemMaster.recordedBy ? <number>itemMaster.recordedBy : null, []),
+            approvedBy : new FormControl(itemMaster.approvedBy ? <number>itemMaster.approvedBy : null, []),
+            discardedOn: new FormControl(itemMaster.discardedOn ? formatDate(new Date(<string><unknown>itemMaster.discardedOn), "yyyy-MM-dd", "en") : null, []),
+            discardApprovedBy : new FormControl(itemMaster.discardApprovedBy ? <number>itemMaster.discardApprovedBy : null, []),
+            discardedReason : new FormControl(itemMaster.discardedReason ? itemMaster.discardedReason : null, []),
             itemCalibrationTypes: itemMaster.itemCalibrationTypes && itemMaster.itemCalibrationTypes.length > 0 ? this.formBuilder.array(
                 itemMaster.itemCalibrationTypes.map((x: CalibrationTypeDto) =>
                     this.createCalibrationType(x)
