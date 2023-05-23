@@ -12,6 +12,7 @@
     using MyTraining1101Demo.Purchase.Items.ProcurementMaster;
     using MyTraining1101Demo.Purchase.Items.RequiredItemSparesMaster;
     using System;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     public class ItemAppService : MyTraining1101DemoAppServiceBase, IItemAppService
@@ -213,6 +214,20 @@
                     itemMasterData.ItemSpares = await this._itemSpareManager.GetItemSpareListFromDB(itemMasterData.Id);    
                 }
                 return itemMasterData;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.Message, ex);
+                throw ex;
+            }
+        }
+
+        public async Task<IList<ItemMasterListDto>> GetItemMasterList()
+        {
+            try
+            {
+                var response = await this._itemManager.GetItemMasterListFromDB();
+                return response;
             }
             catch (Exception ex)
             {

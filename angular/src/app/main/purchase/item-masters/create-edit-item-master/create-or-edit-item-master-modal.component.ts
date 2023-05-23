@@ -5,9 +5,14 @@ import {
     CalibrationAgencyInputDto,
     CalibrationTypeDto,
     CalibrationTypeInputDto,
+    ItemAttachmentDto,
+    ItemAttachmentInputDto,
     ItemMasterDto,
     ItemMasterInputDto,
+    ItemMasterListDto,
     ItemServiceProxy,
+    ItemSpareDto,
+    ItemSpareInputDto,
     ItemSupplierDto,
     ItemSupplierInputDto,
     LegalEntityServiceProxy,
@@ -55,6 +60,7 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
     calibrationTypeList: DropdownDto[] = [];
     calibrationFrequencyList: DropdownDto[] = [];
     supplierList: SupplierDto[] = [];
+    itemMasterList  : ItemMasterListDto [] = [];
 
     constructor(
         injector: Injector,
@@ -88,6 +94,8 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
     initialiseItemMasterForm(itemMaster: ItemMasterDto) {
         let itemCalibrationType: CalibrationTypeDto = new CalibrationTypeDto();
         let itemCalibrationAgency: CalibrationAgencyDto = new CalibrationAgencyDto();
+        let itemSupplier: ItemSupplierDto = new ItemSupplierDto();
+        let itemSpare: ItemSpareDto = new ItemSpareDto();
         this.itemMasterForm = this.formBuilder.group({
             id: new FormControl(itemMaster.id, []),
             categoryId: new FormControl(itemMaster.categoryId, []),
@@ -130,7 +138,17 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
                 itemMaster.itemSuppliers.map((x: ItemSupplierDto) =>
                     this.createItemSupplier(x)
                 )
-            ) : this.formBuilder.array([this.createItemSupplier(itemCalibrationAgency)]),
+            ) : this.formBuilder.array([this.createItemSupplier(itemSupplier)]),
+            itemSpares: itemMaster.itemSpares && itemMaster.itemSpares.length > 0 ? this.formBuilder.array(
+                itemMaster.itemSpares.map((x: ItemSpareDto) =>
+                    this.createItemSpare(x)
+                )
+            ) : this.formBuilder.array([this.createItemSpare(itemSpare)]),
+            itemAttachments: itemMaster.itemAttachments && itemMaster.itemAttachments.length > 0 ? this.formBuilder.array(
+                itemMaster.itemAttachments.map((x: ItemAttachmentDto) =>
+                    this.createItemSpare(x)
+                )
+            ) : this.formBuilder.array([this.createItemSpare(itemSpare)]),
         });
 
     }
@@ -245,9 +263,55 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
         itemSupplierArray.removeAt(indexValue);
     }
 
+    get itemSpares(): FormArray {
+        return (<FormArray>this.itemMasterForm.get('itemSpares'));
+    }
+
+    addItemSpare() {
+        let itemSpare: ItemSpareDto = new ItemSpareDto();
+        let itemSpareForm = this.createItemSpare(itemSpare);
+        this.itemSpares.push(itemSpareForm);
+    }
+
+    createItemSpare(itemSpare: ItemSpareDto): FormGroup {
+        return this.formBuilder.group({
+            id: new FormControl(itemSpare.id, []),
+            itemId: new FormControl(itemSpare.itemId, [])
+        });
+    }
+
+    deleteItemSpare(indexValue: number) {
+        const itemSpareArray = this.itemSpares;
+        itemSpareArray.removeAt(indexValue);
+    }
+
+    get itemAttachments(): FormArray {
+        return (<FormArray>this.itemMasterForm.get('itemAttachments'));
+    }
+
+    addItemAttachment() {
+        let itemAttachment: ItemAttachmentDto = new ItemAttachmentDto();
+        let itemAttachmentForm = this.createItemAttachment(itemAttachment);
+        this.itemAttachments.push(itemAttachmentForm);
+    }
+
+    createItemAttachment(itemAttachment: ItemAttachmentDto): FormGroup {
+        return this.formBuilder.group({
+            id: new FormControl(itemAttachment.id, []),
+            path: new FormControl(itemAttachment.path, []),
+            description: new FormControl(itemAttachment.description, []),
+            itemId: new FormControl(itemAttachment.itemId, [])
+        });
+    }
+
+    deleteItemAttachment(indexValue: number) {
+        const itemAttachmentArray = this.itemAttachments;
+        itemAttachmentArray.removeAt(indexValue);
+    }
 
     async loadDropdownList() {
         await this.loadSuppliers();
+        await this.loadItemMasters();
         this.loadItemCategories();
         this.loadItemTypes();
         this.loadAMCRequirementList();
@@ -259,6 +323,10 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
 
     async loadSuppliers() {
         this.supplierList = await this._supplierService.getSupplierList().toPromise();
+    }
+
+    async loadItemMasters() {
+        this.itemMasterList = await this._itemMasterService.getItemMasterList().toPromise();
     }
 
     loadItemCategories() {
@@ -289,8 +357,6 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
         this.calibrationFrequencyList = this._itemMockService.loadCalibrationFrequencyList();
     }
 
-
-
     onShown(): void {
         // document.getElementById('name').focus();
     }
@@ -302,8 +368,8 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
             this.saving = true;
             input = this.itemMasterForm.value;
             if (input.itemCalibrationAgencies && input.itemCalibrationAgencies.length > 0) {
-                let temptemCalibrationAgencies = this.mapCalibrationAgencies(input.itemCalibrationAgencies);
-                input.itemCalibrationAgencies = temptemCalibrationAgencies;
+                let tempCalibrationAgencies = this.mapCalibrationAgencies(input.itemCalibrationAgencies);
+                input.itemCalibrationAgencies = tempCalibrationAgencies;
             }
 
             if (input.itemCalibrationTypes && input.itemCalibrationTypes.length > 0) {
@@ -314,6 +380,16 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
             if (input.itemSuppliers && input.itemSuppliers.length > 0) {
                 let tempItemSuppliers = this.mapItemSuppliers(input.itemSuppliers);
                 input.itemSuppliers = tempItemSuppliers;
+            }
+
+            if (input.itemSpares && input.itemSpares.length > 0) {
+                let tempItemSpares = this.mapItemSpares(input.itemSpares);
+                input.itemSpares = tempItemSpares;
+            }
+
+            if (input.itemAttachments && input.itemAttachments.length > 0) {
+                let tempItemAttachments = this.mapItemAttachments(input.itemAttachments);
+                input.itemAttachments = tempItemAttachments;
             }
 
             this._itemMasterService
@@ -343,7 +419,7 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
             if (item.frequency != null && item.type != null) {
                 let tempCalibrationTypeItem: CalibrationTypeInputDto = new CalibrationTypeInputDto(
                     {
-                        id: item.id,
+                        id: item.id ? item.id : "",
                         itemId: item.itemId,
                         frequency: item.frequency,
                         type: item.type
@@ -364,7 +440,7 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
             if (item.supplierId != null) {
                 let tempCalibrationAgencyItem: CalibrationAgencyInputDto = new CalibrationAgencyInputDto(
                     {
-                        id: item.id,
+                        id: item.id ? item.id : "",
                         itemId: item.itemId,
                         supplierId: item.supplierId,
                     }
@@ -393,6 +469,44 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
 
         });
         let result = tempItemSupplierList.length > 1 ? tempItemSupplierList : null;
+        return result;
+    }
+
+    mapItemSpares(itemSpareList: ItemSpareInputDto[]): ItemSpareInputDto[] | null {
+        let tempItemSpareList: ItemSpareInputDto[] = [];
+        itemSpareList.forEach(item => {
+            if (item.itemId != null) {
+                let tempItemSpare: ItemSpareInputDto = new ItemSpareInputDto(
+                    {
+                        id: item.id ? item.id : "",
+                        itemId: item.itemId,
+                    }
+                );
+                tempItemSpareList.push(tempItemSpare);
+            }
+
+        });
+        let result = tempItemSpareList.length > 1 ? tempItemSpareList : null;
+        return result;
+    }
+
+    mapItemAttachments(itemAttachmentList: ItemAttachmentInputDto[]): ItemAttachmentInputDto[] | null {
+        let tempItemAttachmentList: ItemAttachmentInputDto[] = [];
+        itemAttachmentList.forEach(item => {
+            if (item.description != null && item.path != null) {
+                let tempItemAttachment: ItemAttachmentInputDto = new ItemAttachmentInputDto(
+                    {
+                        id: item.id ? item.id : "",
+                        path : item.path,
+                        description : item.description,
+                        itemId: item.itemId
+                    }
+                );
+                tempItemAttachmentList.push(tempItemAttachment);
+            }
+
+        });
+        let result = tempItemAttachmentList.length > 1 ? tempItemAttachmentList : null;
         return result;
     }
 

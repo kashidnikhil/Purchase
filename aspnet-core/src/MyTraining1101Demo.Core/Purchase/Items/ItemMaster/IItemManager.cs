@@ -6,6 +6,7 @@
     using System;
     using Abp.Application.Services.Dto;
     using MyTraining1101Demo.Purchase.Items.Enums;
+    using System.Collections.Generic;
 
     public interface IItemManager : IDomainService
     {
@@ -18,5 +19,7 @@
         Task<ItemMasterDto?> GetItemMasterByNameFromDB(ItemCategory itemCategory, string itemName);
 
         Task<ItemMasterDto?> FindItemMasterByCategoryIdFromDB(ItemCategory itemCategory);
+
+        Task<IList<ItemMasterListDto>> GetItemMasterListFromDB();
     }
 }

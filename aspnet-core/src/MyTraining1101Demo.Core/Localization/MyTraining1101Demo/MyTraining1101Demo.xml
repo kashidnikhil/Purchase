@@ -1312,5 +1312,10 @@
 	  <text name="LeadTime">Lead Time</text>
 	  <text name="SupplierItemName">Supplier's Item Name</text>
 	  <text name="AddNewSupplier">Add New Supplier</text>
+	  <text name="AddNewItemSpare">Add New Item Spare</text>
+	  <text name="ItemSpare">Item Spare</text>
+	  <text name="AddNewItemAttachment">Add New Item Attachment</text>
+	  <text name="Path">Path</text>
+	  <text name="Description">Description</text>
   </texts>
 </localizationDictionary>

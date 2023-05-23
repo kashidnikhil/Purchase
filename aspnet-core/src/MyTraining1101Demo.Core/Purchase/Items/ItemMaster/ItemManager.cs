@@ -142,5 +142,23 @@
                 throw ex;
             }
         }
+
+
+        public async Task<IList<ItemMasterListDto>> GetItemMasterListFromDB()
+        {
+            try
+            {
+                var itemMasterQuery = this._itemMasterRepository.GetAll()
+                    .Where(x => !x.IsDeleted);
+
+                return new List<ItemMasterListDto>(ObjectMapper.Map<List<ItemMasterListDto>>(itemMasterQuery));
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.Message, ex);
+                throw ex;
+            }
+
+        }
     }
 }
