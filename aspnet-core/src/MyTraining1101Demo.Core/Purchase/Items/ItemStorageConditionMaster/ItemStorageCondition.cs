@@ -9,8 +9,8 @@ namespace MyTraining1101Demo.Purchase.Items.ItemStorageConditionMaster
     [Table("ItemStorageCondition")]
     public class ItemStorageCondition : FullAuditedEntity<Guid>
     {
-        public HazardousEnum Hazardous { get; set; }
-        public long ThresholdQuantity { get; set; }
+        public HazardousEnum? Hazardous { get; set; }
+        public long? ThresholdQuantity { get; set; }
      
         public string Location { get; set; }
         public virtual Guid? ItemId { get; set; }

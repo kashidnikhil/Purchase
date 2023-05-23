@@ -5,8 +5,8 @@
     public class ItemStorageConditionInputDto
     {
         public Guid? Id { get; set; }
-        public HazardousEnum Hazardous { get; set; }
-        public long ThresholdQuantity { get; set; }
+        public HazardousEnum? Hazardous { get; set; }
+        public long? ThresholdQuantity { get; set; }
 
         public string Location { get; set; }
         public Guid ItemId { get; set; }
