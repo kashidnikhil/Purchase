@@ -104,6 +104,9 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
             itemMobility: new FormControl(itemMaster.itemMobility ? <number>itemMaster.itemMobility : null, []),
             calibrationRequirement: new FormControl(itemMaster.calibrationRequirement ? <number>itemMaster.calibrationRequirement : null, []),
             supplierId: new FormControl(itemMaster.supplierId, []),
+            hsnCode : new FormControl(itemMaster.hsnCode, [Validators.required]),
+            gst : new FormControl(itemMaster.gst ? parseFloat(itemMaster.gst.toString()).toFixed(2) : null, [Validators.required]),
+            purchaseValue : new FormControl(itemMaster.purchaseValue ? parseFloat(itemMaster.purchaseValue.toString()).toFixed(2) : null, []),
             purchaseDate: new FormControl(itemMaster.purchaseDate ? formatDate(new Date(<string><unknown>itemMaster.purchaseDate), "yyyy-MM-dd", "en") : null, []),
             itemCalibrationTypes: itemMaster.itemCalibrationTypes && itemMaster.itemCalibrationTypes.length > 0 ? this.formBuilder.array(
                 itemMaster.itemCalibrationTypes.map((x: CalibrationTypeDto) =>

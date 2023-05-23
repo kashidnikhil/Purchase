@@ -1301,5 +1301,9 @@
 	  <text name="CalibrationFrequency">Calibration Frequency</text>
 	  <text name="AddCalibrationAgency">Add Calibration Agency</text>
 	  <text name="SuppliedBy">Supplied By</text>
+	  <text name="GST%">GST %</text>
+	  <text name="HSNCode">HSN Code</text>
+	  <text name="PurchaseValue">Purchase Value</text>
+	  <text name="PurchaseDate">Purchase Date</text>
   </texts>
 </localizationDictionary>

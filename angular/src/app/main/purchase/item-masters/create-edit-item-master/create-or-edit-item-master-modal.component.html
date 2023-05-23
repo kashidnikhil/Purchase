@@ -265,6 +265,46 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-12 row mb-4">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>{{"GST%" | localize}}</label>
+                                <input #gstInput id="gst" class="form-control" type="number" name="gst"
+                                    formControlName="gst"
+                                    [ngClass]="{ 'is-invalid': submitted && itemMasterForm.get('gst').errors }">
+                                <div *ngIf="submitted && itemMasterForm.get('gst').errors" class="invalid-feedback">
+                                    <div *ngIf="itemMasterForm.get('gst').errors.required">
+                                        GST is required</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>{{"HSNCode" | localize}}</label>
+                                <input #hsnCodeInput id="hsnCode" class="form-control" type="text" name="hsnCode"
+                                    formControlName="hsnCode"
+                                    [ngClass]="{ 'is-invalid': submitted && itemMasterForm.get('hsnCode').errors }">
+                                <div *ngIf="submitted && itemMasterForm.get('hsnCode').errors" class="invalid-feedback">
+                                    <div *ngIf="itemMasterForm.get('hsnCode').errors.required">
+                                        HSN Code is required</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>{{"PurchaseValue" | localize}}</label>
+                                <input #purchaseValueInput id="purchaseValue" class="form-control" type="number"
+                                    name="purchaseValue" formControlName="purchaseValue">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>{{"PurchaseDate" | localize}}</label>
+                                <input #purchaseDateInput id="purchaseDate" class="form-control" type="date"
+                                    name="purchaseDate" formControlName="purchaseDate">
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button [disabled]="saving" type="button" class="btn btn-light-primary font-weight-bold"
