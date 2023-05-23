@@ -1305,5 +1305,12 @@
 	  <text name="HSNCode">HSN Code</text>
 	  <text name="PurchaseValue">Purchase Value</text>
 	  <text name="PurchaseDate">Purchase Date</text>
+	  <text name="OrderingRate">Ordering Rate</text>
+	  <text name="Quantity">Quantity</text>
+	  <text name="RatePerQuantity">Rate Per Quantity</text>
+	  <text name="RateAsOnDate">Rate As On Date</text>
+	  <text name="LeadTime">Lead Time</text>
+	  <text name="SupplierItemName">Supplier's Item Name</text>
+	  <text name="AddNewSupplier">Add New Supplier</text>
   </texts>
 </localizationDictionary>

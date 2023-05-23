@@ -8,6 +8,8 @@ import {
     ItemMasterDto,
     ItemMasterInputDto,
     ItemServiceProxy,
+    ItemSupplierDto,
+    ItemSupplierInputDto,
     LegalEntityServiceProxy,
     MappedSupplierCategoryDto,
     MappedSupplierCategoryInputDto,
@@ -108,6 +110,12 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
             gst : new FormControl(itemMaster.gst ? parseFloat(itemMaster.gst.toString()).toFixed(2) : null, [Validators.required]),
             purchaseValue : new FormControl(itemMaster.purchaseValue ? parseFloat(itemMaster.purchaseValue.toString()).toFixed(2) : null, []),
             purchaseDate: new FormControl(itemMaster.purchaseDate ? formatDate(new Date(<string><unknown>itemMaster.purchaseDate), "yyyy-MM-dd", "en") : null, []),
+            orderingRate : new FormControl(itemMaster.orderingRate ? parseFloat(itemMaster.orderingRate.toString()).toFixed(2) : null, []),
+            quantity : new FormControl(itemMaster.quantity ? <number>itemMaster.quantity : null, []),
+            ratePerQuantity : new FormControl(itemMaster.ratePerQuantity ? parseFloat(itemMaster.ratePerQuantity.toString()).toFixed(2) : null, []), 
+            rateAsOnDate : new FormControl(itemMaster.rateAsOnDate ? parseFloat(itemMaster.ratePerQuantity.toString()).toFixed(2) : null, []), 
+            leadTime: new FormControl(itemMaster.leadTime ? <number>itemMaster.leadTime : null, []),
+            supplierItemName: new FormControl(itemMaster.supplierItemName ? itemMaster.supplierItemName : null, []),
             itemCalibrationTypes: itemMaster.itemCalibrationTypes && itemMaster.itemCalibrationTypes.length > 0 ? this.formBuilder.array(
                 itemMaster.itemCalibrationTypes.map((x: CalibrationTypeDto) =>
                     this.createCalibrationType(x)
@@ -118,6 +126,11 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
                     this.createCalibrationAgency(x)
                 )
             ) : this.formBuilder.array([this.createCalibrationAgency(itemCalibrationAgency)]),
+            itemSuppliers: itemMaster.itemSuppliers && itemMaster.itemSuppliers.length > 0 ? this.formBuilder.array(
+                itemMaster.itemSuppliers.map((x: ItemSupplierDto) =>
+                    this.createItemSupplier(x)
+                )
+            ) : this.formBuilder.array([this.createItemSupplier(itemCalibrationAgency)]),
         });
 
     }
@@ -210,6 +223,28 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
         itemCalibrationAgencyArray.removeAt(indexValue);
     }
 
+    get itemSuppliers(): FormArray {
+        return (<FormArray>this.itemMasterForm.get('itemSuppliers'));
+    }
+
+    addItemSupplier() {
+        let itemSupplier: ItemSupplierDto = new ItemSupplierDto();
+        let itemSupplierForm = this.createItemSupplier(itemSupplier);
+        this.itemSuppliers.push(itemSupplierForm);
+    }
+
+    createItemSupplier(itemSupplier: ItemSupplierDto): FormGroup {
+        return this.formBuilder.group({
+            id: new FormControl(itemSupplier.id, []),
+            supplierId: new FormControl(itemSupplier.supplierId, [])
+        });
+    }
+
+    deleteItemSupplier(indexValue: number) {
+        const itemSupplierArray = this.itemSuppliers;
+        itemSupplierArray.removeAt(indexValue);
+    }
+
 
     async loadDropdownList() {
         await this.loadSuppliers();
@@ -276,6 +311,11 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
                 input.itemCalibrationTypes = tempCalibrationTypes;
             }
 
+            if (input.itemSuppliers && input.itemSuppliers.length > 0) {
+                let tempItemSuppliers = this.mapItemSuppliers(input.itemSuppliers);
+                input.itemSuppliers = tempItemSuppliers;
+            }
+
             this._itemMasterService
                 .insertOrUpdateItem(input)
                 .pipe(
@@ -317,6 +357,7 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
         return result;
     }
 
+
     mapCalibrationAgencies(calibrationAgencyList: CalibrationAgencyInputDto[]): CalibrationAgencyInputDto[] | null {
         let tempCalibrationAgencyList: CalibrationAgencyInputDto[] = [];
         calibrationAgencyList.forEach(item => {
@@ -333,6 +374,25 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
 
         });
         let result = tempCalibrationAgencyList.length > 1 ? tempCalibrationAgencyList : null;
+        return result;
+    }
+
+    mapItemSuppliers(itemSupplierList: ItemSupplierInputDto[]): ItemSupplierInputDto[] | null {
+        let tempItemSupplierList: ItemSupplierInputDto[] = [];
+        itemSupplierList.forEach(item => {
+            if (item.supplierId != null) {
+                let tempItemSupplier: ItemSupplierInputDto = new ItemSupplierInputDto(
+                    {
+                        id: item.id ? item.id : "",
+                        itemId: item.itemId,
+                        supplierId: item.supplierId,
+                    }
+                );
+                tempItemSupplierList.push(tempItemSupplier);
+            }
+
+        });
+        let result = tempItemSupplierList.length > 1 ? tempItemSupplierList : null;
         return result;
     }
 

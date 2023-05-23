@@ -305,6 +305,89 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-12 row mb-4">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>{{"OrderingRate" | localize}}</label>
+                                <input #orderingRateInput id="orderingRate" class="form-control" type="number" name="orderingRate"
+                                    formControlName="orderingRate">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>{{"Quantity" | localize}}</label>
+                                <input #quantityInput id="quantity" class="form-control" type="number" name="quantity"
+                                    formControlName="quantity">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>{{"RatePerQuantity" | localize}}</label>
+                                <input #ratePerQuantityInput id="ratePerQuantity" class="form-control" type="number"
+                                    name="ratePerQuantity" formControlName="ratePerQuantity">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>{{"RateAsOnDate" | localize}}</label>
+                                <input #rateAsOnDateInput id="rateAsOnDate" class="form-control" type="number"
+                                    name="rateAsOnDate" formControlName="rateAsOnDate">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row mb-4">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>{{"LeadTime" | localize}}</label>
+                                <input #leadTimeInput id="leadTime" class="form-control" type="number" name="leadTime" step="1"
+                                    formControlName="leadTime">
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="form-group">
+                                <label>{{"SupplierItemName" | localize}}</label>
+                                <input #supplierItemNameInput id="supplierItemName" class="form-control" type="text" name="supplierItemName"
+                                    formControlName="supplierItemName">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <button type="button" class="btn btn-primary" (click)="addItemSupplier()">
+                            <i class="fa fa-plus"></i>
+                            {{ 'AddNewSupplier' | localize }}
+                        </button>
+                    </div>
+                    <div formArrayName="itemSuppliers" class="mb-4">
+                        <div class="card mb-3"
+                            *ngFor="let itemSupplier of itemSuppliers.controls; let index = index">
+                            <div [formGroupName]="index" class="p-3">
+                                <div class="col-md-12 row mb-4">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>{{"Supplier" | localize}}</label>
+                                            <select placeholder="Select Item Category" class="form-control"
+                                                #supplierIdInput formControlName="supplierId" id="supplierId"
+                                                name="supplierId">
+                                                <option *ngFor="let supplierItem of supplierList"
+                                                    value="{{ supplierItem.id }}">
+                                                    {{ supplierItem.name }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <div class="mt-5 text-center">
+                                            <h3>
+                                                <i class="fa fa-trash"
+                                                    *ngIf="!itemSupplier.value.id && itemSuppliers.controls.length > 1"
+                                                    (click)="deleteItemSupplier(index)"></i>
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button [disabled]="saving" type="button" class="btn btn-light-primary font-weight-bold"
