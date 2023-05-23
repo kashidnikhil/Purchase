@@ -18,6 +18,8 @@ import {
     LegalEntityServiceProxy,
     MappedSupplierCategoryDto,
     MappedSupplierCategoryInputDto,
+    MaterialGradeDto,
+    MaterialGradeServiceProxy,
     SupplierAddressDto,
     SupplierBankDto,
     SupplierCategoryDto,
@@ -62,12 +64,14 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
     itemStatusList: DropdownDto[] = [];
     supplierList: SupplierDto[] = [];
     itemMasterList  : ItemMasterListDto [] = [];
+    materialGradeList : MaterialGradeDto[] =[];
 
     constructor(
         injector: Injector,
         private formBuilder: FormBuilder,
         private _supplierService: SupplierServiceProxy,
         private _itemMasterService: ItemServiceProxy,
+        private _materialGradeServie: MaterialGradeServiceProxy,
         private _itemMockService: ItemMockService
     ) {
         super(injector);
@@ -131,6 +135,7 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
             discardedOn: new FormControl(itemMaster.discardedOn ? formatDate(new Date(<string><unknown>itemMaster.discardedOn), "yyyy-MM-dd", "en") : null, []),
             discardApprovedBy : new FormControl(itemMaster.discardApprovedBy ? <number>itemMaster.discardApprovedBy : null, []),
             discardedReason : new FormControl(itemMaster.discardedReason ? itemMaster.discardedReason : null, []),
+            materialGradeId : new FormControl(itemMaster.materialGradeId ? itemMaster.materialGradeId : null, []),
             itemCalibrationTypes: itemMaster.itemCalibrationTypes && itemMaster.itemCalibrationTypes.length > 0 ? this.formBuilder.array(
                 itemMaster.itemCalibrationTypes.map((x: CalibrationTypeDto) =>
                     this.createCalibrationType(x)
@@ -319,6 +324,7 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
     async loadDropdownList() {
         await this.loadSuppliers();
         await this.loadItemMasters();
+        await this.loadMaterialGrades();
         this.loadItemCategories();
         this.loadItemTypes();
         this.loadAMCRequirementList();
@@ -335,6 +341,10 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
 
     async loadItemMasters() {
         this.itemMasterList = await this._itemMasterService.getItemMasterList().toPromise();
+    }
+
+    async loadMaterialGrades() {
+        this.materialGradeList = await this._materialGradeServie.getMaterialGradeList().toPromise();
     }
 
     loadItemCategories() {

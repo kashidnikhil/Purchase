@@ -1319,5 +1319,6 @@
 	  <text name="Description">Description</text>
 	  <text name="ItemStatus">Item Status</text>
 	  <text name="DiscardedReason">Discarded Reason</text>
+	  <text name="MaterialGrade">Material Grade</text>
   </texts>
 </localizationDictionary>

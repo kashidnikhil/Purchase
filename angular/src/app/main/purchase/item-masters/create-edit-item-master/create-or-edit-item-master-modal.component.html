@@ -480,6 +480,19 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-12 row mb-4">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>{{"MaterialGrade" | localize}}</label>
+                                <select placeholder="Select Material Grade" class="form-control" #materialGradeIdInput
+                                    formControlName="materialGradeId" id="materialGradeId" name="materialGradeId">
+                                    <option *ngFor="let materialGradeItem of materialGradeList" value="{{ materialGradeItem.id }}">
+                                        {{ materialGradeItem.name }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button [disabled]="saving" type="button" class="btn btn-light-primary font-weight-bold"
