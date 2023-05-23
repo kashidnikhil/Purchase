@@ -128,4 +128,19 @@ export class ItemMockService{
 
     }
 
+    loadItemStatusList() : DropdownDto[]{
+        let options = [
+            {
+                title: "Active",
+                value: 1
+            },
+            {
+                title: "Inactive",
+                value: 2
+            }   
+        ];
+
+        return options;
+    }
+
 }

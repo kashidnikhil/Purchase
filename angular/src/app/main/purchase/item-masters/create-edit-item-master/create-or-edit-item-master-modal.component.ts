@@ -59,6 +59,7 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
     calibrationRequirementList: DropdownDto[] = [];
     calibrationTypeList: DropdownDto[] = [];
     calibrationFrequencyList: DropdownDto[] = [];
+    itemStatusList: DropdownDto[] = [];
     supplierList: SupplierDto[] = [];
     itemMasterList  : ItemMasterListDto [] = [];
 
@@ -124,6 +125,7 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
             rateAsOnDate : new FormControl(itemMaster.rateAsOnDate ? parseFloat(itemMaster.ratePerQuantity.toString()).toFixed(2) : null, []), 
             leadTime: new FormControl(itemMaster.leadTime ? <number>itemMaster.leadTime : null, []),
             supplierItemName: new FormControl(itemMaster.supplierItemName ? itemMaster.supplierItemName : null, []),
+            status : new FormControl(itemMaster.status ? <number>itemMaster.status : null, []),
             itemCalibrationTypes: itemMaster.itemCalibrationTypes && itemMaster.itemCalibrationTypes.length > 0 ? this.formBuilder.array(
                 itemMaster.itemCalibrationTypes.map((x: CalibrationTypeDto) =>
                     this.createCalibrationType(x)
@@ -319,6 +321,7 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
         this.loadCalibrationRequirementList();
         this.loadCalibrationTypeList();
         this.loadCalibrationFrequencyList();
+        this.loadItemStatusList();
     }
 
     async loadSuppliers() {
@@ -355,6 +358,10 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
 
     loadCalibrationFrequencyList() {
         this.calibrationFrequencyList = this._itemMockService.loadCalibrationFrequencyList();
+    }
+
+    loadItemStatusList() {
+        this.itemStatusList = this._itemMockService.loadItemStatusList();
     }
 
     onShown(): void {

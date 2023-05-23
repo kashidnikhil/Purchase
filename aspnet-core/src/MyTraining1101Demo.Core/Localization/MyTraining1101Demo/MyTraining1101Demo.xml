@@ -1317,5 +1317,6 @@
 	  <text name="AddNewItemAttachment">Add New Item Attachment</text>
 	  <text name="Path">Path</text>
 	  <text name="Description">Description</text>
+	  <text name="ItemStatus">Item Status</text>
   </texts>
 </localizationDictionary>
