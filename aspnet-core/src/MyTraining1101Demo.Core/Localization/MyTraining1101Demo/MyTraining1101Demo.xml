@@ -1326,5 +1326,7 @@
 	  <text name="Location">Location</text>
 	  <text name="UnitOrdering">Unit - Ordering</text>
 	  <text name="UnitStock">Unit - Stock</text>
+	  <text name="CTQRequirement">CTQ Requirement</text>
+	  <text name="CTQSpecifications">CTQ Specifications</text>
   </texts>
 </localizationDictionary>
