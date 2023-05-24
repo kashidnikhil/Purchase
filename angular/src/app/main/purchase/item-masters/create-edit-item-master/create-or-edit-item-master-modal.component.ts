@@ -13,6 +13,8 @@ import {
     ItemServiceProxy,
     ItemSpareDto,
     ItemSpareInputDto,
+    ItemStorageConditionDto,
+    ItemStorageConditionInputDto,
     ItemSupplierDto,
     ItemSupplierInputDto,
     LegalEntityServiceProxy,
@@ -62,10 +64,11 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
     calibrationTypeList: DropdownDto[] = [];
     calibrationFrequencyList: DropdownDto[] = [];
     itemStatusList: DropdownDto[] = [];
+    hazardousList : DropdownDto[] = [];
     supplierList: SupplierDto[] = [];
     itemMasterList  : ItemMasterListDto [] = [];
     materialGradeList : MaterialGradeDto[] =[];
-
+    
     constructor(
         injector: Injector,
         private formBuilder: FormBuilder,
@@ -101,6 +104,7 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
         let itemCalibrationAgency: CalibrationAgencyDto = new CalibrationAgencyDto();
         let itemSupplier: ItemSupplierDto = new ItemSupplierDto();
         let itemSpare: ItemSpareDto = new ItemSpareDto();
+        let itemStorageCondition: ItemStorageConditionDto = new ItemStorageConditionDto();
         this.itemMasterForm = this.formBuilder.group({
             id: new FormControl(itemMaster.id, []),
             categoryId: new FormControl(itemMaster.categoryId, []),
@@ -135,6 +139,8 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
             discardedOn: new FormControl(itemMaster.discardedOn ? formatDate(new Date(<string><unknown>itemMaster.discardedOn), "yyyy-MM-dd", "en") : null, []),
             discardApprovedBy : new FormControl(itemMaster.discardApprovedBy ? <number>itemMaster.discardApprovedBy : null, []),
             discardedReason : new FormControl(itemMaster.discardedReason ? itemMaster.discardedReason : null, []),
+            comment : new FormControl(itemMaster.comment ? itemMaster.comment : null, []),
+            msl: new FormControl(itemMaster.msl ? itemMaster.msl : null, []),
             materialGradeId : new FormControl(itemMaster.materialGradeId ? itemMaster.materialGradeId : null, []),
             itemCalibrationTypes: itemMaster.itemCalibrationTypes && itemMaster.itemCalibrationTypes.length > 0 ? this.formBuilder.array(
                 itemMaster.itemCalibrationTypes.map((x: CalibrationTypeDto) =>
@@ -161,6 +167,11 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
                     this.createItemSpare(x)
                 )
             ) : this.formBuilder.array([this.createItemSpare(itemSpare)]),
+            itemStorageConditions: itemMaster.itemStorageConditions && itemMaster.itemStorageConditions.length > 0 ? this.formBuilder.array(
+                itemMaster.itemStorageConditions.map((x: ItemStorageConditionDto) =>
+                    this.createItemStorageCondition(x)
+                )
+            ) : this.formBuilder.array([this.createItemStorageCondition(itemStorageCondition)]),
         });
 
     }
@@ -321,6 +332,31 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
         itemAttachmentArray.removeAt(indexValue);
     }
 
+    get itemStorageConditions(): FormArray {
+        return (<FormArray>this.itemMasterForm.get('itemStorageConditions'));
+    }
+
+    addItemStorageCondition() {
+        let itemStorageCondition: ItemStorageConditionDto = new ItemStorageConditionDto();
+        let itemStorageConditionForm = this.createItemStorageCondition(itemStorageCondition);
+        this.itemStorageConditions.push(itemStorageConditionForm);
+    }
+
+    createItemStorageCondition(itemStorageCondition: ItemStorageConditionDto): FormGroup {
+        return this.formBuilder.group({
+            id: new FormControl(itemStorageCondition.id, []),
+            hazardous: new FormControl(itemStorageCondition.hazardous ? <number>itemStorageCondition.hazardous : null, []),
+            thresholdQuantity: new FormControl(itemStorageCondition.thresholdQuantity? <number>itemStorageCondition.thresholdQuantity : null, []),
+            location: new FormControl(itemStorageCondition.location, []),
+            itemId: new FormControl(itemStorageCondition.itemId, [])
+        });
+    }
+
+    deleteItemStorageCondition(indexValue: number) {
+        const itemStorageConditionArray = this.itemStorageConditions;
+        itemStorageConditionArray.removeAt(indexValue);
+    }
+
     async loadDropdownList() {
         await this.loadSuppliers();
         await this.loadItemMasters();
@@ -333,6 +369,7 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
         this.loadCalibrationTypeList();
         this.loadCalibrationFrequencyList();
         this.loadItemStatusList();
+        this.loadHazardousList();
     }
 
     async loadSuppliers() {
@@ -379,6 +416,10 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
         this.itemStatusList = this._itemMockService.loadItemStatusList();
     }
 
+    loadHazardousList() {
+        this.hazardousList = this._itemMockService.loadYesOrNoTypeDropdownData();
+    }
+
     onShown(): void {
         // document.getElementById('name').focus();
     }
@@ -412,6 +453,11 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
             if (input.itemAttachments && input.itemAttachments.length > 0) {
                 let tempItemAttachments = this.mapItemAttachments(input.itemAttachments);
                 input.itemAttachments = tempItemAttachments;
+            }
+
+            if (input.itemStorageConditions && input.itemStorageConditions.length > 0) {
+                let itemStorageConditions = this.mapItemStorageConditions(input.itemStorageConditions);
+                input.itemStorageConditions = itemStorageConditions;
             }
 
             this._itemMasterService
@@ -521,6 +567,27 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
                         id: item.id ? item.id : "",
                         path : item.path,
                         description : item.description,
+                        itemId: item.itemId
+                    }
+                );
+                tempItemAttachmentList.push(tempItemAttachment);
+            }
+
+        });
+        let result = tempItemAttachmentList.length > 1 ? tempItemAttachmentList : null;
+        return result;
+    }
+
+    mapItemStorageConditions(itemStorageConditionList: ItemStorageConditionInputDto[]): ItemStorageConditionInputDto[] | null {
+        let tempItemAttachmentList: ItemStorageConditionInputDto[] = [];
+        itemStorageConditionList.forEach(item => {
+            if (item.location != null ||  item.thresholdQuantity != null || item.hazardous != null) {
+                let tempItemAttachment: ItemStorageConditionInputDto = new ItemStorageConditionInputDto(
+                    {
+                        id: item.id ? item.id : "",
+                        location : item.location,
+                        hazardous : item.hazardous,
+                        thresholdQuantity : item.thresholdQuantity,
                         itemId: item.itemId
                     }
                 );

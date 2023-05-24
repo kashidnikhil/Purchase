@@ -27806,7 +27806,7 @@ export enum ItemStatus {
 export class ItemStorageConditionDto implements IItemStorageConditionDto {
     id!: string;
     hazardous!: HazardousEnum;
-    thresholdQuantity!: number;
+    thresholdQuantity!: number | undefined;
     location!: string | undefined;
     itemId!: string;
 
@@ -27850,7 +27850,7 @@ export class ItemStorageConditionDto implements IItemStorageConditionDto {
 export interface IItemStorageConditionDto {
     id: string;
     hazardous: HazardousEnum;
-    thresholdQuantity: number;
+    thresholdQuantity: number | undefined;
     location: string | undefined;
     itemId: string;
 }
@@ -27858,7 +27858,7 @@ export interface IItemStorageConditionDto {
 export class ItemStorageConditionInputDto implements IItemStorageConditionInputDto {
     id!: string | undefined;
     hazardous!: HazardousEnum;
-    thresholdQuantity!: number;
+    thresholdQuantity!: number | undefined;
     location!: string | undefined;
     itemId!: string;
 
@@ -27902,7 +27902,7 @@ export class ItemStorageConditionInputDto implements IItemStorageConditionInputD
 export interface IItemStorageConditionInputDto {
     id: string | undefined;
     hazardous: HazardousEnum;
-    thresholdQuantity: number;
+    thresholdQuantity: number | undefined;
     location: string | undefined;
     itemId: string;
 }

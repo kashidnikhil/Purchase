@@ -1320,5 +1320,9 @@
 	  <text name="ItemStatus">Item Status</text>
 	  <text name="DiscardedReason">Discarded Reason</text>
 	  <text name="MaterialGrade">Material Grade</text>
+	  <text name="AddItemStorageCondition">Add Item Storage Condition</text>
+	  <text name="Hazardous">Hazardous</text>
+	  <text name="ThresholdQuantity">Threshold Quantity</text>
+	  <text name="Location">Location</text>
   </texts>
 </localizationDictionary>

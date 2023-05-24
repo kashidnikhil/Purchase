@@ -493,6 +493,72 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-12 row mb-4">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>{{"Comment" | localize}}</label>
+                                <textarea #commentInput id="comment" class="form-control" type="text"
+                                    rows="2" name="comment" formControlName="comment"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>{{"MSL" | localize}}</label>
+                                <textarea #mslInput id="msl" class="form-control" type="text"
+                                    rows="2" name="msl" formControlName="msl"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <button type="button" class="btn btn-primary" (click)="addItemStorageCondition()">
+                            <i class="fa fa-plus"></i>
+                            {{ 'AddItemStorageCondition' | localize }}
+                        </button>
+                    </div>
+                    <div formArrayName="itemStorageConditions" class="mb-4">
+                        <div class="card mb-3" *ngFor="let itemStorageCondition of itemStorageConditions.controls; let index = index">
+                            <div [formGroupName]="index" class="p-3">
+                                <div class="col-md-12 row mb-4">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>{{"Hazardous" | localize}}</label>
+                                            <select placeholder="Select Option" class="form-control"
+                                                #hazardousInput formControlName="hazardous" id="hazardous"
+                                                name="hazardous">
+                                                <option *ngFor="let hazardousItem of hazardousList"
+                                                    value="{{ hazardousItem.value }}">
+                                                    {{ hazardousItem.title }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>{{"ThresholdQuantity" | localize}}</label>
+                                            <input #thresholdQuantityInput id="thresholdQuantity" class="form-control" step="1" type="number"
+                                            name="thresholdQuantity" formControlName="thresholdQuantity">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label>{{"Location" | localize}}</label>
+                                            <input #locationInput id="location" class="form-control" type="text"
+                                            name="location" formControlName="location">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <div class="mt-5 text-center">
+                                            <h3>
+                                                <i class="fa fa-trash"
+                                                    *ngIf="!itemStorageCondition.value.id && itemStorageConditions.controls.length > 1"
+                                                    (click)="deleteItemStorageCondition(index)"></i>
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button [disabled]="saving" type="button" class="btn btn-light-primary font-weight-bold"
