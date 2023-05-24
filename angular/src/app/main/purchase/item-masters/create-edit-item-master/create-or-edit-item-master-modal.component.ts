@@ -17,19 +17,12 @@ import {
     ItemStorageConditionInputDto,
     ItemSupplierDto,
     ItemSupplierInputDto,
-    LegalEntityServiceProxy,
-    MappedSupplierCategoryDto,
-    MappedSupplierCategoryInputDto,
     MaterialGradeDto,
     MaterialGradeServiceProxy,
-    SupplierAddressDto,
-    SupplierBankDto,
-    SupplierCategoryDto,
-    SupplierCategoryServiceProxy,
-    SupplierContactPersonDto,
     SupplierDto,
-    SupplierInputDto,
     SupplierServiceProxy,
+    UnitDto,
+    UnitServiceProxy,
 } from '@shared/service-proxies/service-proxies';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { map as _map, filter as _filter } from 'lodash-es';
@@ -39,6 +32,7 @@ import { DropdownDto } from '@app/shared/common/data-models/dropdown';
 import { TabsetComponent } from 'ngx-bootstrap/tabs';
 import { ItemMockService } from '@app/shared/common/mock-data-services/item.mock.service';
 import { formatDate } from '@angular/common';
+import { ProcurementDto } from '@shared/service-proxies/service-proxies';
 
 @Component({
     selector: 'create-edit-item-master-modal',
@@ -68,6 +62,7 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
     supplierList: SupplierDto[] = [];
     itemMasterList  : ItemMasterListDto [] = [];
     materialGradeList : MaterialGradeDto[] =[];
+    unitList : UnitDto[] = [];
     
     constructor(
         injector: Injector,
@@ -75,6 +70,7 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
         private _supplierService: SupplierServiceProxy,
         private _itemMasterService: ItemServiceProxy,
         private _materialGradeServie: MaterialGradeServiceProxy,
+        private _unitService : UnitServiceProxy,
         private _itemMockService: ItemMockService
     ) {
         super(injector);
@@ -105,6 +101,7 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
         let itemSupplier: ItemSupplierDto = new ItemSupplierDto();
         let itemSpare: ItemSpareDto = new ItemSpareDto();
         let itemStorageCondition: ItemStorageConditionDto = new ItemStorageConditionDto();
+        let itemProcurement: ProcurementDto = new ProcurementDto();
         this.itemMasterForm = this.formBuilder.group({
             id: new FormControl(itemMaster.id, []),
             categoryId: new FormControl(itemMaster.categoryId, []),
@@ -142,6 +139,9 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
             comment : new FormControl(itemMaster.comment ? itemMaster.comment : null, []),
             msl: new FormControl(itemMaster.msl ? itemMaster.msl : null, []),
             materialGradeId : new FormControl(itemMaster.materialGradeId ? itemMaster.materialGradeId : null, []),
+            unitOrderId : new FormControl(itemMaster.unitOrderId ? itemMaster.unitOrderId : null, []),
+            unitStockId : new FormControl(itemMaster.unitStockId ? itemMaster.unitStockId : null, []),
+            ctqRequirement : new FormControl(itemMaster.ctqRequirement ? <number>itemMaster.ctqRequirement : null, []),
             itemCalibrationTypes: itemMaster.itemCalibrationTypes && itemMaster.itemCalibrationTypes.length > 0 ? this.formBuilder.array(
                 itemMaster.itemCalibrationTypes.map((x: CalibrationTypeDto) =>
                     this.createCalibrationType(x)
@@ -172,6 +172,11 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
                     this.createItemStorageCondition(x)
                 )
             ) : this.formBuilder.array([this.createItemStorageCondition(itemStorageCondition)]),
+            // itemProcurements: itemMaster.itemProcurements && itemMaster.itemProcurements.length > 0 ? this.formBuilder.array(
+            //     itemMaster.itemProcurements.map((x: ProcurementDto) =>
+            //         this.createItemProcurement(x)
+            //     )
+            // ) : this.formBuilder.array([this.createItemProcurement(itemProcurement)]),
         });
 
     }
@@ -357,10 +362,37 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
         itemStorageConditionArray.removeAt(indexValue);
     }
 
+    get itemProcurements(): FormArray {
+        return (<FormArray>this.itemMasterForm.get('itemProcurements'));
+    }
+
+    addItemProcurement() {
+        let itemProcurement: ProcurementDto = new ProcurementDto();
+        let itemProcurementForm = this.createItemProcurement(itemProcurement);
+        this.itemStorageConditions.push(itemProcurementForm);
+    }
+
+    createItemProcurement(itemProcurement: ProcurementDto): FormGroup {
+        return this.formBuilder.group({
+            id: new FormControl(itemProcurement.id, []),
+            make: new FormControl(itemProcurement.make ? itemProcurement.make : null, []),
+            quantityPerOrderingUOM: new FormControl(itemProcurement.quantityPerOrderingUOM? <number>itemProcurement.quantityPerOrderingUOM : null, []),
+            ratePerPack : new FormControl(itemProcurement.ratePerPack? <number>itemProcurement.ratePerPack : null, []),
+            ratePerStockUOM : new FormControl(itemProcurement.ratePerStockUOM? <number>itemProcurement.ratePerStockUOM : null, []),
+            itemId: new FormControl(itemProcurement.itemId, [])
+        });
+    }
+
+    deleteItemProcurement(indexValue: number) {
+        const itemitemProcurementArray = this.itemProcurements;
+        itemitemProcurementArray.removeAt(indexValue);
+    }
+
     async loadDropdownList() {
         await this.loadSuppliers();
         await this.loadItemMasters();
         await this.loadMaterialGrades();
+        await this.loadUnitList();
         this.loadItemCategories();
         this.loadItemTypes();
         this.loadAMCRequirementList();
@@ -382,6 +414,10 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
 
     async loadMaterialGrades() {
         this.materialGradeList = await this._materialGradeServie.getMaterialGradeList().toPromise();
+    }
+
+    async loadUnitList() {
+        this.unitList = await this._unitService.getUnitList().toPromise();
     }
 
     loadItemCategories() {

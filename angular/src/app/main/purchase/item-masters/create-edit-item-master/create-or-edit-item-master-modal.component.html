@@ -492,6 +492,28 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>{{"UnitOrdering" | localize}}</label>
+                                <select placeholder="Select Unit Ordering" class="form-control" #unitOrderIdInput
+                                    formControlName="unitOrderId" id="unitOrderId" name="unitOrderId">
+                                    <option *ngFor="let unitItem of unitList" value="{{ unitItem.id }}">
+                                        {{ unitItem.name }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>{{"UnitStock" | localize}}</label>
+                                <select placeholder="Select Unit Stock" class="form-control" #unitStockIdInput
+                                    formControlName="unitStockId" id="unitStockId" name="unitStockId">
+                                    <option *ngFor="let unitItem of unitList" value="{{ unitItem.id }}">
+                                        {{ unitItem.name }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-12 row mb-4">
                         <div class="col-md-6">

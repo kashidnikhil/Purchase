@@ -1324,5 +1324,7 @@
 	  <text name="Hazardous">Hazardous</text>
 	  <text name="ThresholdQuantity">Threshold Quantity</text>
 	  <text name="Location">Location</text>
+	  <text name="UnitOrdering">Unit - Ordering</text>
+	  <text name="UnitStock">Unit - Stock</text>
   </texts>
 </localizationDictionary>
