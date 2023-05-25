@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyTraining1101Demo.EntityFrameworkCore;
 
@@ -11,9 +12,10 @@ using MyTraining1101Demo.EntityFrameworkCore;
 namespace MyTraining1101Demo.Migrations
 {
     [DbContext(typeof(MyTraining1101DemoDbContext))]
-    partial class MyTraining1101DemoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230525030442_Modified_RateRevision_Table")]
+    partial class Modified_RateRevision_Table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2588,9 +2590,8 @@ namespace MyTraining1101Demo.Migrations
                     b.Property<Guid?>("MaterialGradeId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<decimal?>("MinimumOrderQuantity")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int?>("MinimumOrderQuantity")
+                        .HasColumnType("int");
 
                     b.Property<string>("Model")
                         .HasColumnType("nvarchar(max)");
@@ -2621,9 +2622,8 @@ namespace MyTraining1101Demo.Migrations
                     b.Property<long?>("Quantity")
                         .HasColumnType("bigint");
 
-                    b.Property<decimal?>("QuantityPerOrderingUOM")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<long>("QuantityPerOrderingUOM")
+                        .HasColumnType("bigint");
 
                     b.Property<decimal?>("RateAsOnDate")
                         .HasPrecision(18, 2)

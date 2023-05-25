@@ -1328,5 +1328,7 @@
 	  <text name="UnitStock">Unit - Stock</text>
 	  <text name="CTQRequirement">CTQ Requirement</text>
 	  <text name="CTQSpecifications">CTQ Specifications</text>
+	  <text name="ExpiryApplicable">Expiry Applicable</text>
+	  
   </texts>
 </localizationDictionary>

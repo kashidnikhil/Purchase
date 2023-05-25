@@ -603,6 +603,28 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-12 row mb-4">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>{{"ExpiryApplicable" | localize}}</label>
+                                <select placeholder="Select Option" class="form-control"
+                                    #expiryApplicableInput formControlName="expiryApplicable" id="expiryApplicable"
+                                    name="expiryApplicable">
+                                    <option *ngFor="let applicableItem of hazardousList"
+                                        value="{{ applicableItem.value }}">
+                                        {{ applicableItem.title }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="form-group">
+                                <label>{{"CTQSpecifications" | localize}}</label>
+                                <input #ctqSpecificationsInput id="ctqSpecifications" class="form-control" type="text"
+                                name="ctqSpecifications" formControlName="ctqSpecifications">
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button [disabled]="saving" type="button" class="btn btn-light-primary font-weight-bold"

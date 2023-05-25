@@ -105,13 +105,16 @@ namespace MyTraining1101Demo.Purchase.Items.ItemMaster
         public virtual Guid? StockUOMId { get; set; }
         public virtual Unit StockUOM { get; set; }
 
-        public long QuantityPerOrderingUOM { get; set; }
+        [Precision(18, 2)]
+        public decimal? QuantityPerOrderingUOM { get; set; }
 
         public CTQRequirement? CTQRequirement { get; set; }
         public string CTQSpecifications { get; set; }
 
         public ExpiryApplicable? ExpiryApplicable { get; set; }
-        public int? MinimumOrderQuantity { get; set; }
+        
+        [Precision(18, 2)]
+        public decimal? MinimumOrderQuantity { get; set; }
 
         public string Author { get; set; }
 

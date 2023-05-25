@@ -94,14 +94,14 @@ namespace MyTraining1101Demo.Purchase.Items.Dto.ItemMaster
         
         public Guid? StockUOMId { get; set; }
 
-        public long QuantityPerOrderingUOM { get; set; }
+        public decimal? QuantityPerOrderingUOM { get; set; }
 
         public CTQRequirement? CTQRequirement { get; set; }
         public string CTQSpecifications { get; set; }
 
         public ExpiryApplicable? ExpiryApplicable { get; set; }
         
-        public int? MinimumOrderQuantity { get; set; }
+        public decimal? MinimumOrderQuantity { get; set; }
 
         public string Author { get; set; }
 

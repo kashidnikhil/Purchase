@@ -5,18 +5,18 @@
     public class ItemRateRevisionDto
     {
         public Guid Id { get; set; }
-        public DateTime DateOfEntry { get; set; }
+        public DateTime? DateOfEntry { get; set; }
         public string Make { get; set; }
 
         public string CatalogueNumber { get; set; }
 
-        public int OrderingQuantity { get; set; }
+        public decimal? OrderingQuantity { get; set; }
 
-        public decimal RatePerOrderingQuantity { get; set; }
+        public decimal? RatePerOrderingQuantity { get; set; }
 
-        public int StockQuantityPerOrderingUOM { get; set; }
+        public int? StockQuantityPerOrderingUOM { get; set; }
 
-        public decimal RatePerStockUOM { get; set; }
+        public decimal? RatePerStockUOM { get; set; }
 
         public Guid StockUOMId { get; set; }
         
