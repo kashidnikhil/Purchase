@@ -27027,10 +27027,10 @@ export class ItemMasterDto implements IItemMasterDto {
     supplierItemName!: string | undefined;
     status!: ItemStatus;
     attachments!: string | undefined;
-    recordedBy!: number;
-    approvedBy!: number;
+    recordedBy!: number | undefined;
+    approvedBy!: number | undefined;
     discardedOn!: DateTime | undefined;
-    discardApprovedBy!: number;
+    discardApprovedBy!: number | undefined;
     discardedReason!: string | undefined;
     materialGradeId!: string | undefined;
     comment!: string | undefined;
@@ -27046,7 +27046,7 @@ export class ItemMasterDto implements IItemMasterDto {
     minimumOrderQuantity!: number | undefined;
     author!: string | undefined;
     publication!: string | undefined;
-    publicationYear!: number;
+    publicationYear!: number | undefined;
     subjectCategory!: SubjectCategory;
     purchasedBy!: number | undefined;
     weightPerUOM!: number | undefined;
@@ -27292,10 +27292,10 @@ export interface IItemMasterDto {
     supplierItemName: string | undefined;
     status: ItemStatus;
     attachments: string | undefined;
-    recordedBy: number;
-    approvedBy: number;
+    recordedBy: number | undefined;
+    approvedBy: number | undefined;
     discardedOn: DateTime | undefined;
-    discardApprovedBy: number;
+    discardApprovedBy: number | undefined;
     discardedReason: string | undefined;
     materialGradeId: string | undefined;
     comment: string | undefined;
@@ -27311,7 +27311,7 @@ export interface IItemMasterDto {
     minimumOrderQuantity: number | undefined;
     author: string | undefined;
     publication: string | undefined;
-    publicationYear: number;
+    publicationYear: number | undefined;
     subjectCategory: SubjectCategory;
     purchasedBy: number | undefined;
     weightPerUOM: number | undefined;
@@ -27355,10 +27355,10 @@ export class ItemMasterInputDto implements IItemMasterInputDto {
     supplierItemName!: string | undefined;
     status!: ItemStatus;
     attachments!: string | undefined;
-    recordedBy!: number;
-    approvedBy!: number;
+    recordedBy!: number | undefined;
+    approvedBy!: number | undefined;
     discardedOn!: DateTime | undefined;
-    discardApprovedBy!: number;
+    discardApprovedBy!: number | undefined;
     discardedReason!: string | undefined;
     materialGradeId!: string | undefined;
     comment!: string | undefined;
@@ -27374,7 +27374,7 @@ export class ItemMasterInputDto implements IItemMasterInputDto {
     minimumOrderQuantity!: number | undefined;
     author!: string | undefined;
     publication!: string | undefined;
-    publicationYear!: number;
+    publicationYear!: number | undefined;
     subjectCategory!: SubjectCategory;
     purchasedBy!: number | undefined;
     weightPerUOM!: number | undefined;
@@ -27386,6 +27386,7 @@ export class ItemMasterInputDto implements IItemMasterInputDto {
     itemSuppliers!: ItemSupplierInputDto[] | undefined;
     itemProcurements!: ProcurementInputDto[] | undefined;
     itemSpares!: ItemSpareInputDto[] | undefined;
+    itemRateRevisions!: ItemRateRevisionInputDto[] | undefined;
 
     constructor(data?: IItemMasterInputDto) {
         if (data) {
@@ -27485,6 +27486,11 @@ export class ItemMasterInputDto implements IItemMasterInputDto {
                 this.itemSpares = [] as any;
                 for (let item of _data["itemSpares"])
                     this.itemSpares!.push(ItemSpareInputDto.fromJS(item));
+            }
+            if (Array.isArray(_data["itemRateRevisions"])) {
+                this.itemRateRevisions = [] as any;
+                for (let item of _data["itemRateRevisions"])
+                    this.itemRateRevisions!.push(ItemRateRevisionInputDto.fromJS(item));
             }
         }
     }
@@ -27586,6 +27592,11 @@ export class ItemMasterInputDto implements IItemMasterInputDto {
             for (let item of this.itemSpares)
                 data["itemSpares"].push(item.toJSON());
         }
+        if (Array.isArray(this.itemRateRevisions)) {
+            data["itemRateRevisions"] = [];
+            for (let item of this.itemRateRevisions)
+                data["itemRateRevisions"].push(item.toJSON());
+        }
         return data;
     }
 }
@@ -27620,10 +27631,10 @@ export interface IItemMasterInputDto {
     supplierItemName: string | undefined;
     status: ItemStatus;
     attachments: string | undefined;
-    recordedBy: number;
-    approvedBy: number;
+    recordedBy: number | undefined;
+    approvedBy: number | undefined;
     discardedOn: DateTime | undefined;
-    discardApprovedBy: number;
+    discardApprovedBy: number | undefined;
     discardedReason: string | undefined;
     materialGradeId: string | undefined;
     comment: string | undefined;
@@ -27639,7 +27650,7 @@ export interface IItemMasterInputDto {
     minimumOrderQuantity: number | undefined;
     author: string | undefined;
     publication: string | undefined;
-    publicationYear: number;
+    publicationYear: number | undefined;
     subjectCategory: SubjectCategory;
     purchasedBy: number | undefined;
     weightPerUOM: number | undefined;
@@ -27651,6 +27662,7 @@ export interface IItemMasterInputDto {
     itemSuppliers: ItemSupplierInputDto[] | undefined;
     itemProcurements: ProcurementInputDto[] | undefined;
     itemSpares: ItemSpareInputDto[] | undefined;
+    itemRateRevisions: ItemRateRevisionInputDto[] | undefined;
 }
 
 export class ItemMasterListDto implements IItemMasterListDto {
@@ -27716,6 +27728,82 @@ export interface IItemMasterListDto {
 export enum ItemMobility {
     Fixed = 1,
     Field = 2,
+}
+
+export class ItemRateRevisionInputDto implements IItemRateRevisionInputDto {
+    id!: string | undefined;
+    dateOfEntry!: DateTime | undefined;
+    make!: string | undefined;
+    catalogueNumber!: string | undefined;
+    orderingQuantity!: number | undefined;
+    ratePerOrderingQuantity!: number | undefined;
+    stockQuantityPerOrderingUOM!: number | undefined;
+    ratePerStockUOM!: number | undefined;
+    stockUOMId!: string;
+    orderingUOMId!: string;
+    itemId!: string;
+
+    constructor(data?: IItemRateRevisionInputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.dateOfEntry = _data["dateOfEntry"] ? DateTime.fromISO(_data["dateOfEntry"].toString()) : <any>undefined;
+            this.make = _data["make"];
+            this.catalogueNumber = _data["catalogueNumber"];
+            this.orderingQuantity = _data["orderingQuantity"];
+            this.ratePerOrderingQuantity = _data["ratePerOrderingQuantity"];
+            this.stockQuantityPerOrderingUOM = _data["stockQuantityPerOrderingUOM"];
+            this.ratePerStockUOM = _data["ratePerStockUOM"];
+            this.stockUOMId = _data["stockUOMId"];
+            this.orderingUOMId = _data["orderingUOMId"];
+            this.itemId = _data["itemId"];
+        }
+    }
+
+    static fromJS(data: any): ItemRateRevisionInputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ItemRateRevisionInputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["dateOfEntry"] = this.dateOfEntry ? this.dateOfEntry.toString() : <any>undefined;
+        data["make"] = this.make;
+        data["catalogueNumber"] = this.catalogueNumber;
+        data["orderingQuantity"] = this.orderingQuantity;
+        data["ratePerOrderingQuantity"] = this.ratePerOrderingQuantity;
+        data["stockQuantityPerOrderingUOM"] = this.stockQuantityPerOrderingUOM;
+        data["ratePerStockUOM"] = this.ratePerStockUOM;
+        data["stockUOMId"] = this.stockUOMId;
+        data["orderingUOMId"] = this.orderingUOMId;
+        data["itemId"] = this.itemId;
+        return data;
+    }
+}
+
+export interface IItemRateRevisionInputDto {
+    id: string | undefined;
+    dateOfEntry: DateTime | undefined;
+    make: string | undefined;
+    catalogueNumber: string | undefined;
+    orderingQuantity: number | undefined;
+    ratePerOrderingQuantity: number | undefined;
+    stockQuantityPerOrderingUOM: number | undefined;
+    ratePerStockUOM: number | undefined;
+    stockUOMId: string;
+    orderingUOMId: string;
+    itemId: string;
 }
 
 export class ItemSpareDto implements IItemSpareDto {

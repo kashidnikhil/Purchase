@@ -76,13 +76,13 @@ namespace MyTraining1101Demo.Purchase.Items.ItemMaster
         
         public string Attachments { get; set; }
 
-        public long RecordedBy { get; set; }
+        public long? RecordedBy { get; set; }
 
-        public long ApprovedBy { get; set; }
+        public long? ApprovedBy { get; set; }
 
         public DateTime? DiscardedOn { get; set; }
 
-        public long DiscardApprovedBy { get; set; }
+        public long? DiscardApprovedBy { get; set; }
 
         public string DiscardedReason { get; set; }
 
@@ -120,7 +120,7 @@ namespace MyTraining1101Demo.Purchase.Items.ItemMaster
 
         public string Publication { get; set; }
 
-        public int PublicationYear { get; set; }
+        public int? PublicationYear { get; set; }
 
         public SubjectCategory? SubjectCategory { get; set; }
 

@@ -333,6 +333,10 @@ namespace MyTraining1101Demo
             configuration.CreateMap<ItemRateRevision, ItemMasterInputDto>()
                 .ForMember(dto => dto.Make, options => options.MapFrom(x => x.Make))
                 .ForMember(dto => dto.RatePerQuantity, options => options.MapFrom(x => x.RatePerOrderingQuantity))
+                .ForMember(dto => dto.StockUOMId, options => options.MapFrom(x => x.StockUOMId))
+                .ForMember(dto => dto.OrderingUOMId, options => options.MapFrom(x => x.OrderingUOMId))
+                .ForMember(dto => dto.RatePerQuantity, options => options.MapFrom(x => x.RatePerOrderingQuantity))
+                .ForMember(dto => dto.QuantityPerOrderingUOM, options => options.MapFrom(x => x.StockQuantityPerOrderingUOM))
                 .ReverseMap();
 
 

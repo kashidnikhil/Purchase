@@ -1,6 +1,7 @@
 ﻿using MyTraining1101Demo.Purchase.Items.Dto.CalibrationAgenciesMaster;
 using MyTraining1101Demo.Purchase.Items.Dto.CalibrationTypeMaster;
 using MyTraining1101Demo.Purchase.Items.Dto.ItemAttachmentsMaster;
+using MyTraining1101Demo.Purchase.Items.Dto.ItemRateRevisionMaster;
 using MyTraining1101Demo.Purchase.Items.Dto.ItemStorageConditionMaster;
 using MyTraining1101Demo.Purchase.Items.Dto.ItemSupplierMaster;
 using MyTraining1101Demo.Purchase.Items.Dto.ProcurementMaster;
@@ -70,13 +71,13 @@ namespace MyTraining1101Demo.Purchase.Items.Dto.ItemMaster
 
         public string Attachments { get; set; }
 
-        public long RecordedBy { get; set; }
+        public long? RecordedBy { get; set; }
 
-        public long ApprovedBy { get; set; }
+        public long? ApprovedBy { get; set; }
 
         public DateTime? DiscardedOn { get; set; }
 
-        public long DiscardApprovedBy { get; set; }
+        public long? DiscardApprovedBy { get; set; }
 
         public string DiscardedReason { get; set; }
 
@@ -107,7 +108,7 @@ namespace MyTraining1101Demo.Purchase.Items.Dto.ItemMaster
 
         public string Publication { get; set; }
 
-        public int PublicationYear { get; set; }
+        public int? PublicationYear { get; set; }
 
         public SubjectCategory? SubjectCategory { get; set; }
 
@@ -130,6 +131,8 @@ namespace MyTraining1101Demo.Purchase.Items.Dto.ItemMaster
         public List<ProcurementInputDto> ItemProcurements { get; set; }
 
         public List<ItemSpareInputDto> ItemSpares { get; set; }
-        
+
+        public List<ItemRateRevisionInputDto> ItemRateRevisions { get; set; }
+
     }
 }

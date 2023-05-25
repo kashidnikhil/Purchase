@@ -11,7 +11,7 @@
     {
         //Task<Guid> BulkInsertOrUpdateItemRateRevisions(List<ItemRateRevisionInputDto> itemRateRevisionInputList);
 
-        Task InsertItemRateRevisionIntoDB(ItemMasterInputDto input,Guid ItemMasterId);
+        Task InsertItemRateRevision(ItemMasterInputDto input,Guid ItemMasterId);
 
     }
 }

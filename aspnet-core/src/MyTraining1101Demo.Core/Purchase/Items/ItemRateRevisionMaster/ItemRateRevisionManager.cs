@@ -26,37 +26,28 @@
             _appConfiguration = configurationAccessor.Configuration;
         }
 
-        //public async Task<Guid> BulkInsertOrUpdateItemRateRevisions(List<ItemRateRevisionInputDto> itemRateRevisionInputList)
-        //{
-        //    try
-        //    {
-        //        Guid itemId = Guid.Empty;
-        //        var mappedItemRateRevisions = ObjectMapper.Map<List<ItemRateRevision>>(itemRateRevisionInputList);
-        //        for (int i = 0; i < mappedItemRateRevisions.Count; i++)
-        //        {
-        //            itemId = (Guid)mappedItemRateRevisions[i].ItemId;
-        //            await this.InsertOrUpdateItemRateRevisionIntoDB(mappedItemRateRevisions[i]);
-        //        }
-        //        return itemId;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw ex;
-        //    }
-        //}
 
         [UnitOfWork]
-        public async Task InsertItemRateRevisionIntoDB(ItemMasterInputDto input,Guid ItemMasterId)
+        public async Task InsertItemRateRevision(ItemMasterInputDto input,Guid ItemMasterId)
         {
             try
             {
-                var mappedItemRateRevision = ObjectMapper.Map<ItemRateRevision>(input);
-               
-                mappedItemRateRevision.Id = Guid.Empty;
-                mappedItemRateRevision.CreationTime = DateTime.UtcNow;
-                mappedItemRateRevision.ItemId = ItemMasterId;
+                if (input.ItemRateRevisions != null && input.ItemRateRevisions.Count > 0)
+                {
+                    input.ItemRateRevisions.ForEach(itemRateRevision =>
+                    {
+                        //itemRateRevision.Id = Guid.Empty;
+                        itemRateRevision.ItemId = ItemMasterId;
+                    });
 
-                var itemRateRevisionId = await this._itemRateRevisionRepository.InsertOrUpdateAndGetIdAsync(mappedItemRateRevision);
+                    var mappedItemRateRevisionList = ObjectMapper.Map<List<ItemRateRevision>>(input.ItemRateRevisions);
+                    await this.BulkInsertItemRevisionRates(mappedItemRateRevisionList);
+                }
+
+                var mappedItemRateRevision = ObjectMapper.Map<ItemRateRevision>(input);
+                mappedItemRateRevision.ItemId = ItemMasterId;
+                await this.InsertItemRateRevisionIntoDB(mappedItemRateRevision);
+                
                 await CurrentUnitOfWork.SaveChangesAsync();
             }
             catch (Exception ex)
@@ -66,45 +57,43 @@
             }
         }
 
-        //public async Task<bool> BulkDeleteItemStorageConditions(Guid itemId)
-        //{
-        //    try
-        //    {
-        //        var itemStorageConditions = await this.GetItemStorageConditionListFromDB(itemId);
-
-        //        if (itemStorageConditions.Count > 0)
-        //        {
-        //            for (int i = 0; i < itemStorageConditions.Count; i++)
-        //            {
-        //                await this.DeleteItemStorageConditionFromDB(itemStorageConditions[i].Id);
-        //            }
-        //        }
-
-        //        return true;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw ex;
-        //    }
-        //}
-
-        //[UnitOfWork]
-        //private async Task DeleteItemStorageConditionFromDB(Guid itemRateRevisionId)
-        //{
-        //    try
-        //    {
-        //        var itemRateRevisionItem = await this._itemRateRevisionRepository.GetAsync(itemRateRevisionId);
-
-        //        await this._itemRateRevisionRepository.DeleteAsync(itemRateRevisionItem);
-
-        //        await CurrentUnitOfWork.SaveChangesAsync();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Logger.Error(ex.Message, ex);
-        //        throw ex;
-        //    }
-        //}
+        private async Task<Guid> BulkInsertItemRevisionRates(List<ItemRateRevision> itemRateRevisionList)
+        {
+            try
+            {
+                Guid itemId = Guid.Empty;
+              
+                for (int i = 0; i < itemRateRevisionList.Count; i++)
+                {
+                    await this.InsertItemRateRevisionIntoDB(itemRateRevisionList[i]);
+                }
+                return itemId;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        private async Task InsertItemRateRevisionIntoDB(ItemRateRevision input)
+        {
+            try
+            {
+                //input.Id = input.Id != Guid.Empty ? input.Id : Guid.Empty;
+                if (input.RatePerOrderingQuantity != null && input.OrderingQuantity != null)
+                {
+                    input.CreationTime = DateTime.UtcNow;
+                    input.RatePerStockUOM = input.RatePerOrderingQuantity / input.OrderingQuantity;
+                    var itemRateRevisionId = await this._itemRateRevisionRepository.InsertOrUpdateAndGetIdAsync(input);
+                    await CurrentUnitOfWork.SaveChangesAsync();
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.Message, ex);
+                throw ex;
+            }
+        }
 
         public async Task<IList<ItemRateRevisionDto>> GetItemRateRevisionListFromDB(Guid itemId)
         {
