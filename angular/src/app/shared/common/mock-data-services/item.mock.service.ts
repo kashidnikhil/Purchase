@@ -143,4 +143,31 @@ export class ItemMockService{
         return options;
     }
 
+    loadSubjectCategoryList() : DropdownDto[]{
+        let options = [
+            {
+                title: "Chemistry",
+                value: 1
+            },
+            {
+                title: "Marketing",
+                value: 2
+            },
+            {
+                title: "Drafting",
+                value: 3
+            },
+            {
+                title: "Management",
+                value: 4
+            },
+            {
+                title: "Other",
+                value: 5
+            }   
+        ];
+
+        return options;
+    }
+
 }

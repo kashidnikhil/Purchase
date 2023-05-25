@@ -447,15 +447,15 @@
                                     <div class="col-md-5">
                                         <div class="form-group">
                                             <label>{{"Path" | localize}}</label>
-                                            <input #pathInput id="path" class="form-control" type="text"
-                                                name="path" formControlName="path">
+                                            <input #pathInput id="path" class="form-control" type="text" name="path"
+                                                formControlName="path">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>{{"Description" | localize}}</label>
                                             <input #descriptionInput id="description" class="form-control" type="text"
-                                            name="description" formControlName="description">
+                                                name="description" formControlName="description">
                                         </div>
                                     </div>
                                     <div class="col-md-1">
@@ -486,7 +486,8 @@
                                 <label>{{"MaterialGrade" | localize}}</label>
                                 <select placeholder="Select Material Grade" class="form-control" #materialGradeIdInput
                                     formControlName="materialGradeId" id="materialGradeId" name="materialGradeId">
-                                    <option *ngFor="let materialGradeItem of materialGradeList" value="{{ materialGradeItem.id }}">
+                                    <option *ngFor="let materialGradeItem of materialGradeList"
+                                        value="{{ materialGradeItem.id }}">
                                         {{ materialGradeItem.name }}
                                     </option>
                                 </select>
@@ -519,15 +520,15 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>{{"Comment" | localize}}</label>
-                                <textarea #commentInput id="comment" class="form-control" type="text"
-                                    rows="2" name="comment" formControlName="comment"></textarea>
+                                <textarea #commentInput id="comment" class="form-control" type="text" rows="2"
+                                    name="comment" formControlName="comment"></textarea>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>{{"MSL" | localize}}</label>
-                                <textarea #mslInput id="msl" class="form-control" type="text"
-                                    rows="2" name="msl" formControlName="msl"></textarea>
+                                <textarea #mslInput id="msl" class="form-control" type="text" rows="2" name="msl"
+                                    formControlName="msl"></textarea>
                             </div>
                         </div>
                     </div>
@@ -538,15 +539,15 @@
                         </button>
                     </div>
                     <div formArrayName="itemStorageConditions" class="mb-4">
-                        <div class="card mb-3" *ngFor="let itemStorageCondition of itemStorageConditions.controls; let index = index">
+                        <div class="card mb-3"
+                            *ngFor="let itemStorageCondition of itemStorageConditions.controls; let index = index">
                             <div [formGroupName]="index" class="p-3">
                                 <div class="col-md-12 row mb-4">
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label>{{"Hazardous" | localize}}</label>
-                                            <select placeholder="Select Option" class="form-control"
-                                                #hazardousInput formControlName="hazardous" id="hazardous"
-                                                name="hazardous">
+                                            <select placeholder="Select Option" class="form-control" #hazardousInput
+                                                formControlName="hazardous" id="hazardous" name="hazardous">
                                                 <option *ngFor="let hazardousItem of hazardousList"
                                                     value="{{ hazardousItem.value }}">
                                                     {{ hazardousItem.title }}
@@ -557,15 +558,16 @@
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label>{{"ThresholdQuantity" | localize}}</label>
-                                            <input #thresholdQuantityInput id="thresholdQuantity" class="form-control" step="1" type="number"
-                                            name="thresholdQuantity" formControlName="thresholdQuantity">
+                                            <input #thresholdQuantityInput id="thresholdQuantity" class="form-control"
+                                                step="1" type="number" name="thresholdQuantity"
+                                                formControlName="thresholdQuantity">
                                         </div>
                                     </div>
                                     <div class="col-md-5">
                                         <div class="form-group">
                                             <label>{{"Location" | localize}}</label>
                                             <input #locationInput id="location" class="form-control" type="text"
-                                            name="location" formControlName="location">
+                                                name="location" formControlName="location">
                                         </div>
                                     </div>
                                     <div class="col-md-1">
@@ -581,13 +583,64 @@
                             </div>
                         </div>
                     </div>
+                    <div class="mb-4">
+                        <button type="button" class="btn btn-primary" (click)="addItemProcurement()">
+                            <i class="fa fa-plus"></i>
+                            {{ 'AddItemProcurement' | localize }}
+                        </button>
+                    </div>
+                    <div formArrayName="itemProcurements" class="mb-4">
+                        <div class="card mb-3"
+                            *ngFor="let itemProcurement of itemProcurements.controls; let index = index">
+                            <div [formGroupName]="index" class="p-3">
+                                <div class="col-md-12 row mb-4">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>{{"Make" | localize}}</label>
+                                            <input #makeInput id="make" class="form-control"
+                                                type="text" name="make" formControlName="make">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>{{"CatalogueNumber" | localize}}</label>
+                                            <input #makeInput id="make" class="form-control"
+                                                type="text" name="make" formControlName="make">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>{{"RatePerPack" | localize}}</label>
+                                            <input #ratePerPackInput id="ratePerPack" class="form-control" type="number"
+                                                name="ratePerPack" formControlName="ratePerPack">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>{{"QuantityPerOrderingUOM" | localize}}</label>
+                                            <input #quantityPerOrderingUOMInput id="quantityPerOrderingUOM" class="form-control" type="number"
+                                                name="quantityPerOrderingUOM" formControlName="quantityPerOrderingUOM">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <div class="mt-5 text-center">
+                                            <h3>
+                                                <i class="fa fa-trash"
+                                                    *ngIf="!itemProcurement.value.id && itemProcurements.controls.length > 1"
+                                                    (click)="deleteItemProcurement(index)"></i>
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-md-12 row mb-4">
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>{{"CTQRequirement" | localize}}</label>
-                                <select placeholder="Select Option" class="form-control"
-                                    #ctqRequirementInput formControlName="ctqRequirement" id="ctqRequirement"
-                                    name="ctqRequirement">
+                                <select placeholder="Select Option" class="form-control" #ctqRequirementInput
+                                    formControlName="ctqRequirement" id="ctqRequirement" name="ctqRequirement">
                                     <option *ngFor="let ctqRequirementItem of hazardousList"
                                         value="{{ ctqRequirementItem.value }}">
                                         {{ ctqRequirementItem.title }}
@@ -595,11 +648,18 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-9">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label>{{"CTQSpecifications" | localize}}</label>
                                 <input #ctqSpecificationsInput id="ctqSpecifications" class="form-control" type="text"
-                                name="ctqSpecifications" formControlName="ctqSpecifications">
+                                    name="ctqSpecifications" formControlName="ctqSpecifications">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>{{"MinOrderQty" | localize}}</label>
+                                <input #minimumOrderQuantityInput id="minimumOrderQuantity" class="form-control" type="number"
+                                    name="minimumOrderQuantity" formControlName="minimumOrderQuantity">
                             </div>
                         </div>
                     </div>
@@ -607,9 +667,8 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>{{"ExpiryApplicable" | localize}}</label>
-                                <select placeholder="Select Option" class="form-control"
-                                    #expiryApplicableInput formControlName="expiryApplicable" id="expiryApplicable"
-                                    name="expiryApplicable">
+                                <select placeholder="Select Option" class="form-control" #expiryApplicableInput
+                                    formControlName="expiryApplicable" id="expiryApplicable" name="expiryApplicable">
                                     <option *ngFor="let applicableItem of hazardousList"
                                         value="{{ applicableItem.value }}">
                                         {{ applicableItem.title }}
@@ -617,11 +676,74 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-9">
+                        <div class="col-md-3">
                             <div class="form-group">
-                                <label>{{"CTQSpecifications" | localize}}</label>
-                                <input #ctqSpecificationsInput id="ctqSpecifications" class="form-control" type="text"
-                                name="ctqSpecifications" formControlName="ctqSpecifications">
+                                <label>{{"OrderingUOM" | localize}}</label>
+                                <select placeholder="Select Option" class="form-control" #orderingUOMIdInput
+                                    formControlName="orderingUOMId" id="orderingUOMId" name="orderingUOMId">
+                                    <option *ngFor="let orderingUOMItem of unitList" value="{{ orderingUOMItem.id }}">
+                                        {{ orderingUOMItem.name }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>{{"StockUOM" | localize}}</label>
+                                <select placeholder="Select Option" class="form-control" #stockUOMIdInput
+                                    formControlName="stockUOMId" id="stockUOMId" name="stockUOMId">
+                                    <option *ngFor="let stockUOMItem of unitList" value="{{ stockUOMItem.id }}">
+                                        {{ stockUOMItem.name }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>{{"QtyPerOrderingUOM" | localize}}</label>
+                                <input #quantityPerOrderingUOMInput id="quantityPerOrderingUOM" class="form-control"
+                                    step="1" type="number" name="quantityPerOrderingUOM"
+                                    formControlName="quantityPerOrderingUOM">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row mb-4">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>{{"Author" | localize}}</label>
+                                <input #authorInput id="author" class="form-control" type="text"
+                                name="author" formControlName="author">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>{{"Publication" | localize}}</label>
+                                <input #publicationInput id="publication" class="form-control" type="text"
+                                    name="publication" formControlName="publication">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>{{"PublicationYear" | localize}}</label>
+                                <select placeholder="Select Option" class="form-control" #publicationYearInput
+                                    formControlName="publicationYear" id="publicationYear" name="publicationYear">
+                                    <option *ngFor="let year of yearList"
+                                        value="{{ year.value }}">
+                                        {{ year.title }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>{{"SubjectCategory" | localize}}</label>
+                                <select placeholder="Select Option" class="form-control" #subjectCategoryInput
+                                    formControlName="subjectCategory" id="subjectCategory" name="subjectCategory">
+                                    <option *ngFor="let subjectCategoryItem of subjectCategoryList"
+                                        value="{{ subjectCategoryItem.value }}">
+                                        {{ subjectCategoryItem.title }}
+                                    </option>
+                                </select>
                             </div>
                         </div>
                     </div>

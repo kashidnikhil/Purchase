@@ -59,6 +59,8 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
     calibrationFrequencyList: DropdownDto[] = [];
     itemStatusList: DropdownDto[] = [];
     hazardousList : DropdownDto[] = [];
+    subjectCategoryList : DropdownDto[] = [];
+    yearList : DropdownDto[] = [];
     supplierList: SupplierDto[] = [];
     itemMasterList  : ItemMasterListDto [] = [];
     materialGradeList : MaterialGradeDto[] =[];
@@ -99,6 +101,7 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
         let itemCalibrationType: CalibrationTypeDto = new CalibrationTypeDto();
         let itemCalibrationAgency: CalibrationAgencyDto = new CalibrationAgencyDto();
         let itemSupplier: ItemSupplierDto = new ItemSupplierDto();
+        let itemAttachment : ItemAttachmentDto = new ItemAttachmentDto();
         let itemSpare: ItemSpareDto = new ItemSpareDto();
         let itemStorageCondition: ItemStorageConditionDto = new ItemStorageConditionDto();
         let itemProcurement: ProcurementDto = new ProcurementDto();
@@ -146,6 +149,13 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
             ctqRequirement : new FormControl(itemMaster.ctqRequirement ? <number>itemMaster.ctqRequirement : null, []),
             ctqSpecifications : new FormControl(itemMaster.ctqSpecifications ? itemMaster.ctqSpecifications : null, []),
             expiryApplicable : new FormControl(itemMaster.expiryApplicable ? <number>itemMaster.expiryApplicable : null, []),
+            quantityPerOrderingUOM : new FormControl(itemMaster.quantityPerOrderingUOM ? parseFloat(itemMaster.quantityPerOrderingUOM.toString()).toFixed(2) : null, []),
+            minimumOrderQuantity : new FormControl(itemMaster.minimumOrderQuantity ? parseFloat(itemMaster.minimumOrderQuantity.toString()).toFixed(2) : null, []),
+            author : new FormControl(itemMaster.author ? itemMaster.author : null, []),
+            publication : new FormControl(itemMaster.publication ? itemMaster.publication : null, []),
+            publicationYear : new FormControl(itemMaster.publicationYear ? <number>itemMaster.publicationYear : null, []),
+            subjectCategory : new FormControl(itemMaster.subjectCategory ? <number>itemMaster.subjectCategory : null, []),
+            purchasedBy : new FormControl(itemMaster.purchasedBy ? <number>itemMaster.purchasedBy : null, []),
             itemCalibrationTypes: itemMaster.itemCalibrationTypes && itemMaster.itemCalibrationTypes.length > 0 ? this.formBuilder.array(
                 itemMaster.itemCalibrationTypes.map((x: CalibrationTypeDto) =>
                     this.createCalibrationType(x)
@@ -168,68 +178,26 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
             ) : this.formBuilder.array([this.createItemSpare(itemSpare)]),
             itemAttachments: itemMaster.itemAttachments && itemMaster.itemAttachments.length > 0 ? this.formBuilder.array(
                 itemMaster.itemAttachments.map((x: ItemAttachmentDto) =>
-                    this.createItemSpare(x)
+                    this.createItemAttachment(x)
                 )
-            ) : this.formBuilder.array([this.createItemSpare(itemSpare)]),
+            ) : this.formBuilder.array([this.createItemAttachment(itemAttachment)]),
             itemStorageConditions: itemMaster.itemStorageConditions && itemMaster.itemStorageConditions.length > 0 ? this.formBuilder.array(
                 itemMaster.itemStorageConditions.map((x: ItemStorageConditionDto) =>
                     this.createItemStorageCondition(x)
                 )
             ) : this.formBuilder.array([this.createItemStorageCondition(itemStorageCondition)]),
-            // itemProcurements: itemMaster.itemProcurements && itemMaster.itemProcurements.length > 0 ? this.formBuilder.array(
-            //     itemMaster.itemProcurements.map((x: ProcurementDto) =>
-            //         this.createItemProcurement(x)
-            //     )
-            // ) : this.formBuilder.array([this.createItemProcurement(itemProcurement)]),
+            itemProcurements: itemMaster.itemProcurements && itemMaster.itemProcurements.length > 0 ? this.formBuilder.array(
+                itemMaster.itemProcurements.map((x: ProcurementDto) =>
+                    this.createItemProcurement(x)
+                )
+            ) : this.formBuilder.array([this.createItemProcurement(itemProcurement)]),
         });
 
     }
 
-    // initialiseSupplierForm(supplierItem: SupplierDto) {
-    //     let supplierAddressItem: SupplierAddressDto = new SupplierAddressDto();
-    //     let supplierContactPersonItem: SupplierContactPersonDto = new SupplierContactPersonDto();
-    //     let supplierBankItem: SupplierBankDto = new SupplierBankDto();
-    //     this.itemMasterForm = this.formBuilder.group({
-    //         id: new FormControl(supplierItem.id, []),
-    //         name: new FormControl(supplierItem.name, [Validators.required]),
-    //         phoneNumber: new FormControl(supplierItem.telephoneNumber, []),
-    //         mobile: new FormControl(supplierItem.mobile, []),
-    //         email: new FormControl(supplierItem.email, []),
-    //         website: new FormControl(supplierItem.website, []),
-    //         certifications: new FormControl(supplierItem.certifications, []),
-    //         legalEntityId: new FormControl(supplierItem.legalEntityId, []),
-    //         gstNumber: new FormControl(supplierItem.gstNumber, []),
-    //         yearOfEstablishment: new FormControl(supplierItem.yearOfEstablishment, []),
-    //         deliveryBy: new FormControl(supplierItem.deliveryBy, []),
-    //         category: new FormControl(supplierItem.category, []),
-    //         paymentMode: new FormControl(supplierItem.paymentMode, []),
-    //         supplierCategories : [this.unMapSupplierCategories(supplierItem.supplierCategories), []],
-    //         // supplierCategories: new FormControl(<SupplierCategoryDto[]>(this.unMapSupplierCategories(supplierItem.supplierCategories)), []),
-    //         supplierAddresses: supplierItem.supplierAddresses && supplierItem.supplierAddresses.length > 0 ? this.formBuilder.array(
-    //             supplierItem.supplierAddresses.map((x: SupplierAddressDto) =>
-    //                 this.createSupplierAddress(x)
-    //             )
-    //         ) : this.formBuilder.array([this.createSupplierAddress(supplierAddressItem)]),
-    //         supplierContactPersons: supplierItem.supplierContactPersons && supplierItem.supplierContactPersons.length > 0 ? this.formBuilder.array(
-    //             supplierItem.supplierContactPersons.map((x: SupplierContactPersonDto) =>
-    //                 this.createSupplierContactPerson(x)
-    //             )
-    //         ) : this.formBuilder.array([this.createSupplierContactPerson(supplierContactPersonItem)]),
-    //         supplierBanks: supplierItem.supplierBanks && supplierItem.supplierBanks.length > 0 ? this.formBuilder.array(
-    //             supplierItem.supplierBanks.map((x: SupplierBankDto) =>
-    //                 this.createSupplierBank(x)
-    //             )
-    //         ) : this.formBuilder.array([this.createSupplierBank(supplierBankItem)])
-
-    //     });
-    //     console.log(this.itemMasterForm.value);
-    // }
-
-    // Calibration Type related functions
     get itemCalibrationTypes(): FormArray {
         return (<FormArray>this.itemMasterForm.get('itemCalibrationTypes'));
     }
-
 
     addCalibrationType() {
         let calibrationTypeItem: CalibrationTypeDto = new CalibrationTypeDto();
@@ -330,8 +298,8 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
     createItemAttachment(itemAttachment: ItemAttachmentDto): FormGroup {
         return this.formBuilder.group({
             id: new FormControl(itemAttachment.id, []),
-            path: new FormControl(itemAttachment.path, []),
-            description: new FormControl(itemAttachment.description, []),
+            path: new FormControl(itemAttachment.path? itemAttachment.path : null, []),
+            description: new FormControl(itemAttachment.description ? itemAttachment.description : null, []),
             itemId: new FormControl(itemAttachment.itemId, [])
         });
     }
@@ -373,7 +341,7 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
     addItemProcurement() {
         let itemProcurement: ProcurementDto = new ProcurementDto();
         let itemProcurementForm = this.createItemProcurement(itemProcurement);
-        this.itemStorageConditions.push(itemProcurementForm);
+        this.itemProcurements.push(itemProcurementForm);
     }
 
     createItemProcurement(itemProcurement: ProcurementDto): FormGroup {
@@ -383,6 +351,7 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
             quantityPerOrderingUOM: new FormControl(itemProcurement.quantityPerOrderingUOM? <number>itemProcurement.quantityPerOrderingUOM : null, []),
             ratePerPack : new FormControl(itemProcurement.ratePerPack? <number>itemProcurement.ratePerPack : null, []),
             ratePerStockUOM : new FormControl(itemProcurement.ratePerStockUOM? <number>itemProcurement.ratePerStockUOM : null, []),
+            catalogueNumber : new FormControl(itemProcurement.catalogueNumber? itemProcurement.catalogueNumber : null, []),
             itemId: new FormControl(itemProcurement.itemId, [])
         });
     }
@@ -406,6 +375,8 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
         this.loadCalibrationFrequencyList();
         this.loadItemStatusList();
         this.loadHazardousList();
+        this.loadSubjectCategoryList();
+        this.loadYearList();
     }
 
     async loadSuppliers() {
@@ -458,6 +429,19 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
 
     loadHazardousList() {
         this.hazardousList = this._itemMockService.loadYesOrNoTypeDropdownData();
+    }
+
+    loadSubjectCategoryList() {
+        this.subjectCategoryList = this._itemMockService.loadSubjectCategoryList();
+    }
+
+    loadYearList() {
+        for (let i = 1950; i <= 2050; i++) {
+            let yearItem: DropdownDto = new DropdownDto();
+            yearItem.title = <string><unknown>i;
+            yearItem.value = i;
+            this.yearList.push(yearItem);
+        }
     }
 
     onShown(): void {

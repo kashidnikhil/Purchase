@@ -1329,6 +1329,19 @@
 	  <text name="CTQRequirement">CTQ Requirement</text>
 	  <text name="CTQSpecifications">CTQ Specifications</text>
 	  <text name="ExpiryApplicable">Expiry Applicable</text>
+	  <text name="OrderingUOM">Ordering UOM</text>
+	  <text name="StockUOM">Stock UOM</text>
+	  <text name="QtyPerOrderingUOM">Qty Per Ordering UOM</text>
+	  <text name="MinOrderQty">Minimum Order Quantity</text>
+	  <text name="Author">Author</text>
+	  <text name="Publication">Publication</text>
+	  <text name="PublicationYear">Publication Year</text>
+	  <text name="SubjectCategory">Subject Category</text>
+	  <text name="AddItemProcurement">Add Item Procurement</text>
+	  <text name="QuantityPerOrderingUOM">Qty Per Ordering UOM</text>
+	  <text name="CatalogueNumber">Catalogue Number</text>
+	  <text name="RatePerPack">Rate Per Pack</text>
 	  
+
   </texts>
 </localizationDictionary>

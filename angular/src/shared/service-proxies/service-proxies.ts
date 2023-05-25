@@ -27039,7 +27039,7 @@ export class ItemMasterDto implements IItemMasterDto {
     unitStockId!: string | undefined;
     orderingUOMId!: string | undefined;
     stockUOMId!: string | undefined;
-    quantityPerOrderingUOM!: number;
+    quantityPerOrderingUOM!: number | undefined;
     ctqRequirement!: CTQRequirement;
     ctqSpecifications!: string | undefined;
     expiryApplicable!: ExpiryApplicable;
@@ -27304,7 +27304,7 @@ export interface IItemMasterDto {
     unitStockId: string | undefined;
     orderingUOMId: string | undefined;
     stockUOMId: string | undefined;
-    quantityPerOrderingUOM: number;
+    quantityPerOrderingUOM: number | undefined;
     ctqRequirement: CTQRequirement;
     ctqSpecifications: string | undefined;
     expiryApplicable: ExpiryApplicable;
@@ -27367,7 +27367,7 @@ export class ItemMasterInputDto implements IItemMasterInputDto {
     unitStockId!: string | undefined;
     orderingUOMId!: string | undefined;
     stockUOMId!: string | undefined;
-    quantityPerOrderingUOM!: number;
+    quantityPerOrderingUOM!: number | undefined;
     ctqRequirement!: CTQRequirement;
     ctqSpecifications!: string | undefined;
     expiryApplicable!: ExpiryApplicable;
@@ -27632,7 +27632,7 @@ export interface IItemMasterInputDto {
     unitStockId: string | undefined;
     orderingUOMId: string | undefined;
     stockUOMId: string | undefined;
-    quantityPerOrderingUOM: number;
+    quantityPerOrderingUOM: number | undefined;
     ctqRequirement: CTQRequirement;
     ctqSpecifications: string | undefined;
     expiryApplicable: ExpiryApplicable;
@@ -31993,9 +31993,9 @@ export class ProcurementDto implements IProcurementDto {
     id!: string;
     make!: string | undefined;
     catalogueNumber!: string | undefined;
-    ratePerPack!: number;
-    quantityPerOrderingUOM!: number;
-    ratePerStockUOM!: number;
+    ratePerPack!: number | undefined;
+    quantityPerOrderingUOM!: number | undefined;
+    ratePerStockUOM!: number | undefined;
     itemId!: string;
 
     constructor(data?: IProcurementDto) {
@@ -32043,9 +32043,9 @@ export interface IProcurementDto {
     id: string;
     make: string | undefined;
     catalogueNumber: string | undefined;
-    ratePerPack: number;
-    quantityPerOrderingUOM: number;
-    ratePerStockUOM: number;
+    ratePerPack: number | undefined;
+    quantityPerOrderingUOM: number | undefined;
+    ratePerStockUOM: number | undefined;
     itemId: string;
 }
 
@@ -32053,9 +32053,9 @@ export class ProcurementInputDto implements IProcurementInputDto {
     id!: string | undefined;
     make!: string | undefined;
     catalogueNumber!: string | undefined;
-    ratePerPack!: number;
-    quantityPerOrderingUOM!: number;
-    ratePerStockUOM!: number;
+    ratePerPack!: number | undefined;
+    quantityPerOrderingUOM!: number | undefined;
+    ratePerStockUOM!: number | undefined;
     itemId!: string;
 
     constructor(data?: IProcurementInputDto) {
@@ -32103,9 +32103,9 @@ export interface IProcurementInputDto {
     id: string | undefined;
     make: string | undefined;
     catalogueNumber: string | undefined;
-    ratePerPack: number;
-    quantityPerOrderingUOM: number;
-    ratePerStockUOM: number;
+    ratePerPack: number | undefined;
+    quantityPerOrderingUOM: number | undefined;
+    ratePerStockUOM: number | undefined;
     itemId: string;
 }
 
