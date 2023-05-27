@@ -360,7 +360,7 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
             ratePerPack : new FormControl(itemProcurement.ratePerPack? <number>itemProcurement.ratePerPack : null, []),
             ratePerStockUOM : new FormControl(itemProcurement.ratePerStockUOM? <number>itemProcurement.ratePerStockUOM : null, []),
             catalogueNumber : new FormControl(itemProcurement.catalogueNumber? itemProcurement.catalogueNumber : null, []),
-            itemId: new FormControl(itemProcurement.itemId, [])
+            itemId: new FormControl(itemProcurement.itemId? itemProcurement.itemId : null, [])
         });
     }
 
@@ -688,7 +688,6 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
                 );
                 tempItemRateRevisionList.push(tempItemRateRevision);
             }
-
         });
         let result = tempItemRateRevisionList.length > 1 ? tempItemRateRevisionList : null;
         return result;

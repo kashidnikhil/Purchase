@@ -78,7 +78,7 @@
         {
             try
             {
-                //input.Id = input.Id != Guid.Empty ? input.Id : Guid.Empty;
+                input.Id = input.Id != Guid.Empty ? input.Id : Guid.Empty;
                 if (input.RatePerOrderingQuantity != null && input.OrderingQuantity != null)
                 {
                     input.CreationTime = DateTime.UtcNow;

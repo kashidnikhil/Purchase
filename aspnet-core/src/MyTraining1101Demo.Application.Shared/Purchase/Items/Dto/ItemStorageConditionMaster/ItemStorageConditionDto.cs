@@ -12,6 +12,6 @@ namespace MyTraining1101Demo.Purchase.Items.Dto.ItemStorageConditionMaster
         public long? ThresholdQuantity { get; set; }
 
         public string Location { get; set; }
-        public Guid ItemId { get; set; }
+        public Guid? ItemId { get; set; }
     }
 }

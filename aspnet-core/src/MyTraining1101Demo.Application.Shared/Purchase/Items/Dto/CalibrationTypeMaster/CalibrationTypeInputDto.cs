@@ -10,6 +10,6 @@
 
         public CalibrationFrequency? Frequency { get; set; }
 
-        public Guid ItemId { get; set; }
+        public Guid? ItemId { get; set; }
     }
 }

@@ -20115,8 +20115,8 @@ export interface ICacheDto {
 
 export class CalibrationAgencyDto implements ICalibrationAgencyDto {
     id!: string;
-    supplierId!: string;
-    itemId!: string;
+    supplierId!: string | undefined;
+    itemId!: string | undefined;
 
     constructor(data?: ICalibrationAgencyDto) {
         if (data) {
@@ -20153,14 +20153,14 @@ export class CalibrationAgencyDto implements ICalibrationAgencyDto {
 
 export interface ICalibrationAgencyDto {
     id: string;
-    supplierId: string;
-    itemId: string;
+    supplierId: string | undefined;
+    itemId: string | undefined;
 }
 
 export class CalibrationAgencyInputDto implements ICalibrationAgencyInputDto {
     id!: string | undefined;
     supplierId!: string;
-    itemId!: string;
+    itemId!: string | undefined;
 
     constructor(data?: ICalibrationAgencyInputDto) {
         if (data) {
@@ -20198,7 +20198,7 @@ export class CalibrationAgencyInputDto implements ICalibrationAgencyInputDto {
 export interface ICalibrationAgencyInputDto {
     id: string | undefined;
     supplierId: string;
-    itemId: string;
+    itemId: string | undefined;
 }
 
 export enum CalibrationFrequency {
@@ -20215,7 +20215,7 @@ export class CalibrationTypeDto implements ICalibrationTypeDto {
     id!: string;
     type!: CalibrationTypeEnum;
     frequency!: CalibrationFrequency;
-    itemId!: string;
+    itemId!: string | undefined;
 
     constructor(data?: ICalibrationTypeDto) {
         if (data) {
@@ -20256,7 +20256,7 @@ export interface ICalibrationTypeDto {
     id: string;
     type: CalibrationTypeEnum;
     frequency: CalibrationFrequency;
-    itemId: string;
+    itemId: string | undefined;
 }
 
 export enum CalibrationTypeEnum {
@@ -20269,7 +20269,7 @@ export class CalibrationTypeInputDto implements ICalibrationTypeInputDto {
     id!: string | undefined;
     type!: CalibrationTypeEnum;
     frequency!: CalibrationFrequency;
-    itemId!: string;
+    itemId!: string | undefined;
 
     constructor(data?: ICalibrationTypeInputDto) {
         if (data) {
@@ -20310,7 +20310,7 @@ export interface ICalibrationTypeInputDto {
     id: string | undefined;
     type: CalibrationTypeEnum;
     frequency: CalibrationFrequency;
-    itemId: string;
+    itemId: string | undefined;
 }
 
 export class CancelPaymentDto implements ICancelPaymentDto {
@@ -26893,7 +26893,7 @@ export class ItemAttachmentDto implements IItemAttachmentDto {
     id!: string;
     path!: string | undefined;
     description!: string | undefined;
-    itemId!: string;
+    itemId!: string | undefined;
 
     constructor(data?: IItemAttachmentDto) {
         if (data) {
@@ -26934,14 +26934,14 @@ export interface IItemAttachmentDto {
     id: string;
     path: string | undefined;
     description: string | undefined;
-    itemId: string;
+    itemId: string | undefined;
 }
 
 export class ItemAttachmentInputDto implements IItemAttachmentInputDto {
     id!: string | undefined;
     path!: string | undefined;
     description!: string | undefined;
-    itemId!: string;
+    itemId!: string | undefined;
 
     constructor(data?: IItemAttachmentInputDto) {
         if (data) {
@@ -26982,7 +26982,7 @@ export interface IItemAttachmentInputDto {
     id: string | undefined;
     path: string | undefined;
     description: string | undefined;
-    itemId: string;
+    itemId: string | undefined;
 }
 
 export enum ItemCategory {
@@ -27751,9 +27751,9 @@ export class ItemRateRevisionDto implements IItemRateRevisionDto {
     ratePerOrderingQuantity!: number | undefined;
     stockQuantityPerOrderingUOM!: number | undefined;
     ratePerStockUOM!: number | undefined;
-    stockUOMId!: string;
-    orderingUOMId!: string;
-    itemId!: string;
+    stockUOMId!: string | undefined;
+    orderingUOMId!: string | undefined;
+    itemId!: string | undefined;
 
     constructor(data?: IItemRateRevisionDto) {
         if (data) {
@@ -27813,9 +27813,9 @@ export interface IItemRateRevisionDto {
     ratePerOrderingQuantity: number | undefined;
     stockQuantityPerOrderingUOM: number | undefined;
     ratePerStockUOM: number | undefined;
-    stockUOMId: string;
-    orderingUOMId: string;
-    itemId: string;
+    stockUOMId: string | undefined;
+    orderingUOMId: string | undefined;
+    itemId: string | undefined;
 }
 
 export class ItemRateRevisionInputDto implements IItemRateRevisionInputDto {
@@ -27827,9 +27827,9 @@ export class ItemRateRevisionInputDto implements IItemRateRevisionInputDto {
     ratePerOrderingQuantity!: number | undefined;
     stockQuantityPerOrderingUOM!: number | undefined;
     ratePerStockUOM!: number | undefined;
-    stockUOMId!: string;
-    orderingUOMId!: string;
-    itemId!: string;
+    stockUOMId!: string | undefined;
+    orderingUOMId!: string | undefined;
+    itemId!: string | undefined;
 
     constructor(data?: IItemRateRevisionInputDto) {
         if (data) {
@@ -27889,14 +27889,14 @@ export interface IItemRateRevisionInputDto {
     ratePerOrderingQuantity: number | undefined;
     stockQuantityPerOrderingUOM: number | undefined;
     ratePerStockUOM: number | undefined;
-    stockUOMId: string;
-    orderingUOMId: string;
-    itemId: string;
+    stockUOMId: string | undefined;
+    orderingUOMId: string | undefined;
+    itemId: string | undefined;
 }
 
 export class ItemSpareDto implements IItemSpareDto {
     id!: string;
-    itemId!: string;
+    itemId!: string | undefined;
 
     constructor(data?: IItemSpareDto) {
         if (data) {
@@ -27931,12 +27931,12 @@ export class ItemSpareDto implements IItemSpareDto {
 
 export interface IItemSpareDto {
     id: string;
-    itemId: string;
+    itemId: string | undefined;
 }
 
 export class ItemSpareInputDto implements IItemSpareInputDto {
     id!: string | undefined;
-    itemId!: string;
+    itemId!: string | undefined;
 
     constructor(data?: IItemSpareInputDto) {
         if (data) {
@@ -27971,7 +27971,7 @@ export class ItemSpareInputDto implements IItemSpareInputDto {
 
 export interface IItemSpareInputDto {
     id: string | undefined;
-    itemId: string;
+    itemId: string | undefined;
 }
 
 export enum ItemStatus {
@@ -27984,7 +27984,7 @@ export class ItemStorageConditionDto implements IItemStorageConditionDto {
     hazardous!: HazardousEnum;
     thresholdQuantity!: number | undefined;
     location!: string | undefined;
-    itemId!: string;
+    itemId!: string | undefined;
 
     constructor(data?: IItemStorageConditionDto) {
         if (data) {
@@ -28028,7 +28028,7 @@ export interface IItemStorageConditionDto {
     hazardous: HazardousEnum;
     thresholdQuantity: number | undefined;
     location: string | undefined;
-    itemId: string;
+    itemId: string | undefined;
 }
 
 export class ItemStorageConditionInputDto implements IItemStorageConditionInputDto {
@@ -28036,7 +28036,7 @@ export class ItemStorageConditionInputDto implements IItemStorageConditionInputD
     hazardous!: HazardousEnum;
     thresholdQuantity!: number | undefined;
     location!: string | undefined;
-    itemId!: string;
+    itemId!: string | undefined;
 
     constructor(data?: IItemStorageConditionInputDto) {
         if (data) {
@@ -28080,13 +28080,13 @@ export interface IItemStorageConditionInputDto {
     hazardous: HazardousEnum;
     thresholdQuantity: number | undefined;
     location: string | undefined;
-    itemId: string;
+    itemId: string | undefined;
 }
 
 export class ItemSupplierDto implements IItemSupplierDto {
     id!: string;
-    supplierId!: string;
-    itemId!: string;
+    supplierId!: string | undefined;
+    itemId!: string | undefined;
 
     constructor(data?: IItemSupplierDto) {
         if (data) {
@@ -28123,14 +28123,14 @@ export class ItemSupplierDto implements IItemSupplierDto {
 
 export interface IItemSupplierDto {
     id: string;
-    supplierId: string;
-    itemId: string;
+    supplierId: string | undefined;
+    itemId: string | undefined;
 }
 
 export class ItemSupplierInputDto implements IItemSupplierInputDto {
     id!: string | undefined;
-    supplierId!: string;
-    itemId!: string;
+    supplierId!: string | undefined;
+    itemId!: string | undefined;
 
     constructor(data?: IItemSupplierInputDto) {
         if (data) {
@@ -28167,8 +28167,8 @@ export class ItemSupplierInputDto implements IItemSupplierInputDto {
 
 export interface IItemSupplierInputDto {
     id: string | undefined;
-    supplierId: string;
-    itemId: string;
+    supplierId: string | undefined;
+    itemId: string | undefined;
 }
 
 export enum ItemType {
@@ -32172,7 +32172,7 @@ export class ProcurementDto implements IProcurementDto {
     ratePerPack!: number | undefined;
     quantityPerOrderingUOM!: number | undefined;
     ratePerStockUOM!: number | undefined;
-    itemId!: string;
+    itemId!: string | undefined;
 
     constructor(data?: IProcurementDto) {
         if (data) {
@@ -32222,7 +32222,7 @@ export interface IProcurementDto {
     ratePerPack: number | undefined;
     quantityPerOrderingUOM: number | undefined;
     ratePerStockUOM: number | undefined;
-    itemId: string;
+    itemId: string | undefined;
 }
 
 export class ProcurementInputDto implements IProcurementInputDto {
@@ -32232,7 +32232,7 @@ export class ProcurementInputDto implements IProcurementInputDto {
     ratePerPack!: number | undefined;
     quantityPerOrderingUOM!: number | undefined;
     ratePerStockUOM!: number | undefined;
-    itemId!: string;
+    itemId!: string | undefined;
 
     constructor(data?: IProcurementInputDto) {
         if (data) {
@@ -32282,7 +32282,7 @@ export interface IProcurementInputDto {
     ratePerPack: number | undefined;
     quantityPerOrderingUOM: number | undefined;
     ratePerStockUOM: number | undefined;
-    itemId: string;
+    itemId: string | undefined;
 }
 
 export class RecentTenant implements IRecentTenant {

@@ -17,10 +17,10 @@
 
         public decimal? RatePerStockUOM { get; set; }
 
-        public Guid StockUOMId { get; set; }
+        public Guid? StockUOMId { get; set; }
 
-        public Guid OrderingUOMId { get; set; }
+        public Guid? OrderingUOMId { get; set; }
 
-        public Guid ItemId { get; set; }
+        public Guid? ItemId { get; set; }
     }
 }

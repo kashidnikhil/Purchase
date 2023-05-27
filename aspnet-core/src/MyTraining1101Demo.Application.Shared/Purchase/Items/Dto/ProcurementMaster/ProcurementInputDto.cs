@@ -14,6 +14,6 @@ namespace MyTraining1101Demo.Purchase.Items.Dto.ProcurementMaster
 
         public double? RatePerStockUOM { get; set; }
 
-        public Guid ItemId { get; set; }
+        public Guid? ItemId { get; set; }
     }
 }

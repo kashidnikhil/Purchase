@@ -5,7 +5,7 @@
     public class ItemSupplierDto
     {
         public Guid Id { get; set; }
-        public Guid SupplierId { get; set; }
-        public Guid ItemId { get; set; }
+        public Guid? SupplierId { get; set; }
+        public Guid? ItemId { get; set; }
     }
 }
