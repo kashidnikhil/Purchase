@@ -1,6 +1,7 @@
 ﻿using MyTraining1101Demo.Purchase.Items.Dto.CalibrationAgenciesMaster;
 using MyTraining1101Demo.Purchase.Items.Dto.CalibrationTypeMaster;
 using MyTraining1101Demo.Purchase.Items.Dto.ItemAttachmentsMaster;
+using MyTraining1101Demo.Purchase.Items.Dto.ItemRateRevisionMaster;
 using MyTraining1101Demo.Purchase.Items.Dto.ItemStorageConditionMaster;
 using MyTraining1101Demo.Purchase.Items.Dto.ItemSupplierMaster;
 using MyTraining1101Demo.Purchase.Items.Dto.ProcurementMaster;
@@ -130,5 +131,7 @@ namespace MyTraining1101Demo.Purchase.Items.Dto.ItemMaster
         public IList<ProcurementDto> ItemProcurements { get; set; }
 
         public IList<ItemSpareDto> ItemSpares { get; set; }
+
+        public IList<ItemRateRevisionDto> ItemRateRevisions { get; set; }
     }
 }

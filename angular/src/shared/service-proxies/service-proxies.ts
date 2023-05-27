@@ -27058,6 +27058,7 @@ export class ItemMasterDto implements IItemMasterDto {
     itemSuppliers!: ItemSupplierDto[] | undefined;
     itemProcurements!: ProcurementDto[] | undefined;
     itemSpares!: ItemSpareDto[] | undefined;
+    itemRateRevisions!: ItemRateRevisionDto[] | undefined;
 
     constructor(data?: IItemMasterDto) {
         if (data) {
@@ -27157,6 +27158,11 @@ export class ItemMasterDto implements IItemMasterDto {
                 this.itemSpares = [] as any;
                 for (let item of _data["itemSpares"])
                     this.itemSpares!.push(ItemSpareDto.fromJS(item));
+            }
+            if (Array.isArray(_data["itemRateRevisions"])) {
+                this.itemRateRevisions = [] as any;
+                for (let item of _data["itemRateRevisions"])
+                    this.itemRateRevisions!.push(ItemRateRevisionDto.fromJS(item));
             }
         }
     }
@@ -27258,6 +27264,11 @@ export class ItemMasterDto implements IItemMasterDto {
             for (let item of this.itemSpares)
                 data["itemSpares"].push(item.toJSON());
         }
+        if (Array.isArray(this.itemRateRevisions)) {
+            data["itemRateRevisions"] = [];
+            for (let item of this.itemRateRevisions)
+                data["itemRateRevisions"].push(item.toJSON());
+        }
         return data;
     }
 }
@@ -27323,6 +27334,7 @@ export interface IItemMasterDto {
     itemSuppliers: ItemSupplierDto[] | undefined;
     itemProcurements: ProcurementDto[] | undefined;
     itemSpares: ItemSpareDto[] | undefined;
+    itemRateRevisions: ItemRateRevisionDto[] | undefined;
 }
 
 export class ItemMasterInputDto implements IItemMasterInputDto {
@@ -27728,6 +27740,82 @@ export interface IItemMasterListDto {
 export enum ItemMobility {
     Fixed = 1,
     Field = 2,
+}
+
+export class ItemRateRevisionDto implements IItemRateRevisionDto {
+    id!: string;
+    dateOfEntry!: DateTime | undefined;
+    make!: string | undefined;
+    catalogueNumber!: string | undefined;
+    orderingQuantity!: number | undefined;
+    ratePerOrderingQuantity!: number | undefined;
+    stockQuantityPerOrderingUOM!: number | undefined;
+    ratePerStockUOM!: number | undefined;
+    stockUOMId!: string;
+    orderingUOMId!: string;
+    itemId!: string;
+
+    constructor(data?: IItemRateRevisionDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.dateOfEntry = _data["dateOfEntry"] ? DateTime.fromISO(_data["dateOfEntry"].toString()) : <any>undefined;
+            this.make = _data["make"];
+            this.catalogueNumber = _data["catalogueNumber"];
+            this.orderingQuantity = _data["orderingQuantity"];
+            this.ratePerOrderingQuantity = _data["ratePerOrderingQuantity"];
+            this.stockQuantityPerOrderingUOM = _data["stockQuantityPerOrderingUOM"];
+            this.ratePerStockUOM = _data["ratePerStockUOM"];
+            this.stockUOMId = _data["stockUOMId"];
+            this.orderingUOMId = _data["orderingUOMId"];
+            this.itemId = _data["itemId"];
+        }
+    }
+
+    static fromJS(data: any): ItemRateRevisionDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ItemRateRevisionDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["dateOfEntry"] = this.dateOfEntry ? this.dateOfEntry.toString() : <any>undefined;
+        data["make"] = this.make;
+        data["catalogueNumber"] = this.catalogueNumber;
+        data["orderingQuantity"] = this.orderingQuantity;
+        data["ratePerOrderingQuantity"] = this.ratePerOrderingQuantity;
+        data["stockQuantityPerOrderingUOM"] = this.stockQuantityPerOrderingUOM;
+        data["ratePerStockUOM"] = this.ratePerStockUOM;
+        data["stockUOMId"] = this.stockUOMId;
+        data["orderingUOMId"] = this.orderingUOMId;
+        data["itemId"] = this.itemId;
+        return data;
+    }
+}
+
+export interface IItemRateRevisionDto {
+    id: string;
+    dateOfEntry: DateTime | undefined;
+    make: string | undefined;
+    catalogueNumber: string | undefined;
+    orderingQuantity: number | undefined;
+    ratePerOrderingQuantity: number | undefined;
+    stockQuantityPerOrderingUOM: number | undefined;
+    ratePerStockUOM: number | undefined;
+    stockUOMId: string;
+    orderingUOMId: string;
+    itemId: string;
 }
 
 export class ItemRateRevisionInputDto implements IItemRateRevisionInputDto {

@@ -209,7 +209,8 @@
                     itemMasterData.ItemStorageConditions = await this._itemStorageConditionManager.GetItemStorageConditionListFromDB(itemMasterData.Id);
                     itemMasterData.ItemSuppliers = await this._itemSupplierManager.GetItemSupplierListFromDB(itemMasterData.Id);
                     itemMasterData.ItemProcurements = await this._itemProcurementManager.GetItemProcurementListFromDB(itemMasterData.Id);
-                    itemMasterData.ItemSpares = await this._itemSpareManager.GetItemSpareListFromDB(itemMasterData.Id);    
+                    itemMasterData.ItemSpares = await this._itemSpareManager.GetItemSpareListFromDB(itemMasterData.Id);
+                    itemMasterData.ItemRateRevisions = await this._itemRateRevisionManager.GetItemRateRevisionListFromDB(itemMasterData.Id);
                 }
                 return itemMasterData;
             }

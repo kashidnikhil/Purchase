@@ -10,6 +10,8 @@ import {
     ItemMasterDto,
     ItemMasterInputDto,
     ItemMasterListDto,
+    ItemRateRevisionDto,
+    ItemRateRevisionInputDto,
     ItemServiceProxy,
     ItemSpareDto,
     ItemSpareInputDto,
@@ -105,6 +107,7 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
         let itemSpare: ItemSpareDto = new ItemSpareDto();
         let itemStorageCondition: ItemStorageConditionDto = new ItemStorageConditionDto();
         let itemProcurement: ProcurementDto = new ProcurementDto();
+        let itemRateRevision: ItemRateRevisionDto = new ItemRateRevisionDto();
         this.itemMasterForm = this.formBuilder.group({
             id: new FormControl(itemMaster.id, []),
             categoryId: new FormControl(itemMaster.categoryId, []),
@@ -191,6 +194,11 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
                     this.createItemProcurement(x)
                 )
             ) : this.formBuilder.array([this.createItemProcurement(itemProcurement)]),
+            itemRateRevisions: itemMaster.itemRateRevisions && itemMaster.itemRateRevisions.length > 0 ? this.formBuilder.array(
+                itemMaster.itemRateRevisions.map((x: ItemRateRevisionDto) =>
+                    this.createItemRateRevision(x)
+                )
+            ) : this.formBuilder.array([this.createItemRateRevision(itemRateRevision)])
         });
 
     }
@@ -357,8 +365,39 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
     }
 
     deleteItemProcurement(indexValue: number) {
-        const itemitemProcurementArray = this.itemProcurements;
-        itemitemProcurementArray.removeAt(indexValue);
+        const itemProcurementArray = this.itemProcurements;
+        itemProcurementArray.removeAt(indexValue);
+    }
+
+    get itemRateRevisions(): FormArray {
+        return (<FormArray>this.itemMasterForm.get('itemRateRevisions'));
+    }
+
+    addItemRateRevision() {
+        let itemRateRevision: ItemRateRevisionDto = new ItemRateRevisionDto();
+        let itemRateRevisionForm = this.createItemRateRevision(itemRateRevision);
+        this.itemRateRevisions.push(itemRateRevisionForm);
+    }
+
+    createItemRateRevision(itemRateRevision: ItemRateRevisionDto): FormGroup {
+        return this.formBuilder.group({
+            id: new FormControl(itemRateRevision.id, []),
+            make: new FormControl(itemRateRevision.make ? itemRateRevision.make : null, []),
+            orderingQuantity: new FormControl(itemRateRevision.orderingQuantity? parseFloat(itemRateRevision.orderingQuantity.toString()).toFixed(2) : null, []),
+            catalogueNumber : new FormControl(itemRateRevision.catalogueNumber ? itemRateRevision.catalogueNumber : null, []),
+            dateOfEntry: new FormControl(itemRateRevision.dateOfEntry ? formatDate(new Date(<string><unknown>itemRateRevision.dateOfEntry), "yyyy-MM-dd", "en") : null, []),
+            ratePerOrderingQuantity : new FormControl(itemRateRevision.ratePerOrderingQuantity? parseFloat(itemRateRevision.ratePerOrderingQuantity.toString()).toFixed(2) : null, []),
+            stockQuantityPerOrderingUOM : new FormControl(itemRateRevision.stockQuantityPerOrderingUOM? parseFloat(itemRateRevision.stockQuantityPerOrderingUOM.toString()).toFixed(2) : null, []),
+            ratePerStockUOM : new FormControl(itemRateRevision.ratePerStockUOM? parseFloat(itemRateRevision.ratePerStockUOM.toString()).toFixed(2) : null, []),
+            orderingUOMId: new FormControl(itemRateRevision.orderingUOMId? itemRateRevision.orderingUOMId : null, []),
+            stockUOMId : new FormControl(itemRateRevision.stockUOMId? itemRateRevision.stockUOMId : null, []),
+            itemId: new FormControl(itemRateRevision.itemId, [])
+        });
+    }
+
+    deleteItemRateRevision(indexValue: number) {
+        const itemRateRevisionArray = this.itemRateRevisions;
+        itemRateRevisionArray.removeAt(indexValue);
     }
 
     async loadDropdownList() {
@@ -482,6 +521,11 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
             if (input.itemStorageConditions && input.itemStorageConditions.length > 0) {
                 let itemStorageConditions = this.mapItemStorageConditions(input.itemStorageConditions);
                 input.itemStorageConditions = itemStorageConditions;
+            }
+
+            if (input.itemRateRevisions && input.itemRateRevisions.length > 0) {
+                let itemRateRevisions = this.mapItemRateRevisions(input.itemRateRevisions);
+                input.itemRateRevisions = itemRateRevisions;
             }
 
             this._itemMasterService
@@ -620,6 +664,33 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
 
         });
         let result = tempItemAttachmentList.length > 1 ? tempItemAttachmentList : null;
+        return result;
+    }
+
+    mapItemRateRevisions(itemRateRevisionList: ItemRateRevisionInputDto[]): ItemRateRevisionInputDto[] | null {
+        let tempItemRateRevisionList: ItemRateRevisionInputDto[] = [];
+        itemRateRevisionList.forEach(itemRateRevision => {
+            if (itemRateRevision.ratePerOrderingQuantity != null ||  itemRateRevision.orderingQuantity != null) {
+                let tempItemRateRevision: ItemRateRevisionInputDto = new ItemRateRevisionInputDto(
+                    {
+                        id: itemRateRevision.id ? itemRateRevision.id : "",
+                        make: itemRateRevision.make,
+                        orderingQuantity: itemRateRevision.orderingQuantity,
+                        catalogueNumber : itemRateRevision.catalogueNumber,
+                        dateOfEntry: itemRateRevision.dateOfEntry,
+                        ratePerOrderingQuantity : itemRateRevision.ratePerOrderingQuantity,
+                        stockQuantityPerOrderingUOM :itemRateRevision.stockQuantityPerOrderingUOM,
+                        ratePerStockUOM : itemRateRevision.ratePerStockUOM,
+                        orderingUOMId: itemRateRevision.orderingUOMId,
+                        stockUOMId : itemRateRevision.stockUOMId,
+                        itemId: itemRateRevision.itemId
+                    }
+                );
+                tempItemRateRevisionList.push(tempItemRateRevision);
+            }
+
+        });
+        let result = tempItemRateRevisionList.length > 1 ? tempItemRateRevisionList : null;
         return result;
     }
 

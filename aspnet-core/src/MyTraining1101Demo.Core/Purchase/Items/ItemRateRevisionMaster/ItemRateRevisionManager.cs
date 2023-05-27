@@ -95,12 +95,12 @@
             }
         }
 
-        public async Task<IList<ItemRateRevisionDto>> GetItemRateRevisionListFromDB(Guid itemId)
+        public async Task<IList<ItemRateRevisionDto>> GetItemRateRevisionListFromDB(Guid itemMasterId)
         {
             try
             {
                 var itemRateRevisionQuery = this._itemRateRevisionRepository.GetAll()
-                    .Where(x => !x.IsDeleted && x.ItemId == itemId);
+                    .Where(x => !x.IsDeleted && x.ItemId == itemMasterId);
 
                 return new List<ItemRateRevisionDto>(ObjectMapper.Map<List<ItemRateRevisionDto>>(itemRateRevisionQuery));
             }

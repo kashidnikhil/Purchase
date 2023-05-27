@@ -13,5 +13,7 @@
 
         Task InsertItemRateRevision(ItemMasterInputDto input,Guid ItemMasterId);
 
+        Task<IList<ItemRateRevisionDto>> GetItemRateRevisionListFromDB(Guid itemMasterId);
+
     }
 }
