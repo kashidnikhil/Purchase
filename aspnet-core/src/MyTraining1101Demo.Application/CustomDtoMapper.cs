@@ -330,15 +330,15 @@ namespace MyTraining1101Demo
             configuration.CreateMap<ItemRateRevision, ItemRateRevisionDto>().ReverseMap();
             //configuration.CreateMap<ItemRateRevision, ItemRateRevisionInputDto>().ReverseMap();
             
-            configuration.CreateMap<ItemRateRevision, ItemMasterInputDto>()
+            configuration.CreateMap<ItemMasterInputDto,ItemRateRevision> ()
                 .ForMember(dto => dto.Make, options => options.MapFrom(x => x.Make))
-                .ForMember(dto => dto.RatePerQuantity, options => options.MapFrom(x => x.RatePerOrderingQuantity))
+                .ForMember(dto => dto.RatePerOrderingQuantity, options => options.MapFrom(x => x.RatePerQuantity))
                 .ForMember(dto => dto.StockUOMId, options => options.MapFrom(x => x.StockUOMId))
                 .ForMember(dto => dto.OrderingUOMId, options => options.MapFrom(x => x.OrderingUOMId))
-                .ForMember(dto => dto.RatePerQuantity, options => options.MapFrom(x => x.RatePerOrderingQuantity))
-                .ForMember(dto => dto.QuantityPerOrderingUOM, options => options.MapFrom(x => x.StockQuantityPerOrderingUOM))
+                .ForMember(dto => dto.RatePerOrderingQuantity, options => options.MapFrom(x => x.RatePerQuantity))
+                .ForMember(dto => dto.StockQuantityPerOrderingUOM, options => options.MapFrom(x => x.QuantityPerOrderingUOM))
+                .ForMember(x => x.ItemId, opt => opt.Ignore())
                 .ReverseMap();
-
 
             configuration.CreateMap<ItemStorageCondition, ItemStorageConditionDto>().ReverseMap();
             configuration.CreateMap<ItemStorageCondition, ItemStorageConditionInputDto>().ReverseMap();

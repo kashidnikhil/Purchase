@@ -1277,6 +1277,12 @@
 	  <text name="EditCompany">Edit Company</text>
 	  <text name="CompanyName">Company Name</text>
 
+	  <!-- Comapnies section-->
+	  <text name="Models">Models</text>
+	  <text name="ModelsHeaderInfo">Manage models.</text>
+	  <text name="CreateNewModel">Create New Model</text>
+	  <text name="EditModel">Edit Model</text>
+	  
 	  <!-- Item master section-->
 	  <text name="CreateNewItem">Create New Item</text>
 	  <text name="EditItem">Edit Item</text>

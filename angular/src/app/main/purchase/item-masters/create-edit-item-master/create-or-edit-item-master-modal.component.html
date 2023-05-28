@@ -66,7 +66,7 @@
                         </div>
                     </div>
                     <div class="col-md-12 row mb-4">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label>{{"ItemType" | localize}}</label>
                                 <select placeholder="Select Item Type" class="form-control" #itemTypeInput
@@ -77,7 +77,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label>{{"AMCRequired" | localize}}</label>
                                 <select placeholder="Select Option" class="form-control" #amcRequiredInput
@@ -86,6 +86,13 @@
                                         {{ option.title }}
                                     </option>
                                 </select>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label>{{"Make" | localize}}</label>
+                                <input #makeInput id="model" class="form-control" type="text" name="make"
+                                    formControlName="make">
                             </div>
                         </div>
                     </div>

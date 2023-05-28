@@ -21,6 +21,7 @@ import {
     ItemSupplierInputDto,
     MaterialGradeDto,
     MaterialGradeServiceProxy,
+    ProcurementInputDto,
     SupplierDto,
     SupplierServiceProxy,
     UnitDto,
@@ -523,6 +524,11 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
                 input.itemStorageConditions = itemStorageConditions;
             }
 
+            if (input.itemProcurements && input.itemProcurements.length > 0) {
+                let itemProcurements = this.mapItemProcurements(input.itemProcurements);
+                input.itemProcurements = itemProcurements;
+            }
+
             if (input.itemRateRevisions && input.itemRateRevisions.length > 0) {
                 let itemRateRevisions = this.mapItemRateRevisions(input.itemRateRevisions);
                 input.itemRateRevisions = itemRateRevisions;
@@ -647,10 +653,10 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
     }
 
     mapItemStorageConditions(itemStorageConditionList: ItemStorageConditionInputDto[]): ItemStorageConditionInputDto[] | null {
-        let tempItemAttachmentList: ItemStorageConditionInputDto[] = [];
+        let tempItemStorageConditionList: ItemStorageConditionInputDto[] = [];
         itemStorageConditionList.forEach(item => {
             if (item.location != null ||  item.thresholdQuantity != null || item.hazardous != null) {
-                let tempItemAttachment: ItemStorageConditionInputDto = new ItemStorageConditionInputDto(
+                let tempItemStorageCondition: ItemStorageConditionInputDto = new ItemStorageConditionInputDto(
                     {
                         id: item.id ? item.id : "",
                         location : item.location,
@@ -659,11 +665,34 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
                         itemId: item.itemId
                     }
                 );
-                tempItemAttachmentList.push(tempItemAttachment);
+                tempItemStorageConditionList.push(tempItemStorageCondition);
             }
 
         });
-        let result = tempItemAttachmentList.length > 1 ? tempItemAttachmentList : null;
+        let result = tempItemStorageConditionList.length > 1 ? tempItemStorageConditionList : null;
+        return result;
+    }
+
+    mapItemProcurements(itemProcurementList: ProcurementInputDto[]): ProcurementInputDto[] | null {
+        let tempItemProcurementList: ProcurementInputDto[] = [];
+        itemProcurementList.forEach(itemProcurement => {
+            if (itemProcurement.ratePerPack != null && itemProcurement.quantityPerOrderingUOM != null) {
+                let tempItemProcurement: ProcurementInputDto = new ProcurementInputDto(
+                    {
+                        id: itemProcurement.id ? itemProcurement.id : "",
+                        catalogueNumber : itemProcurement.catalogueNumber,
+                        make : itemProcurement.make,
+                        quantityPerOrderingUOM: itemProcurement.quantityPerOrderingUOM,
+                        ratePerPack : itemProcurement.ratePerPack,
+                        ratePerStockUOM : itemProcurement.ratePerStockUOM,
+                        itemId: itemProcurement.itemId
+                    }
+                );
+                tempItemProcurementList.push(tempItemProcurement);
+            }
+
+        });
+        let result = tempItemProcurementList.length > 1 ? tempItemProcurementList : null;
         return result;
     }
 
