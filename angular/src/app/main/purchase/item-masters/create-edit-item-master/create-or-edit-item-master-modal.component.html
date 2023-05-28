@@ -418,8 +418,8 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>{{"ItemSpare" | localize}}</label>
-                                            <select placeholder="Select Item" class="form-control" #itemIdInput
-                                                formControlName="itemId" id="itemId" name="itemId">
+                                            <select placeholder="Select Item" class="form-control" #itemSparesIdInput
+                                                formControlName="itemSparesId" id="itemSparesId" name="itemSparesId">
                                                 <option *ngFor="let itemMaster of itemMasterList"
                                                     value="{{ itemMaster.id }}">
                                                     {{ itemMaster.itemName }}

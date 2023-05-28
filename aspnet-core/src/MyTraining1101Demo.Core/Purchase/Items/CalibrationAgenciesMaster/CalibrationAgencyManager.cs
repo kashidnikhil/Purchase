@@ -31,10 +31,12 @@
             {
                 Guid itemId = Guid.Empty;
                 var mappedItemCalibrationAgencies = ObjectMapper.Map<List<CalibrationAgency>>(itemCalibrationAgencyInputList);
-                for (int i = 0; i < mappedItemCalibrationAgencies.Count; i++)
+
+                var filteredMappedItemCalibrationAgencies = mappedItemCalibrationAgencies.Where(x => x.SupplierId != null && x.SupplierId != Guid.Empty).ToList();
+                    for (int i = 0; i < filteredMappedItemCalibrationAgencies.Count; i++)
                 {
-                    itemId = (Guid)mappedItemCalibrationAgencies[i].ItemId;
-                    await this.InsertOrUpdateItemCalibrationAgencyIntoDB(mappedItemCalibrationAgencies[i]);
+                    itemId = (Guid)filteredMappedItemCalibrationAgencies[i].ItemId;
+                    await this.InsertOrUpdateItemCalibrationAgencyIntoDB(filteredMappedItemCalibrationAgencies[i]);
                 }
                 return itemId;
             }

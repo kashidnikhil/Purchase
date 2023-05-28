@@ -27896,6 +27896,7 @@ export interface IItemRateRevisionInputDto {
 
 export class ItemSpareDto implements IItemSpareDto {
     id!: string;
+    itemSparesId!: string | undefined;
     itemId!: string | undefined;
 
     constructor(data?: IItemSpareDto) {
@@ -27910,6 +27911,7 @@ export class ItemSpareDto implements IItemSpareDto {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
+            this.itemSparesId = _data["itemSparesId"];
             this.itemId = _data["itemId"];
         }
     }
@@ -27924,6 +27926,7 @@ export class ItemSpareDto implements IItemSpareDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
+        data["itemSparesId"] = this.itemSparesId;
         data["itemId"] = this.itemId;
         return data;
     }
@@ -27931,11 +27934,13 @@ export class ItemSpareDto implements IItemSpareDto {
 
 export interface IItemSpareDto {
     id: string;
+    itemSparesId: string | undefined;
     itemId: string | undefined;
 }
 
 export class ItemSpareInputDto implements IItemSpareInputDto {
     id!: string | undefined;
+    itemSparesId!: string | undefined;
     itemId!: string | undefined;
 
     constructor(data?: IItemSpareInputDto) {
@@ -27950,6 +27955,7 @@ export class ItemSpareInputDto implements IItemSpareInputDto {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
+            this.itemSparesId = _data["itemSparesId"];
             this.itemId = _data["itemId"];
         }
     }
@@ -27964,6 +27970,7 @@ export class ItemSpareInputDto implements IItemSpareInputDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
+        data["itemSparesId"] = this.itemSparesId;
         data["itemId"] = this.itemId;
         return data;
     }
@@ -27971,6 +27978,7 @@ export class ItemSpareInputDto implements IItemSpareInputDto {
 
 export interface IItemSpareInputDto {
     id: string | undefined;
+    itemSparesId: string | undefined;
     itemId: string | undefined;
 }
 

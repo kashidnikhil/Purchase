@@ -31,10 +31,12 @@ namespace MyTraining1101Demo.Purchase.Items.ItemSupplierMaster
             {
                 Guid itemId = Guid.Empty;
                 var mappedItemSuppliers = ObjectMapper.Map<List<ItemSupplier>>(itemSupplierInputList);
-                for (int i = 0; i < mappedItemSuppliers.Count; i++)
+                var filteredMappedItemSuppliers = mappedItemSuppliers.Where(x => x.SupplierId != null && x.SupplierId != Guid.Empty).ToList();
+
+                for (int i = 0; i < filteredMappedItemSuppliers.Count; i++)
                 {
-                    itemId = (Guid)mappedItemSuppliers[i].ItemId;
-                    await this.InsertOrUpdateItemSupplierIntoDB(mappedItemSuppliers[i]);
+                    itemId = (Guid)filteredMappedItemSuppliers[i].ItemId;
+                    await this.InsertOrUpdateItemSupplierIntoDB(filteredMappedItemSuppliers[i]);
                 }
                 return itemId;
             }

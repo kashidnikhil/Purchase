@@ -33,10 +33,12 @@
             {
                 Guid itemId = Guid.Empty;
                 var mappedItemSpares = ObjectMapper.Map<List<ItemSpare>>(itemSpareInputList);
-                for (int i = 0; i < mappedItemSpares.Count; i++)
+                var filteredMappedItemSpares = mappedItemSpares.Where(x => x.ItemSparesId!= null && x.ItemSparesId != Guid.Empty).ToList();
+
+                for (int i = 0; i < filteredMappedItemSpares.Count; i++)
                 {
-                    itemId = (Guid)mappedItemSpares[i].ItemId;
-                    await this.InsertOrUpdateItemSpareIntoDB(mappedItemSpares[i]);
+                    itemId = (Guid)filteredMappedItemSpares[i].ItemId;
+                    await this.InsertOrUpdateItemSpareIntoDB(filteredMappedItemSpares[i]);
                 }
                 return itemId;
             }

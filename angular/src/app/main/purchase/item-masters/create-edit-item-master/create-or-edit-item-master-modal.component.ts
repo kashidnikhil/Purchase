@@ -285,6 +285,7 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
     createItemSpare(itemSpare: ItemSpareDto): FormGroup {
         return this.formBuilder.group({
             id: new FormControl(itemSpare.id, []),
+            itemSparesId: new FormControl(itemSpare.itemSparesId ? itemSpare.itemSparesId : null, []),
             itemId: new FormControl(itemSpare.itemId, [])
         });
     }
@@ -621,6 +622,7 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
                 let tempItemSpare: ItemSpareInputDto = new ItemSpareInputDto(
                     {
                         id: item.id ? item.id : "",
+                        itemSparesId : item.itemSparesId,
                         itemId: item.itemId,
                     }
                 );
@@ -736,6 +738,5 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
                 ratePerStockUOM : tempRatePerStockUOM
             }
         );
-        console.log(itemRateRevisionForm.value);
     }
 }
