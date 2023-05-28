@@ -601,18 +601,18 @@
                             *ngFor="let itemProcurement of itemProcurements.controls; let index = index">
                             <div [formGroupName]="index" class="p-3">
                                 <div class="col-md-12 row mb-4">
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <div class="form-group">
                                             <label>{{"Make" | localize}}</label>
-                                            <input #makeInput id="make" class="form-control"
-                                                type="text" name="make" formControlName="make">
+                                            <input #makeInput id="make" class="form-control" type="text" name="make"
+                                                formControlName="make">
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label>{{"CatalogueNumber" | localize}}</label>
-                                            <input #makeInput id="make" class="form-control"
-                                                type="text" name="make" formControlName="make">
+                                            <input #makeInput id="make" class="form-control" type="text" name="make"
+                                                formControlName="make">
                                         </div>
                                     </div>
                                     <div class="col-md-2">
@@ -625,8 +625,9 @@
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label>{{"QuantityPerOrderingUOM" | localize}}</label>
-                                            <input #quantityPerOrderingUOMInput id="quantityPerOrderingUOM" class="form-control" type="number"
-                                                name="quantityPerOrderingUOM" formControlName="quantityPerOrderingUOM">
+                                            <input #quantityPerOrderingUOMInput id="quantityPerOrderingUOM"
+                                                class="form-control" type="number" name="quantityPerOrderingUOM"
+                                                formControlName="quantityPerOrderingUOM">
                                         </div>
                                     </div>
                                     <div class="col-md-1">
@@ -665,8 +666,8 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>{{"MinOrderQty" | localize}}</label>
-                                <input #minimumOrderQuantityInput id="minimumOrderQuantity" class="form-control" type="number"
-                                    name="minimumOrderQuantity" formControlName="minimumOrderQuantity">
+                                <input #minimumOrderQuantityInput id="minimumOrderQuantity" class="form-control"
+                                    type="number" name="minimumOrderQuantity" formControlName="minimumOrderQuantity">
                             </div>
                         </div>
                     </div>
@@ -718,8 +719,8 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>{{"Author" | localize}}</label>
-                                <input #authorInput id="author" class="form-control" type="text"
-                                name="author" formControlName="author">
+                                <input #authorInput id="author" class="form-control" type="text" name="author"
+                                    formControlName="author">
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -734,8 +735,7 @@
                                 <label>{{"PublicationYear" | localize}}</label>
                                 <select placeholder="Select Option" class="form-control" #publicationYearInput
                                     formControlName="publicationYear" id="publicationYear" name="publicationYear">
-                                    <option *ngFor="let year of yearList"
-                                        value="{{ year.value }}">
+                                    <option *ngFor="let year of yearList" value="{{ year.value }}">
                                         {{ year.title }}
                                     </option>
                                 </select>
@@ -751,6 +751,110 @@
                                         {{ subjectCategoryItem.title }}
                                     </option>
                                 </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <button type="button" class="btn btn-primary" (click)="addItemRateRevision()">
+                            <i class="fa fa-plus"></i>
+                            {{ 'AddItemRateRevision' | localize }}
+                        </button>
+                    </div>
+                    <div formArrayName="itemRateRevisions" class="mb-4">
+                        <div class="card mb-3"
+                            *ngFor="let itemRateRevision of itemRateRevisions.controls; let index = index">
+                            <div [formGroupName]="index" class="p-3">
+                                <div class="col-md-12 row mb-4">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>{{"DateOfEntry" | localize}}</label>
+                                            <input #dateOfEntryInput id="dateOfEntry" class="form-control" type="date"
+                                                name="dateOfEntry" formControlName="dateOfEntry">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>{{"StockUOM" | localize}}</label>
+                                            <select placeholder="Select Option" class="form-control" #stockUOMIdInput
+                                                formControlName="stockUOMId" id="stockUOMId" name="stockUOMId">
+                                                <option *ngFor="let UOMItem of unitList"
+                                                    value="{{ UOMItem.id }}">
+                                                    {{ UOMItem.name }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>{{"Make" | localize}}</label>
+                                            <input #makeInput id="make" class="form-control" type="text" name="make"
+                                                formControlName="make">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>{{"CatalogueNumber" | localize}}</label>
+                                            <input #catalogueNumberInput id="catalogueNumber" class="form-control"
+                                                type="text" name="catalogueNumber" formControlName="catalogueNumber">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <div class="mt-5 text-center">
+                                            <h3>
+                                                <i class="fa fa-trash"
+                                                    *ngIf="!itemRateRevision.value.id && itemRateRevisions.controls.length > 1"
+                                                    (click)="deleteItemRateRevision(index)"></i>
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 row mb-4">
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>{{"OrderingUOM" | localize}}</label>
+                                            <select placeholder="Select Option" class="form-control" #stockUOMIdInput
+                                                formControlName="stockUOMId" id="stockUOMId" name="stockUOMId">
+                                                <option *ngFor="let orderingUOMItem of unitList"
+                                                    value="{{ orderingUOMItem.id }}">
+                                                    {{ orderingUOMItem.name }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>{{"RatePerOrderingQuantity" | localize}}</label>
+                                            <input #ratePerOrderingQuantityInput id="ratePerOrderingQuantity" class="form-control"
+                                            step="1" type="number" name="ratePerOrderingQuantity" 
+                                            formControlName="ratePerOrderingQuantity">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>{{"OrderingQuantity" | localize}}</label>
+                                            <input #orderingQuantityInput id="orderingQuantity" class="form-control"
+                                            step="1" type="number" name="orderingQuantity" 
+                                            formControlName="orderingQuantity"
+                                            (keyup)="calculateRatePerStockUOM(itemRateRevision)">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>{{"StockPerQuantity" | localize}}</label>
+                                            <input #stockQuantityPerOrderingUOMInput id="stockQuantityPerOrderingUOM" class="form-control"
+                                            step="1" type="number" name="stockQuantityPerOrderingUOM" formControlName="stockQuantityPerOrderingUOM">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>{{"RatePerStockUOM" | localize}}</label>
+                                            <input disabled #ratePerStockUOMInput id="ratePerStockUOM" class="form-control"
+                                            step="1" type="number" name="ratePerStockUOM" formControlName="ratePerStockUOM">
+                                        </div>
+                                    </div>
+
+                                    
+                                </div>
                             </div>
                         </div>
                     </div>

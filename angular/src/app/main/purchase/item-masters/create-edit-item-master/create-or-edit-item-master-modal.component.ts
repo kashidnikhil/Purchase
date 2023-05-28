@@ -389,7 +389,7 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
             dateOfEntry: new FormControl(itemRateRevision.dateOfEntry ? formatDate(new Date(<string><unknown>itemRateRevision.dateOfEntry), "yyyy-MM-dd", "en") : null, []),
             ratePerOrderingQuantity : new FormControl(itemRateRevision.ratePerOrderingQuantity? parseFloat(itemRateRevision.ratePerOrderingQuantity.toString()).toFixed(2) : null, []),
             stockQuantityPerOrderingUOM : new FormControl(itemRateRevision.stockQuantityPerOrderingUOM? parseFloat(itemRateRevision.stockQuantityPerOrderingUOM.toString()).toFixed(2) : null, []),
-            ratePerStockUOM : new FormControl(itemRateRevision.ratePerStockUOM? parseFloat(itemRateRevision.ratePerStockUOM.toString()).toFixed(2) : null, []),
+            ratePerStockUOM : new FormControl(itemRateRevision.ratePerStockUOM? parseFloat(itemRateRevision.ratePerStockUOM.toString()).toFixed(2) : 0, []),
             orderingUOMId: new FormControl(itemRateRevision.orderingUOMId? itemRateRevision.orderingUOMId : null, []),
             stockUOMId : new FormControl(itemRateRevision.stockUOMId? itemRateRevision.stockUOMId : null, []),
             itemId: new FormControl(itemRateRevision.itemId, [])
@@ -726,5 +726,16 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
         this.submitted = false;
         this.active = false;
         this.modal.hide();
+    }
+
+    calculateRatePerStockUOM(itemRateRevisionForm : FormGroup) : void{
+        let tempItemRateRevision = itemRateRevisionForm.value;
+        let tempRatePerStockUOM = tempItemRateRevision.ratePerOrderingQuantity != null && tempItemRateRevision.orderingQuantity != null ? parseFloat((tempItemRateRevision.ratePerOrderingQuantity / tempItemRateRevision.orderingQuantity).toString()).toFixed(2) : 0;
+        itemRateRevisionForm.patchValue(
+            {
+                ratePerStockUOM : tempRatePerStockUOM
+            }
+        );
+        console.log(itemRateRevisionForm.value);
     }
 }

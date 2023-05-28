@@ -1347,7 +1347,13 @@
 	  <text name="QuantityPerOrderingUOM">Qty Per Ordering UOM</text>
 	  <text name="CatalogueNumber">Catalogue Number</text>
 	  <text name="RatePerPack">Rate Per Pack</text>
-	  
-
+	  <text name="AddItemRateRevision">Add Item Rate Revision</text>
+	  <text name="DateOfEntry">Date of Entry</text>
+	  <text name="RatePerOrderingQuantity">Rate Per Ordering Qty</text>
+	  <text name="StockPerQuantity">Stock Per Qty</text>
+	  <text name="RatePerStockUOM">Rate Per Stock UOM</text>
+	  <text name="OrderingQuantity">Ordering Qty</text>
+	
   </texts>
 </localizationDictionary>
+
