@@ -41,7 +41,10 @@
                     });
 
                     var mappedItemRateRevisionList = ObjectMapper.Map<List<ItemRateRevision>>(input.ItemRateRevisions);
-                    await this.BulkInsertItemRevisionRates(mappedItemRateRevisionList);
+                    var filteredMappedItemRateRevisionList = mappedItemRateRevisionList.Where(x=> x.OrderingQuantity != null).ToList();
+                    if (filteredMappedItemRateRevisionList.Count > 0) { 
+                        await this.BulkInsertItemRevisionRates(filteredMappedItemRateRevisionList);
+                    }
                 }
 
                 var mappedItemRateRevision = ObjectMapper.Map<ItemRateRevision>(input);
@@ -79,14 +82,9 @@
             try
             {
                 input.Id = input.Id != Guid.Empty ? input.Id : Guid.Empty;
-                if (input.RatePerOrderingQuantity != null && input.OrderingQuantity != null)
-                {
-                    input.CreationTime = DateTime.UtcNow;
-                    input.RatePerStockUOM = input.RatePerOrderingQuantity / input.OrderingQuantity;
-                    var itemRateRevisionId = await this._itemRateRevisionRepository.InsertOrUpdateAndGetIdAsync(input);
-                    await CurrentUnitOfWork.SaveChangesAsync();
-                }
-                
+                input.CreationTime = DateTime.UtcNow;
+                var itemRateRevisionId = await this._itemRateRevisionRepository.InsertOrUpdateAndGetIdAsync(input);
+                await CurrentUnitOfWork.SaveChangesAsync();
             }
             catch (Exception ex)
             {
