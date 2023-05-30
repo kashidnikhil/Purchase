@@ -6,6 +6,7 @@ import {
     CalibrationTypeDto,
     CalibrationTypeInputDto,
     ItemAccessoryDto,
+    ItemAccessoryInputDto,
     ItemAttachmentDto,
     ItemAttachmentInputDto,
     ItemMasterDto,
@@ -547,6 +548,11 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
                 input.itemSpares = tempItemSpares;
             }
 
+            if (input.itemAccessories && input.itemAccessories.length > 0) {
+                let tempItemAccessories = this.mapItemAccessories(input.itemAccessories);
+                input.itemAccessories = tempItemAccessories;
+            }
+
             if (input.itemAttachments && input.itemAttachments.length > 0) {
                 let tempItemAttachments = this.mapItemAttachments(input.itemAttachments);
                 input.itemAttachments = tempItemAttachments;
@@ -644,6 +650,25 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
 
         });
         let result = tempItemSupplierList.length > 1 ? tempItemSupplierList : null;
+        return result;
+    }
+
+    mapItemAccessories(itemAccessoryList: ItemAccessoryInputDto[]): ItemAccessoryInputDto[] | null {
+        let tempItemAccessoryList: ItemAccessoryInputDto[] = [];
+        itemAccessoryList.forEach(item => {
+            if (item.accessoryId != null) {
+                let tempItemAccessory: ItemAccessoryInputDto = new ItemAccessoryInputDto(
+                    {
+                        id: item.id ? item.id : "",
+                        accessoryId: item.accessoryId,
+                        itemId: item.itemId,
+                    }
+                );
+                tempItemAccessoryList.push(tempItemAccessory);
+            }
+
+        });
+        let result = tempItemAccessoryList.length > 1 ? tempItemAccessoryList : null;
         return result;
     }
 
