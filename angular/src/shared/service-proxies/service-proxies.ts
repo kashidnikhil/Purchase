@@ -26884,6 +26884,94 @@ export interface IIsTenantAvailableOutput {
     serverRootAddress: string | undefined;
 }
 
+export class ItemAccessoryDto implements IItemAccessoryDto {
+    id!: string;
+    accessoryId!: string | undefined;
+    itemId!: string | undefined;
+
+    constructor(data?: IItemAccessoryDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.accessoryId = _data["accessoryId"];
+            this.itemId = _data["itemId"];
+        }
+    }
+
+    static fromJS(data: any): ItemAccessoryDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ItemAccessoryDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["accessoryId"] = this.accessoryId;
+        data["itemId"] = this.itemId;
+        return data;
+    }
+}
+
+export interface IItemAccessoryDto {
+    id: string;
+    accessoryId: string | undefined;
+    itemId: string | undefined;
+}
+
+export class ItemAccessoryInputDto implements IItemAccessoryInputDto {
+    id!: string | undefined;
+    accessoryId!: string | undefined;
+    itemId!: string | undefined;
+
+    constructor(data?: IItemAccessoryInputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.accessoryId = _data["accessoryId"];
+            this.itemId = _data["itemId"];
+        }
+    }
+
+    static fromJS(data: any): ItemAccessoryInputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ItemAccessoryInputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["accessoryId"] = this.accessoryId;
+        data["itemId"] = this.itemId;
+        return data;
+    }
+}
+
+export interface IItemAccessoryInputDto {
+    id: string | undefined;
+    accessoryId: string | undefined;
+    itemId: string | undefined;
+}
+
 export enum ItemAMCRequirement {
     Yes = 1,
     No = 2,
@@ -27056,6 +27144,7 @@ export class ItemMasterDto implements IItemMasterDto {
     itemAttachments!: ItemAttachmentDto[] | undefined;
     itemStorageConditions!: ItemStorageConditionDto[] | undefined;
     itemSuppliers!: ItemSupplierDto[] | undefined;
+    itemAccessories!: ItemAccessoryDto[] | undefined;
     itemProcurements!: ProcurementDto[] | undefined;
     itemSpares!: ItemSpareDto[] | undefined;
     itemRateRevisions!: ItemRateRevisionDto[] | undefined;
@@ -27148,6 +27237,11 @@ export class ItemMasterDto implements IItemMasterDto {
                 this.itemSuppliers = [] as any;
                 for (let item of _data["itemSuppliers"])
                     this.itemSuppliers!.push(ItemSupplierDto.fromJS(item));
+            }
+            if (Array.isArray(_data["itemAccessories"])) {
+                this.itemAccessories = [] as any;
+                for (let item of _data["itemAccessories"])
+                    this.itemAccessories!.push(ItemAccessoryDto.fromJS(item));
             }
             if (Array.isArray(_data["itemProcurements"])) {
                 this.itemProcurements = [] as any;
@@ -27254,6 +27348,11 @@ export class ItemMasterDto implements IItemMasterDto {
             for (let item of this.itemSuppliers)
                 data["itemSuppliers"].push(item.toJSON());
         }
+        if (Array.isArray(this.itemAccessories)) {
+            data["itemAccessories"] = [];
+            for (let item of this.itemAccessories)
+                data["itemAccessories"].push(item.toJSON());
+        }
         if (Array.isArray(this.itemProcurements)) {
             data["itemProcurements"] = [];
             for (let item of this.itemProcurements)
@@ -27332,6 +27431,7 @@ export interface IItemMasterDto {
     itemAttachments: ItemAttachmentDto[] | undefined;
     itemStorageConditions: ItemStorageConditionDto[] | undefined;
     itemSuppliers: ItemSupplierDto[] | undefined;
+    itemAccessories: ItemAccessoryDto[] | undefined;
     itemProcurements: ProcurementDto[] | undefined;
     itemSpares: ItemSpareDto[] | undefined;
     itemRateRevisions: ItemRateRevisionDto[] | undefined;
@@ -27397,6 +27497,7 @@ export class ItemMasterInputDto implements IItemMasterInputDto {
     itemStorageConditions!: ItemStorageConditionInputDto[] | undefined;
     itemSuppliers!: ItemSupplierInputDto[] | undefined;
     itemProcurements!: ProcurementInputDto[] | undefined;
+    itemAccessories!: ItemAccessoryInputDto[] | undefined;
     itemSpares!: ItemSpareInputDto[] | undefined;
     itemRateRevisions!: ItemRateRevisionInputDto[] | undefined;
 
@@ -27493,6 +27594,11 @@ export class ItemMasterInputDto implements IItemMasterInputDto {
                 this.itemProcurements = [] as any;
                 for (let item of _data["itemProcurements"])
                     this.itemProcurements!.push(ProcurementInputDto.fromJS(item));
+            }
+            if (Array.isArray(_data["itemAccessories"])) {
+                this.itemAccessories = [] as any;
+                for (let item of _data["itemAccessories"])
+                    this.itemAccessories!.push(ItemAccessoryInputDto.fromJS(item));
             }
             if (Array.isArray(_data["itemSpares"])) {
                 this.itemSpares = [] as any;
@@ -27599,6 +27705,11 @@ export class ItemMasterInputDto implements IItemMasterInputDto {
             for (let item of this.itemProcurements)
                 data["itemProcurements"].push(item.toJSON());
         }
+        if (Array.isArray(this.itemAccessories)) {
+            data["itemAccessories"] = [];
+            for (let item of this.itemAccessories)
+                data["itemAccessories"].push(item.toJSON());
+        }
         if (Array.isArray(this.itemSpares)) {
             data["itemSpares"] = [];
             for (let item of this.itemSpares)
@@ -27673,6 +27784,7 @@ export interface IItemMasterInputDto {
     itemStorageConditions: ItemStorageConditionInputDto[] | undefined;
     itemSuppliers: ItemSupplierInputDto[] | undefined;
     itemProcurements: ProcurementInputDto[] | undefined;
+    itemAccessories: ItemAccessoryInputDto[] | undefined;
     itemSpares: ItemSpareInputDto[] | undefined;
     itemRateRevisions: ItemRateRevisionInputDto[] | undefined;
 }

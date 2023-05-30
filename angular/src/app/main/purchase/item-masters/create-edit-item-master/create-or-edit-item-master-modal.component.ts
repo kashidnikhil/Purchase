@@ -5,6 +5,7 @@ import {
     CalibrationAgencyInputDto,
     CalibrationTypeDto,
     CalibrationTypeInputDto,
+    ItemAccessoryDto,
     ItemAttachmentDto,
     ItemAttachmentInputDto,
     ItemMasterDto,
@@ -106,6 +107,7 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
         let itemSupplier: ItemSupplierDto = new ItemSupplierDto();
         let itemAttachment : ItemAttachmentDto = new ItemAttachmentDto();
         let itemSpare: ItemSpareDto = new ItemSpareDto();
+        let itemAccessory: ItemAccessoryDto = new ItemAccessoryDto();
         let itemStorageCondition: ItemStorageConditionDto = new ItemStorageConditionDto();
         let itemProcurement: ProcurementDto = new ProcurementDto();
         let itemRateRevision: ItemRateRevisionDto = new ItemRateRevisionDto();
@@ -180,6 +182,11 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
                     this.createItemSpare(x)
                 )
             ) : this.formBuilder.array([this.createItemSpare(itemSpare)]),
+            itemAccessories: itemMaster.itemAccessories && itemMaster.itemAccessories.length > 0 ? this.formBuilder.array(
+                itemMaster.itemAccessories.map((x: ItemAccessoryDto) =>
+                    this.createItemAccessory(x)
+                )
+            ) : this.formBuilder.array([this.createItemAccessory(itemAccessory)]),
             itemAttachments: itemMaster.itemAttachments && itemMaster.itemAttachments.length > 0 ? this.formBuilder.array(
                 itemMaster.itemAttachments.map((x: ItemAttachmentDto) =>
                     this.createItemAttachment(x)
@@ -290,6 +297,8 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
         });
     }
 
+
+
     deleteItemSpare(indexValue: number) {
         const itemSpareArray = this.itemSpares;
         itemSpareArray.removeAt(indexValue);
@@ -317,6 +326,29 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
     deleteItemAttachment(indexValue: number) {
         const itemAttachmentArray = this.itemAttachments;
         itemAttachmentArray.removeAt(indexValue);
+    }
+
+    get itemAccessories(): FormArray {
+        return (<FormArray>this.itemMasterForm.get('itemAccessories'));
+    }
+
+    addItemAccessory() {
+        let itemAccessory: ItemAccessoryDto = new ItemAccessoryDto();
+        let itemAccessoryForm = this.createItemAccessory(itemAccessory);
+        this.itemAccessories.push(itemAccessoryForm);
+    }
+
+    createItemAccessory(itemAccessory: ItemAccessoryDto): FormGroup {
+        return this.formBuilder.group({
+            id: new FormControl(itemAccessory.id, []),
+            accessoryId: new FormControl(itemAccessory.accessoryId ? itemAccessory.accessoryId : null, []),
+            itemId: new FormControl(itemAccessory.itemId, [])
+        });
+    }
+
+    deleteItemAccessory(indexValue: number) {
+        const itemAccessoryArray = this.itemAccessories;
+        itemAccessoryArray.removeAt(indexValue);
     }
 
     get itemStorageConditions(): FormArray {

@@ -99,6 +99,8 @@ using MyTraining1101Demo.Purchase.Items.Dto.ProcurementMaster;
 using MyTraining1101Demo.Purchase.Items.RequiredItemSparesMaster;
 using MyTraining1101Demo.Purchase.Items.Dto.RequiredItemSparesMaster;
 using Abp.ObjectMapping;
+using MyTraining1101Demo.Purchase.Items.ItemAccesoriesMaster;
+using MyTraining1101Demo.Purchase.Items.Dto.ItemAccessoriesMaster;
 
 namespace MyTraining1101Demo
 {
@@ -351,6 +353,10 @@ namespace MyTraining1101Demo
 
             configuration.CreateMap<ItemSpare, ItemSpareDto>().ReverseMap();
             configuration.CreateMap<ItemSpare, ItemSpareInputDto>().ReverseMap();
+
+            configuration.CreateMap<ItemAccessory, ItemAccessoryDto>().ReverseMap();
+            configuration.CreateMap<ItemAccessory, ItemAccessoryInputDto>().ReverseMap();
+
 
             /* ADD YOUR OWN CUSTOM AUTOMAPPER MAPPINGS HERE */
         }

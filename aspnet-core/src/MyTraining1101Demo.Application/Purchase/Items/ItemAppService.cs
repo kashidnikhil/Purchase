@@ -4,6 +4,7 @@
     using MyTraining1101Demo.Purchase.Items.CalibrationAgenciesMaster;
     using MyTraining1101Demo.Purchase.Items.CalibrationTypeMaster;
     using MyTraining1101Demo.Purchase.Items.Dto.ItemMaster;
+    using MyTraining1101Demo.Purchase.Items.ItemAccessoriesMaster;
     using MyTraining1101Demo.Purchase.Items.ItemAttachmentsMaster;
     using MyTraining1101Demo.Purchase.Items.ItemMaster;
     using MyTraining1101Demo.Purchase.Items.ItemRateRevisionMaster;
@@ -26,6 +27,7 @@
         private readonly IItemSupplierManager _itemSupplierManager;
         private readonly IProcurementManager _itemProcurementManager;
         private readonly IItemSpareManager _itemSpareManager;
+        private readonly IItemAccessoryManager _itemAccessoryManager;
         public ItemAppService(
           IItemManager itemManager,
           ICalibrationAgencyManager calibrationAgencyManager,
@@ -35,6 +37,7 @@
           IItemStorageConditionManager itemStorageConditionManager,
           IItemSupplierManager itemSupplierManager,
           IProcurementManager itemProcurementManager,
+          IItemAccessoryManager itemAccessoryManager,
           IItemSpareManager itemSpareManager
          )
         {
@@ -47,6 +50,7 @@
             _itemSupplierManager = itemSupplierManager;
             _itemProcurementManager = itemProcurementManager;
             _itemSpareManager = itemSpareManager;
+            _itemAccessoryManager = itemAccessoryManager;
         }
 
         public async Task<PagedResultDto<ItemMasterListDto>> GetItems(ItemMasterSearchDto input)
@@ -150,6 +154,15 @@
                             ItemSpare.ItemId = insertedOrUpdatedItemId;
                         });
                         await this._itemSpareManager.BulkInsertOrUpdateItemSpares(input.ItemSpares);
+                    }
+
+                    if (input.ItemAccessories != null && input.ItemAccessories.Count > 0)
+                    {
+                        input.ItemAccessories.ForEach(ItemAccessory =>
+                        {
+                            ItemAccessory.ItemId = insertedOrUpdatedItemId;
+                        });
+                        await this._itemAccessoryManager.BulkInsertOrUpdateItemAccessories(input.ItemAccessories);
                     }
 
                     //This is used for inserting item rate. Used for maintaining rate history
