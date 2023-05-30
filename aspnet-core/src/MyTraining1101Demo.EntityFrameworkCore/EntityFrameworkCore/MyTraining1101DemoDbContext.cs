@@ -19,6 +19,7 @@ using MyTraining1101Demo.Purchase.Companies.CompanyMaster;
 using MyTraining1101Demo.Purchase.DeliveryTerms;
 using MyTraining1101Demo.Purchase.Items.CalibrationAgenciesMaster;
 using MyTraining1101Demo.Purchase.Items.CalibrationTypeMaster;
+using MyTraining1101Demo.Purchase.Items.ItemAccesoriesMaster;
 using MyTraining1101Demo.Purchase.Items.ItemAttachmentsMaster;
 using MyTraining1101Demo.Purchase.Items.ItemMaster;
 using MyTraining1101Demo.Purchase.Items.ItemRateRevisionMaster;
@@ -121,8 +122,8 @@ namespace MyTraining1101Demo.EntityFrameworkCore
         public virtual DbSet<ItemSupplier> ItemSuppliers { get; set; }
 
         public virtual DbSet<ItemRateRevision> ItemRateRevisions { get; set; }
-        
 
+        public virtual DbSet<ItemAccessory> ItemAccessories { get; set; }
 
         public MyTraining1101DemoDbContext(DbContextOptions<MyTraining1101DemoDbContext> options)
             : base(options)
