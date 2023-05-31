@@ -1353,6 +1353,8 @@
 	  <text name="StockPerQuantity">Stock Per Qty</text>
 	  <text name="RatePerStockUOM">Rate Per Stock UOM</text>
 	  <text name="OrderingQuantity">Ordering Qty</text>
+	  <text name="AddItemAccessory">Add Item Accessory</text>
+	  <text name="ItemAccessory">Item Accessory</text>
 	
   </texts>
 </localizationDictionary>

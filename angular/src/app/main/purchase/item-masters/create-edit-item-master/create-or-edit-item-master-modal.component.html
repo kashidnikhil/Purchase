@@ -180,6 +180,48 @@
                         </div>
                     </div>
                     <div class="mb-4">
+                        <button type="button" class="btn btn-primary" (click)="addItemAccessory()">
+                            <i class="fa fa-plus"></i>
+                            {{ 'AddItemAccessory' | localize }}
+                        </button>
+                    </div>
+                    <div formArrayName="itemAccessories" class="mb-4">
+                        <div class="card mb-3"
+                            *ngFor="let itemAccessory of itemAccessories.controls; let index = index">
+                            <div [formGroupName]="index" class="p-3">
+                                <div class="col-md-12 row mb-4">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>{{"ItemAccessory" | localize}}</label>
+                                            <select placeholder="Select Item Category" class="form-control"
+                                                #accessoryIdInput formControlName="accessoryId" id="accessoryId"
+                                                name="accessoryId">
+                                                <option *ngFor="let accessoryItem of itemMasterList"
+                                                    value="{{ accessoryItem.id }}">
+                                                    {{ accessoryItem.itemName }}
+                                                </option>
+                                            </select>
+                                            <!-- <div *ngIf="submitted && calibrationAgencyItem.get('supplierId').errors"
+                                                class="invalid-feedback">
+                                                <div *ngIf="calibrationAgencyItem.get('supplierId').errors.required">
+                                                    Supplier is required</div>
+                                            </div> -->
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <div class="mt-5 text-center">
+                                            <h3>
+                                                <i class="fa fa-trash"
+                                                    *ngIf="!itemAccessory.value.id && itemAccessories.controls.length > 1"
+                                                    (click)="deleteItemAccessory(index)"></i>
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
                         <button type="button" class="btn btn-primary" (click)="addCalibrationType()">
                             <i class="fa fa-plus"></i>
                             {{ 'AddCalibrationType' | localize }}
