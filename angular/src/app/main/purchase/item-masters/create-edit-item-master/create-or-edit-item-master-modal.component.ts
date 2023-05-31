@@ -38,12 +38,14 @@ import { TabsetComponent } from 'ngx-bootstrap/tabs';
 import { ItemMockService } from '@app/shared/common/mock-data-services/item.mock.service';
 import { formatDate } from '@angular/common';
 import { ProcurementDto } from '@shared/service-proxies/service-proxies';
+import { ItemFormBuilderService } from '../services/item-form-builder.service';
 
 @Component({
     selector: 'create-edit-item-master-modal',
     templateUrl: './create-or-edit-item-master-modal.component.html',
     encapsulation: ViewEncapsulation.None,
-    styleUrls: ['create-or-edit-item-master-modal.component.less']
+    styleUrls: ['create-or-edit-item-master-modal.component.less'],
+    providers: [ItemFormBuilderService]
 })
 export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
     @ViewChild('createOrEditItemMasterModal', { static: true }) modal: ModalDirective;
@@ -78,7 +80,8 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
         private _itemMasterService: ItemServiceProxy,
         private _materialGradeServie: MaterialGradeServiceProxy,
         private _unitService : UnitServiceProxy,
-        private _itemMockService: ItemMockService
+        private _itemMockService: ItemMockService,
+        private _itemFormBuilderService: ItemFormBuilderService
     ) {
         super(injector);
     }
@@ -101,6 +104,48 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
             });
         }
     }
+
+    onItemCategorySelect(categoryId : number){
+        let itemMaster = new ItemMasterDto();
+        itemMaster.itemCategory = categoryId;
+        
+        if(categoryId == 10001){
+
+        }
+
+        if(categoryId == 20001){
+
+        }
+
+        if(categoryId == 30001){
+
+        }
+
+        if(categoryId == 40001){
+            this.itemMasterForm = this._itemFormBuilderService.createBookTypeForm(itemMaster);
+        }
+
+        if(categoryId == 50001){
+
+        }
+
+        if(categoryId == 60001){
+
+        }
+
+        if(categoryId == 70001){
+
+        }
+
+        if(categoryId == 80001){
+
+        }
+
+        if(categoryId == 90001){
+
+        }
+
+       }
 
     initialiseItemMasterForm(itemMaster: ItemMasterDto) {
         let itemCalibrationType: CalibrationTypeDto = new CalibrationTypeDto();
