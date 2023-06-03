@@ -142,7 +142,7 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
         }
 
         if(categoryId == 90001){
-
+            this.itemMasterForm = this._itemFormBuilderService.createToolsAndTacklesTypeForm(itemMaster);
         }
 
        }
@@ -182,7 +182,7 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
             orderingRate : new FormControl(itemMaster.orderingRate ? parseFloat(itemMaster.orderingRate.toString()).toFixed(2) : null, []),
             quantity : new FormControl(itemMaster.quantity ? <number>itemMaster.quantity : null, []),
             ratePerQuantity : new FormControl(itemMaster.ratePerQuantity ? parseFloat(itemMaster.ratePerQuantity.toString()).toFixed(2) : null, []), 
-            rateAsOnDate : new FormControl(itemMaster.rateAsOnDate ? parseFloat(itemMaster.ratePerQuantity.toString()).toFixed(2) : null, []), 
+            rateAsOnDate : new FormControl(itemMaster.rateAsOnDate ? parseFloat(itemMaster.rateAsOnDate.toString()).toFixed(2) : null, []), 
             leadTime: new FormControl(itemMaster.leadTime ? <number>itemMaster.leadTime : null, []),
             supplierItemName: new FormControl(itemMaster.supplierItemName ? itemMaster.supplierItemName : null, []),
             status : new FormControl(itemMaster.status ? <number>itemMaster.status : null, []),
