@@ -118,7 +118,7 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
         }
 
         if(categoryId == 30001){
-
+            this.itemMasterForm = this._itemFormBuilderService.createRAndMTypeForm(itemMaster);
         }
 
         if(categoryId == 40001){
@@ -138,7 +138,7 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
         }
 
         if(categoryId == 80001){
-
+            this.itemMasterForm = this._itemFormBuilderService.createFurnitureAndFixturesTypeForm(itemMaster);
         }
 
         if(categoryId == 90001){
