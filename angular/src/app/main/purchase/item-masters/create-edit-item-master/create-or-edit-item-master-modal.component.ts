@@ -110,11 +110,11 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
         itemMaster.itemCategory = categoryId;
         
         if(categoryId == 10001){
-
+            this.itemMasterForm = this._itemFormBuilderService.createLabInstrumentTypeForm(itemMaster);
         }
 
         if(categoryId == 20001){
-
+            this.itemMasterForm = this._itemFormBuilderService.createOfficeEquipmentTypeForm(itemMaster);
         }
 
         if(categoryId == 30001){
@@ -126,11 +126,12 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
         }
 
         if(categoryId == 50001){
-
+            this.itemMasterForm = this._itemFormBuilderService.createGlasswareTypeForm(itemMaster);
         }
 
         if(categoryId == 60001){
-
+            this.itemMasterForm = this._itemFormBuilderService.createChemicalsTypeForm(itemMaster);
+  
         }
 
         if(categoryId == 70001){
@@ -254,7 +255,6 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
                 )
             ) : this.formBuilder.array([this.createItemRateRevision(itemRateRevision)])
         });
-
     }
 
     get itemCalibrationTypes(): FormArray {
