@@ -56,7 +56,7 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
     active: boolean = false;
     submitted: boolean = false;
     saving: boolean = false;
-
+    
     itemCategoriesList: DropdownDto[] = [];
     itemTypeList: DropdownDto[] = [];
     amcRequirementList: DropdownDto[] = [];
@@ -90,15 +90,14 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
         await this.loadDropdownList();
         let itemMaster = new ItemMasterDto();
         if (!itemMasterId) {
-            this.initialiseItemMasterForm(itemMaster);
-            // this.initialiseSupplierForm(supplierItem);
+            this.itemMasterForm =  this._itemFormBuilderService.initialisePrimaryItemMasterForm(itemMaster);
             this.active = true;
             this.modal.show();
         }
         else {
-            this._supplierService.getSupplierMasterById(itemMasterId).subscribe((response: SupplierDto) => {
-                let supplierItem = response;
-                // this.initialiseSupplierForm(supplierItem);
+            this._itemMasterService.getItemMasterById(itemMasterId).subscribe((response:ItemMasterDto) => {
+                let itemMaster = response;
+                this.itemMasterForm = this._itemFormBuilderService.loadCategoryWiseItemForm(itemMaster);
                 this.active = true;
                 this.modal.show();
             });
@@ -108,153 +107,7 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
     onItemCategorySelect(categoryId : number){
         let itemMaster = new ItemMasterDto();
         itemMaster.itemCategory = categoryId;
-        
-        if(categoryId == 10001){
-            this.itemMasterForm = this._itemFormBuilderService.createLabInstrumentTypeForm(itemMaster);
-        }
-
-        if(categoryId == 20001){
-            this.itemMasterForm = this._itemFormBuilderService.createOfficeEquipmentTypeForm(itemMaster);
-        }
-
-        if(categoryId == 30001){
-            this.itemMasterForm = this._itemFormBuilderService.createRAndMTypeForm(itemMaster);
-        }
-
-        if(categoryId == 40001){
-            this.itemMasterForm = this._itemFormBuilderService.createBookTypeForm(itemMaster);
-        }
-
-        if(categoryId == 50001){
-            this.itemMasterForm = this._itemFormBuilderService.createGlasswareTypeForm(itemMaster);
-        }
-
-        if(categoryId == 60001){
-            this.itemMasterForm = this._itemFormBuilderService.createChemicalsTypeForm(itemMaster);
-  
-        }
-
-        if(categoryId == 70001){
-
-        }
-
-        if(categoryId == 80001){
-            this.itemMasterForm = this._itemFormBuilderService.createFurnitureAndFixturesTypeForm(itemMaster);
-        }
-
-        if(categoryId == 90001){
-            this.itemMasterForm = this._itemFormBuilderService.createToolsAndTacklesTypeForm(itemMaster);
-        }
-
-       }
-
-    initialiseItemMasterForm(itemMaster: ItemMasterDto) {
-        let itemCalibrationType: CalibrationTypeDto = new CalibrationTypeDto();
-        let itemCalibrationAgency: CalibrationAgencyDto = new CalibrationAgencyDto();
-        let itemSupplier: ItemSupplierDto = new ItemSupplierDto();
-        let itemAttachment : ItemAttachmentDto = new ItemAttachmentDto();
-        let itemSpare: ItemSpareDto = new ItemSpareDto();
-        let itemAccessory: ItemAccessoryDto = new ItemAccessoryDto();
-        let itemStorageCondition: ItemStorageConditionDto = new ItemStorageConditionDto();
-        let itemProcurement: ProcurementDto = new ProcurementDto();
-        let itemRateRevision: ItemRateRevisionDto = new ItemRateRevisionDto();
-        this.itemMasterForm = this.formBuilder.group({
-            id: new FormControl(itemMaster.id, []),
-            categoryId: new FormControl(itemMaster.categoryId, []),
-            itemId: new FormControl(itemMaster.itemId, []),
-            itemCategory: new FormControl(itemMaster.itemCategory ? <number>itemMaster.itemCategory : null, [Validators.required]),
-            genericName: new FormControl(itemMaster.genericName, []),
-            itemName: new FormControl(itemMaster.itemName, [Validators.required]),
-            alias: new FormControl(itemMaster.alias, []),
-            itemType: new FormControl(itemMaster.itemType ? <number>itemMaster.itemType : null, []),
-            amcRequired: new FormControl(itemMaster.amcRequired ? <number>itemMaster.amcRequired : null, []),
-            make: new FormControl(itemMaster.make, []),
-            model: new FormControl(itemMaster.model, []),
-            serialNumber: new FormControl(itemMaster.serialNumber, []),
-            specifications: new FormControl(itemMaster.specifications, []),
-            storageConditions: new FormControl(itemMaster.storageConditions, []),
-            itemMobility: new FormControl(itemMaster.itemMobility ? <number>itemMaster.itemMobility : null, []),
-            calibrationRequirement: new FormControl(itemMaster.calibrationRequirement ? <number>itemMaster.calibrationRequirement : null, []),
-            supplierId: new FormControl(itemMaster.supplierId, []),
-            hsnCode : new FormControl(itemMaster.hsnCode, [Validators.required]),
-            gst : new FormControl(itemMaster.gst ? parseFloat(itemMaster.gst.toString()).toFixed(2) : null, [Validators.required]),
-            purchaseValue : new FormControl(itemMaster.purchaseValue ? parseFloat(itemMaster.purchaseValue.toString()).toFixed(2) : null, []),
-            purchaseDate: new FormControl(itemMaster.purchaseDate ? formatDate(new Date(<string><unknown>itemMaster.purchaseDate), "yyyy-MM-dd", "en") : null, []),
-            orderingRate : new FormControl(itemMaster.orderingRate ? parseFloat(itemMaster.orderingRate.toString()).toFixed(2) : null, []),
-            quantity : new FormControl(itemMaster.quantity ? <number>itemMaster.quantity : null, []),
-            ratePerQuantity : new FormControl(itemMaster.ratePerQuantity ? parseFloat(itemMaster.ratePerQuantity.toString()).toFixed(2) : null, []), 
-            rateAsOnDate : new FormControl(itemMaster.rateAsOnDate ? parseFloat(itemMaster.rateAsOnDate.toString()).toFixed(2) : null, []), 
-            leadTime: new FormControl(itemMaster.leadTime ? <number>itemMaster.leadTime : null, []),
-            supplierItemName: new FormControl(itemMaster.supplierItemName ? itemMaster.supplierItemName : null, []),
-            status : new FormControl(itemMaster.status ? <number>itemMaster.status : null, []),
-            recordedBy : new FormControl(itemMaster.recordedBy ? <number>itemMaster.recordedBy : null, []),
-            approvedBy : new FormControl(itemMaster.approvedBy ? <number>itemMaster.approvedBy : null, []),
-            discardedOn: new FormControl(itemMaster.discardedOn ? formatDate(new Date(<string><unknown>itemMaster.discardedOn), "yyyy-MM-dd", "en") : null, []),
-            discardApprovedBy : new FormControl(itemMaster.discardApprovedBy ? <number>itemMaster.discardApprovedBy : null, []),
-            discardedReason : new FormControl(itemMaster.discardedReason ? itemMaster.discardedReason : null, []),
-            comment : new FormControl(itemMaster.comment ? itemMaster.comment : null, []),
-            msl: new FormControl(itemMaster.msl ? itemMaster.msl : null, []),
-            materialGradeId : new FormControl(itemMaster.materialGradeId ? itemMaster.materialGradeId : null, []),
-            unitOrderId : new FormControl(itemMaster.unitOrderId ? itemMaster.unitOrderId : null, []),
-            unitStockId : new FormControl(itemMaster.unitStockId ? itemMaster.unitStockId : null, []),
-            stockUOMId : new FormControl(itemMaster.stockUOMId ? itemMaster.stockUOMId : null, []),
-            orderingUOMId : new FormControl(itemMaster.orderingUOMId ? itemMaster.orderingUOMId : null, []),
-            ctqRequirement : new FormControl(itemMaster.ctqRequirement ? <number>itemMaster.ctqRequirement : null, []),
-            ctqSpecifications : new FormControl(itemMaster.ctqSpecifications ? itemMaster.ctqSpecifications : null, []),
-            expiryApplicable : new FormControl(itemMaster.expiryApplicable ? <number>itemMaster.expiryApplicable : null, []),
-            quantityPerOrderingUOM : new FormControl(itemMaster.quantityPerOrderingUOM ? parseFloat(itemMaster.quantityPerOrderingUOM.toString()).toFixed(2) : null, []),
-            minimumOrderQuantity : new FormControl(itemMaster.minimumOrderQuantity ? parseFloat(itemMaster.minimumOrderQuantity.toString()).toFixed(2) : null, []),
-            author : new FormControl(itemMaster.author ? itemMaster.author : null, []),
-            publication : new FormControl(itemMaster.publication ? itemMaster.publication : null, []),
-            publicationYear : new FormControl(itemMaster.publicationYear ? <number>itemMaster.publicationYear : null, []),
-            subjectCategory : new FormControl(itemMaster.subjectCategory ? <number>itemMaster.subjectCategory : null, []),
-            purchasedBy : new FormControl(itemMaster.purchasedBy ? <number>itemMaster.purchasedBy : null, []),
-            itemCalibrationTypes: itemMaster.itemCalibrationTypes && itemMaster.itemCalibrationTypes.length > 0 ? this.formBuilder.array(
-                itemMaster.itemCalibrationTypes.map((x: CalibrationTypeDto) =>
-                    this.createCalibrationType(x)
-                )
-            ) : this.formBuilder.array([this.createCalibrationType(itemCalibrationType)]),
-            itemCalibrationAgencies: itemMaster.itemCalibrationAgencies && itemMaster.itemCalibrationAgencies.length > 0 ? this.formBuilder.array(
-                itemMaster.itemCalibrationAgencies.map((x: CalibrationAgencyDto) =>
-                    this.createCalibrationAgency(x)
-                )
-            ) : this.formBuilder.array([this.createCalibrationAgency(itemCalibrationAgency)]),
-            itemSuppliers: itemMaster.itemSuppliers && itemMaster.itemSuppliers.length > 0 ? this.formBuilder.array(
-                itemMaster.itemSuppliers.map((x: ItemSupplierDto) =>
-                    this.createItemSupplier(x)
-                )
-            ) : this.formBuilder.array([this.createItemSupplier(itemSupplier)]),
-            itemSpares: itemMaster.itemSpares && itemMaster.itemSpares.length > 0 ? this.formBuilder.array(
-                itemMaster.itemSpares.map((x: ItemSpareDto) =>
-                    this.createItemSpare(x)
-                )
-            ) : this.formBuilder.array([this.createItemSpare(itemSpare)]),
-            itemAccessories: itemMaster.itemAccessories && itemMaster.itemAccessories.length > 0 ? this.formBuilder.array(
-                itemMaster.itemAccessories.map((x: ItemAccessoryDto) =>
-                    this.createItemAccessory(x)
-                )
-            ) : this.formBuilder.array([this.createItemAccessory(itemAccessory)]),
-            itemAttachments: itemMaster.itemAttachments && itemMaster.itemAttachments.length > 0 ? this.formBuilder.array(
-                itemMaster.itemAttachments.map((x: ItemAttachmentDto) =>
-                    this.createItemAttachment(x)
-                )
-            ) : this.formBuilder.array([this.createItemAttachment(itemAttachment)]),
-            itemStorageConditions: itemMaster.itemStorageConditions && itemMaster.itemStorageConditions.length > 0 ? this.formBuilder.array(
-                itemMaster.itemStorageConditions.map((x: ItemStorageConditionDto) =>
-                    this.createItemStorageCondition(x)
-                )
-            ) : this.formBuilder.array([this.createItemStorageCondition(itemStorageCondition)]),
-            itemProcurements: itemMaster.itemProcurements && itemMaster.itemProcurements.length > 0 ? this.formBuilder.array(
-                itemMaster.itemProcurements.map((x: ProcurementDto) =>
-                    this.createItemProcurement(x)
-                )
-            ) : this.formBuilder.array([this.createItemProcurement(itemProcurement)]),
-            itemRateRevisions: itemMaster.itemRateRevisions && itemMaster.itemRateRevisions.length > 0 ? this.formBuilder.array(
-                itemMaster.itemRateRevisions.map((x: ItemRateRevisionDto) =>
-                    this.createItemRateRevision(x)
-                )
-            ) : this.formBuilder.array([this.createItemRateRevision(itemRateRevision)])
-        });
+        this.itemMasterForm = this._itemFormBuilderService.loadCategoryWiseItemForm(itemMaster);
     }
 
     get itemCalibrationTypes(): FormArray {

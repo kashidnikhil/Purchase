@@ -7,8 +7,8 @@
             <form *ngIf="active && itemMasterForm" [formGroup]="itemMasterForm" novalidate (ngSubmit)="save()">
                 <div class="modal-header">
                     <h4 class="modal-title">
-                        <span *ngIf="itemMasterForm.get('id').value">{{ 'EditItem' | localize }}: {{
-                            itemMasterForm.get('name').value }}</span>
+                        <span *ngIf="itemMasterForm.get('id')?.value">{{ 'EditItem' | localize }}: {{
+                            itemMasterForm.get('itemName')?.value }}</span>
                         <span *ngIf="!itemMasterForm.get('id').value">{{ 'CreateNewItem' | localize }}</span>
                     </h4>
                     <button type="button" class="btn-close" (click)="close()" [attr.aria-label]="l('Close')"
@@ -17,7 +17,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="col-md-12 row mb-4">
-                        <div class="col-md-6" *ngIf="itemMasterForm.contains('itemCategory')">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label>{{"ItemCategory" | localize}}</label>
                                 <select placeholder="Select Item Category" class="form-control" #itemCategoryInput
@@ -36,7 +36,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6" *ngIf="itemMasterForm.contains('itemName')">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label>{{"ItemName" | localize}}</label>
                                 <input #itemNameInput id="itemName" class="form-control" type="text" name="itemName"

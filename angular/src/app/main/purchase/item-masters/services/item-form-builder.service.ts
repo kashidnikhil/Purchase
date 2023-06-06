@@ -1,6 +1,6 @@
 import { formatDate } from "@angular/common";
 import { Injectable } from "@angular/core";
-import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { CalibrationAgencyDto, CalibrationTypeDto, ItemAccessoryDto, ItemAttachmentDto, ItemMasterDto, ItemRateRevisionDto, ItemSpareDto, ItemStorageConditionDto, ItemSupplierDto, ProcurementDto } from "@shared/service-proxies/service-proxies";
 
 @Injectable()
@@ -11,19 +11,17 @@ export class ItemFormBuilderService{
 
     }
 
-    itemMasterForm!: FormGroup;
-
-    public createBookTypeForm(itemMaster: ItemMasterDto) : FormGroup
+    private createBookTypeForm(itemMaster: ItemMasterDto) : FormGroup
     {
         let itemSupplier: ItemSupplierDto = new ItemSupplierDto();
         let itemAttachment : ItemAttachmentDto = new ItemAttachmentDto();
-        return this.formBuilder.group({
+        let form = this.formBuilder.group({
             id: new FormControl(itemMaster.id, []),
-            itemCategory: new FormControl(itemMaster.itemCategory ? <number>itemMaster.itemCategory : null, []),
+            itemCategory: new FormControl({value : itemMaster.itemCategory ? <number>itemMaster.itemCategory : null, disabled: itemMaster.id != null ? true : false}, [Validators.required]),
             itemId: new FormControl(itemMaster.itemId, []),
             categoryId: new FormControl(itemMaster.categoryId, []),
             genericName: new FormControl(itemMaster.genericName, []),
-            itemName: new FormControl(itemMaster.itemName, []),
+            itemName: new FormControl(itemMaster.itemName, [Validators.required]),
             alias: new FormControl(itemMaster.alias, []),
             hsnCode : new FormControl(itemMaster.hsnCode, []),
             gst : new FormControl(itemMaster.gst ? parseFloat(itemMaster.gst.toString()).toFixed(2) : null, []),
@@ -51,9 +49,11 @@ export class ItemFormBuilderService{
                 )
             ) : this.formBuilder.array([this.createItemAttachment(itemAttachment)]),
         });
+
+        return form;
     }
 
-    public createToolsAndTacklesTypeForm(itemMaster: ItemMasterDto) : FormGroup
+    private createToolsAndTacklesTypeForm(itemMaster: ItemMasterDto) : FormGroup
     {
         let itemSupplier: ItemSupplierDto = new ItemSupplierDto();
         let itemAttachment : ItemAttachmentDto = new ItemAttachmentDto();
@@ -62,9 +62,10 @@ export class ItemFormBuilderService{
             id: new FormControl(itemMaster.id, []),
             categoryId: new FormControl(itemMaster.categoryId, []),
             itemId: new FormControl(itemMaster.itemId, []),
-            itemCategory: new FormControl(itemMaster.itemCategory ? <number>itemMaster.itemCategory : null, []),
+            itemCategory: new FormControl({value : itemMaster.itemCategory ? <number>itemMaster.itemCategory : null, disabled: itemMaster.id != null ? true : false}, [Validators.required]),
+            //itemCategory: new FormControl(itemMaster.itemCategory ? <number>itemMaster.itemCategory : null, []),
             genericName: new FormControl(itemMaster.genericName, []),
-            itemName: new FormControl(itemMaster.itemName, []),
+            itemName: new FormControl(itemMaster.itemName, [Validators.required]),
             alias: new FormControl(itemMaster.alias, []),
             make: new FormControl(itemMaster.make, []),
             model: new FormControl(itemMaster.model, []),
@@ -113,7 +114,7 @@ export class ItemFormBuilderService{
         });
     }
 
-    public createFurnitureAndFixturesTypeForm(itemMaster: ItemMasterDto) : FormGroup {
+    private createFurnitureAndFixturesTypeForm(itemMaster: ItemMasterDto) : FormGroup {
         let itemAccessory : ItemAccessoryDto = new ItemAccessoryDto();
         let itemSupplier : ItemSupplierDto = new ItemSupplierDto();
         let itemSpare : ItemSpareDto = new ItemSpareDto();
@@ -123,9 +124,10 @@ export class ItemFormBuilderService{
             id: new FormControl(itemMaster.id, []),
             categoryId: new FormControl(itemMaster.categoryId, []),
             itemId: new FormControl(itemMaster.itemId, []),
-            itemCategory: new FormControl(itemMaster.itemCategory ? <number>itemMaster.itemCategory : null, []),
+            itemCategory: new FormControl({value : itemMaster.itemCategory ? <number>itemMaster.itemCategory : null, disabled: itemMaster.id != null ? true : false}, [Validators.required]),
+            //itemCategory: new FormControl(itemMaster.itemCategory ? <number>itemMaster.itemCategory : null, []),
             genericName: new FormControl(itemMaster.genericName, []),
-            itemName: new FormControl(itemMaster.itemName, []),
+            itemName: new FormControl(itemMaster.itemName, [Validators.required]),
             alias: new FormControl(itemMaster.alias, []),
             itemType: new FormControl(itemMaster.itemType ? <number>itemMaster.itemType : null, []),
             amcRequired: new FormControl(itemMaster.amcRequired ? <number>itemMaster.amcRequired : null, []),
@@ -188,16 +190,17 @@ export class ItemFormBuilderService{
 
     }
 
-    public createRAndMTypeForm(itemMaster: ItemMasterDto) : FormGroup {
+    private createRAndMTypeForm(itemMaster: ItemMasterDto) : FormGroup {
         let itemSupplier:ItemSupplierDto = new ItemSupplierDto();
         let itemAttachment : ItemAttachmentDto = new ItemAttachmentDto();
         return this.formBuilder.group({
             id: new FormControl(itemMaster.id, []),
             categoryId: new FormControl(itemMaster.categoryId, []),
             itemId: new FormControl(itemMaster.itemId, []),
-            itemCategory: new FormControl(itemMaster.itemCategory ? <number>itemMaster.itemCategory : null, []),
+            itemCategory: new FormControl({value : itemMaster.itemCategory ? <number>itemMaster.itemCategory : null, disabled: itemMaster.id != null ? true : false}, [Validators.required]),
+            // itemCategory: new FormControl(itemMaster.itemCategory ? <number>itemMaster.itemCategory : null, []),
             genericName: new FormControl(itemMaster.genericName, []),
-            itemName: new FormControl(itemMaster.itemName, []),
+            itemName: new FormControl(itemMaster.itemName, [Validators.required]),
             alias: new FormControl(itemMaster.alias, []),
             specifications: new FormControl(itemMaster.specifications, []),
             hsnCode : new FormControl(itemMaster.hsnCode, []),
@@ -226,7 +229,7 @@ export class ItemFormBuilderService{
         });
     }
 
-    public createOfficeEquipmentTypeForm(itemMaster: ItemMasterDto) : FormGroup {
+    private createOfficeEquipmentTypeForm(itemMaster: ItemMasterDto) : FormGroup {
         let itemAccessory: ItemAccessoryDto = new ItemAccessoryDto();
         let itemSupplier : ItemSupplierDto = new ItemSupplierDto();
         let itemSpare : ItemSpareDto = new ItemSpareDto();
@@ -236,9 +239,10 @@ export class ItemFormBuilderService{
             id: new FormControl(itemMaster.id, []),
             categoryId: new FormControl(itemMaster.categoryId, []),
             itemId: new FormControl(itemMaster.itemId, []),
-            itemCategory: new FormControl(itemMaster.itemCategory ? <number>itemMaster.itemCategory : null, []),
+            itemCategory: new FormControl({value : itemMaster.itemCategory ? <number>itemMaster.itemCategory : null, disabled: itemMaster.id != null ? true : false}, [Validators.required]),
+            // itemCategory: new FormControl(itemMaster.itemCategory ? <number>itemMaster.itemCategory : null, []),
             genericName: new FormControl(itemMaster.genericName, []),
-            itemName: new FormControl(itemMaster.itemName, []),
+            itemName: new FormControl(itemMaster.itemName, [Validators.required]),
             alias: new FormControl(itemMaster.alias, []),
             itemType: new FormControl(itemMaster.itemType ? <number>itemMaster.itemType : null, []),
             amcRequired: new FormControl(itemMaster.amcRequired ? <number>itemMaster.amcRequired : null, []),
@@ -295,7 +299,7 @@ export class ItemFormBuilderService{
         });
     }
 
-    public createMaterialTypeForm(itemMaster: ItemMasterDto): FormGroup{
+    private createMaterialTypeForm(itemMaster: ItemMasterDto): FormGroup{
         let itemSupplier : ItemSupplierDto = new ItemSupplierDto();
         let itemAttachment: ItemAttachmentDto = new ItemAttachmentDto();
         let itemStorageCondition: ItemStorageConditionDto = new ItemStorageConditionDto();
@@ -305,9 +309,10 @@ export class ItemFormBuilderService{
             id: new FormControl(itemMaster.id, []),
             categoryId: new FormControl(itemMaster.categoryId, []),
             itemId: new FormControl(itemMaster.itemId, []),
-            itemCategory: new FormControl(itemMaster.itemCategory ? <number>itemMaster.itemCategory : null, []),
-            genericName: new FormControl(itemMaster.genericName, []),
-            itemName: new FormControl(itemMaster.itemName, []),
+            itemCategory: new FormControl({value : itemMaster.itemCategory ? <number>itemMaster.itemCategory : null, disabled: itemMaster.id != null ? true : false}, [Validators.required]),
+            //itemCategory: new FormControl(itemMaster.itemCategory ? <number>itemMaster.itemCategory : null, []),
+            genericName: new FormControl(itemMaster.genericName, [Validators.required]),
+            itemName: new FormControl(itemMaster.itemName, [Validators.required]),
             alias: new FormControl(itemMaster.alias, []),
             make: new FormControl(itemMaster.make, []),
             model: new FormControl(itemMaster.model, []),
@@ -365,16 +370,17 @@ export class ItemFormBuilderService{
         });
     }
 
-    public createChemicalsTypeForm(itemMaster: ItemMasterDto) : FormGroup{
+    private createChemicalsTypeForm(itemMaster: ItemMasterDto) : FormGroup{
         let itemAttachment: ItemAttachmentDto = new ItemAttachmentDto();
         let itemRateRevision: ItemRateRevisionDto = new ItemRateRevisionDto(); 
         return this.formBuilder.group({
             id: new FormControl(itemMaster.id, []),
             categoryId: new FormControl(itemMaster.categoryId, []),
             itemId: new FormControl(itemMaster.itemId, []),
-            itemCategory: new FormControl(itemMaster.itemCategory ? <number>itemMaster.itemCategory : null, []),
+            itemCategory: new FormControl({value : itemMaster.itemCategory ? <number>itemMaster.itemCategory : null, disabled: itemMaster.id != null ? true : false}, [Validators.required]),
+            //itemCategory: new FormControl(itemMaster.itemCategory ? <number>itemMaster.itemCategory : null, []),
             genericName: new FormControl(itemMaster.genericName, []),
-            itemName: new FormControl(itemMaster.itemName, []),
+            itemName: new FormControl(itemMaster.itemName, [Validators.required]),
             alias: new FormControl(itemMaster.alias, []),
             make: new FormControl(itemMaster.make, []),
             model: new FormControl(itemMaster.model, []),
@@ -417,7 +423,7 @@ export class ItemFormBuilderService{
         });
     }
 
-    public createGlasswareTypeForm(itemMaster : ItemMasterDto)  : FormGroup {
+    private createGlasswareTypeForm(itemMaster : ItemMasterDto)  : FormGroup {
         let itemCalibrationType : CalibrationTypeDto = new CalibrationTypeDto();
         let itemCalibrationAgency : CalibrationAgencyDto = new CalibrationAgencyDto();
         let itemSupplier : ItemSupplierDto = new ItemSupplierDto();
@@ -430,9 +436,10 @@ export class ItemFormBuilderService{
             id: new FormControl(itemMaster.id, []),
             categoryId: new FormControl(itemMaster.categoryId, []),
             itemId: new FormControl(itemMaster.itemId, []),
-            itemCategory: new FormControl(itemMaster.itemCategory ? <number>itemMaster.itemCategory : null, []),
+            itemCategory: new FormControl({value : itemMaster.itemCategory ? <number>itemMaster.itemCategory : null, disabled: itemMaster.id != null ? true : false}, [Validators.required]),
+            // itemCategory: new FormControl(itemMaster.itemCategory ? <number>itemMaster.itemCategory : null, []),
             genericName: new FormControl(itemMaster.genericName, []),
-            itemName: new FormControl(itemMaster.itemName, []),
+            itemName: new FormControl(itemMaster.itemName, [Validators.required]),
             alias: new FormControl(itemMaster.alias, []),
             make: new FormControl(itemMaster.make, []),
             model: new FormControl(itemMaster.model, []),
@@ -501,7 +508,7 @@ export class ItemFormBuilderService{
         });
     }
 
-    public createLabInstrumentTypeForm(itemMaster : ItemMasterDto): FormGroup{
+    private createLabInstrumentTypeForm(itemMaster : ItemMasterDto): FormGroup{
         let itemSpare: ItemSpareDto = new ItemSpareDto();
         let itemAccessory: ItemAccessoryDto = new ItemAccessoryDto();
         let itemSupplier: ItemSupplierDto = new ItemSupplierDto();
@@ -516,7 +523,7 @@ export class ItemFormBuilderService{
             itemId: new FormControl(itemMaster.itemId, []),
             itemCategory: new FormControl(itemMaster.itemCategory ? <number>itemMaster.itemCategory : null, []),
             genericName: new FormControl(itemMaster.genericName, []),
-            itemName: new FormControl(itemMaster.itemName, []),
+            itemName: new FormControl(itemMaster.itemName, [Validators.required]),
             alias: new FormControl(itemMaster.alias, []),
             itemType: new FormControl(itemMaster.itemType ? <number>itemMaster.itemType : null, []),
             amcRequired: new FormControl(itemMaster.amcRequired ? <number>itemMaster.amcRequired : null, []),
@@ -582,7 +589,95 @@ export class ItemFormBuilderService{
         });
     }
 
+    public loadCategoryWiseItemForm(itemMaster : ItemMasterDto) : FormGroup{
+        let categoryId = itemMaster.itemCategory; 
+        
+        if(categoryId == 10001){
+            return this.createLabInstrumentTypeForm(itemMaster);
+        }
 
+        if(categoryId == 20001){
+            return this.createOfficeEquipmentTypeForm(itemMaster);
+        }
+
+        if(categoryId == 30001){
+            return this.createRAndMTypeForm(itemMaster);
+        }
+
+        if(categoryId == 40001){
+            return this.createBookTypeForm(itemMaster);
+        }
+
+        if(categoryId == 50001){
+            return this.createGlasswareTypeForm(itemMaster);
+        }
+
+        if(categoryId == 60001){
+            return this.createChemicalsTypeForm(itemMaster);
+        }
+
+        if(categoryId == 70001){
+            return this.createMaterialTypeForm(itemMaster);
+        }
+
+        if(categoryId == 80001){
+            return this.createFurnitureAndFixturesTypeForm(itemMaster);
+        }
+
+        if(categoryId == 90001){
+            return this.createToolsAndTacklesTypeForm(itemMaster);
+        }
+    }
+
+    public initialisePrimaryItemMasterForm(itemMaster: ItemMasterDto) : FormGroup {
+            return this.formBuilder.group({
+                id: new FormControl(itemMaster.id, []),
+                categoryId: new FormControl(itemMaster.categoryId, []),
+                itemId: new FormControl(itemMaster.itemId, []),
+                itemCategory: new FormControl(itemMaster.itemCategory ? <number>itemMaster.itemCategory : null, [Validators.required]),
+                genericName: new FormControl(itemMaster.genericName, []),
+                itemName: new FormControl(itemMaster.itemName, [Validators.required]),
+                alias: new FormControl(itemMaster.alias, []),
+                itemType: new FormControl(itemMaster.itemType ? <number>itemMaster.itemType : null, []),
+                amcRequired: new FormControl(itemMaster.amcRequired ? <number>itemMaster.amcRequired : null, []),
+                make: new FormControl(itemMaster.make, []),
+                model: new FormControl(itemMaster.model, []),
+                serialNumber: new FormControl(itemMaster.serialNumber, []),
+                specifications: new FormControl(itemMaster.specifications, []),
+                storageConditions: new FormControl(itemMaster.storageConditions, []),
+                itemMobility: new FormControl(itemMaster.itemMobility ? <number>itemMaster.itemMobility : null, []),
+                calibrationRequirement: new FormControl(itemMaster.calibrationRequirement ? <number>itemMaster.calibrationRequirement : null, []),
+                supplierId: new FormControl(itemMaster.supplierId, []),
+                hsnCode : new FormControl(itemMaster.hsnCode, []),
+                gst : new FormControl(itemMaster.gst ? parseFloat(itemMaster.gst.toString()).toFixed(2) : null, []),
+                purchaseValue : new FormControl(itemMaster.purchaseValue ? parseFloat(itemMaster.purchaseValue.toString()).toFixed(2) : null, []),
+                purchaseDate: new FormControl(itemMaster.purchaseDate ? formatDate(new Date(<string><unknown>itemMaster.purchaseDate), "yyyy-MM-dd", "en") : null, []),
+                orderingRate : new FormControl(itemMaster.orderingRate ? parseFloat(itemMaster.orderingRate.toString()).toFixed(2) : null, []),
+                quantity : new FormControl(itemMaster.quantity ? <number>itemMaster.quantity : null, []),
+                ratePerQuantity : new FormControl(itemMaster.ratePerQuantity ? parseFloat(itemMaster.ratePerQuantity.toString()).toFixed(2) : null, []), 
+                rateAsOnDate : new FormControl(itemMaster.rateAsOnDate ? parseFloat(itemMaster.rateAsOnDate.toString()).toFixed(2) : null, []), 
+                leadTime: new FormControl(itemMaster.leadTime ? <number>itemMaster.leadTime : null, []),
+                supplierItemName: new FormControl(itemMaster.supplierItemName ? itemMaster.supplierItemName : null, []),
+                status : new FormControl(itemMaster.status ? <number>itemMaster.status : null, []),
+                recordedBy : new FormControl(itemMaster.recordedBy ? <number>itemMaster.recordedBy : null, []),
+                approvedBy : new FormControl(itemMaster.approvedBy ? <number>itemMaster.approvedBy : null, []),
+                discardedOn: new FormControl(itemMaster.discardedOn ? formatDate(new Date(<string><unknown>itemMaster.discardedOn), "yyyy-MM-dd", "en") : null, []),
+                discardApprovedBy : new FormControl(itemMaster.discardApprovedBy ? <number>itemMaster.discardApprovedBy : null, []),
+                discardedReason : new FormControl(itemMaster.discardedReason ? itemMaster.discardedReason : null, []),
+                comment : new FormControl(itemMaster.comment ? itemMaster.comment : null, []),
+                msl: new FormControl(itemMaster.msl ? itemMaster.msl : null, []),
+                materialGradeId : new FormControl(itemMaster.materialGradeId ? itemMaster.materialGradeId : null, []),
+                unitOrderId : new FormControl(itemMaster.unitOrderId ? itemMaster.unitOrderId : null, []),
+                unitStockId : new FormControl(itemMaster.unitStockId ? itemMaster.unitStockId : null, []),
+                stockUOMId : new FormControl(itemMaster.stockUOMId ? itemMaster.stockUOMId : null, []),
+                orderingUOMId : new FormControl(itemMaster.orderingUOMId ? itemMaster.orderingUOMId : null, []),
+                ctqRequirement : new FormControl(itemMaster.ctqRequirement ? <number>itemMaster.ctqRequirement : null, []),
+                ctqSpecifications : new FormControl(itemMaster.ctqSpecifications ? itemMaster.ctqSpecifications : null, []),
+                expiryApplicable : new FormControl(itemMaster.expiryApplicable ? <number>itemMaster.expiryApplicable : null, []),
+                quantityPerOrderingUOM : new FormControl(itemMaster.quantityPerOrderingUOM ? parseFloat(itemMaster.quantityPerOrderingUOM.toString()).toFixed(2) : null, []),
+                minimumOrderQuantity : new FormControl(itemMaster.minimumOrderQuantity ? parseFloat(itemMaster.minimumOrderQuantity.toString()).toFixed(2) : null, [])
+            });
+    }
 
     createItemSupplier(itemSupplier: ItemSupplierDto): FormGroup {
         return this.formBuilder.group({
