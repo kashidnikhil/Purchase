@@ -101,6 +101,8 @@ using MyTraining1101Demo.Purchase.Items.Dto.RequiredItemSparesMaster;
 using Abp.ObjectMapping;
 using MyTraining1101Demo.Purchase.Items.ItemAccesoriesMaster;
 using MyTraining1101Demo.Purchase.Items.Dto.ItemAccessoriesMaster;
+using MyTraining1101Demo.Purchase.AssemblyCategories;
+using MyTraining1101Demo.Purchase.AssemblyCategories.Dto;
 
 namespace MyTraining1101Demo
 {
@@ -357,7 +359,14 @@ namespace MyTraining1101Demo
             configuration.CreateMap<ItemAccessory, ItemAccessoryDto>().ReverseMap();
             configuration.CreateMap<ItemAccessory, ItemAccessoryInputDto>().ReverseMap();
 
+            configuration.CreateMap<ItemAccessory, ItemAccessoryDto>().ReverseMap();
+            configuration.CreateMap<ItemAccessory, ItemAccessoryInputDto>().ReverseMap();
 
+            configuration.CreateMap<AssemblyCategory, AssemblyCategoryInputDto>().ReverseMap();
+            configuration.CreateMap<AssemblyCategory, AssemblyCategoryDto>().ReverseMap();
+            configuration.CreateMap<AssemblyCategory, AssemblyCategoryListDto>()
+                .ForMember(dto => dto.ModelName, options => options.MapFrom(x => x.Model.Name))
+                .ReverseMap(); 
             /* ADD YOUR OWN CUSTOM AUTOMAPPER MAPPINGS HERE */
         }
     }

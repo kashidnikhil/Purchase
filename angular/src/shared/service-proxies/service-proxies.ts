@@ -1053,6 +1053,317 @@ export class AccountServiceProxy {
 }
 
 @Injectable()
+export class AssemblyCategoryServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @param searchString (optional) 
+     * @param sorting (optional) 
+     * @param maxResultCount (optional) 
+     * @param skipCount (optional) 
+     * @return Success
+     */
+    getAssemblyCategories(searchString: string | undefined, sorting: string | undefined, maxResultCount: number | undefined, skipCount: number | undefined): Observable<PagedResultDtoOfAssemblyCategoryListDto> {
+        let url_ = this.baseUrl + "/api/services/app/AssemblyCategory/GetAssemblyCategories?";
+        if (searchString === null)
+            throw new Error("The parameter 'searchString' cannot be null.");
+        else if (searchString !== undefined)
+            url_ += "SearchString=" + encodeURIComponent("" + searchString) + "&";
+        if (sorting === null)
+            throw new Error("The parameter 'sorting' cannot be null.");
+        else if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAssemblyCategories(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAssemblyCategories(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PagedResultDtoOfAssemblyCategoryListDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PagedResultDtoOfAssemblyCategoryListDto>;
+        }));
+    }
+
+    protected processGetAssemblyCategories(response: HttpResponseBase): Observable<PagedResultDtoOfAssemblyCategoryListDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PagedResultDtoOfAssemblyCategoryListDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PagedResultDtoOfAssemblyCategoryListDto>(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    insertOrUpdateAssemblyCategory(body: AssemblyCategoryInputDto | undefined): Observable<string> {
+        let url_ = this.baseUrl + "/api/services/app/AssemblyCategory/InsertOrUpdateAssemblyCategory";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processInsertOrUpdateAssemblyCategory(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processInsertOrUpdateAssemblyCategory(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<string>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<string>;
+        }));
+    }
+
+    protected processInsertOrUpdateAssemblyCategory(response: HttpResponseBase): Observable<string> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+    
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<string>(null as any);
+    }
+
+    /**
+     * @param assemblyCategoryId (optional) 
+     * @return Success
+     */
+    deleteAssemblyCategory(assemblyCategoryId: string | undefined): Observable<boolean> {
+        let url_ = this.baseUrl + "/api/services/app/AssemblyCategory/DeleteAssemblyCategory?";
+        if (assemblyCategoryId === null)
+            throw new Error("The parameter 'assemblyCategoryId' cannot be null.");
+        else if (assemblyCategoryId !== undefined)
+            url_ += "assemblyCategoryId=" + encodeURIComponent("" + assemblyCategoryId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDeleteAssemblyCategory(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDeleteAssemblyCategory(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<boolean>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<boolean>;
+        }));
+    }
+
+    protected processDeleteAssemblyCategory(response: HttpResponseBase): Observable<boolean> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+    
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<boolean>(null as any);
+    }
+
+    /**
+     * @param assemblyCategoryId (optional) 
+     * @return Success
+     */
+    getAssemblyCategoryById(assemblyCategoryId: string | undefined): Observable<AssemblyCategoryDto> {
+        let url_ = this.baseUrl + "/api/services/app/AssemblyCategory/GetAssemblyCategoryById?";
+        if (assemblyCategoryId === null)
+            throw new Error("The parameter 'assemblyCategoryId' cannot be null.");
+        else if (assemblyCategoryId !== undefined)
+            url_ += "assemblyCategoryId=" + encodeURIComponent("" + assemblyCategoryId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAssemblyCategoryById(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAssemblyCategoryById(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<AssemblyCategoryDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<AssemblyCategoryDto>;
+        }));
+    }
+
+    protected processGetAssemblyCategoryById(response: HttpResponseBase): Observable<AssemblyCategoryDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = AssemblyCategoryDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<AssemblyCategoryDto>(null as any);
+    }
+
+    /**
+     * @return Success
+     */
+    getAssemblyCategoryList(): Observable<AssemblyCategoryDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/AssemblyCategory/GetAssemblyCategoryList";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAssemblyCategoryList(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAssemblyCategoryList(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<AssemblyCategoryDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<AssemblyCategoryDto[]>;
+        }));
+    }
+
+    protected processGetAssemblyCategoryList(response: HttpResponseBase): Observable<AssemblyCategoryDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(AssemblyCategoryDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<AssemblyCategoryDto[]>(null as any);
+    }
+}
+
+@Injectable()
 export class AuditLogServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -19793,6 +20104,166 @@ export interface IAppSettingsJsonDto {
     languages: NameValue[] | undefined;
 }
 
+export class AssemblyCategoryDto implements IAssemblyCategoryDto {
+    id!: string;
+    subCategory!: string | undefined;
+    subCategory1!: string | undefined;
+    comments!: string | undefined;
+    modelId!: string | undefined;
+
+    constructor(data?: IAssemblyCategoryDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.subCategory = _data["subCategory"];
+            this.subCategory1 = _data["subCategory1"];
+            this.comments = _data["comments"];
+            this.modelId = _data["modelId"];
+        }
+    }
+
+    static fromJS(data: any): AssemblyCategoryDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new AssemblyCategoryDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["subCategory"] = this.subCategory;
+        data["subCategory1"] = this.subCategory1;
+        data["comments"] = this.comments;
+        data["modelId"] = this.modelId;
+        return data;
+    }
+}
+
+export interface IAssemblyCategoryDto {
+    id: string;
+    subCategory: string | undefined;
+    subCategory1: string | undefined;
+    comments: string | undefined;
+    modelId: string | undefined;
+}
+
+export class AssemblyCategoryInputDto implements IAssemblyCategoryInputDto {
+    id!: string | undefined;
+    subCategory!: string | undefined;
+    subCategory1!: string | undefined;
+    comments!: string | undefined;
+    modelId!: string | undefined;
+
+    constructor(data?: IAssemblyCategoryInputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.subCategory = _data["subCategory"];
+            this.subCategory1 = _data["subCategory1"];
+            this.comments = _data["comments"];
+            this.modelId = _data["modelId"];
+        }
+    }
+
+    static fromJS(data: any): AssemblyCategoryInputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new AssemblyCategoryInputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["subCategory"] = this.subCategory;
+        data["subCategory1"] = this.subCategory1;
+        data["comments"] = this.comments;
+        data["modelId"] = this.modelId;
+        return data;
+    }
+}
+
+export interface IAssemblyCategoryInputDto {
+    id: string | undefined;
+    subCategory: string | undefined;
+    subCategory1: string | undefined;
+    comments: string | undefined;
+    modelId: string | undefined;
+}
+
+export class AssemblyCategoryListDto implements IAssemblyCategoryListDto {
+    id!: string;
+    subCategory!: string | undefined;
+    subCategory1!: string | undefined;
+    comments!: string | undefined;
+    modelName!: string | undefined;
+    modelId!: string | undefined;
+
+    constructor(data?: IAssemblyCategoryListDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.subCategory = _data["subCategory"];
+            this.subCategory1 = _data["subCategory1"];
+            this.comments = _data["comments"];
+            this.modelName = _data["modelName"];
+            this.modelId = _data["modelId"];
+        }
+    }
+
+    static fromJS(data: any): AssemblyCategoryListDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new AssemblyCategoryListDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["subCategory"] = this.subCategory;
+        data["subCategory1"] = this.subCategory1;
+        data["comments"] = this.comments;
+        data["modelName"] = this.modelName;
+        data["modelId"] = this.modelId;
+        return data;
+    }
+}
+
+export interface IAssemblyCategoryListDto {
+    id: string;
+    subCategory: string | undefined;
+    subCategory1: string | undefined;
+    comments: string | undefined;
+    modelName: string | undefined;
+    modelId: string | undefined;
+}
+
 export class AuditLogListDto implements IAuditLogListDto {
     userId!: number | undefined;
     userName!: string | undefined;
@@ -30702,6 +31173,54 @@ export class PagedResultDtoOfAcceptanceCriteriaDto implements IPagedResultDtoOfA
 export interface IPagedResultDtoOfAcceptanceCriteriaDto {
     totalCount: number;
     items: AcceptanceCriteriaDto[] | undefined;
+}
+
+export class PagedResultDtoOfAssemblyCategoryListDto implements IPagedResultDtoOfAssemblyCategoryListDto {
+    totalCount!: number;
+    items!: AssemblyCategoryListDto[] | undefined;
+
+    constructor(data?: IPagedResultDtoOfAssemblyCategoryListDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.totalCount = _data["totalCount"];
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(AssemblyCategoryListDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfAssemblyCategoryListDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfAssemblyCategoryListDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IPagedResultDtoOfAssemblyCategoryListDto {
+    totalCount: number;
+    items: AssemblyCategoryListDto[] | undefined;
 }
 
 export class PagedResultDtoOfAuditLogListDto implements IPagedResultDtoOfAuditLogListDto {

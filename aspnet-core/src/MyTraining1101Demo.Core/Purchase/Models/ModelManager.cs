@@ -1,26 +1,20 @@
-﻿using Abp.Application.Services.Dto;
-using Abp.Domain.Repositories;
-using Abp.Domain.Uow;
-using Microsoft.Extensions.Configuration;
-using MyTraining1101Demo.Configuration;
-using Abp.Application.Services.Dto;
-using Abp.Domain.Repositories;
-using Abp.Domain.Uow;
-using Abp.Extensions;
-using Abp.Linq.Extensions;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using MyTraining1101Demo.Configuration;
-using MyTraining1101Demo.Purchase.Models.Dto;
-using MyTraining1101Demo.Purchase.Shared;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Threading.Tasks;
-
-namespace MyTraining1101Demo.Purchase.Models
-{ 
+﻿namespace MyTraining1101Demo.Purchase.Models
+{
+    using Abp.Application.Services.Dto;
+    using Abp.Domain.Repositories;
+    using Abp.Domain.Uow;
+    using Abp.Extensions;
+    using Abp.Linq.Extensions;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+    using MyTraining1101Demo.Configuration;
+    using MyTraining1101Demo.Purchase.Models.Dto;
+    using MyTraining1101Demo.Purchase.Shared;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Linq.Dynamic.Core;
+    using System.Threading.Tasks;
 
     public class ModelManager
     : MyTraining1101DemoDomainServiceBase, IModelManager

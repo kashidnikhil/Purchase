@@ -1,15 +1,12 @@
-﻿using Abp.Application.Services.Dto;
-using Abp.Domain.Services;
-using MyTraining1101Demo.Purchase.Models.Dto;
-using MyTraining1101Demo.Purchase.Shared;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MyTraining1101Demo.Purchase.Models
+﻿namespace MyTraining1101Demo.Purchase.Models
 {
+    using Abp.Application.Services.Dto;
+    using Abp.Domain.Services;
+    using MyTraining1101Demo.Purchase.Models.Dto;
+    using MyTraining1101Demo.Purchase.Shared;
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
     public interface IModelManager : IDomainService
     {
         Task<PagedResultDto<ModelDto>> GetPaginatedModelsFromDB(ModelSearchDto input);

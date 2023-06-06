@@ -13,6 +13,7 @@ using MyTraining1101Demo.MultiTenancy.Accounting;
 using MyTraining1101Demo.MultiTenancy.Payments;
 using MyTraining1101Demo.PhoneBook;
 using MyTraining1101Demo.Purchase.AcceptanceCriterias;
+using MyTraining1101Demo.Purchase.AssemblyCategories;
 using MyTraining1101Demo.Purchase.Companies.CompanyAddresses;
 using MyTraining1101Demo.Purchase.Companies.CompanyContactPersons;
 using MyTraining1101Demo.Purchase.Companies.CompanyMaster;
@@ -124,6 +125,8 @@ namespace MyTraining1101Demo.EntityFrameworkCore
         public virtual DbSet<ItemRateRevision> ItemRateRevisions { get; set; }
 
         public virtual DbSet<ItemAccessory> ItemAccessories { get; set; }
+
+        public virtual DbSet<AssemblyCategory> AssemblyCategories { get; set; }
 
         public MyTraining1101DemoDbContext(DbContextOptions<MyTraining1101DemoDbContext> options)
             : base(options)

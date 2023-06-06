@@ -1,15 +1,10 @@
-﻿using Abp.Domain.Entities.Auditing;
-using IdentityServer4.Models;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MyTraining1101Demo.Purchase.Models
+﻿namespace MyTraining1101Demo.Purchase.Models
 {
+    using Abp.Domain.Entities.Auditing;
+    using System;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+
 
     [Table("Model")]
     public class Model : FullAuditedEntity<Guid>

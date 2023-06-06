@@ -1,13 +1,12 @@
-﻿using Abp.Application.Services.Dto;
-using Abp.Domain.Services;
-using MyTraining1101Demo.Purchase.Shared;
-using MyTraining1101Demo.Purchase.Units.Dto;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
-namespace MyTraining1101Demo.Purchase.Units
+﻿namespace MyTraining1101Demo.Purchase.Units
 {
+    using Abp.Application.Services.Dto;
+    using Abp.Domain.Services;
+    using MyTraining1101Demo.Purchase.Shared;
+    using MyTraining1101Demo.Purchase.Units.Dto;
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
     public interface IUnitManager : IDomainService
     {
         Task<PagedResultDto<UnitDto>> GetPaginatedUnitFromDB(UnitSearchDto input);
