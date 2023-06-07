@@ -77,8 +77,7 @@ namespace MyTraining1101Demo.Purchase.LegalEntities
                     }
                     else
                     {
-                        LegalEntityItem.Name = input.Name;
-                        LegalEntityItem.Description = input.Description;
+                        ObjectMapper.Map(input,LegalEntityItem);
                         LegalEntityId = await this._legalEntityRepository.InsertOrUpdateAndGetIdAsync(LegalEntityItem);
                         return new ResponseDto
                         {

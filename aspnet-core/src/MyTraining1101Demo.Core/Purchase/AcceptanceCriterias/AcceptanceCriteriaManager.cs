@@ -59,7 +59,7 @@
         {
             try
             {
-                Guid AcceptanceCriteriaId = Guid.Empty;
+                Guid acceptanceCriteriaId = Guid.Empty;
                 var AcceptanceCriteriaItem = await this._acceptanceCriteriaRepository.GetAll().IgnoreQueryFilters().FirstOrDefaultAsync(x => x.Name.ToLower().Trim() == input.Name.ToLower().Trim());
                 if (AcceptanceCriteriaItem != null)
                 {
@@ -76,12 +76,11 @@
                     }
                     else
                     {
-                        AcceptanceCriteriaItem.Name = input.Name;
-                        AcceptanceCriteriaItem.Description = input.Description;
-                        AcceptanceCriteriaId = await this._acceptanceCriteriaRepository.InsertOrUpdateAndGetIdAsync(AcceptanceCriteriaItem);
+                        ObjectMapper.Map(input, AcceptanceCriteriaItem);
+                        acceptanceCriteriaId = await this._acceptanceCriteriaRepository.InsertOrUpdateAndGetIdAsync(AcceptanceCriteriaItem);
                         return new ResponseDto
                         {
-                            Id = AcceptanceCriteriaId,
+                            Id = acceptanceCriteriaId,
                             DataMatchFound = false
                         };
                     }
@@ -90,11 +89,11 @@
                 else
                 {
                     var mappedAcceptanceCriteriaItem = ObjectMapper.Map<AcceptanceCriteria>(input);
-                    AcceptanceCriteriaId = await this._acceptanceCriteriaRepository.InsertOrUpdateAndGetIdAsync(mappedAcceptanceCriteriaItem);
+                    acceptanceCriteriaId = await this._acceptanceCriteriaRepository.InsertOrUpdateAndGetIdAsync(mappedAcceptanceCriteriaItem);
                     await CurrentUnitOfWork.SaveChangesAsync();
                     return new ResponseDto
                     {
-                        Id = AcceptanceCriteriaId,
+                        Id = acceptanceCriteriaId,
                         DataMatchFound = false
                     };
                 }
