@@ -94,6 +94,18 @@ export class AppNavigationService {
                         '/app/main/companies'
                     ),
                     new AppMenuItem(
+                        'Assembly Master',
+                        'Pages.Administration.AuditLogs',
+                        'flaticon-folder-1',
+                        '/app/main/assembly-masters'
+                    ),
+                    // new AppMenuItem(
+                    //     'Item Masters',
+                    //     'Pages.Administration.AuditLogs',
+                    //     'flaticon-folder-1',
+                    //     '/app/main/item-masters'
+                    // ),
+                    new AppMenuItem(
                         'Item Masters',
                         'Pages.Administration.AuditLogs',
                         'flaticon-folder-1',

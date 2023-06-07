@@ -35,7 +35,7 @@
         {
             try
             {
-                var assemblyQuery = this._assemblyRepository.GetAll()
+                var assemblyQuery = this._assemblyRepository.GetAllIncluding(x=> x.Model)
                     .Where(x => !x.IsDeleted)
                     .WhereIf(!input.SearchString.IsNullOrWhiteSpace(), item => item.Name.ToLower().Contains(input.SearchString.ToLower()));
 

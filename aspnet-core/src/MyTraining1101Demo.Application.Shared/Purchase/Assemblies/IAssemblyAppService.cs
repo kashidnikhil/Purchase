@@ -2,6 +2,7 @@
 {
     using Abp.Application.Services.Dto;
     using MyTraining1101Demo.Purchase.Assemblies.Dto;
+    using MyTraining1101Demo.Purchase.Shared;
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -14,6 +15,7 @@
 
         Task<IList<AssemblyDto>> GetAssemblyList(Guid? modelId);
 
-        Task<bool> RestoreAcceptanceCriteria(Guid assemblyId);
+        Task<bool> RestoreAssembly(Guid assemblyId);
+        Task<ResponseDto> InsertOrUpdateAssembly(AssemblyInputDto input);
     }
 }

@@ -70,6 +70,10 @@ import { RouterModule } from '@angular/router';
                         path: 'item-masters',
                         loadChildren: () => import('./purchase/item-masters/item-masters.module').then(m => m.ItemMastersModule)
                     },
+                    {
+                        path: 'assembly-masters',
+                        loadChildren: () => import('./purchase/assembly-masters/assembly-masters.module').then(m => m.AssemblyMastersModule)
+                    },
                        
                                       
                     { path: '', redirectTo: 'dashboard', pathMatch: 'full' },

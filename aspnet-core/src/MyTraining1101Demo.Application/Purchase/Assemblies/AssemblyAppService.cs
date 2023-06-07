@@ -91,7 +91,7 @@
             }
         }
 
-        public async Task<bool> RestoreAcceptanceCriteria(Guid assemblyId)
+        public async Task<bool> RestoreAssembly(Guid assemblyId)
         {
             try
             {

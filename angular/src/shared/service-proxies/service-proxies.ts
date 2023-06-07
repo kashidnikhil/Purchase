@@ -1370,8 +1370,8 @@ export class AssemblyServiceProxy {
      * @param assemblyId (optional) 
      * @return Success
      */
-    restoreAcceptanceCriteria(assemblyId: string | undefined): Observable<boolean> {
-        let url_ = this.baseUrl + "/api/services/app/Assembly/RestoreAcceptanceCriteria?";
+    restoreAssembly(assemblyId: string | undefined): Observable<boolean> {
+        let url_ = this.baseUrl + "/api/services/app/Assembly/RestoreAssembly?";
         if (assemblyId === null)
             throw new Error("The parameter 'assemblyId' cannot be null.");
         else if (assemblyId !== undefined)
@@ -1387,11 +1387,11 @@ export class AssemblyServiceProxy {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processRestoreAcceptanceCriteria(response_);
+            return this.processRestoreAssembly(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processRestoreAcceptanceCriteria(response_ as any);
+                    return this.processRestoreAssembly(response_ as any);
                 } catch (e) {
                     return _observableThrow(e) as any as Observable<boolean>;
                 }
@@ -1400,7 +1400,7 @@ export class AssemblyServiceProxy {
         }));
     }
 
-    protected processRestoreAcceptanceCriteria(response: HttpResponseBase): Observable<boolean> {
+    protected processRestoreAssembly(response: HttpResponseBase): Observable<boolean> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :

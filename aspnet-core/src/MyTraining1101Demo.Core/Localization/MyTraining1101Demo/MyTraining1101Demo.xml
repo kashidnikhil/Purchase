@@ -1357,6 +1357,18 @@
 	  <text name="ItemAccessory">Item Accessory</text>
 	  <text name="ExistingItemErrorMessage">Item {0} cannot be added. Item master with same name already exists</text>
 
+	  <!-- Units section-->
+	  <text name="AssemblyMasters">Assembly Masters</text>
+	  <text name="AssemblyMastersHeaderInfo">Manage assembly masters.</text>
+	  <text name="CreateNewAssemblyMaster">Create new assembly master</text>
+	  <text name="EditAssemblyMaster">Edit assembly master</text>
+	  <text name="AssemblyMasterDeleteWarningMessage">Assembly Master {0} will be deleted.</text>
+	  <text name="AssemblyMasterRestoreMessage">Assembly Master with name {0} already exists. Do you want to restore this assembly master?</text>
+	  <text name="AssemblyMasterSuccessfullyRestored">Assembly Master restored successfully</text>
+	  <text name="ExistingAssemblyMasterErrorMessage">Assembly Master {0} cannot be added. Assembly Master already exists</text>
+	  <text name="NewAssemblyMasterErrorMessage">No new instance of assembly master with name {0} cannot be added.Assembly master with name {0} already exists. Do you want to restore the assembly master?</text>
+	  
   </texts>
 </localizationDictionary>
 
+    
