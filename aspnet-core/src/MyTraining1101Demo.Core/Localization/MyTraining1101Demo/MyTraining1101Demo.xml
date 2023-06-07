@@ -1367,7 +1367,6 @@
 	  <text name="AssemblyMasterSuccessfullyRestored">Assembly Master restored successfully</text>
 	  <text name="ExistingAssemblyMasterErrorMessage">Assembly Master {0} cannot be added. Assembly Master already exists</text>
 	  <text name="NewAssemblyMasterErrorMessage">No new instance of assembly master with name {0} cannot be added.Assembly master with name {0} already exists. Do you want to restore the assembly master?</text>
-	  
   </texts>
 </localizationDictionary>
 

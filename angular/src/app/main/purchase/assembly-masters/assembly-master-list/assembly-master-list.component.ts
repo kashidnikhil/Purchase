@@ -7,6 +7,7 @@ import { LazyLoadEvent } from 'primeng/api';
 import { Paginator } from 'primeng/paginator';
 import { Table } from 'primeng/table';
 import { finalize } from 'rxjs/operators';
+import { CreateOrEditAssemblyMasterModalComponent } from '../create-edit-assembly-master/create-or-edit-assembly-master-modal.component';
 // import { CreateOrEditLegalEntityModalComponent } from '../create-edit-legal-entity/create-or-edit-legal-entity-modal.component';
 
 @Component({
@@ -16,7 +17,7 @@ import { finalize } from 'rxjs/operators';
     animations: [appModuleAnimation()],
 })
 export class AssemblyMasterListComponent extends AppComponentBase implements AfterViewInit {
-    @ViewChild('createOrEditAssemblyMasterModal', { static: true }) createOrEditAssemblyMasterModal: any; //CreateOrEditLegalEntityModalComponent;
+    @ViewChild('createOrEditAssemblyMasterModal', { static: true }) createOrEditAssemblyMasterModal: CreateOrEditAssemblyMasterModalComponent;
     @ViewChild('dataTable', { static: true }) dataTable: Table;
     @ViewChild('paginator', { static: true }) paginator: Paginator;
     
@@ -80,32 +81,32 @@ export class AssemblyMasterListComponent extends AppComponentBase implements Aft
     restoreAssembly(assemblyResponse: ResponseDto):void {
         if(assemblyResponse.id == null){
             if(assemblyResponse.isExistingDataAlreadyDeleted){
-                this.message.confirm(this.l('UnitRestoreMessage', assemblyResponse.name), this.l('AreYouSure'), async (isConfirmed) => {
+                this.message.confirm(this.l('AssemblyMasterRestoreMessage', assemblyResponse.name), this.l('AreYouSure'), async (isConfirmed) => {
                     if (isConfirmed) {
                         this._assemblyService.restoreAssembly(assemblyResponse.restoringItemId).subscribe(() => {
                             this.reloadPage();
-                            this.notify.success(this.l('UnitSuccessfullyRestored'));
+                            this.notify.success(this.l('AssemblyMasterSuccessfullyRestored'));
                         });
                     }
                 });
             }
             else{
-                this.notify.error(this.l('ExistingUnitErrorMessage',assemblyResponse.name));
+                this.notify.error(this.l('ExistingAssemblyMasterErrorMessage',assemblyResponse.name));
             }
         }
         else{
             if(assemblyResponse.isExistingDataAlreadyDeleted){
-                this.message.confirm(this.l('NewUnitErrorMessage', assemblyResponse.name), this.l('AreYouSure'), async (isConfirmed) => {
+                this.message.confirm(this.l('NewAssemblyMasterErrorMessage', assemblyResponse.name), this.l('AreYouSure'), async (isConfirmed) => {
                     if (isConfirmed) {
                         this._assemblyService.restoreAssembly(assemblyResponse.restoringItemId).subscribe(() => {
                             this.reloadPage();
-                            this.notify.success(this.l('UnitSuccessfullyRestored'));
+                            this.notify.success(this.l('AssemblyMasterSuccessfullyRestored'));
                         });
                     }
                 });
             }   
             else{
-                this.notify.error(this.l('ExistingUnitErrorMessage',assemblyResponse.name));
+                this.notify.error(this.l('ExistingAssemblyMasterErrorMessage',assemblyResponse.name));
             }
         }
     }

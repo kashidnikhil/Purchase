@@ -1,0 +1,66 @@
+<div
+    appBsModal
+    #createOrEditModal="bs-modal"
+    (onShown)="onShown()"
+    class="modal fade create-or-edit-user-modal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static', keyboard: !saving }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #assemblyForm="ngForm" novalidate (ngSubmit)="save()">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="assemblyMasterItem.id">{{ 'EditAssemblyMaster' | localize }}: {{ assemblyMasterItem.name }}</span>
+                        <span *ngIf="!assemblyMasterItem.id">{{ 'CreateNewAssemblyMaster' | localize }}</span>
+                    </h4>
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        [attr.aria-label]="l('Close')"
+                        [disabled]="saving"
+                    >
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>{{"Model" | localize}}</label>
+                        <select placeholder="Select Model" class="form-control" [(ngModel)]="assemblyMasterItem.modelId" name="modelId">
+                            <option *ngFor="let modelItem of modelList" value="{{ modelItem.id }}">
+                                {{ modelItem.name }}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>{{"Name" | localize}}</label>
+                        <input #nameInput id="name" class="form-control" type="text" [(ngModel)]="assemblyMasterItem.name" name="name" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button
+                        [disabled]="saving"
+                        type="button"
+                        class="btn btn-light-primary font-weight-bold"
+                        (click)="close()"
+                    >
+                        {{ 'Cancel' | localize }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary font-weight-bold"
+                        [disabled]="!assemblyForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ 'Save' | localize }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

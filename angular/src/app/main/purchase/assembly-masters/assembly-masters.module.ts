@@ -5,13 +5,13 @@ import { AssemblyMastersRoutingModule } from "./assembly-masters-routing.module"
 import { ReactiveFormsModule } from "@angular/forms";
 import { MultiSelectModule } from 'primeng/multiselect';
 import { AssemblyMasterListComponent } from "./assembly-master-list/assembly-master-list.component";
-// import { CreateOrEditItemMasterModalComponent } from "./create-edit-item-master/create-or-edit-item-master-modal.component";
+import { CreateOrEditAssemblyMasterModalComponent } from "./create-edit-assembly-master/create-or-edit-assembly-master-modal.component";
 import { ItemMockService } from "@app/shared/common/mock-data-services/item.mock.service";
 
 @NgModule({
     declarations: [
         AssemblyMasterListComponent,
-        // CreateOrEditItemMasterModalComponent
+        CreateOrEditAssemblyMasterModalComponent
     ],
     imports: [
         AppSharedModule,  
