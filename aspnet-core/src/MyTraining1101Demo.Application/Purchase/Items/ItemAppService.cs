@@ -12,6 +12,7 @@
     using MyTraining1101Demo.Purchase.Items.ItemSupplierMaster;
     using MyTraining1101Demo.Purchase.Items.ProcurementMaster;
     using MyTraining1101Demo.Purchase.Items.RequiredItemSparesMaster;
+    using MyTraining1101Demo.Purchase.Shared;
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -68,10 +69,11 @@
             }
         }
 
-        public async Task<Guid> InsertOrUpdateItem(ItemMasterInputDto input)
+        public async Task<ResponseDto> InsertOrUpdateItem(ItemMasterInputDto input)
         {
             try
             {
+
                 var existingItem = await this._itemManager.GetItemMasterByNameFromDB(input.ItemCategory, input.ItemName);
                 if (existingItem == null)
                 {
@@ -86,17 +88,21 @@
                 }
                 else {
                     input.CategoryId = existingItem.CategoryId;
-                    input.ItemId = existingItem.ItemId + 1;
+                    input.ItemId = existingItem.Id == input.Id ? existingItem.ItemId : existingItem.ItemId + 1;
                 }
 
-                var insertedOrUpdatedItemId = await this._itemManager.InsertOrUpdateItemMasterIntoDB(input);
-                if (insertedOrUpdatedItemId != Guid.Empty)
+                var insertedOrUpdatedItem = await this._itemManager.InsertOrUpdateItemMasterIntoDB(input);
+                if (insertedOrUpdatedItem.DataMatchFound) { 
+                    return insertedOrUpdatedItem;
+                }
+
+                if (insertedOrUpdatedItem.Id != Guid.Empty)
                 {
                     if (input.ItemCalibrationAgencies != null && input.ItemCalibrationAgencies.Count > 0)
                     {
                         input.ItemCalibrationAgencies.ForEach(itemCalibrationAgency =>
                         {
-                            itemCalibrationAgency.ItemId = insertedOrUpdatedItemId;
+                            itemCalibrationAgency.ItemId = insertedOrUpdatedItem.Id;
                         });
                         await this._calibrationAgencyManager.BulkInsertOrUpdateItemCalibrationAgencies(input.ItemCalibrationAgencies);
                     }
@@ -105,7 +111,7 @@
                     {
                         input.ItemCalibrationTypes.ForEach(ItemCalibrationType =>
                         {
-                            ItemCalibrationType.ItemId = insertedOrUpdatedItemId;
+                            ItemCalibrationType.ItemId = insertedOrUpdatedItem.Id;
                         });
                         await this._calibrationTypeManager.BulkInsertOrUpdateItemCalibrationTypes(input.ItemCalibrationTypes);
 
@@ -115,7 +121,7 @@
                     {
                         input.ItemAttachments.ForEach(ItemAttachment =>
                         {
-                            ItemAttachment.ItemId = insertedOrUpdatedItemId;
+                            ItemAttachment.ItemId = insertedOrUpdatedItem.Id;
                         });
                         await this._itemAttachmentManager.BulkInsertOrUpdateItemAttachments(input.ItemAttachments);
                     }
@@ -124,7 +130,7 @@
                     {
                         input.ItemStorageConditions.ForEach(ItemStorageCondition =>
                         {
-                            ItemStorageCondition.ItemId = insertedOrUpdatedItemId;
+                            ItemStorageCondition.ItemId = insertedOrUpdatedItem.Id;
                         });
                         await this._itemStorageConditionManager.BulkInsertOrUpdateItemStorageConditions(input.ItemStorageConditions);
                     }
@@ -133,7 +139,7 @@
                     {
                         input.ItemSuppliers.ForEach(ItemSupplier =>
                         {
-                            ItemSupplier.ItemId = insertedOrUpdatedItemId;
+                            ItemSupplier.ItemId = insertedOrUpdatedItem.Id;
                         });
                         await this._itemSupplierManager.BulkInsertOrUpdateItemSuppliers(input.ItemSuppliers);
                     }
@@ -142,7 +148,7 @@
                     {
                         input.ItemProcurements.ForEach(ItemProcurement =>
                         {
-                            ItemProcurement.ItemId = insertedOrUpdatedItemId;
+                            ItemProcurement.ItemId = insertedOrUpdatedItem.Id;
                         });
                         await this._itemProcurementManager.BulkInsertOrUpdateItemProcurements(input.ItemProcurements);
                     }
@@ -151,7 +157,7 @@
                     {
                         input.ItemSpares.ForEach(ItemSpare =>
                         {
-                            ItemSpare.ItemId = insertedOrUpdatedItemId;
+                            ItemSpare.ItemId = insertedOrUpdatedItem.Id;
                         });
                         await this._itemSpareManager.BulkInsertOrUpdateItemSpares(input.ItemSpares);
                     }
@@ -160,15 +166,15 @@
                     {
                         input.ItemAccessories.ForEach(ItemAccessory =>
                         {
-                            ItemAccessory.ItemId = insertedOrUpdatedItemId;
+                            ItemAccessory.ItemId = insertedOrUpdatedItem.Id;
                         });
                         await this._itemAccessoryManager.BulkInsertOrUpdateItemAccessories(input.ItemAccessories);
                     }
 
                     //This is used for inserting item rate. Used for maintaining rate history
-                    await this._itemRateRevisionManager.InsertItemRateRevision (input, insertedOrUpdatedItemId);
+                    await this._itemRateRevisionManager.InsertItemRateRevision (input, insertedOrUpdatedItem.Id);
                 }
-                return insertedOrUpdatedItemId;
+                return insertedOrUpdatedItem;
             }
             catch (Exception ex)
             {

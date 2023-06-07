@@ -24,6 +24,7 @@ import {
     MaterialGradeDto,
     MaterialGradeServiceProxy,
     ProcurementInputDto,
+    ResponseDto,
     SupplierDto,
     SupplierServiceProxy,
     UnitDto,
@@ -51,6 +52,8 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
     @ViewChild('createOrEditItemMasterModal', { static: true }) modal: ModalDirective;
     @ViewChild(TabsetComponent) tabSet: TabsetComponent;
     @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
+    @Output() saveItemMaster: EventEmitter<ResponseDto> = new EventEmitter<ResponseDto>();
+
 
     itemMasterForm!: FormGroup;
     active: boolean = false;
@@ -425,7 +428,7 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
         if (this.itemMasterForm.valid) {
             let input = new ItemMasterInputDto();
             this.saving = true;
-            input = this.itemMasterForm.value;
+            input = this.itemMasterForm.getRawValue();
             if (input.itemCalibrationAgencies && input.itemCalibrationAgencies.length > 0) {
                 let tempCalibrationAgencies = this.mapCalibrationAgencies(input.itemCalibrationAgencies);
                 input.itemCalibrationAgencies = tempCalibrationAgencies;
@@ -478,16 +481,18 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
                         this.saving = false;
                     })
                 )
-                .subscribe((response: string) => {
-                    if (response) {
+                
+                .subscribe((response: ResponseDto) => {
+                    if(!response.dataMatchFound){
                         this.notify.info(this.l('SavedSuccessfully'));
                         this.close();
                         this.modalSave.emit(null);
                     }
-                    // else{
-                    //     this.close();
-                    //     this.restoreSupplierCategory.emit(response);
-                    // }
+                    else{
+                        this.close();
+                        this.saveItemMaster.emit(response);
+                    }
+                    
                 });
         }
     }

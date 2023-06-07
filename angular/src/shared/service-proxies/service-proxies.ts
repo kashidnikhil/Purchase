@@ -7325,7 +7325,7 @@ export class ItemServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    insertOrUpdateItem(body: ItemMasterInputDto | undefined): Observable<string> {
+    insertOrUpdateItem(body: ItemMasterInputDto | undefined): Observable<ResponseDto> {
         let url_ = this.baseUrl + "/api/services/app/Item/InsertOrUpdateItem";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -7348,14 +7348,14 @@ export class ItemServiceProxy {
                 try {
                     return this.processInsertOrUpdateItem(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<string>;
+                    return _observableThrow(e) as any as Observable<ResponseDto>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<string>;
+                return _observableThrow(response_) as any as Observable<ResponseDto>;
         }));
     }
 
-    protected processInsertOrUpdateItem(response: HttpResponseBase): Observable<string> {
+    protected processInsertOrUpdateItem(response: HttpResponseBase): Observable<ResponseDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -7366,8 +7366,7 @@ export class ItemServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-                result200 = resultData200 !== undefined ? resultData200 : <any>null;
-    
+            result200 = ResponseDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -7375,7 +7374,7 @@ export class ItemServiceProxy {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<string>(null as any);
+        return _observableOf<ResponseDto>(null as any);
     }
 
     /**

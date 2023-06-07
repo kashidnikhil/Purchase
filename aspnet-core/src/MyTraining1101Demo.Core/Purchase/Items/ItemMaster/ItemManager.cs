@@ -8,8 +8,11 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using MyTraining1101Demo.Configuration;
+    using MyTraining1101Demo.Purchase.DeliveryTerms.Dto;
+    using MyTraining1101Demo.Purchase.DeliveryTerms;
     using MyTraining1101Demo.Purchase.Items.Dto.ItemMaster;
     using MyTraining1101Demo.Purchase.Items.Enums;
+    using MyTraining1101Demo.Purchase.Shared;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -53,15 +56,69 @@
             }
         }
 
+        //[UnitOfWork]
+        //public async Task<Guid> InsertOrUpdateItemMasterIntoDB(ItemMasterInputDto input)
+        //{
+        //    try
+        //    {
+        //        var mappedItemMaster = ObjectMapper.Map<Item>(input);
+        //        var itemMasterId = await this._itemMasterRepository.InsertOrUpdateAndGetIdAsync(mappedItemMaster);
+        //        await CurrentUnitOfWork.SaveChangesAsync();
+        //        return itemMasterId;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Logger.Error(ex.Message, ex);
+        //        throw ex;
+        //    }
+        //}
+
         [UnitOfWork]
-        public async Task<Guid> InsertOrUpdateItemMasterIntoDB(ItemMasterInputDto input)
+        public async Task<ResponseDto> InsertOrUpdateItemMasterIntoDB(ItemMasterInputDto input)
         {
             try
             {
-                var mappedItemMaster = ObjectMapper.Map<Item>(input);
-                var itemMasterId = await this._itemMasterRepository.InsertOrUpdateAndGetIdAsync(mappedItemMaster);
-                await CurrentUnitOfWork.SaveChangesAsync();
-                return itemMasterId;
+                Guid itemMasterId = Guid.Empty;
+                var existingItemMaster = await this._itemMasterRepository.GetAll()
+                    .Where(x => !x.IsDeleted && x.ItemCategory == input.ItemCategory && x.ItemName.ToLower().Trim() == input.ItemName.Trim().ToLower())
+                    .FirstOrDefaultAsync();
+                
+                if (existingItemMaster != null)
+                {
+                    if (input.Id != existingItemMaster.Id)
+                    {
+                        return new ResponseDto
+                        {
+                            Id = input.Id == Guid.Empty ? null : input.Id,
+                            Name = existingItemMaster.ItemName,
+                            DataMatchFound = true
+                        };
+                    }
+                    else
+                    {
+                        ObjectMapper.Map(input, existingItemMaster);
+                        itemMasterId = await this._itemMasterRepository.InsertOrUpdateAndGetIdAsync(existingItemMaster);
+                        await CurrentUnitOfWork.SaveChangesAsync();
+                        return new ResponseDto
+                        {
+                            Id = itemMasterId,
+                            DataMatchFound = false
+                        };
+                    }
+
+                }
+                else
+                {
+                    
+                    var mappedItemMaster = ObjectMapper.Map<Item>(input);
+                    itemMasterId = await this._itemMasterRepository.InsertOrUpdateAndGetIdAsync(mappedItemMaster);
+                    await CurrentUnitOfWork.SaveChangesAsync();
+                    return new ResponseDto
+                    {
+                        Id = itemMasterId,
+                        DataMatchFound = false
+                    };
+                }
             }
             catch (Exception ex)
             {
@@ -69,6 +126,7 @@
                 throw ex;
             }
         }
+
 
         [UnitOfWork]
         public async Task<bool> DeleteItemMasterFromDB(Guid itemId)

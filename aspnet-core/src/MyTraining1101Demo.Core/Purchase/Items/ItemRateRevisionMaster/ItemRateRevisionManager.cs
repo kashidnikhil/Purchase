@@ -28,7 +28,7 @@
 
 
         [UnitOfWork]
-        public async Task InsertItemRateRevision(ItemMasterInputDto input,Guid ItemMasterId)
+        public async Task InsertItemRateRevision(ItemMasterInputDto input,Guid? ItemMasterId)
         {
             try
             {
@@ -48,6 +48,7 @@
                 }
 
                 var mappedItemRateRevision = ObjectMapper.Map<ItemRateRevision>(input);
+                mappedItemRateRevision.Id = Guid.Empty;
                 mappedItemRateRevision.ItemId = ItemMasterId;
                 await this.InsertItemRateRevisionIntoDB(mappedItemRateRevision);
                 

@@ -1355,7 +1355,8 @@
 	  <text name="OrderingQuantity">Ordering Qty</text>
 	  <text name="AddItemAccessory">Add Item Accessory</text>
 	  <text name="ItemAccessory">Item Accessory</text>
-	
+	  <text name="ExistingItemErrorMessage">Item {0} cannot be added. Item master with same name already exists</text>
+
   </texts>
 </localizationDictionary>
 

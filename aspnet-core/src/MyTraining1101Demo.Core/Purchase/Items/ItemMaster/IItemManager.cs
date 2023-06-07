@@ -7,11 +7,12 @@
     using Abp.Application.Services.Dto;
     using MyTraining1101Demo.Purchase.Items.Enums;
     using System.Collections.Generic;
+    using MyTraining1101Demo.Purchase.Shared;
 
     public interface IItemManager : IDomainService
     {
         Task<PagedResultDto<ItemMasterListDto>> GetPaginatedItemListFromDB(ItemMasterSearchDto input);
-        Task<Guid> InsertOrUpdateItemMasterIntoDB(ItemMasterInputDto input);
+        Task<ResponseDto> InsertOrUpdateItemMasterIntoDB(ItemMasterInputDto input);
         Task<bool> DeleteItemMasterFromDB(Guid itemId);
 
         Task<ItemMasterDto> GetItemMasterByIdFromDB(Guid itemId);

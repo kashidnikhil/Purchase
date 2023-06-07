@@ -1,5 +1,6 @@
 ﻿using Abp.Application.Services.Dto;
 using MyTraining1101Demo.Purchase.Items.Dto.ItemMaster;
+using MyTraining1101Demo.Purchase.Shared;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ namespace MyTraining1101Demo.Purchase.Items
     {
         Task<PagedResultDto<ItemMasterListDto>> GetItems(ItemMasterSearchDto input);
 
-        Task<Guid> InsertOrUpdateItem(ItemMasterInputDto input);
+        Task<ResponseDto> InsertOrUpdateItem(ItemMasterInputDto input);
 
         Task<bool> DeleteItemMasterData(Guid itemId);
 
