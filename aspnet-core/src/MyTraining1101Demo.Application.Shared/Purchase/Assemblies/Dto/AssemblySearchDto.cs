@@ -1,8 +1,8 @@
-﻿namespace MyTraining1101Demo.Purchase.AssemblyCategories.Dto
+﻿namespace MyTraining1101Demo.Purchase.Assemblies.Dto
 {
     using Abp.Runtime.Validation;
     using MyTraining1101Demo.Dto;
-    public class AssemblyCategorySearchDto : PagedAndSortedInputDto, IShouldNormalize
+    public class AssemblySearchDto : PagedAndSortedInputDto, IShouldNormalize
     {
         public string SearchString { get; set; }
 
@@ -10,7 +10,7 @@
         {
             if (string.IsNullOrEmpty(Sorting))
             {
-                Sorting = "";
+                Sorting = "name";
             }
         }
     }

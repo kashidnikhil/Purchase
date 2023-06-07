@@ -46,63 +46,64 @@ using MyTraining1101Demo.PhoneBook;
 using MyTraining1101Demo.PhoneBook.Dto;
 using MyTraining1101Demo.Purchase.AcceptanceCriterias;
 using MyTraining1101Demo.Purchase.AcceptanceCriterias.Dto;
+using MyTraining1101Demo.Purchase.Assemblies;
+using MyTraining1101Demo.Purchase.Assemblies.Dto;
+using MyTraining1101Demo.Purchase.Companies.CompanyAddresses;
+using MyTraining1101Demo.Purchase.Companies.CompanyContactPersons;
+using MyTraining1101Demo.Purchase.Companies.CompanyMaster;
+using MyTraining1101Demo.Purchase.Companies.Dto.CompanyAddresses;
+using MyTraining1101Demo.Purchase.Companies.Dto.CompanyContactPersons;
+using MyTraining1101Demo.Purchase.Companies.Dto.CompanyMaster;
 using MyTraining1101Demo.Purchase.DeliveryTerms;
 using MyTraining1101Demo.Purchase.DeliveryTerms.Dto;
+using MyTraining1101Demo.Purchase.Items.CalibrationAgenciesMaster;
+using MyTraining1101Demo.Purchase.Items.CalibrationTypeMaster;
+using MyTraining1101Demo.Purchase.Items.Dto.CalibrationAgenciesMaster;
+using MyTraining1101Demo.Purchase.Items.Dto.CalibrationTypeMaster;
+using MyTraining1101Demo.Purchase.Items.Dto.ItemAccessoriesMaster;
+using MyTraining1101Demo.Purchase.Items.Dto.ItemAttachmentsMaster;
+using MyTraining1101Demo.Purchase.Items.Dto.ItemMaster;
+using MyTraining1101Demo.Purchase.Items.Dto.ItemRateRevisionMaster;
+using MyTraining1101Demo.Purchase.Items.Dto.ItemStorageConditionMaster;
+using MyTraining1101Demo.Purchase.Items.Dto.ItemSupplierMaster;
+using MyTraining1101Demo.Purchase.Items.Dto.ProcurementMaster;
+using MyTraining1101Demo.Purchase.Items.Dto.RequiredItemSparesMaster;
+using MyTraining1101Demo.Purchase.Items.ItemAccesoriesMaster;
+using MyTraining1101Demo.Purchase.Items.ItemAttachmentsMaster;
+using MyTraining1101Demo.Purchase.Items.ItemMaster;
+using MyTraining1101Demo.Purchase.Items.ItemRateRevisionMaster;
+using MyTraining1101Demo.Purchase.Items.ItemStorageConditionMaster;
+using MyTraining1101Demo.Purchase.Items.ItemSupplierMaster;
+using MyTraining1101Demo.Purchase.Items.ProcurementMaster;
+using MyTraining1101Demo.Purchase.Items.RequiredItemSparesMaster;
 using MyTraining1101Demo.Purchase.LegalEntities;
 using MyTraining1101Demo.Purchase.LegalEntities.Dto;
 using MyTraining1101Demo.Purchase.MaterialGrades;
 using MyTraining1101Demo.Purchase.MaterialGrades.Dto;
+using MyTraining1101Demo.Purchase.Models;
+using MyTraining1101Demo.Purchase.Models.Dto;
 using MyTraining1101Demo.Purchase.POGeneralTerms;
 using MyTraining1101Demo.Purchase.POGeneralTerms.Dto;
+using MyTraining1101Demo.Purchase.SubAssemblyItems;
+using MyTraining1101Demo.Purchase.SubAssemblyItems.Dto;
 using MyTraining1101Demo.Purchase.SupplierCategories;
 using MyTraining1101Demo.Purchase.SupplierCategories.Dto;
-using MyTraining1101Demo.Purchase.TermsOfPayments;
-using MyTraining1101Demo.Purchase.TermsOfPayments.Dto;
-using MyTraining1101Demo.Purchase.Units.Dto;
-using MyTraining1101Demo.Purchase.Units;
-using MyTraining1101Demo.Purchase.Models.Dto;
-using MyTraining1101Demo.Purchase.Models;
-using MyTraining1101Demo.Sessions.Dto;
-using MyTraining1101Demo.WebHooks.Dto;
-using MyTraining1101Demo.Purchase.Suppliers.SupplierMaster;
-using MyTraining1101Demo.Purchase.Suppliers.SupplierBanks;
-using MyTraining1101Demo.Purchase.Suppliers.SupplierContactPersons;
-using MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierMaster;
+using MyTraining1101Demo.Purchase.Suppliers.Dto.MappedSupplierCategories;
+using MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierAddresses;
 using MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierBanks;
 using MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierContactPersons;
-using MyTraining1101Demo.Purchase.Suppliers.SupplierAddresses;
-using MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierAddresses;
-using MyTraining1101Demo.Purchase.Companies.CompanyMaster;
-using MyTraining1101Demo.Purchase.Companies.Dto.CompanyMaster;
-using MyTraining1101Demo.Purchase.Companies.CompanyContactPersons;
-using MyTraining1101Demo.Purchase.Companies.CompanyAddresses;
-using MyTraining1101Demo.Purchase.Companies.Dto.CompanyAddresses;
-using MyTraining1101Demo.Purchase.Companies.Dto.CompanyContactPersons;
+using MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierMaster;
 using MyTraining1101Demo.Purchase.Suppliers.MappedSupplierCategories;
-using MyTraining1101Demo.Purchase.Suppliers.Dto.MappedSupplierCategories;
-using MyTraining1101Demo.Purchase.Items.ItemMaster;
-using MyTraining1101Demo.Purchase.Items.Dto.ItemMaster;
-using MyTraining1101Demo.Purchase.Items.CalibrationAgenciesMaster;
-using MyTraining1101Demo.Purchase.Items.Dto.CalibrationAgenciesMaster;
-using MyTraining1101Demo.Purchase.Items.CalibrationTypeMaster;
-using MyTraining1101Demo.Purchase.Items.Dto.CalibrationTypeMaster;
-using MyTraining1101Demo.Purchase.Items.ItemAttachmentsMaster;
-using MyTraining1101Demo.Purchase.Items.Dto.ItemAttachmentsMaster;
-using MyTraining1101Demo.Purchase.Items.ItemRateRevisionMaster;
-using MyTraining1101Demo.Purchase.Items.Dto.ItemRateRevisionMaster;
-using MyTraining1101Demo.Purchase.Items.ItemStorageConditionMaster;
-using MyTraining1101Demo.Purchase.Items.Dto.ItemStorageConditionMaster;
-using MyTraining1101Demo.Purchase.Items.ItemSupplierMaster;
-using MyTraining1101Demo.Purchase.Items.Dto.ItemSupplierMaster;
-using MyTraining1101Demo.Purchase.Items.ProcurementMaster;
-using MyTraining1101Demo.Purchase.Items.Dto.ProcurementMaster;
-using MyTraining1101Demo.Purchase.Items.RequiredItemSparesMaster;
-using MyTraining1101Demo.Purchase.Items.Dto.RequiredItemSparesMaster;
-using Abp.ObjectMapping;
-using MyTraining1101Demo.Purchase.Items.ItemAccesoriesMaster;
-using MyTraining1101Demo.Purchase.Items.Dto.ItemAccessoriesMaster;
-using MyTraining1101Demo.Purchase.AssemblyCategories;
-using MyTraining1101Demo.Purchase.AssemblyCategories.Dto;
+using MyTraining1101Demo.Purchase.Suppliers.SupplierAddresses;
+using MyTraining1101Demo.Purchase.Suppliers.SupplierBanks;
+using MyTraining1101Demo.Purchase.Suppliers.SupplierContactPersons;
+using MyTraining1101Demo.Purchase.Suppliers.SupplierMaster;
+using MyTraining1101Demo.Purchase.TermsOfPayments;
+using MyTraining1101Demo.Purchase.TermsOfPayments.Dto;
+using MyTraining1101Demo.Purchase.Units;
+using MyTraining1101Demo.Purchase.Units.Dto;
+using MyTraining1101Demo.Sessions.Dto;
+using MyTraining1101Demo.WebHooks.Dto;
 
 namespace MyTraining1101Demo
 {
@@ -362,11 +363,18 @@ namespace MyTraining1101Demo
             configuration.CreateMap<ItemAccessory, ItemAccessoryDto>().ReverseMap();
             configuration.CreateMap<ItemAccessory, ItemAccessoryInputDto>().ReverseMap();
 
-            configuration.CreateMap<AssemblyCategory, AssemblyCategoryInputDto>().ReverseMap();
-            configuration.CreateMap<AssemblyCategory, AssemblyCategoryDto>().ReverseMap();
-            configuration.CreateMap<AssemblyCategory, AssemblyCategoryListDto>()
+            configuration.CreateMap<Assembly, AssemblyInputDto>().ReverseMap();
+            configuration.CreateMap<Assembly, AssemblyDto>().ReverseMap();
+            configuration.CreateMap<Assembly, AssemblyListDto>()
                 .ForMember(dto => dto.ModelName, options => options.MapFrom(x => x.Model.Name))
-                .ReverseMap(); 
+                .ReverseMap();
+
+            configuration.CreateMap<SubAssemblyItem, SubAssemblyItemInputDto>().ReverseMap();
+            configuration.CreateMap<SubAssemblyItem, SubAssemblyItemDto>().ReverseMap();
+            configuration.CreateMap<SubAssemblyItem, SubAssemblyItemListDto>()
+                .ForMember(dto => dto.ModelName, options => options.MapFrom(x => x.Model.Name))
+                .ForMember(dto => dto.AssemblyName, options => options.MapFrom(x => x.Assembly.Name))
+                .ReverseMap();
             /* ADD YOUR OWN CUSTOM AUTOMAPPER MAPPINGS HERE */
         }
     }

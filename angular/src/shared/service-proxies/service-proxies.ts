@@ -1053,7 +1053,7 @@ export class AccountServiceProxy {
 }
 
 @Injectable()
-export class AssemblyCategoryServiceProxy {
+export class AssemblyServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
@@ -1070,8 +1070,8 @@ export class AssemblyCategoryServiceProxy {
      * @param skipCount (optional) 
      * @return Success
      */
-    getAssemblyCategories(searchString: string | undefined, sorting: string | undefined, maxResultCount: number | undefined, skipCount: number | undefined): Observable<PagedResultDtoOfAssemblyCategoryListDto> {
-        let url_ = this.baseUrl + "/api/services/app/AssemblyCategory/GetAssemblyCategories?";
+    getAssemblies(searchString: string | undefined, sorting: string | undefined, maxResultCount: number | undefined, skipCount: number | undefined): Observable<PagedResultDtoOfAssemblyListDto> {
+        let url_ = this.baseUrl + "/api/services/app/Assembly/GetAssemblies?";
         if (searchString === null)
             throw new Error("The parameter 'searchString' cannot be null.");
         else if (searchString !== undefined)
@@ -1099,20 +1099,20 @@ export class AssemblyCategoryServiceProxy {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAssemblyCategories(response_);
+            return this.processGetAssemblies(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetAssemblyCategories(response_ as any);
+                    return this.processGetAssemblies(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<PagedResultDtoOfAssemblyCategoryListDto>;
+                    return _observableThrow(e) as any as Observable<PagedResultDtoOfAssemblyListDto>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<PagedResultDtoOfAssemblyCategoryListDto>;
+                return _observableThrow(response_) as any as Observable<PagedResultDtoOfAssemblyListDto>;
         }));
     }
 
-    protected processGetAssemblyCategories(response: HttpResponseBase): Observable<PagedResultDtoOfAssemblyCategoryListDto> {
+    protected processGetAssemblies(response: HttpResponseBase): Observable<PagedResultDtoOfAssemblyListDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -1123,7 +1123,7 @@ export class AssemblyCategoryServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = PagedResultDtoOfAssemblyCategoryListDto.fromJS(resultData200);
+            result200 = PagedResultDtoOfAssemblyListDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -1131,15 +1131,15 @@ export class AssemblyCategoryServiceProxy {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<PagedResultDtoOfAssemblyCategoryListDto>(null as any);
+        return _observableOf<PagedResultDtoOfAssemblyListDto>(null as any);
     }
 
     /**
      * @param body (optional) 
      * @return Success
      */
-    insertOrUpdateAssemblyCategory(body: AssemblyCategoryInputDto | undefined): Observable<string> {
-        let url_ = this.baseUrl + "/api/services/app/AssemblyCategory/InsertOrUpdateAssemblyCategory";
+    insertOrUpdateAssembly(body: AssemblyInputDto | undefined): Observable<ResponseDto> {
+        let url_ = this.baseUrl + "/api/services/app/Assembly/InsertOrUpdateAssembly";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -1155,20 +1155,20 @@ export class AssemblyCategoryServiceProxy {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processInsertOrUpdateAssemblyCategory(response_);
+            return this.processInsertOrUpdateAssembly(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processInsertOrUpdateAssemblyCategory(response_ as any);
+                    return this.processInsertOrUpdateAssembly(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<string>;
+                    return _observableThrow(e) as any as Observable<ResponseDto>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<string>;
+                return _observableThrow(response_) as any as Observable<ResponseDto>;
         }));
     }
 
-    protected processInsertOrUpdateAssemblyCategory(response: HttpResponseBase): Observable<string> {
+    protected processInsertOrUpdateAssembly(response: HttpResponseBase): Observable<ResponseDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -1179,8 +1179,7 @@ export class AssemblyCategoryServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-                result200 = resultData200 !== undefined ? resultData200 : <any>null;
-    
+            result200 = ResponseDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -1188,19 +1187,19 @@ export class AssemblyCategoryServiceProxy {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<string>(null as any);
+        return _observableOf<ResponseDto>(null as any);
     }
 
     /**
-     * @param assemblyCategoryId (optional) 
+     * @param assemblyId (optional) 
      * @return Success
      */
-    deleteAssemblyCategory(assemblyCategoryId: string | undefined): Observable<boolean> {
-        let url_ = this.baseUrl + "/api/services/app/AssemblyCategory/DeleteAssemblyCategory?";
-        if (assemblyCategoryId === null)
-            throw new Error("The parameter 'assemblyCategoryId' cannot be null.");
-        else if (assemblyCategoryId !== undefined)
-            url_ += "assemblyCategoryId=" + encodeURIComponent("" + assemblyCategoryId) + "&";
+    deleteAssembly(assemblyId: string | undefined): Observable<boolean> {
+        let url_ = this.baseUrl + "/api/services/app/Assembly/DeleteAssembly?";
+        if (assemblyId === null)
+            throw new Error("The parameter 'assemblyId' cannot be null.");
+        else if (assemblyId !== undefined)
+            url_ += "assemblyId=" + encodeURIComponent("" + assemblyId) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -1212,11 +1211,11 @@ export class AssemblyCategoryServiceProxy {
         };
 
         return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processDeleteAssemblyCategory(response_);
+            return this.processDeleteAssembly(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processDeleteAssemblyCategory(response_ as any);
+                    return this.processDeleteAssembly(response_ as any);
                 } catch (e) {
                     return _observableThrow(e) as any as Observable<boolean>;
                 }
@@ -1225,7 +1224,7 @@ export class AssemblyCategoryServiceProxy {
         }));
     }
 
-    protected processDeleteAssemblyCategory(response: HttpResponseBase): Observable<boolean> {
+    protected processDeleteAssembly(response: HttpResponseBase): Observable<boolean> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -1249,15 +1248,15 @@ export class AssemblyCategoryServiceProxy {
     }
 
     /**
-     * @param assemblyCategoryId (optional) 
+     * @param acceptanceCriteriaId (optional) 
      * @return Success
      */
-    getAssemblyCategoryById(assemblyCategoryId: string | undefined): Observable<AssemblyCategoryDto> {
-        let url_ = this.baseUrl + "/api/services/app/AssemblyCategory/GetAssemblyCategoryById?";
-        if (assemblyCategoryId === null)
-            throw new Error("The parameter 'assemblyCategoryId' cannot be null.");
-        else if (assemblyCategoryId !== undefined)
-            url_ += "assemblyCategoryId=" + encodeURIComponent("" + assemblyCategoryId) + "&";
+    getAssemblyById(acceptanceCriteriaId: string | undefined): Observable<AssemblyDto> {
+        let url_ = this.baseUrl + "/api/services/app/Assembly/GetAssemblyById?";
+        if (acceptanceCriteriaId === null)
+            throw new Error("The parameter 'acceptanceCriteriaId' cannot be null.");
+        else if (acceptanceCriteriaId !== undefined)
+            url_ += "acceptanceCriteriaId=" + encodeURIComponent("" + acceptanceCriteriaId) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -1269,20 +1268,20 @@ export class AssemblyCategoryServiceProxy {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAssemblyCategoryById(response_);
+            return this.processGetAssemblyById(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetAssemblyCategoryById(response_ as any);
+                    return this.processGetAssemblyById(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<AssemblyCategoryDto>;
+                    return _observableThrow(e) as any as Observable<AssemblyDto>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<AssemblyCategoryDto>;
+                return _observableThrow(response_) as any as Observable<AssemblyDto>;
         }));
     }
 
-    protected processGetAssemblyCategoryById(response: HttpResponseBase): Observable<AssemblyCategoryDto> {
+    protected processGetAssemblyById(response: HttpResponseBase): Observable<AssemblyDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -1293,7 +1292,7 @@ export class AssemblyCategoryServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = AssemblyCategoryDto.fromJS(resultData200);
+            result200 = AssemblyDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -1301,14 +1300,19 @@ export class AssemblyCategoryServiceProxy {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<AssemblyCategoryDto>(null as any);
+        return _observableOf<AssemblyDto>(null as any);
     }
 
     /**
+     * @param modelId (optional) 
      * @return Success
      */
-    getAssemblyCategoryList(): Observable<AssemblyCategoryDto[]> {
-        let url_ = this.baseUrl + "/api/services/app/AssemblyCategory/GetAssemblyCategoryList";
+    getAssemblyList(modelId: string | undefined): Observable<AssemblyDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/Assembly/GetAssemblyList?";
+        if (modelId === null)
+            throw new Error("The parameter 'modelId' cannot be null.");
+        else if (modelId !== undefined)
+            url_ += "modelId=" + encodeURIComponent("" + modelId) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -1320,20 +1324,20 @@ export class AssemblyCategoryServiceProxy {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAssemblyCategoryList(response_);
+            return this.processGetAssemblyList(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetAssemblyCategoryList(response_ as any);
+                    return this.processGetAssemblyList(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<AssemblyCategoryDto[]>;
+                    return _observableThrow(e) as any as Observable<AssemblyDto[]>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<AssemblyCategoryDto[]>;
+                return _observableThrow(response_) as any as Observable<AssemblyDto[]>;
         }));
     }
 
-    protected processGetAssemblyCategoryList(response: HttpResponseBase): Observable<AssemblyCategoryDto[]> {
+    protected processGetAssemblyList(response: HttpResponseBase): Observable<AssemblyDto[]> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -1347,7 +1351,7 @@ export class AssemblyCategoryServiceProxy {
             if (Array.isArray(resultData200)) {
                 result200 = [] as any;
                 for (let item of resultData200)
-                    result200!.push(AssemblyCategoryDto.fromJS(item));
+                    result200!.push(AssemblyDto.fromJS(item));
             }
             else {
                 result200 = <any>null;
@@ -1359,7 +1363,64 @@ export class AssemblyCategoryServiceProxy {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<AssemblyCategoryDto[]>(null as any);
+        return _observableOf<AssemblyDto[]>(null as any);
+    }
+
+    /**
+     * @param assemblyId (optional) 
+     * @return Success
+     */
+    restoreAcceptanceCriteria(assemblyId: string | undefined): Observable<boolean> {
+        let url_ = this.baseUrl + "/api/services/app/Assembly/RestoreAcceptanceCriteria?";
+        if (assemblyId === null)
+            throw new Error("The parameter 'assemblyId' cannot be null.");
+        else if (assemblyId !== undefined)
+            url_ += "assemblyId=" + encodeURIComponent("" + assemblyId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processRestoreAcceptanceCriteria(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processRestoreAcceptanceCriteria(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<boolean>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<boolean>;
+        }));
+    }
+
+    protected processRestoreAcceptanceCriteria(response: HttpResponseBase): Observable<boolean> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+    
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<boolean>(null as any);
     }
 }
 
@@ -13362,6 +13423,373 @@ export class StripePaymentServiceProxy {
 }
 
 @Injectable()
+export class SubAssemblyItemServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @param searchString (optional) 
+     * @param sorting (optional) 
+     * @param maxResultCount (optional) 
+     * @param skipCount (optional) 
+     * @return Success
+     */
+    getSubAssemblyItems(searchString: string | undefined, sorting: string | undefined, maxResultCount: number | undefined, skipCount: number | undefined): Observable<PagedResultDtoOfSubAssemblyItemListDto> {
+        let url_ = this.baseUrl + "/api/services/app/SubAssemblyItem/GetSubAssemblyItems?";
+        if (searchString === null)
+            throw new Error("The parameter 'searchString' cannot be null.");
+        else if (searchString !== undefined)
+            url_ += "SearchString=" + encodeURIComponent("" + searchString) + "&";
+        if (sorting === null)
+            throw new Error("The parameter 'sorting' cannot be null.");
+        else if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetSubAssemblyItems(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetSubAssemblyItems(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PagedResultDtoOfSubAssemblyItemListDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PagedResultDtoOfSubAssemblyItemListDto>;
+        }));
+    }
+
+    protected processGetSubAssemblyItems(response: HttpResponseBase): Observable<PagedResultDtoOfSubAssemblyItemListDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PagedResultDtoOfSubAssemblyItemListDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PagedResultDtoOfSubAssemblyItemListDto>(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    insertOrUpdateSubAssemblyItem(body: SubAssemblyItemInputDto | undefined): Observable<ResponseDto> {
+        let url_ = this.baseUrl + "/api/services/app/SubAssemblyItem/InsertOrUpdateSubAssemblyItem";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processInsertOrUpdateSubAssemblyItem(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processInsertOrUpdateSubAssemblyItem(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ResponseDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ResponseDto>;
+        }));
+    }
+
+    protected processInsertOrUpdateSubAssemblyItem(response: HttpResponseBase): Observable<ResponseDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ResponseDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ResponseDto>(null as any);
+    }
+
+    /**
+     * @param subAssemblyItemId (optional) 
+     * @return Success
+     */
+    deleteSubAssemblyItem(subAssemblyItemId: string | undefined): Observable<boolean> {
+        let url_ = this.baseUrl + "/api/services/app/SubAssemblyItem/DeleteSubAssemblyItem?";
+        if (subAssemblyItemId === null)
+            throw new Error("The parameter 'subAssemblyItemId' cannot be null.");
+        else if (subAssemblyItemId !== undefined)
+            url_ += "subAssemblyItemId=" + encodeURIComponent("" + subAssemblyItemId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDeleteSubAssemblyItem(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDeleteSubAssemblyItem(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<boolean>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<boolean>;
+        }));
+    }
+
+    protected processDeleteSubAssemblyItem(response: HttpResponseBase): Observable<boolean> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+    
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<boolean>(null as any);
+    }
+
+    /**
+     * @param subAssemblyItemId (optional) 
+     * @return Success
+     */
+    getSubAssemblyItemById(subAssemblyItemId: string | undefined): Observable<SubAssemblyItemDto> {
+        let url_ = this.baseUrl + "/api/services/app/SubAssemblyItem/GetSubAssemblyItemById?";
+        if (subAssemblyItemId === null)
+            throw new Error("The parameter 'subAssemblyItemId' cannot be null.");
+        else if (subAssemblyItemId !== undefined)
+            url_ += "subAssemblyItemId=" + encodeURIComponent("" + subAssemblyItemId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetSubAssemblyItemById(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetSubAssemblyItemById(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<SubAssemblyItemDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<SubAssemblyItemDto>;
+        }));
+    }
+
+    protected processGetSubAssemblyItemById(response: HttpResponseBase): Observable<SubAssemblyItemDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = SubAssemblyItemDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<SubAssemblyItemDto>(null as any);
+    }
+
+    /**
+     * @return Success
+     */
+    getSubAssemblyItemList(): Observable<SubAssemblyItemDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/SubAssemblyItem/GetSubAssemblyItemList";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetSubAssemblyItemList(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetSubAssemblyItemList(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<SubAssemblyItemDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<SubAssemblyItemDto[]>;
+        }));
+    }
+
+    protected processGetSubAssemblyItemList(response: HttpResponseBase): Observable<SubAssemblyItemDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(SubAssemblyItemDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<SubAssemblyItemDto[]>(null as any);
+    }
+
+    /**
+     * @param subAssemblyItemId (optional) 
+     * @return Success
+     */
+    restoreSubAssemblyItem(subAssemblyItemId: string | undefined): Observable<boolean> {
+        let url_ = this.baseUrl + "/api/services/app/SubAssemblyItem/RestoreSubAssemblyItem?";
+        if (subAssemblyItemId === null)
+            throw new Error("The parameter 'subAssemblyItemId' cannot be null.");
+        else if (subAssemblyItemId !== undefined)
+            url_ += "subAssemblyItemId=" + encodeURIComponent("" + subAssemblyItemId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processRestoreSubAssemblyItem(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processRestoreSubAssemblyItem(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<boolean>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<boolean>;
+        }));
+    }
+
+    protected processRestoreSubAssemblyItem(response: HttpResponseBase): Observable<boolean> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+    
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<boolean>(null as any);
+    }
+}
+
+@Injectable()
 export class SubscriptionServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -20103,14 +20531,12 @@ export interface IAppSettingsJsonDto {
     languages: NameValue[] | undefined;
 }
 
-export class AssemblyCategoryDto implements IAssemblyCategoryDto {
+export class AssemblyDto implements IAssemblyDto {
     id!: string;
-    subCategory!: string | undefined;
-    subCategory1!: string | undefined;
-    comments!: string | undefined;
+    name!: string | undefined;
     modelId!: string | undefined;
 
-    constructor(data?: IAssemblyCategoryDto) {
+    constructor(data?: IAssemblyDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -20122,16 +20548,14 @@ export class AssemblyCategoryDto implements IAssemblyCategoryDto {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
-            this.subCategory = _data["subCategory"];
-            this.subCategory1 = _data["subCategory1"];
-            this.comments = _data["comments"];
+            this.name = _data["name"];
             this.modelId = _data["modelId"];
         }
     }
 
-    static fromJS(data: any): AssemblyCategoryDto {
+    static fromJS(data: any): AssemblyDto {
         data = typeof data === 'object' ? data : {};
-        let result = new AssemblyCategoryDto();
+        let result = new AssemblyDto();
         result.init(data);
         return result;
     }
@@ -20139,30 +20563,24 @@ export class AssemblyCategoryDto implements IAssemblyCategoryDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
-        data["subCategory"] = this.subCategory;
-        data["subCategory1"] = this.subCategory1;
-        data["comments"] = this.comments;
+        data["name"] = this.name;
         data["modelId"] = this.modelId;
         return data;
     }
 }
 
-export interface IAssemblyCategoryDto {
+export interface IAssemblyDto {
     id: string;
-    subCategory: string | undefined;
-    subCategory1: string | undefined;
-    comments: string | undefined;
+    name: string | undefined;
     modelId: string | undefined;
 }
 
-export class AssemblyCategoryInputDto implements IAssemblyCategoryInputDto {
+export class AssemblyInputDto implements IAssemblyInputDto {
     id!: string | undefined;
-    subCategory!: string | undefined;
-    subCategory1!: string | undefined;
-    comments!: string | undefined;
+    name!: string | undefined;
     modelId!: string | undefined;
 
-    constructor(data?: IAssemblyCategoryInputDto) {
+    constructor(data?: IAssemblyInputDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -20174,16 +20592,14 @@ export class AssemblyCategoryInputDto implements IAssemblyCategoryInputDto {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
-            this.subCategory = _data["subCategory"];
-            this.subCategory1 = _data["subCategory1"];
-            this.comments = _data["comments"];
+            this.name = _data["name"];
             this.modelId = _data["modelId"];
         }
     }
 
-    static fromJS(data: any): AssemblyCategoryInputDto {
+    static fromJS(data: any): AssemblyInputDto {
         data = typeof data === 'object' ? data : {};
-        let result = new AssemblyCategoryInputDto();
+        let result = new AssemblyInputDto();
         result.init(data);
         return result;
     }
@@ -20191,31 +20607,24 @@ export class AssemblyCategoryInputDto implements IAssemblyCategoryInputDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
-        data["subCategory"] = this.subCategory;
-        data["subCategory1"] = this.subCategory1;
-        data["comments"] = this.comments;
+        data["name"] = this.name;
         data["modelId"] = this.modelId;
         return data;
     }
 }
 
-export interface IAssemblyCategoryInputDto {
+export interface IAssemblyInputDto {
     id: string | undefined;
-    subCategory: string | undefined;
-    subCategory1: string | undefined;
-    comments: string | undefined;
+    name: string | undefined;
     modelId: string | undefined;
 }
 
-export class AssemblyCategoryListDto implements IAssemblyCategoryListDto {
+export class AssemblyListDto implements IAssemblyListDto {
     id!: string;
-    subCategory!: string | undefined;
-    subCategory1!: string | undefined;
-    comments!: string | undefined;
+    name!: string | undefined;
     modelName!: string | undefined;
-    modelId!: string | undefined;
 
-    constructor(data?: IAssemblyCategoryListDto) {
+    constructor(data?: IAssemblyListDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -20227,17 +20636,14 @@ export class AssemblyCategoryListDto implements IAssemblyCategoryListDto {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
-            this.subCategory = _data["subCategory"];
-            this.subCategory1 = _data["subCategory1"];
-            this.comments = _data["comments"];
+            this.name = _data["name"];
             this.modelName = _data["modelName"];
-            this.modelId = _data["modelId"];
         }
     }
 
-    static fromJS(data: any): AssemblyCategoryListDto {
+    static fromJS(data: any): AssemblyListDto {
         data = typeof data === 'object' ? data : {};
-        let result = new AssemblyCategoryListDto();
+        let result = new AssemblyListDto();
         result.init(data);
         return result;
     }
@@ -20245,22 +20651,16 @@ export class AssemblyCategoryListDto implements IAssemblyCategoryListDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
-        data["subCategory"] = this.subCategory;
-        data["subCategory1"] = this.subCategory1;
-        data["comments"] = this.comments;
+        data["name"] = this.name;
         data["modelName"] = this.modelName;
-        data["modelId"] = this.modelId;
         return data;
     }
 }
 
-export interface IAssemblyCategoryListDto {
+export interface IAssemblyListDto {
     id: string;
-    subCategory: string | undefined;
-    subCategory1: string | undefined;
-    comments: string | undefined;
+    name: string | undefined;
     modelName: string | undefined;
-    modelId: string | undefined;
 }
 
 export class AuditLogListDto implements IAuditLogListDto {
@@ -31174,11 +31574,11 @@ export interface IPagedResultDtoOfAcceptanceCriteriaDto {
     items: AcceptanceCriteriaDto[] | undefined;
 }
 
-export class PagedResultDtoOfAssemblyCategoryListDto implements IPagedResultDtoOfAssemblyCategoryListDto {
+export class PagedResultDtoOfAssemblyListDto implements IPagedResultDtoOfAssemblyListDto {
     totalCount!: number;
-    items!: AssemblyCategoryListDto[] | undefined;
+    items!: AssemblyListDto[] | undefined;
 
-    constructor(data?: IPagedResultDtoOfAssemblyCategoryListDto) {
+    constructor(data?: IPagedResultDtoOfAssemblyListDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -31193,14 +31593,14 @@ export class PagedResultDtoOfAssemblyCategoryListDto implements IPagedResultDtoO
             if (Array.isArray(_data["items"])) {
                 this.items = [] as any;
                 for (let item of _data["items"])
-                    this.items!.push(AssemblyCategoryListDto.fromJS(item));
+                    this.items!.push(AssemblyListDto.fromJS(item));
             }
         }
     }
 
-    static fromJS(data: any): PagedResultDtoOfAssemblyCategoryListDto {
+    static fromJS(data: any): PagedResultDtoOfAssemblyListDto {
         data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfAssemblyCategoryListDto();
+        let result = new PagedResultDtoOfAssemblyListDto();
         result.init(data);
         return result;
     }
@@ -31217,9 +31617,9 @@ export class PagedResultDtoOfAssemblyCategoryListDto implements IPagedResultDtoO
     }
 }
 
-export interface IPagedResultDtoOfAssemblyCategoryListDto {
+export interface IPagedResultDtoOfAssemblyListDto {
     totalCount: number;
-    items: AssemblyCategoryListDto[] | undefined;
+    items: AssemblyListDto[] | undefined;
 }
 
 export class PagedResultDtoOfAuditLogListDto implements IPagedResultDtoOfAuditLogListDto {
@@ -31940,6 +32340,54 @@ export class PagedResultDtoOfPOGeneralTermDto implements IPagedResultDtoOfPOGene
 export interface IPagedResultDtoOfPOGeneralTermDto {
     totalCount: number;
     items: POGeneralTermDto[] | undefined;
+}
+
+export class PagedResultDtoOfSubAssemblyItemListDto implements IPagedResultDtoOfSubAssemblyItemListDto {
+    totalCount!: number;
+    items!: SubAssemblyItemListDto[] | undefined;
+
+    constructor(data?: IPagedResultDtoOfSubAssemblyItemListDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.totalCount = _data["totalCount"];
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(SubAssemblyItemListDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfSubAssemblyItemListDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfSubAssemblyItemListDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IPagedResultDtoOfSubAssemblyItemListDto {
+    totalCount: number;
+    items: SubAssemblyItemListDto[] | undefined;
 }
 
 export class PagedResultDtoOfSubscriptionPaymentListDto implements IPagedResultDtoOfSubscriptionPaymentListDto {
@@ -34250,6 +34698,150 @@ export class StripePaymentResultOutput implements IStripePaymentResultOutput {
 
 export interface IStripePaymentResultOutput {
     paymentDone: boolean;
+}
+
+export class SubAssemblyItemDto implements ISubAssemblyItemDto {
+    id!: string;
+    name!: string | undefined;
+    modelId!: string | undefined;
+    assemblyId!: string | undefined;
+
+    constructor(data?: ISubAssemblyItemDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.name = _data["name"];
+            this.modelId = _data["modelId"];
+            this.assemblyId = _data["assemblyId"];
+        }
+    }
+
+    static fromJS(data: any): SubAssemblyItemDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new SubAssemblyItemDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["name"] = this.name;
+        data["modelId"] = this.modelId;
+        data["assemblyId"] = this.assemblyId;
+        return data;
+    }
+}
+
+export interface ISubAssemblyItemDto {
+    id: string;
+    name: string | undefined;
+    modelId: string | undefined;
+    assemblyId: string | undefined;
+}
+
+export class SubAssemblyItemInputDto implements ISubAssemblyItemInputDto {
+    id!: string | undefined;
+    name!: string | undefined;
+    modelId!: string | undefined;
+    assemblyId!: string | undefined;
+
+    constructor(data?: ISubAssemblyItemInputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.name = _data["name"];
+            this.modelId = _data["modelId"];
+            this.assemblyId = _data["assemblyId"];
+        }
+    }
+
+    static fromJS(data: any): SubAssemblyItemInputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new SubAssemblyItemInputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["name"] = this.name;
+        data["modelId"] = this.modelId;
+        data["assemblyId"] = this.assemblyId;
+        return data;
+    }
+}
+
+export interface ISubAssemblyItemInputDto {
+    id: string | undefined;
+    name: string | undefined;
+    modelId: string | undefined;
+    assemblyId: string | undefined;
+}
+
+export class SubAssemblyItemListDto implements ISubAssemblyItemListDto {
+    id!: string;
+    name!: string | undefined;
+    modelName!: string | undefined;
+    assemblyName!: string | undefined;
+
+    constructor(data?: ISubAssemblyItemListDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.name = _data["name"];
+            this.modelName = _data["modelName"];
+            this.assemblyName = _data["assemblyName"];
+        }
+    }
+
+    static fromJS(data: any): SubAssemblyItemListDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new SubAssemblyItemListDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["name"] = this.name;
+        data["modelName"] = this.modelName;
+        data["assemblyName"] = this.assemblyName;
+        return data;
+    }
+}
+
+export interface ISubAssemblyItemListDto {
+    id: string;
+    name: string | undefined;
+    modelName: string | undefined;
+    assemblyName: string | undefined;
 }
 
 export enum SubjectCategory {

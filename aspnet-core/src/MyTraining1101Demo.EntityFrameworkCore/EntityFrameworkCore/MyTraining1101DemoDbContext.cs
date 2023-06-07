@@ -13,7 +13,7 @@ using MyTraining1101Demo.MultiTenancy.Accounting;
 using MyTraining1101Demo.MultiTenancy.Payments;
 using MyTraining1101Demo.PhoneBook;
 using MyTraining1101Demo.Purchase.AcceptanceCriterias;
-using MyTraining1101Demo.Purchase.AssemblyCategories;
+using MyTraining1101Demo.Purchase.Assemblies;
 using MyTraining1101Demo.Purchase.Companies.CompanyAddresses;
 using MyTraining1101Demo.Purchase.Companies.CompanyContactPersons;
 using MyTraining1101Demo.Purchase.Companies.CompanyMaster;
@@ -32,6 +32,7 @@ using MyTraining1101Demo.Purchase.LegalEntities;
 using MyTraining1101Demo.Purchase.MaterialGrades;
 using MyTraining1101Demo.Purchase.Models;
 using MyTraining1101Demo.Purchase.POGeneralTerms;
+using MyTraining1101Demo.Purchase.SubAssemblyItems;
 using MyTraining1101Demo.Purchase.SupplierCategories;
 using MyTraining1101Demo.Purchase.Suppliers.MappedSupplierCategories;
 using MyTraining1101Demo.Purchase.Suppliers.SupplierAddresses;
@@ -126,7 +127,9 @@ namespace MyTraining1101Demo.EntityFrameworkCore
 
         public virtual DbSet<ItemAccessory> ItemAccessories { get; set; }
 
-        public virtual DbSet<AssemblyCategory> AssemblyCategories { get; set; }
+        public virtual DbSet<Assembly> Assemblies { get; set; }
+
+        public virtual DbSet<SubAssemblyItem> SubAssemblyItems { get; set; }
 
         public MyTraining1101DemoDbContext(DbContextOptions<MyTraining1101DemoDbContext> options)
             : base(options)
