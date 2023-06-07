@@ -74,6 +74,10 @@ import { RouterModule } from '@angular/router';
                         path: 'assembly-masters',
                         loadChildren: () => import('./purchase/assembly-masters/assembly-masters.module').then(m => m.AssemblyMastersModule)
                     },
+                    {
+                        path: 'sub-assembly-items',
+                        loadChildren: () => import('./purchase/sub-assembly-items/sub-assembly-items.module').then(m => m.SubAssemblyItemsModule)
+                    },
                        
                                       
                     { path: '', redirectTo: 'dashboard', pathMatch: 'full' },

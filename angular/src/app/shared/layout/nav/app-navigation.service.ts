@@ -99,12 +99,12 @@ export class AppNavigationService {
                         'flaticon-folder-1',
                         '/app/main/assembly-masters'
                     ),
-                    // new AppMenuItem(
-                    //     'Item Masters',
-                    //     'Pages.Administration.AuditLogs',
-                    //     'flaticon-folder-1',
-                    //     '/app/main/item-masters'
-                    // ),
+                    new AppMenuItem(
+                        'Sub Assembly Items',
+                        'Pages.Administration.AuditLogs',
+                        'flaticon-folder-1',
+                        '/app/main/sub-assembly-items'
+                    ),
                     new AppMenuItem(
                         'Item Masters',
                         'Pages.Administration.AuditLogs',

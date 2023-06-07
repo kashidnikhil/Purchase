@@ -42,11 +42,9 @@
                 var totalCount = await assemblyQuery.CountAsync();
                 var assemblyItems = await assemblyQuery.OrderBy(input.Sorting).PageBy(input).ToListAsync();
 
-                var data = new PagedResultDto<AssemblyListDto>(
+                return new PagedResultDto<AssemblyListDto>(
                 totalCount,
                 ObjectMapper.Map<List<AssemblyListDto>>(assemblyItems));
-
-                return data;
             }
             catch (Exception ex)
             {
