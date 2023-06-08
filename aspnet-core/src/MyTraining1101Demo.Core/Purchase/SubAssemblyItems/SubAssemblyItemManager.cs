@@ -37,14 +37,18 @@
                 var subAssemblyItemQuery = this._subAssemblyItemRepository.GetAllIncluding(x=> x.Assembly)
                     .Include(x=> x.Model)
                     .Where(x => !x.IsDeleted)
-                    .WhereIf(!input.SearchString.IsNullOrWhiteSpace(), item => item.Name.ToLower().Contains(input.SearchString.ToLower()));
+                    .Select(x=> new SubAssemblyItemListDto {
+                        Id = x.Id,
+                        Name = x.Name,
+                        ModelName = x.Model.Name,
+                        AssemblyName = x.Assembly.Name
+                    })
+                    .WhereIf(!input.SearchString.IsNullOrWhiteSpace(), item => item.Name.ToLower().Contains(input.SearchString.ToLower()) || item.ModelName.ToLower().Contains(input.SearchString.ToLower()) || item.AssemblyName.ToLower().Contains(input.SearchString.ToLower()));
 
                 var totalCount = await subAssemblyItemQuery.CountAsync();
                 var subAssemblyItems = await subAssemblyItemQuery.OrderBy(input.Sorting).PageBy(input).ToListAsync();
 
-                return new PagedResultDto<SubAssemblyItemListDto>(
-                totalCount,
-                ObjectMapper.Map<List<SubAssemblyItemListDto>>(subAssemblyItems));
+                return new PagedResultDto<SubAssemblyItemListDto>(totalCount,subAssemblyItems);
             }
             catch (Exception ex)
             {
