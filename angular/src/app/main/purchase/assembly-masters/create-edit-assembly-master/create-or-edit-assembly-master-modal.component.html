@@ -29,7 +29,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label>{{"Model" | localize}}</label>
-                        <select placeholder="Select Model" class="form-control" [(ngModel)]="assemblyMasterItem.modelId" name="modelId">
+                        <select placeholder="Select Model" class="form-control" [(ngModel)]="assemblyMasterItem.modelId" name="modelId" required>
                             <option *ngFor="let modelItem of modelList" value="{{ modelItem.id }}">
                                 {{ modelItem.name }}
                             </option>

@@ -34,7 +34,8 @@
         {
             try
             {
-                var subAssemblyItemQuery = this._subAssemblyItemRepository.GetAll()
+                var subAssemblyItemQuery = this._subAssemblyItemRepository.GetAllIncluding(x=> x.Assembly)
+                    .Include(x=> x.Model)
                     .Where(x => !x.IsDeleted)
                     .WhereIf(!input.SearchString.IsNullOrWhiteSpace(), item => item.Name.ToLower().Contains(input.SearchString.ToLower()));
 

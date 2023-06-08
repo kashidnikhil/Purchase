@@ -6,7 +6,10 @@ import {
     AssemblyServiceProxy,
     ModelDto,
     ModelServiceProxy,
-    ResponseDto
+    ResponseDto,
+    SubAssemblyItemDto,
+    SubAssemblyItemInputDto,
+    SubAssemblyItemServiceProxy
 } from '@shared/service-proxies/service-proxies';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { map as _map, filter as _filter } from 'lodash-es';
@@ -26,28 +29,33 @@ export class CreateOrEditSubAssemblyItemModalComponent extends AppComponentBase 
 
     active = false;
     saving = false;
-    assemblyMasterItem : AssemblyDto = new AssemblyDto();
+    subAssemblyItem : SubAssemblyItemDto = new SubAssemblyItemDto();
 
     modelList : ModelDto[] = [];
+    assemblyList: AssemblyDto[] = [];
     
     constructor(
         injector: Injector,
         private _modelService: ModelServiceProxy,
-        private _assemblyService : AssemblyServiceProxy
+        private _assemblyService : AssemblyServiceProxy,
+        private _subAssemblyItemService: SubAssemblyItemServiceProxy
     ) {
         super(injector);
     }
 
-    async show(assmeblyMasterId?: string) {
+    async show(subAssmeblyItemId?: string) {
         await this.loadDropdownList();
-        if (!assmeblyMasterId) {
-            this.assemblyMasterItem = new AssemblyDto({id : null, name: "", modelId : ""}); 
+        if (!subAssmeblyItemId) {
+            this.subAssemblyItem = new SubAssemblyItemDto({id : null, name: "", modelId : "",assemblyId:""}); 
             this.active = true;
             this.modal.show();
         }
         else{
-            this._assemblyService.getAssemblyById(assmeblyMasterId).subscribe((response : AssemblyDto)=> {
-                this.assemblyMasterItem = response;
+            this._subAssemblyItemService.getSubAssemblyItemById(subAssmeblyItemId).subscribe(async (response : SubAssemblyItemDto)=> {
+                if(response.modelId){
+                    await this.onModelChange(response.modelId);
+                }
+                this.subAssemblyItem = response;
                 this.active = true;
                 this.modal.show();
             });
@@ -62,17 +70,21 @@ export class CreateOrEditSubAssemblyItemModalComponent extends AppComponentBase 
         this.modelList = await this._modelService.getModelList().toPromise();
     }
 
+    async onModelChange(modelId: string){
+        this.assemblyList = await this._assemblyService.getAssemblyList(modelId).toPromise();
+    }
+
    
     onShown(): void {
         document.getElementById('name').focus();
     }
 
     save(): void {
-        let input = new AssemblyInputDto();
-        input = this.assemblyMasterItem;
+        let input = new SubAssemblyItemInputDto();
+        input = this.subAssemblyItem;
         this.saving = true;
-        this._assemblyService
-            .insertOrUpdateAssembly(input)
+        this._subAssemblyItemService
+            .insertOrUpdateSubAssemblyItem(input)
             .pipe(
                 finalize(() => {
                     this.saving = false;
@@ -92,6 +104,7 @@ export class CreateOrEditSubAssemblyItemModalComponent extends AppComponentBase 
     }
 
     close(): void {
+        this.assemblyList = [];
         this.active = false;
         this.modal.hide();
     }
