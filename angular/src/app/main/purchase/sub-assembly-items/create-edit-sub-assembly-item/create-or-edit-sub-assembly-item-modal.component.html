@@ -11,25 +11,20 @@
 >
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <form *ngIf="active" #subAssemblyItmForm="ngForm" novalidate (ngSubmit)="save()">
+            <form *ngIf="active && subAssemblyForm" [formGroup]="subAssemblyForm" novalidate (ngSubmit)="save()">
                 <div class="modal-header">
                     <h4 class="modal-title">
-                        <span *ngIf="subAssemblyItem.id">{{ 'EditSubAssemblyItem' | localize }}: {{ subAssemblyItem.name }}</span>
-                        <span *ngIf="!subAssemblyItem.id">{{ 'CreateNewSubAssemblyItem' | localize }}</span>
+                        <span *ngIf="subAssemblyForm.get('id').value">{{ 'EditSubAssemblyItem' | localize }}: {{ subAssemblyForm.get('name').value }}</span>
+                        <span *ngIf="!subAssemblyForm.get('id').value">{{ 'CreateNewSubAssemblyItem' | localize }}</span>
                     </h4>
-                    <button
-                        type="button"
-                        class="btn-close"
-                        (click)="close()"
-                        [attr.aria-label]="l('Close')"
-                        [disabled]="saving"
-                    >
+                    <button type="button" class="btn-close" (click)="close()" [attr.aria-label]="l('Close')"
+                    [disabled]="saving">
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
                         <label>{{"Model" | localize}}</label>
-                        <select placeholder="Select Model" class="form-control" [(ngModel)]="subAssemblyItem.modelId" (change)="onModelChange($event.target.value)" name="modelId" required>
+                        <select id="modelId" formControlName="modelId" name="modelId" placeholder="Select Model" class="form-control" (change)="onModelChange($event.target.value)">
                             <option *ngFor="let modelItem of modelList" value="{{ modelItem.id }}">
                                 {{ modelItem.name }}
                             </option>
@@ -37,7 +32,7 @@
                     </div>
                     <div class="form-group">
                         <label>{{"Assembly" | localize}}</label>
-                        <select placeholder="Select Model" class="form-control" [(ngModel)]="subAssemblyItem.assemblyId" name="assemblyId" required>
+                        <select id="assemblyId" formControlName="assemblyId" name="assemblyId" placeholder="Select Model" class="form-control">
                             <option *ngFor="let assemblyItem of assemblyList" value="{{ assemblyItem.id }}" required>
                                 {{ assemblyItem.name }}
                             </option>
@@ -45,28 +40,28 @@
                     </div>
                     <div class="form-group">
                         <label>{{"Name" | localize}}</label>
-                        <input #nameInput id="name" class="form-control" type="text" [(ngModel)]="subAssemblyItem.name" name="name" required>
+                        <input #nameInput formControlName="name" id="name" class="form-control" type="text" name="name">
                     </div>
+                    <div class="form-group mt-5">
+                        <label>{{"Items" | localize}}</label> &nbsp;&nbsp;
+                        
+                        <p-multiSelect [options]="itemMasterList" formControlName="subAssemblyItems"  optionLabel="itemName" display="chip"></p-multiSelect>
+                    </div>
+                    
+
                 </div>
-                <div class="modal-footer">
-                    <button
-                        [disabled]="saving"
-                        type="button"
-                        class="btn btn-light-primary font-weight-bold"
-                        (click)="close()"
-                    >
+                <div class="modal-footer" >
+                    <div>
+                        <button [disabled]="saving" type="button" class="btn btn-light-primary font-weight-bold"
+                        (click)="close()">
                         {{ 'Cancel' | localize }}
                     </button>
-                    <button
-                        type="submit"
-                        class="btn btn-primary font-weight-bold"
-                        [disabled]="!subAssemblyItmForm.form.valid"
-                        [buttonBusy]="saving"
-                        [busyText]="l('SavingWithThreeDot')"
-                    >
+                    <button type="submit" class="btn btn-primary font-weight-bold" [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')">
                         <i class="fa fa-save"></i>
                         <span>{{ 'Save' | localize }}</span>
                     </button>
+                    </div>
                 </div>
             </form>
         </div>

@@ -34705,6 +34705,7 @@ export class SubAssemblyDto implements ISubAssemblyDto {
     name!: string | undefined;
     modelId!: string | undefined;
     assemblyId!: string | undefined;
+    subAssemblyItems!: SubAssemblyItemDto[] | undefined;
 
     constructor(data?: ISubAssemblyDto) {
         if (data) {
@@ -34721,6 +34722,11 @@ export class SubAssemblyDto implements ISubAssemblyDto {
             this.name = _data["name"];
             this.modelId = _data["modelId"];
             this.assemblyId = _data["assemblyId"];
+            if (Array.isArray(_data["subAssemblyItems"])) {
+                this.subAssemblyItems = [] as any;
+                for (let item of _data["subAssemblyItems"])
+                    this.subAssemblyItems!.push(SubAssemblyItemDto.fromJS(item));
+            }
         }
     }
 
@@ -34737,6 +34743,11 @@ export class SubAssemblyDto implements ISubAssemblyDto {
         data["name"] = this.name;
         data["modelId"] = this.modelId;
         data["assemblyId"] = this.assemblyId;
+        if (Array.isArray(this.subAssemblyItems)) {
+            data["subAssemblyItems"] = [];
+            for (let item of this.subAssemblyItems)
+                data["subAssemblyItems"].push(item.toJSON());
+        }
         return data;
     }
 }
@@ -34746,6 +34757,7 @@ export interface ISubAssemblyDto {
     name: string | undefined;
     modelId: string | undefined;
     assemblyId: string | undefined;
+    subAssemblyItems: SubAssemblyItemDto[] | undefined;
 }
 
 export class SubAssemblyInputDto implements ISubAssemblyInputDto {
@@ -34753,6 +34765,7 @@ export class SubAssemblyInputDto implements ISubAssemblyInputDto {
     name!: string | undefined;
     modelId!: string | undefined;
     assemblyId!: string | undefined;
+    subAssemblyItems!: SubAssemblyItemInputDto[] | undefined;
 
     constructor(data?: ISubAssemblyInputDto) {
         if (data) {
@@ -34769,6 +34782,11 @@ export class SubAssemblyInputDto implements ISubAssemblyInputDto {
             this.name = _data["name"];
             this.modelId = _data["modelId"];
             this.assemblyId = _data["assemblyId"];
+            if (Array.isArray(_data["subAssemblyItems"])) {
+                this.subAssemblyItems = [] as any;
+                for (let item of _data["subAssemblyItems"])
+                    this.subAssemblyItems!.push(SubAssemblyItemInputDto.fromJS(item));
+            }
         }
     }
 
@@ -34785,6 +34803,11 @@ export class SubAssemblyInputDto implements ISubAssemblyInputDto {
         data["name"] = this.name;
         data["modelId"] = this.modelId;
         data["assemblyId"] = this.assemblyId;
+        if (Array.isArray(this.subAssemblyItems)) {
+            data["subAssemblyItems"] = [];
+            for (let item of this.subAssemblyItems)
+                data["subAssemblyItems"].push(item.toJSON());
+        }
         return data;
     }
 }
@@ -34794,6 +34817,123 @@ export interface ISubAssemblyInputDto {
     name: string | undefined;
     modelId: string | undefined;
     assemblyId: string | undefined;
+    subAssemblyItems: SubAssemblyItemInputDto[] | undefined;
+}
+
+export class SubAssemblyItemDto implements ISubAssemblyItemDto {
+    id!: string;
+    itemId!: string | undefined;
+    itemName!: string | undefined;
+    genericName!: string | undefined;
+    unitName!: string | undefined;
+    make!: string | undefined;
+    subAssemblyName!: string | undefined;
+    existingItemId!: number | undefined;
+    categoryId!: number | undefined;
+    subAssemblyId!: string | undefined;
+
+    constructor(data?: ISubAssemblyItemDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.itemId = _data["itemId"];
+            this.itemName = _data["itemName"];
+            this.genericName = _data["genericName"];
+            this.unitName = _data["unitName"];
+            this.make = _data["make"];
+            this.subAssemblyName = _data["subAssemblyName"];
+            this.existingItemId = _data["existingItemId"];
+            this.categoryId = _data["categoryId"];
+            this.subAssemblyId = _data["subAssemblyId"];
+        }
+    }
+
+    static fromJS(data: any): SubAssemblyItemDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new SubAssemblyItemDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["itemId"] = this.itemId;
+        data["itemName"] = this.itemName;
+        data["genericName"] = this.genericName;
+        data["unitName"] = this.unitName;
+        data["make"] = this.make;
+        data["subAssemblyName"] = this.subAssemblyName;
+        data["existingItemId"] = this.existingItemId;
+        data["categoryId"] = this.categoryId;
+        data["subAssemblyId"] = this.subAssemblyId;
+        return data;
+    }
+}
+
+export interface ISubAssemblyItemDto {
+    id: string;
+    itemId: string | undefined;
+    itemName: string | undefined;
+    genericName: string | undefined;
+    unitName: string | undefined;
+    make: string | undefined;
+    subAssemblyName: string | undefined;
+    existingItemId: number | undefined;
+    categoryId: number | undefined;
+    subAssemblyId: string | undefined;
+}
+
+export class SubAssemblyItemInputDto implements ISubAssemblyItemInputDto {
+    id!: string | undefined;
+    subAssemblyId!: string | undefined;
+    itemId!: string | undefined;
+
+    constructor(data?: ISubAssemblyItemInputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.subAssemblyId = _data["subAssemblyId"];
+            this.itemId = _data["itemId"];
+        }
+    }
+
+    static fromJS(data: any): SubAssemblyItemInputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new SubAssemblyItemInputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["subAssemblyId"] = this.subAssemblyId;
+        data["itemId"] = this.itemId;
+        return data;
+    }
+}
+
+export interface ISubAssemblyItemInputDto {
+    id: string | undefined;
+    subAssemblyId: string | undefined;
+    itemId: string | undefined;
 }
 
 export class SubAssemblyListDto implements ISubAssemblyListDto {

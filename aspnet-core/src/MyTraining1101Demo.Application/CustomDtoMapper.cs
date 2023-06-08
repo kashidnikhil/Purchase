@@ -86,6 +86,8 @@ using MyTraining1101Demo.Purchase.POGeneralTerms;
 using MyTraining1101Demo.Purchase.POGeneralTerms.Dto;
 using MyTraining1101Demo.Purchase.SubAssemblies;
 using MyTraining1101Demo.Purchase.SubAssemblies.Dto;
+using MyTraining1101Demo.Purchase.SubAssemblyItems;
+using MyTraining1101Demo.Purchase.SubAssemblyItems.Dto;
 using MyTraining1101Demo.Purchase.SupplierCategories;
 using MyTraining1101Demo.Purchase.SupplierCategories.Dto;
 using MyTraining1101Demo.Purchase.Suppliers.Dto.MappedSupplierCategories;
@@ -374,6 +376,13 @@ namespace MyTraining1101Demo
             configuration.CreateMap<SubAssembly, SubAssemblyListDto>()
                 .ForMember(dto => dto.ModelName, options => options.MapFrom(x => x.Model.Name))
                 .ForMember(dto => dto.AssemblyName, options => options.MapFrom(x => x.Assembly.Name))
+                .ReverseMap();
+
+
+            configuration.CreateMap<SubAssemblyItem, SubAssemblyItemInputDto>().ReverseMap();
+            configuration.CreateMap<SubAssemblyItem, SubAssemblyItemDto>()
+                .ForMember(dto => dto.SubAssemblyName, options => options.MapFrom(x => x.SubAssembly.Name))
+                .ForMember(dto => dto.ItemName, options => options.MapFrom(x => x.Item.ItemName))
                 .ReverseMap();
             /* ADD YOUR OWN CUSTOM AUTOMAPPER MAPPINGS HERE */
         }
