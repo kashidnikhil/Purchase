@@ -1,14 +1,14 @@
 <div [@routerTransition]>
     <div class="content d-flex flex-column flex-column-fluid">
-        <sub-header [title]="'AssemblyMasters' | localize" [description]="'AssemblyMastersHeaderInfo' | localize">
+        <sub-header [title]="'SubAssemblyItems' | localize" [description]="'SubAssemblyItemsHeaderInfo' | localize">
             <div role="actions">
                 <button
-                    (click)="createAssemblyMaster()"
+                    (click)="createSubAssemblyItem()"
                     class="btn btn-primary"
                 >
                 <!-- *ngIf="'Pages.Administration.Users.Create' | permission" -->
                     <i class="fa fa-plus"></i>
-                    {{ 'CreateNewAssemblyMaster' | localize }}
+                    {{ 'CreateNewSubAssemblyItem' | localize }}
                 </button>
             </div>
         </sub-header>
@@ -123,7 +123,7 @@
                                                         <a
                                                             href="javascript:;"
                                                             class="dropdown-item"
-                                                            (click)="createOrEditAssemblyMasterModal.show(record.id)"
+                                                            (click)="createOrEditSubAssemblyItemModal.show(record.id)"
                                                         >
                                                             {{ 'Edit' | localize }}
                                                         </a>
@@ -140,7 +140,7 @@
                                                         <a
                                                             href="javascript:;"
                                                             class="dropdown-item"
-                                                            (click)="deleteAssembly(record)"
+                                                            (click)="deleteSubAssemblyItem(record)"
                                                         >
                                                             {{ 'Delete' | localize }}
                                                         </a>
@@ -159,7 +159,7 @@
                                         <td style="width: 100px">
                                             <span class="p-column-title">{{ 'Assembly' | localize }}</span>
                                             {{ record.assemblyName }}
-                                        </td>
+                                        </td> 
                                     </tr>
                                 </ng-template>
                             </p-table>
@@ -184,6 +184,7 @@
                 </div>
             </div>
         </div>
-        <!-- <create-edit-assembly-master-modal #createOrEditAssemblyMasterModal (modalSave)="getSubAssemblyItems()" (restoreAssemblyMaster)="restoreAssembly($event)"></create-edit-assembly-master-modal> -->
+      ['
+      '  <create-edit-sub-assembly-item-modal #createOrEditSubAssemblyItemModal (modalSave)="getSubAssemblyItems()" (restoreSubAssemblyItem)="restoreSubAssemblyItem($event)"></create-edit-sub-assembly-item-modal>
     </div>
 </div>

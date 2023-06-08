@@ -8,11 +8,12 @@ import { MultiSelectModule } from 'primeng/multiselect';
 // import { CreateOrEditAssemblyMasterModalComponent } from "./create-edit-assembly-master/create-or-edit-assembly-master-modal.component";
 import { ItemMockService } from "@app/shared/common/mock-data-services/item.mock.service";
 import { SubAssemblyItemListComponent } from "./sub-assembly-item-list/sub-assembly-item-list.component";
+import { CreateOrEditSubAssemblyItemModalComponent } from "./create-edit-sub-assembly-item/create-or-edit-sub-assembly-item-modal.component";
 
 @NgModule({
     declarations: [
         SubAssemblyItemListComponent,
-        // CreateOrEditAssemblyMasterModalComponent
+        CreateOrEditSubAssemblyItemModalComponent
     ],
     imports: [
         AppSharedModule,  

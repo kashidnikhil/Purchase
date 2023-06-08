@@ -2,13 +2,12 @@ import { Component, Injector, ViewChild, ViewEncapsulation, AfterViewInit } from
 import { ActivatedRoute } from '@angular/router';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { AppComponentBase } from '@shared/common/app-component-base';
-import { AssemblyDto, AssemblyServiceProxy, LegalEntityDto, LegalEntityServiceProxy, ResponseDto, SubAssemblyItemDto, SubAssemblyItemServiceProxy, UnitDto, UnitServiceProxy } from '@shared/service-proxies/service-proxies';
+import { ResponseDto, SubAssemblyItemDto, SubAssemblyItemServiceProxy } from '@shared/service-proxies/service-proxies';
 import { LazyLoadEvent } from 'primeng/api';
 import { Paginator } from 'primeng/paginator';
 import { Table } from 'primeng/table';
 import { finalize } from 'rxjs/operators';
-// import { CreateOrEditAssemblyMasterModalComponent } from '../create-edit-assembly-master/create-or-edit-assembly-master-modal.component';
-// import { CreateOrEditLegalEntityModalComponent } from '../create-edit-legal-entity/create-or-edit-legal-entity-modal.component';
+import { CreateOrEditSubAssemblyItemModalComponent } from '../create-edit-sub-assembly-item/create-or-edit-sub-assembly-item-modal.component';
 
 @Component({
     templateUrl: './sub-assembly-item-list.component.html',
@@ -17,7 +16,7 @@ import { finalize } from 'rxjs/operators';
     animations: [appModuleAnimation()],
 })
 export class SubAssemblyItemListComponent extends AppComponentBase implements AfterViewInit {
-    @ViewChild('createOrEditAssemblyMasterModal', { static: true }) createOrEditAssemblyMasterModal: any; //CreateOrEditAssemblyMasterModalComponent;
+    @ViewChild('createOrEditSubAssemblyItemModal', { static: true }) createOrEditAssemblyMasterModal: CreateOrEditSubAssemblyItemModalComponent;
     @ViewChild('dataTable', { static: true }) dataTable: Table;
     @ViewChild('paginator', { static: true }) paginator: Paginator;
     
@@ -63,11 +62,11 @@ export class SubAssemblyItemListComponent extends AppComponentBase implements Af
         this.paginator.changePage(this.paginator.getPage());
     }
 
-    createAssemblyMaster(): void {
+    createSubAssemblyItem(): void {
         this.createOrEditAssemblyMasterModal.show();
     }
 
-    deleteAssembly(subAssemblyItem: SubAssemblyItemDto): void {
+    deleteSubAssemblyItem(subAssemblyItem: SubAssemblyItemDto): void {
         this.message.confirm(this.l('UnitDeleteWarningMessage', subAssemblyItem.name), this.l('AreYouSure'), (isConfirmed) => {
             if (isConfirmed) {
                 this._subAssemblyItemService.deleteSubAssemblyItem(subAssemblyItem.id).subscribe(() => {
@@ -78,29 +77,29 @@ export class SubAssemblyItemListComponent extends AppComponentBase implements Af
         });
     }
 
-    restoreAssembly(subAssemblyItemResponse: ResponseDto):void {
+    restoreSubAssemblyItem(subAssemblyItemResponse: ResponseDto):void {
         if(subAssemblyItemResponse.id == null){
             if(subAssemblyItemResponse.isExistingDataAlreadyDeleted){
-                this.message.confirm(this.l('AssemblyMasterRestoreMessage', subAssemblyItemResponse.name), this.l('AreYouSure'), async (isConfirmed) => {
+                this.message.confirm(this.l('SubAssemblyItemRestoreMessage', subAssemblyItemResponse.name), this.l('AreYouSure'), async (isConfirmed) => {
                     if (isConfirmed) {
                         this._subAssemblyItemService.restoreSubAssemblyItem(subAssemblyItemResponse.restoringItemId).subscribe(() => {
                             this.reloadPage();
-                            this.notify.success(this.l('AssemblyMasterSuccessfullyRestored'));
+                            this.notify.success(this.l('SubAssemblyItemSuccessfullyRestored'));
                         });
                     }
                 });
             }
             else{
-                this.notify.error(this.l('ExistingAssemblyMasterErrorMessage',subAssemblyItemResponse.name));
+                this.notify.error(this.l('ExistingSubAssemblyItemErrorMessage',subAssemblyItemResponse.name));
             }
         }
         else{
             if(subAssemblyItemResponse.isExistingDataAlreadyDeleted){
-                this.message.confirm(this.l('NewAssemblyMasterErrorMessage', subAssemblyItemResponse.name), this.l('AreYouSure'), async (isConfirmed) => {
+                this.message.confirm(this.l('NewSubAssemblyItemErrorMessage', subAssemblyItemResponse.name), this.l('AreYouSure'), async (isConfirmed) => {
                     if (isConfirmed) {
                         this._subAssemblyItemService.restoreSubAssemblyItem(subAssemblyItemResponse.restoringItemId).subscribe(() => {
                             this.reloadPage();
-                            this.notify.success(this.l('AssemblyMasterSuccessfullyRestored'));
+                            this.notify.success(this.l('SubAssemblyItemSuccessfullyRestored'));
                         });
                     }
                 });
