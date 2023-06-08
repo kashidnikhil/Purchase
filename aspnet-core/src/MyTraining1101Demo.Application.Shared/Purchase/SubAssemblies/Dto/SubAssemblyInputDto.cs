@@ -1,9 +1,9 @@
-﻿namespace MyTraining1101Demo.Purchase.SubAssemblyItems.Dto
+﻿namespace MyTraining1101Demo.Purchase.SubAssemblies.Dto
 {
     using System;
-    public class SubAssemblyItemDto
+    public class SubAssemblyInputDto
     {
-        public Guid Id { get; set; }
+        public Guid? Id { get; set; }
         public string Name { get; set; }
 
         public Guid? ModelId { get; set; }

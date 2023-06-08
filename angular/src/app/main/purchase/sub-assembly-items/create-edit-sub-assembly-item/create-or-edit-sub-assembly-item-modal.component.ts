@@ -7,9 +7,9 @@ import {
     ModelDto,
     ModelServiceProxy,
     ResponseDto,
-    SubAssemblyItemDto,
-    SubAssemblyItemInputDto,
-    SubAssemblyItemServiceProxy
+    SubAssemblyDto,
+    SubAssemblyInputDto,
+    SubAssemblyServiceProxy
 } from '@shared/service-proxies/service-proxies';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { map as _map, filter as _filter } from 'lodash-es';
@@ -29,7 +29,7 @@ export class CreateOrEditSubAssemblyItemModalComponent extends AppComponentBase 
 
     active = false;
     saving = false;
-    subAssemblyItem : SubAssemblyItemDto = new SubAssemblyItemDto();
+    subAssemblyItem : SubAssemblyDto = new SubAssemblyDto();
 
     modelList : ModelDto[] = [];
     assemblyList: AssemblyDto[] = [];
@@ -38,7 +38,7 @@ export class CreateOrEditSubAssemblyItemModalComponent extends AppComponentBase 
         injector: Injector,
         private _modelService: ModelServiceProxy,
         private _assemblyService : AssemblyServiceProxy,
-        private _subAssemblyItemService: SubAssemblyItemServiceProxy
+        private _subAssemblyService: SubAssemblyServiceProxy
     ) {
         super(injector);
     }
@@ -46,12 +46,12 @@ export class CreateOrEditSubAssemblyItemModalComponent extends AppComponentBase 
     async show(subAssmeblyItemId?: string) {
         await this.loadDropdownList();
         if (!subAssmeblyItemId) {
-            this.subAssemblyItem = new SubAssemblyItemDto({id : null, name: "", modelId : "",assemblyId:""}); 
+            this.subAssemblyItem = new SubAssemblyDto({id : null, name: "", modelId : "",assemblyId:""}); 
             this.active = true;
             this.modal.show();
         }
         else{
-            this._subAssemblyItemService.getSubAssemblyItemById(subAssmeblyItemId).subscribe(async (response : SubAssemblyItemDto)=> {
+            this._subAssemblyService.getSubAssemblyById(subAssmeblyItemId).subscribe(async (response : SubAssemblyDto)=> {
                 if(response.modelId){
                     await this.onModelChange(response.modelId);
                 }
@@ -80,11 +80,11 @@ export class CreateOrEditSubAssemblyItemModalComponent extends AppComponentBase 
     }
 
     save(): void {
-        let input = new SubAssemblyItemInputDto();
+        let input = new SubAssemblyInputDto();
         input = this.subAssemblyItem;
         this.saving = true;
-        this._subAssemblyItemService
-            .insertOrUpdateSubAssemblyItem(input)
+        this._subAssemblyService
+            .insertOrUpdateSubAssembly(input)
             .pipe(
                 finalize(() => {
                     this.saving = false;

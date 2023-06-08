@@ -1,4 +1,4 @@
-﻿namespace MyTraining1101Demo.Purchase.SubAssemblyItems
+﻿namespace MyTraining1101Demo.Purchase.SubAssemblies
 {
     using Abp.Domain.Entities.Auditing;
     using MyTraining1101Demo.Purchase.Assemblies;
@@ -6,8 +6,8 @@
     using System;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    [Table("SubAssemblyItems")]
-    public class SubAssemblyItem : FullAuditedEntity<Guid>
+    [Table("SubAssemblies")]
+    public class SubAssembly : FullAuditedEntity<Guid>
     {
         public string Name { get; set; }
 

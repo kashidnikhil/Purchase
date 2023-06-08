@@ -68,7 +68,7 @@ import { ZeroTemplateHttpConfigurationService } from './zero-template-http-confi
         ApiServiceProxies.CompanyServiceProxy,
         ApiServiceProxies.ItemServiceProxy,
         ApiServiceProxies.AssemblyServiceProxy,
-        ApiServiceProxies.SubAssemblyItemServiceProxy,
+        ApiServiceProxies.SubAssemblyServiceProxy,
         { provide: RefreshTokenService, useClass: ZeroRefreshTokenService },
         { provide: AbpHttpConfigurationService, useClass: ZeroTemplateHttpConfigurationService },
         { provide: HTTP_INTERCEPTORS, useClass: AbpHttpInterceptor, multi: true },

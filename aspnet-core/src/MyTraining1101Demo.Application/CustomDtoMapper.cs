@@ -84,8 +84,8 @@ using MyTraining1101Demo.Purchase.Models;
 using MyTraining1101Demo.Purchase.Models.Dto;
 using MyTraining1101Demo.Purchase.POGeneralTerms;
 using MyTraining1101Demo.Purchase.POGeneralTerms.Dto;
-using MyTraining1101Demo.Purchase.SubAssemblyItems;
-using MyTraining1101Demo.Purchase.SubAssemblyItems.Dto;
+using MyTraining1101Demo.Purchase.SubAssemblies;
+using MyTraining1101Demo.Purchase.SubAssemblies.Dto;
 using MyTraining1101Demo.Purchase.SupplierCategories;
 using MyTraining1101Demo.Purchase.SupplierCategories.Dto;
 using MyTraining1101Demo.Purchase.Suppliers.Dto.MappedSupplierCategories;
@@ -369,9 +369,9 @@ namespace MyTraining1101Demo
                 .ForMember(dto => dto.ModelName, options => options.MapFrom(x => x.Model.Name))
                 .ReverseMap();
 
-            configuration.CreateMap<SubAssemblyItem, SubAssemblyItemInputDto>().ReverseMap();
-            configuration.CreateMap<SubAssemblyItem, SubAssemblyItemDto>().ReverseMap();
-            configuration.CreateMap<SubAssemblyItem, SubAssemblyItemListDto>()
+            configuration.CreateMap<SubAssembly, SubAssemblyInputDto>().ReverseMap();
+            configuration.CreateMap<SubAssembly, SubAssemblyDto>().ReverseMap();
+            configuration.CreateMap<SubAssembly, SubAssemblyListDto>()
                 .ForMember(dto => dto.ModelName, options => options.MapFrom(x => x.Model.Name))
                 .ForMember(dto => dto.AssemblyName, options => options.MapFrom(x => x.Assembly.Name))
                 .ReverseMap();

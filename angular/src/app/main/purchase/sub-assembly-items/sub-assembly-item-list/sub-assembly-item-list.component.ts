@@ -2,7 +2,7 @@ import { Component, Injector, ViewChild, ViewEncapsulation, AfterViewInit } from
 import { ActivatedRoute } from '@angular/router';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { AppComponentBase } from '@shared/common/app-component-base';
-import { ResponseDto, SubAssemblyItemDto, SubAssemblyItemServiceProxy } from '@shared/service-proxies/service-proxies';
+import { ResponseDto, SubAssemblyDto, SubAssemblyServiceProxy } from '@shared/service-proxies/service-proxies';
 import { LazyLoadEvent } from 'primeng/api';
 import { Paginator } from 'primeng/paginator';
 import { Table } from 'primeng/table';
@@ -25,7 +25,7 @@ export class SubAssemblyItemListComponent extends AppComponentBase implements Af
 
     constructor(
         injector: Injector,
-        private _subAssemblyItemService: SubAssemblyItemServiceProxy,
+        private _subAssemblyService: SubAssemblyServiceProxy,
         private _activatedRoute: ActivatedRoute
     ) {
         super(injector);
@@ -43,8 +43,8 @@ export class SubAssemblyItemListComponent extends AppComponentBase implements Af
         }
 
         this.primengTableHelper.showLoadingIndicator();
-        this._subAssemblyItemService
-            .getSubAssemblyItems(
+        this._subAssemblyService
+            .getSubAssemblies(
                     this.filterText,
                     this.primengTableHelper.getSorting(this.dataTable),
                     this.primengTableHelper.getMaxResultCount(this.paginator, event),
@@ -66,10 +66,10 @@ export class SubAssemblyItemListComponent extends AppComponentBase implements Af
         this.createOrEditAssemblyMasterModal.show();
     }
 
-    deleteSubAssemblyItem(subAssemblyItem: SubAssemblyItemDto): void {
+    deleteSubAssemblyItem(subAssemblyItem: SubAssemblyDto): void {
         this.message.confirm(this.l('UnitDeleteWarningMessage', subAssemblyItem.name), this.l('AreYouSure'), (isConfirmed) => {
             if (isConfirmed) {
-                this._subAssemblyItemService.deleteSubAssemblyItem(subAssemblyItem.id).subscribe(() => {
+                this._subAssemblyService.deleteSubAssembly(subAssemblyItem.id).subscribe(() => {
                     this.reloadPage();
                     this.notify.success(this.l('SuccessfullyDeleted'));
                 });
@@ -77,12 +77,12 @@ export class SubAssemblyItemListComponent extends AppComponentBase implements Af
         });
     }
 
-    restoreSubAssemblyItem(subAssemblyItemResponse: ResponseDto):void {
-        if(subAssemblyItemResponse.id == null){
-            if(subAssemblyItemResponse.isExistingDataAlreadyDeleted){
-                this.message.confirm(this.l('SubAssemblyItemRestoreMessage', subAssemblyItemResponse.name), this.l('AreYouSure'), async (isConfirmed) => {
+    restoreSubAssemblyItem(subAssemblyResponse: ResponseDto):void {
+        if(subAssemblyResponse.id == null){
+            if(subAssemblyResponse.isExistingDataAlreadyDeleted){
+                this.message.confirm(this.l('SubAssemblyItemRestoreMessage', subAssemblyResponse.name), this.l('AreYouSure'), async (isConfirmed) => {
                     if (isConfirmed) {
-                        this._subAssemblyItemService.restoreSubAssemblyItem(subAssemblyItemResponse.restoringItemId).subscribe(() => {
+                        this._subAssemblyService.restoreSubAssembly(subAssemblyResponse.restoringItemId).subscribe(() => {
                             this.reloadPage();
                             this.notify.success(this.l('SubAssemblyItemSuccessfullyRestored'));
                         });
@@ -90,14 +90,14 @@ export class SubAssemblyItemListComponent extends AppComponentBase implements Af
                 });
             }
             else{
-                this.notify.error(this.l('ExistingSubAssemblyItemErrorMessage',subAssemblyItemResponse.name));
+                this.notify.error(this.l('ExistingSubAssemblyItemErrorMessage',subAssemblyResponse.name));
             }
         }
         else{
-            if(subAssemblyItemResponse.isExistingDataAlreadyDeleted){
-                this.message.confirm(this.l('NewSubAssemblyItemErrorMessage', subAssemblyItemResponse.name), this.l('AreYouSure'), async (isConfirmed) => {
+            if(subAssemblyResponse.isExistingDataAlreadyDeleted){
+                this.message.confirm(this.l('NewSubAssemblyItemErrorMessage', subAssemblyResponse.name), this.l('AreYouSure'), async (isConfirmed) => {
                     if (isConfirmed) {
-                        this._subAssemblyItemService.restoreSubAssemblyItem(subAssemblyItemResponse.restoringItemId).subscribe(() => {
+                        this._subAssemblyService.restoreSubAssembly(subAssemblyResponse.restoringItemId).subscribe(() => {
                             this.reloadPage();
                             this.notify.success(this.l('SubAssemblyItemSuccessfullyRestored'));
                         });
@@ -105,7 +105,7 @@ export class SubAssemblyItemListComponent extends AppComponentBase implements Af
                 });
             }   
             else{
-                this.notify.error(this.l('ExistingAssemblyMasterErrorMessage',subAssemblyItemResponse.name));
+                this.notify.error(this.l('ExistingAssemblyMasterErrorMessage',subAssemblyResponse.name));
             }
         }
     }

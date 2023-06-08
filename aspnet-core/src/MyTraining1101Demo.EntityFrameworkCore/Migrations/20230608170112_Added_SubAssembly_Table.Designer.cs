@@ -12,8 +12,8 @@ using MyTraining1101Demo.EntityFrameworkCore;
 namespace MyTraining1101Demo.Migrations
 {
     [DbContext(typeof(MyTraining1101DemoDbContext))]
-    [Migration("20230607174512_Added_Sub_Assemblies_Table")]
-    partial class Added_Sub_Assemblies_Table
+    [Migration("20230608170112_Added_SubAssembly_Table")]
+    partial class Added_SubAssembly_Table
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -3188,7 +3188,7 @@ namespace MyTraining1101Demo.Migrations
                     b.ToTable("POGeneralTerm");
                 });
 
-            modelBuilder.Entity("MyTraining1101Demo.Purchase.SubAssemblyItems.SubAssemblyItem", b =>
+            modelBuilder.Entity("MyTraining1101Demo.Purchase.SubAssemblies.SubAssembly", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -3230,7 +3230,7 @@ namespace MyTraining1101Demo.Migrations
 
                     b.HasIndex("ModelId");
 
-                    b.ToTable("SubAssemblyItems");
+                    b.ToTable("SubAssemblies");
                 });
 
             modelBuilder.Entity("MyTraining1101Demo.Purchase.SupplierCategories.SupplierCategory", b =>
@@ -4134,7 +4134,7 @@ namespace MyTraining1101Demo.Migrations
                     b.Navigation("ItemSpares");
                 });
 
-            modelBuilder.Entity("MyTraining1101Demo.Purchase.SubAssemblyItems.SubAssemblyItem", b =>
+            modelBuilder.Entity("MyTraining1101Demo.Purchase.SubAssemblies.SubAssembly", b =>
                 {
                     b.HasOne("MyTraining1101Demo.Purchase.Assemblies.Assembly", "Assembly")
                         .WithMany()

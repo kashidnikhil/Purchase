@@ -1,8 +1,8 @@
-﻿namespace MyTraining1101Demo.Purchase.SubAssemblyItems.Dto
+﻿namespace MyTraining1101Demo.Purchase.SubAssemblies.Dto
 {
     using Abp.Runtime.Validation;
     using MyTraining1101Demo.Dto;
-    public class SubAssemblyItemSearchDto : PagedAndSortedInputDto, IShouldNormalize
+    public class SubAssemblySearchDto : PagedAndSortedInputDto, IShouldNormalize
     {
         public string SearchString { get; set; }
 

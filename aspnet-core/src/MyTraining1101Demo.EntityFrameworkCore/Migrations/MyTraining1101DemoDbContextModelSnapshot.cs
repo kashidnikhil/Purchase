@@ -3186,7 +3186,7 @@ namespace MyTraining1101Demo.Migrations
                     b.ToTable("POGeneralTerm");
                 });
 
-            modelBuilder.Entity("MyTraining1101Demo.Purchase.SubAssemblyItems.SubAssemblyItem", b =>
+            modelBuilder.Entity("MyTraining1101Demo.Purchase.SubAssemblies.SubAssembly", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -3228,7 +3228,7 @@ namespace MyTraining1101Demo.Migrations
 
                     b.HasIndex("ModelId");
 
-                    b.ToTable("SubAssemblyItems");
+                    b.ToTable("SubAssemblies");
                 });
 
             modelBuilder.Entity("MyTraining1101Demo.Purchase.SupplierCategories.SupplierCategory", b =>
@@ -4132,7 +4132,7 @@ namespace MyTraining1101Demo.Migrations
                     b.Navigation("ItemSpares");
                 });
 
-            modelBuilder.Entity("MyTraining1101Demo.Purchase.SubAssemblyItems.SubAssemblyItem", b =>
+            modelBuilder.Entity("MyTraining1101Demo.Purchase.SubAssemblies.SubAssembly", b =>
                 {
                     b.HasOne("MyTraining1101Demo.Purchase.Assemblies.Assembly", "Assembly")
                         .WithMany()

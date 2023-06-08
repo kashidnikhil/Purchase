@@ -13423,7 +13423,7 @@ export class StripePaymentServiceProxy {
 }
 
 @Injectable()
-export class SubAssemblyItemServiceProxy {
+export class SubAssemblyServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
@@ -13440,8 +13440,8 @@ export class SubAssemblyItemServiceProxy {
      * @param skipCount (optional) 
      * @return Success
      */
-    getSubAssemblyItems(searchString: string | undefined, sorting: string | undefined, maxResultCount: number | undefined, skipCount: number | undefined): Observable<PagedResultDtoOfSubAssemblyItemListDto> {
-        let url_ = this.baseUrl + "/api/services/app/SubAssemblyItem/GetSubAssemblyItems?";
+    getSubAssemblies(searchString: string | undefined, sorting: string | undefined, maxResultCount: number | undefined, skipCount: number | undefined): Observable<PagedResultDtoOfSubAssemblyListDto> {
+        let url_ = this.baseUrl + "/api/services/app/SubAssembly/GetSubAssemblies?";
         if (searchString === null)
             throw new Error("The parameter 'searchString' cannot be null.");
         else if (searchString !== undefined)
@@ -13469,20 +13469,20 @@ export class SubAssemblyItemServiceProxy {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetSubAssemblyItems(response_);
+            return this.processGetSubAssemblies(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetSubAssemblyItems(response_ as any);
+                    return this.processGetSubAssemblies(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<PagedResultDtoOfSubAssemblyItemListDto>;
+                    return _observableThrow(e) as any as Observable<PagedResultDtoOfSubAssemblyListDto>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<PagedResultDtoOfSubAssemblyItemListDto>;
+                return _observableThrow(response_) as any as Observable<PagedResultDtoOfSubAssemblyListDto>;
         }));
     }
 
-    protected processGetSubAssemblyItems(response: HttpResponseBase): Observable<PagedResultDtoOfSubAssemblyItemListDto> {
+    protected processGetSubAssemblies(response: HttpResponseBase): Observable<PagedResultDtoOfSubAssemblyListDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -13493,7 +13493,7 @@ export class SubAssemblyItemServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = PagedResultDtoOfSubAssemblyItemListDto.fromJS(resultData200);
+            result200 = PagedResultDtoOfSubAssemblyListDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -13501,15 +13501,15 @@ export class SubAssemblyItemServiceProxy {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<PagedResultDtoOfSubAssemblyItemListDto>(null as any);
+        return _observableOf<PagedResultDtoOfSubAssemblyListDto>(null as any);
     }
 
     /**
      * @param body (optional) 
      * @return Success
      */
-    insertOrUpdateSubAssemblyItem(body: SubAssemblyItemInputDto | undefined): Observable<ResponseDto> {
-        let url_ = this.baseUrl + "/api/services/app/SubAssemblyItem/InsertOrUpdateSubAssemblyItem";
+    insertOrUpdateSubAssembly(body: SubAssemblyInputDto | undefined): Observable<ResponseDto> {
+        let url_ = this.baseUrl + "/api/services/app/SubAssembly/InsertOrUpdateSubAssembly";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -13525,11 +13525,11 @@ export class SubAssemblyItemServiceProxy {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processInsertOrUpdateSubAssemblyItem(response_);
+            return this.processInsertOrUpdateSubAssembly(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processInsertOrUpdateSubAssemblyItem(response_ as any);
+                    return this.processInsertOrUpdateSubAssembly(response_ as any);
                 } catch (e) {
                     return _observableThrow(e) as any as Observable<ResponseDto>;
                 }
@@ -13538,7 +13538,7 @@ export class SubAssemblyItemServiceProxy {
         }));
     }
 
-    protected processInsertOrUpdateSubAssemblyItem(response: HttpResponseBase): Observable<ResponseDto> {
+    protected processInsertOrUpdateSubAssembly(response: HttpResponseBase): Observable<ResponseDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -13561,15 +13561,15 @@ export class SubAssemblyItemServiceProxy {
     }
 
     /**
-     * @param subAssemblyItemId (optional) 
+     * @param subAssemblyId (optional) 
      * @return Success
      */
-    deleteSubAssemblyItem(subAssemblyItemId: string | undefined): Observable<boolean> {
-        let url_ = this.baseUrl + "/api/services/app/SubAssemblyItem/DeleteSubAssemblyItem?";
-        if (subAssemblyItemId === null)
-            throw new Error("The parameter 'subAssemblyItemId' cannot be null.");
-        else if (subAssemblyItemId !== undefined)
-            url_ += "subAssemblyItemId=" + encodeURIComponent("" + subAssemblyItemId) + "&";
+    deleteSubAssembly(subAssemblyId: string | undefined): Observable<boolean> {
+        let url_ = this.baseUrl + "/api/services/app/SubAssembly/DeleteSubAssembly?";
+        if (subAssemblyId === null)
+            throw new Error("The parameter 'subAssemblyId' cannot be null.");
+        else if (subAssemblyId !== undefined)
+            url_ += "subAssemblyId=" + encodeURIComponent("" + subAssemblyId) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -13581,11 +13581,11 @@ export class SubAssemblyItemServiceProxy {
         };
 
         return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processDeleteSubAssemblyItem(response_);
+            return this.processDeleteSubAssembly(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processDeleteSubAssemblyItem(response_ as any);
+                    return this.processDeleteSubAssembly(response_ as any);
                 } catch (e) {
                     return _observableThrow(e) as any as Observable<boolean>;
                 }
@@ -13594,7 +13594,7 @@ export class SubAssemblyItemServiceProxy {
         }));
     }
 
-    protected processDeleteSubAssemblyItem(response: HttpResponseBase): Observable<boolean> {
+    protected processDeleteSubAssembly(response: HttpResponseBase): Observable<boolean> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -13621,8 +13621,8 @@ export class SubAssemblyItemServiceProxy {
      * @param subAssemblyItemId (optional) 
      * @return Success
      */
-    getSubAssemblyItemById(subAssemblyItemId: string | undefined): Observable<SubAssemblyItemDto> {
-        let url_ = this.baseUrl + "/api/services/app/SubAssemblyItem/GetSubAssemblyItemById?";
+    getSubAssemblyById(subAssemblyItemId: string | undefined): Observable<SubAssemblyDto> {
+        let url_ = this.baseUrl + "/api/services/app/SubAssembly/GetSubAssemblyById?";
         if (subAssemblyItemId === null)
             throw new Error("The parameter 'subAssemblyItemId' cannot be null.");
         else if (subAssemblyItemId !== undefined)
@@ -13638,20 +13638,20 @@ export class SubAssemblyItemServiceProxy {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetSubAssemblyItemById(response_);
+            return this.processGetSubAssemblyById(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetSubAssemblyItemById(response_ as any);
+                    return this.processGetSubAssemblyById(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<SubAssemblyItemDto>;
+                    return _observableThrow(e) as any as Observable<SubAssemblyDto>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<SubAssemblyItemDto>;
+                return _observableThrow(response_) as any as Observable<SubAssemblyDto>;
         }));
     }
 
-    protected processGetSubAssemblyItemById(response: HttpResponseBase): Observable<SubAssemblyItemDto> {
+    protected processGetSubAssemblyById(response: HttpResponseBase): Observable<SubAssemblyDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -13662,7 +13662,7 @@ export class SubAssemblyItemServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = SubAssemblyItemDto.fromJS(resultData200);
+            result200 = SubAssemblyDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -13670,14 +13670,14 @@ export class SubAssemblyItemServiceProxy {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<SubAssemblyItemDto>(null as any);
+        return _observableOf<SubAssemblyDto>(null as any);
     }
 
     /**
      * @return Success
      */
-    getSubAssemblyItemList(): Observable<SubAssemblyItemDto[]> {
-        let url_ = this.baseUrl + "/api/services/app/SubAssemblyItem/GetSubAssemblyItemList";
+    getSubAssemblyList(): Observable<SubAssemblyDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/SubAssembly/GetSubAssemblyList";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -13689,20 +13689,20 @@ export class SubAssemblyItemServiceProxy {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetSubAssemblyItemList(response_);
+            return this.processGetSubAssemblyList(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetSubAssemblyItemList(response_ as any);
+                    return this.processGetSubAssemblyList(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<SubAssemblyItemDto[]>;
+                    return _observableThrow(e) as any as Observable<SubAssemblyDto[]>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<SubAssemblyItemDto[]>;
+                return _observableThrow(response_) as any as Observable<SubAssemblyDto[]>;
         }));
     }
 
-    protected processGetSubAssemblyItemList(response: HttpResponseBase): Observable<SubAssemblyItemDto[]> {
+    protected processGetSubAssemblyList(response: HttpResponseBase): Observable<SubAssemblyDto[]> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -13716,7 +13716,7 @@ export class SubAssemblyItemServiceProxy {
             if (Array.isArray(resultData200)) {
                 result200 = [] as any;
                 for (let item of resultData200)
-                    result200!.push(SubAssemblyItemDto.fromJS(item));
+                    result200!.push(SubAssemblyDto.fromJS(item));
             }
             else {
                 result200 = <any>null;
@@ -13728,19 +13728,19 @@ export class SubAssemblyItemServiceProxy {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<SubAssemblyItemDto[]>(null as any);
+        return _observableOf<SubAssemblyDto[]>(null as any);
     }
 
     /**
-     * @param subAssemblyItemId (optional) 
+     * @param subAssemblyId (optional) 
      * @return Success
      */
-    restoreSubAssemblyItem(subAssemblyItemId: string | undefined): Observable<boolean> {
-        let url_ = this.baseUrl + "/api/services/app/SubAssemblyItem/RestoreSubAssemblyItem?";
-        if (subAssemblyItemId === null)
-            throw new Error("The parameter 'subAssemblyItemId' cannot be null.");
-        else if (subAssemblyItemId !== undefined)
-            url_ += "subAssemblyItemId=" + encodeURIComponent("" + subAssemblyItemId) + "&";
+    restoreSubAssembly(subAssemblyId: string | undefined): Observable<boolean> {
+        let url_ = this.baseUrl + "/api/services/app/SubAssembly/RestoreSubAssembly?";
+        if (subAssemblyId === null)
+            throw new Error("The parameter 'subAssemblyId' cannot be null.");
+        else if (subAssemblyId !== undefined)
+            url_ += "subAssemblyId=" + encodeURIComponent("" + subAssemblyId) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -13752,11 +13752,11 @@ export class SubAssemblyItemServiceProxy {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processRestoreSubAssemblyItem(response_);
+            return this.processRestoreSubAssembly(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processRestoreSubAssemblyItem(response_ as any);
+                    return this.processRestoreSubAssembly(response_ as any);
                 } catch (e) {
                     return _observableThrow(e) as any as Observable<boolean>;
                 }
@@ -13765,7 +13765,7 @@ export class SubAssemblyItemServiceProxy {
         }));
     }
 
-    protected processRestoreSubAssemblyItem(response: HttpResponseBase): Observable<boolean> {
+    protected processRestoreSubAssembly(response: HttpResponseBase): Observable<boolean> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -32342,11 +32342,11 @@ export interface IPagedResultDtoOfPOGeneralTermDto {
     items: POGeneralTermDto[] | undefined;
 }
 
-export class PagedResultDtoOfSubAssemblyItemListDto implements IPagedResultDtoOfSubAssemblyItemListDto {
+export class PagedResultDtoOfSubAssemblyListDto implements IPagedResultDtoOfSubAssemblyListDto {
     totalCount!: number;
-    items!: SubAssemblyItemListDto[] | undefined;
+    items!: SubAssemblyListDto[] | undefined;
 
-    constructor(data?: IPagedResultDtoOfSubAssemblyItemListDto) {
+    constructor(data?: IPagedResultDtoOfSubAssemblyListDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -32361,14 +32361,14 @@ export class PagedResultDtoOfSubAssemblyItemListDto implements IPagedResultDtoOf
             if (Array.isArray(_data["items"])) {
                 this.items = [] as any;
                 for (let item of _data["items"])
-                    this.items!.push(SubAssemblyItemListDto.fromJS(item));
+                    this.items!.push(SubAssemblyListDto.fromJS(item));
             }
         }
     }
 
-    static fromJS(data: any): PagedResultDtoOfSubAssemblyItemListDto {
+    static fromJS(data: any): PagedResultDtoOfSubAssemblyListDto {
         data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfSubAssemblyItemListDto();
+        let result = new PagedResultDtoOfSubAssemblyListDto();
         result.init(data);
         return result;
     }
@@ -32385,9 +32385,9 @@ export class PagedResultDtoOfSubAssemblyItemListDto implements IPagedResultDtoOf
     }
 }
 
-export interface IPagedResultDtoOfSubAssemblyItemListDto {
+export interface IPagedResultDtoOfSubAssemblyListDto {
     totalCount: number;
-    items: SubAssemblyItemListDto[] | undefined;
+    items: SubAssemblyListDto[] | undefined;
 }
 
 export class PagedResultDtoOfSubscriptionPaymentListDto implements IPagedResultDtoOfSubscriptionPaymentListDto {
@@ -34700,13 +34700,13 @@ export interface IStripePaymentResultOutput {
     paymentDone: boolean;
 }
 
-export class SubAssemblyItemDto implements ISubAssemblyItemDto {
+export class SubAssemblyDto implements ISubAssemblyDto {
     id!: string;
     name!: string | undefined;
     modelId!: string | undefined;
     assemblyId!: string | undefined;
 
-    constructor(data?: ISubAssemblyItemDto) {
+    constructor(data?: ISubAssemblyDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -34724,9 +34724,9 @@ export class SubAssemblyItemDto implements ISubAssemblyItemDto {
         }
     }
 
-    static fromJS(data: any): SubAssemblyItemDto {
+    static fromJS(data: any): SubAssemblyDto {
         data = typeof data === 'object' ? data : {};
-        let result = new SubAssemblyItemDto();
+        let result = new SubAssemblyDto();
         result.init(data);
         return result;
     }
@@ -34741,20 +34741,20 @@ export class SubAssemblyItemDto implements ISubAssemblyItemDto {
     }
 }
 
-export interface ISubAssemblyItemDto {
+export interface ISubAssemblyDto {
     id: string;
     name: string | undefined;
     modelId: string | undefined;
     assemblyId: string | undefined;
 }
 
-export class SubAssemblyItemInputDto implements ISubAssemblyItemInputDto {
+export class SubAssemblyInputDto implements ISubAssemblyInputDto {
     id!: string | undefined;
     name!: string | undefined;
     modelId!: string | undefined;
     assemblyId!: string | undefined;
 
-    constructor(data?: ISubAssemblyItemInputDto) {
+    constructor(data?: ISubAssemblyInputDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -34772,9 +34772,9 @@ export class SubAssemblyItemInputDto implements ISubAssemblyItemInputDto {
         }
     }
 
-    static fromJS(data: any): SubAssemblyItemInputDto {
+    static fromJS(data: any): SubAssemblyInputDto {
         data = typeof data === 'object' ? data : {};
-        let result = new SubAssemblyItemInputDto();
+        let result = new SubAssemblyInputDto();
         result.init(data);
         return result;
     }
@@ -34789,20 +34789,20 @@ export class SubAssemblyItemInputDto implements ISubAssemblyItemInputDto {
     }
 }
 
-export interface ISubAssemblyItemInputDto {
+export interface ISubAssemblyInputDto {
     id: string | undefined;
     name: string | undefined;
     modelId: string | undefined;
     assemblyId: string | undefined;
 }
 
-export class SubAssemblyItemListDto implements ISubAssemblyItemListDto {
+export class SubAssemblyListDto implements ISubAssemblyListDto {
     id!: string;
     name!: string | undefined;
     modelName!: string | undefined;
     assemblyName!: string | undefined;
 
-    constructor(data?: ISubAssemblyItemListDto) {
+    constructor(data?: ISubAssemblyListDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -34820,9 +34820,9 @@ export class SubAssemblyItemListDto implements ISubAssemblyItemListDto {
         }
     }
 
-    static fromJS(data: any): SubAssemblyItemListDto {
+    static fromJS(data: any): SubAssemblyListDto {
         data = typeof data === 'object' ? data : {};
-        let result = new SubAssemblyItemListDto();
+        let result = new SubAssemblyListDto();
         result.init(data);
         return result;
     }
@@ -34837,7 +34837,7 @@ export class SubAssemblyItemListDto implements ISubAssemblyItemListDto {
     }
 }
 
-export interface ISubAssemblyItemListDto {
+export interface ISubAssemblyListDto {
     id: string;
     name: string | undefined;
     modelName: string | undefined;
