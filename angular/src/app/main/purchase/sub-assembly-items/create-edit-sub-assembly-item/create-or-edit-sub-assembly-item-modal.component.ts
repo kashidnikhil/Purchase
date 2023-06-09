@@ -4,6 +4,7 @@ import {
     AssemblyDto,
     AssemblyInputDto,
     AssemblyServiceProxy,
+    ItemListDto,
     ItemMasterListDto,
     ItemServiceProxy,
     ModelDto,
@@ -40,7 +41,7 @@ export class CreateOrEditSubAssemblyItemModalComponent extends AppComponentBase 
     modelList : ModelDto[] = [];
     assemblyList: AssemblyDto[] = [];
 
-    itemMasterList  : ItemMasterListDto [] = [];
+    itemMasterList  : ItemListDto [] = [];
     
     constructor(
         injector: Injector,
@@ -84,19 +85,14 @@ export class CreateOrEditSubAssemblyItemModalComponent extends AppComponentBase 
         });
     }
 
-    unMapSubAssemblyItems(subAssemblyItemList: SubAssemblyItemDto[]): ItemMasterListDto[] {
-        let tempItemList: ItemMasterListDto[] = [];
+    unMapSubAssemblyItems(subAssemblyItemList: SubAssemblyItemDto[]): ItemListDto[] {
+        let tempItemList: ItemListDto[] = [];
         if (subAssemblyItemList && subAssemblyItemList.length > 0) {
             subAssemblyItemList.forEach(item => {
-                let tempItemMaster: ItemMasterListDto = new ItemMasterListDto(
+                let tempItemMaster: ItemListDto = new ItemListDto(
                     {
                         id: item.itemId ? item.itemId : "",
-                        itemName : item.itemName,
-                        categoryId : item.categoryId,
-                        genericName : item.genericName,
-                        itemId : item.existingItemId,
-                        make :item.make,
-                        unitName : item.unitName
+                        itemName : item.itemName
                     }
                 );
                 tempItemList.push(tempItemMaster);
@@ -106,18 +102,18 @@ export class CreateOrEditSubAssemblyItemModalComponent extends AppComponentBase 
     }
 
     mapSubAssemblyItems(subAssemblyItemList: SubAssemblyItemInputDto[]): SubAssemblyItemInputDto[] {
-        let tempAssemblyItemList: SubAssemblyItemInputDto[] = [];
+        let tempSubAssemblyItemList: SubAssemblyItemInputDto[] = [];
         subAssemblyItemList.forEach(item => {
-            let tempSupplierCategoryItem: SubAssemblyItemInputDto = new SubAssemblyItemInputDto(
+            let tempSubAssemblyItem: SubAssemblyItemInputDto = new SubAssemblyItemInputDto(
                 {
-                    id: item.id? item.id : "",
-                    itemId: item.itemId,
+                    id: "" ,
+                    itemId: item.id,
                     subAssemblyId: item.subAssemblyId,
                 }
             );
-            tempAssemblyItemList.push(tempSupplierCategoryItem);
+            tempSubAssemblyItemList.push(tempSubAssemblyItem);
         });
-        return tempAssemblyItemList;
+        return tempSubAssemblyItemList;
     }
 
     async loadDropdownList() {
@@ -130,7 +126,7 @@ export class CreateOrEditSubAssemblyItemModalComponent extends AppComponentBase 
     }
 
     async loadItemMasters() {
-        this.itemMasterList = await this._itemMasterService.getItemMasterList().toPromise();
+        this.itemMasterList = await this._itemMasterService.getItemMasterListForSubAssemblyPageDropdown().toPromise();
     }
 
     async onModelChange(modelId: string){
@@ -144,8 +140,12 @@ export class CreateOrEditSubAssemblyItemModalComponent extends AppComponentBase 
 
     save(): void {
         let input = new SubAssemblyInputDto();
-        input = this.subAssemblyForm.value;
         this.saving = true;
+        input = this.subAssemblyForm.value;
+        if (input.subAssemblyItems && input.subAssemblyItems.length > 0) {
+            let tempSubAssemblyItems = this.mapSubAssemblyItems(input.subAssemblyItems);
+            input.subAssemblyItems = tempSubAssemblyItems;
+        }
         this._subAssemblyService
             .insertOrUpdateSubAssembly(input)
             .pipe(

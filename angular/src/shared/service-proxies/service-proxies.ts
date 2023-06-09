@@ -7608,6 +7608,64 @@ export class ItemServiceProxy {
         }
         return _observableOf<ItemMasterListDto[]>(null as any);
     }
+
+    /**
+     * @return Success
+     */
+    getItemMasterListForSubAssemblyPageDropdown(): Observable<ItemListDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/Item/GetItemMasterListForSubAssemblyPageDropdown";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetItemMasterListForSubAssemblyPageDropdown(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetItemMasterListForSubAssemblyPageDropdown(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ItemListDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ItemListDto[]>;
+        }));
+    }
+
+    protected processGetItemMasterListForSubAssemblyPageDropdown(response: HttpResponseBase): Observable<ItemListDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(ItemListDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ItemListDto[]>(null as any);
+    }
 }
 
 @Injectable()
@@ -27955,6 +28013,46 @@ export enum ItemCategory {
     ToolsAndTackles = 90001,
 }
 
+export class ItemListDto implements IItemListDto {
+    id!: string;
+    itemName!: string | undefined;
+
+    constructor(data?: IItemListDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.itemName = _data["itemName"];
+        }
+    }
+
+    static fromJS(data: any): ItemListDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ItemListDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["itemName"] = this.itemName;
+        return data;
+    }
+}
+
+export interface IItemListDto {
+    id: string;
+    itemName: string | undefined;
+}
+
 export class ItemMasterDto implements IItemMasterDto {
     id!: string;
     itemCategory!: ItemCategory;
@@ -34824,12 +34922,7 @@ export class SubAssemblyItemDto implements ISubAssemblyItemDto {
     id!: string;
     itemId!: string | undefined;
     itemName!: string | undefined;
-    genericName!: string | undefined;
-    unitName!: string | undefined;
-    make!: string | undefined;
     subAssemblyName!: string | undefined;
-    existingItemId!: number | undefined;
-    categoryId!: number | undefined;
     subAssemblyId!: string | undefined;
 
     constructor(data?: ISubAssemblyItemDto) {
@@ -34846,12 +34939,7 @@ export class SubAssemblyItemDto implements ISubAssemblyItemDto {
             this.id = _data["id"];
             this.itemId = _data["itemId"];
             this.itemName = _data["itemName"];
-            this.genericName = _data["genericName"];
-            this.unitName = _data["unitName"];
-            this.make = _data["make"];
             this.subAssemblyName = _data["subAssemblyName"];
-            this.existingItemId = _data["existingItemId"];
-            this.categoryId = _data["categoryId"];
             this.subAssemblyId = _data["subAssemblyId"];
         }
     }
@@ -34868,12 +34956,7 @@ export class SubAssemblyItemDto implements ISubAssemblyItemDto {
         data["id"] = this.id;
         data["itemId"] = this.itemId;
         data["itemName"] = this.itemName;
-        data["genericName"] = this.genericName;
-        data["unitName"] = this.unitName;
-        data["make"] = this.make;
         data["subAssemblyName"] = this.subAssemblyName;
-        data["existingItemId"] = this.existingItemId;
-        data["categoryId"] = this.categoryId;
         data["subAssemblyId"] = this.subAssemblyId;
         return data;
     }
@@ -34883,12 +34966,7 @@ export interface ISubAssemblyItemDto {
     id: string;
     itemId: string | undefined;
     itemName: string | undefined;
-    genericName: string | undefined;
-    unitName: string | undefined;
-    make: string | undefined;
     subAssemblyName: string | undefined;
-    existingItemId: number | undefined;
-    categoryId: number | undefined;
     subAssemblyId: string | undefined;
 }
 

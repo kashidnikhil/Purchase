@@ -11,12 +11,15 @@ namespace MyTraining1101Demo.Purchase.SubAssemblyItems
     public class SubAssemblyAppService : MyTraining1101DemoAppServiceBase, ISubAssemblyAppService
     {
         private readonly ISubAssemblyManager _subAssemblyManager;
+        private readonly ISubAssemblyItemManager _subAssemblyItemManager;
 
         public SubAssemblyAppService(
-          ISubAssemblyManager subAssemblyManager
+          ISubAssemblyManager subAssemblyManager,
+          ISubAssemblyItemManager subAssemblyItemManager
          )
         {
             _subAssemblyManager = subAssemblyManager;
+            _subAssemblyItemManager = subAssemblyItemManager;
         }
         public async Task<PagedResultDto<SubAssemblyListDto>> GetSubAssemblies(SubAssemblySearchDto input)
         {
@@ -37,6 +40,16 @@ namespace MyTraining1101Demo.Purchase.SubAssemblyItems
             try
             {
                 var insertedOrUpdatedSubAssembly = await this._subAssemblyManager.InsertOrUpdateSubAssemblyIntoDB(input);
+
+                if (input.SubAssemblyItems != null && input.SubAssemblyItems.Count > 0)
+                {
+                    input.SubAssemblyItems.ForEach(subAssemblyItem =>
+                    {
+                        subAssemblyItem.SubAssemblyId = insertedOrUpdatedSubAssembly.Id;
+                    });
+
+                    await this._subAssemblyItemManager.BulkInsertOrUpdateSubAssemblyItems(input.SubAssemblyItems);
+                }
 
                 return insertedOrUpdatedSubAssembly;
             }

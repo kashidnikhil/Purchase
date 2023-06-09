@@ -22,5 +22,7 @@
         Task<ItemMasterDto?> FindItemMasterByCategoryIdFromDB(ItemCategory itemCategory);
 
         Task<IList<ItemMasterListDto>> GetItemMasterListFromDB();
+
+        Task<IList<ItemListDto>> GetItemListForSubAssemblyPageDropdownFromDB();
     }
 }

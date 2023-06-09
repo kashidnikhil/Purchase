@@ -5,6 +5,7 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using MyTraining1101Demo.Configuration;
+    using MyTraining1101Demo.Purchase.Items.Dto.ItemMaster;
     using MyTraining1101Demo.Purchase.SubAssemblies.Dto;
     using MyTraining1101Demo.Purchase.SubAssemblyItems.Dto;
     using System;
@@ -27,12 +28,16 @@
             _appConfiguration = configurationAccessor.Configuration;
         }
 
-        public async Task<Guid> BulkInsertOrUpdateSubAssemblyItems(List<SubAssemblyInputDto> itemCalibrationAgencyInputList)
+        public async Task<Guid> BulkInsertOrUpdateSubAssemblyItems(List<SubAssemblyItemInputDto> subAssemblyItemInputList)
         {
             try
             {
                 Guid itemId = Guid.Empty;
-                var mappedSubAssemblyItems = ObjectMapper.Map<List<SubAssemblyItem>>(itemCalibrationAgencyInputList);
+
+                // Using the approach of (soft) delete and insert for updating the records. (soft) delete is used because it should not hamper the other functionalities at any point of time.
+                await this.BulkDeleteSubAssemblyItems((Guid)subAssemblyItemInputList[0].SubAssemblyId);
+
+                var mappedSubAssemblyItems = ObjectMapper.Map<List<SubAssemblyItem>>(subAssemblyItemInputList);
 
                 //var filteredMappedItemCalibrationAgencies = mappedSubAssemblyItems.Where(x => x.SupplierId != null && x.SupplierId != Guid.Empty).ToList();
                 for (int i = 0; i < mappedSubAssemblyItems.Count; i++)
@@ -67,13 +72,13 @@
         {
             try
             {
-                var subAssemblyItems = await this.GetSubAssemblyItemListFromDB(subAssemblyId);
+                var subAssemblyItemList = await this.GetSubAssemblyItemListFromDB(subAssemblyId);
 
-                if (subAssemblyItems.Count > 0)
+                if (subAssemblyItemList.Count > 0)
                 {
-                    for (int i = 0; i < subAssemblyItems.Count; i++)
+                    for (int i = 0; i < subAssemblyItemList.Count; i++)
                     {
-                        await this.DeleteSubAssemblyItemFromDB(subAssemblyItems[i].Id);
+                        await this.DeleteSubAssemblyItemFromDB(subAssemblyItemList[i].Id);
                     }
                 }
 
@@ -107,24 +112,11 @@
         {
             try
             {
-                var subAssemblyItemQuery = this._subAssemblyItemRepository.GetAllIncluding(x => x.SubAssembly)
-                    .Include(x=> x.Item).ThenInclude(x=> x.OrderingUOM)
-                    .Where(x => !x.IsDeleted && x.SubAssemblyId == subAssemblyId)
-                    .Select(x=> new SubAssemblyItemDto {
-                    Id = x.Id,
-                    ItemId = x.ItemId,
-                    CategoryId = x.Item.CategoryId,
-                    ItemName = x.Item.ItemName,
-                    Make = x.Item.Make,
-                    UnitName = x.Item.OrderingUOM.Name,
-                    GenericName = x.Item.GenericName,
-                    ExistingItemId = x.Item.ItemId,
-                    SubAssemblyId = x.SubAssemblyId,
-                    SubAssemblyName = x.SubAssembly.Name
-                    });
+                var subAssemblyItemQuery = this._subAssemblyItemRepository.GetAllIncluding(x=> x.Item)
+                    .Include(x=> x.SubAssembly)
+                    .Where(x => !x.IsDeleted && x.SubAssemblyId == subAssemblyId).ToList();
 
-                var response =  ObjectMapper.Map<List<SubAssemblyItemDto>>(subAssemblyItemQuery);
-
+                var response = new List<SubAssemblyItemDto>(ObjectMapper.Map<List<SubAssemblyItemDto>>(subAssemblyItemQuery));
                 return response;
             }
             catch (Exception ex)

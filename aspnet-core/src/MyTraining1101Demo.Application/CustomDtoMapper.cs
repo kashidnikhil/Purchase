@@ -322,8 +322,9 @@ namespace MyTraining1101Demo
             configuration.CreateMap<Item, ItemMasterInputDto>().ReverseMap();
             configuration.CreateMap<Item, ItemMasterListDto>()
                 .ForMember(dto => dto.UnitName, options => options.MapFrom(x => x.OrderingUOM.Name))
-                .ReverseMap(); 
-            
+                .ReverseMap();
+            configuration.CreateMap<Item, ItemListDto>().ReverseMap(); 
+
 
             configuration.CreateMap<CalibrationAgency, CalibrationAgencyDto>().ReverseMap();
             configuration.CreateMap<CalibrationAgency, CalibrationAgencyInputDto>().ReverseMap();

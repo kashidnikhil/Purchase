@@ -254,5 +254,19 @@
             }
         }
 
+        public async Task<IList<ItemListDto>> GetItemMasterListForSubAssemblyPageDropdown()
+        {
+            try
+            {
+                var response = await this._itemManager.GetItemListForSubAssemblyPageDropdownFromDB();
+                return response;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.Message, ex);
+                throw ex;
+            }
+        }
+
     }
 }

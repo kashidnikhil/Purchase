@@ -18,5 +18,7 @@ namespace MyTraining1101Demo.Purchase.Items
         Task<ItemMasterDto> GetItemMasterById(Guid itemId);
 
         Task<IList<ItemMasterListDto>> GetItemMasterList();
+
+        Task<IList<ItemListDto>> GetItemMasterListForSubAssemblyPageDropdown();
     }
 }

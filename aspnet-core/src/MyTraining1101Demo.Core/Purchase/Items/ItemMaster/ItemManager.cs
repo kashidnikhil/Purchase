@@ -8,8 +8,6 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using MyTraining1101Demo.Configuration;
-    using MyTraining1101Demo.Purchase.DeliveryTerms.Dto;
-    using MyTraining1101Demo.Purchase.DeliveryTerms;
     using MyTraining1101Demo.Purchase.Items.Dto.ItemMaster;
     using MyTraining1101Demo.Purchase.Items.Enums;
     using MyTraining1101Demo.Purchase.Shared;
@@ -210,6 +208,23 @@
                     .Where(x => !x.IsDeleted);
 
                 return new List<ItemMasterListDto>(ObjectMapper.Map<List<ItemMasterListDto>>(itemMasterQuery));
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.Message, ex);
+                throw ex;
+            }
+
+        }
+
+        public async Task<IList<ItemListDto>> GetItemListForSubAssemblyPageDropdownFromDB()
+        {
+            try
+            {
+                var itemMasterQuery = this._itemMasterRepository.GetAll()
+                    .Where(x => !x.IsDeleted);
+
+                return new List<ItemListDto>(ObjectMapper.Map<List<ItemListDto>>(itemMasterQuery));
             }
             catch (Exception ex)
             {

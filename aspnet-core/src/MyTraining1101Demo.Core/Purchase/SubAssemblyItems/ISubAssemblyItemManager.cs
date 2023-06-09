@@ -9,7 +9,7 @@
 
     public interface ISubAssemblyItemManager : IDomainService
     {
-        Task<Guid> BulkInsertOrUpdateSubAssemblyItems(List<SubAssemblyInputDto> itemCalibrationAgencyInputList);
+        Task<Guid> BulkInsertOrUpdateSubAssemblyItems(List<SubAssemblyItemInputDto> itemCalibrationAgencyInputList);
 
         Task<bool> BulkDeleteSubAssemblyItems(Guid subAssemblyId);
 
