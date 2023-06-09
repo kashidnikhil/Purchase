@@ -5,8 +5,6 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using MyTraining1101Demo.Configuration;
-    using MyTraining1101Demo.Purchase.Items.Dto.ItemMaster;
-    using MyTraining1101Demo.Purchase.SubAssemblies.Dto;
     using MyTraining1101Demo.Purchase.SubAssemblyItems.Dto;
     using System;
     using System.Collections.Generic;
@@ -108,7 +106,7 @@
             }
         }
 
-        public async Task<IList<SubAssemblyItemDto>> GetSubAssemblyItemListFromDB(Guid subAssemblyId)
+        public async Task<List<SubAssemblyItemDto>> GetSubAssemblyItemListFromDB(Guid subAssemblyId)
         {
             try
             {

@@ -13,6 +13,6 @@
 
         Task<bool> BulkDeleteSubAssemblyItems(Guid subAssemblyId);
 
-        Task<IList<SubAssemblyItemDto>> GetSubAssemblyItemListFromDB(Guid subAssemblyId);
+        Task<List<SubAssemblyItemDto>> GetSubAssemblyItemListFromDB(Guid subAssemblyId);
     }
 }

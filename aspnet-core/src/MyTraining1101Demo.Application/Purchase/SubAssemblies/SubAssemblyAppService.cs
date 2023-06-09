@@ -2,6 +2,7 @@
 using MyTraining1101Demo.Purchase.Shared;
 using MyTraining1101Demo.Purchase.SubAssemblies;
 using MyTraining1101Demo.Purchase.SubAssemblies.Dto;
+using MyTraining1101Demo.Purchase.Suppliers.SupplierMaster;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -64,6 +65,8 @@ namespace MyTraining1101Demo.Purchase.SubAssemblyItems
         {
             try
             {
+                var isSubAssemblyItemsDeleted = await this._subAssemblyItemManager.BulkDeleteSubAssemblyItems(subAssemblyId);
+                
                 var isSubAssemblyDeleted = await this._subAssemblyManager.DeleteSubAssemblyFromDB(subAssemblyId);
                 return isSubAssemblyDeleted;
             }
@@ -79,8 +82,14 @@ namespace MyTraining1101Demo.Purchase.SubAssemblyItems
         {
             try
             {
-                var response = await this._subAssemblyManager.GetSubAssemblyByIdFromDB(subAssemblyItemId);
-                return response;
+                var subAssembly = await this._subAssemblyManager.GetSubAssemblyByIdFromDB(subAssemblyItemId);
+
+                if (subAssembly.Id != Guid.Empty)
+                {
+                    subAssembly.SubAssemblyItems = await this._subAssemblyItemManager.GetSubAssemblyItemListFromDB(subAssembly.Id);
+                }
+
+                return subAssembly;
             }
             catch (Exception ex)
             {
