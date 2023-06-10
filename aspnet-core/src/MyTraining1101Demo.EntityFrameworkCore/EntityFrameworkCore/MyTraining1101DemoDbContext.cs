@@ -31,6 +31,8 @@ using MyTraining1101Demo.Purchase.Items.RequiredItemSparesMaster;
 using MyTraining1101Demo.Purchase.LegalEntities;
 using MyTraining1101Demo.Purchase.MaterialGrades;
 using MyTraining1101Demo.Purchase.Models;
+using MyTraining1101Demo.Purchase.ModelWiseItems.ModelWiseItemMasters;
+using MyTraining1101Demo.Purchase.ModelWiseItems.ModelWiseItems;
 using MyTraining1101Demo.Purchase.POGeneralTerms;
 using MyTraining1101Demo.Purchase.SubAssemblies;
 using MyTraining1101Demo.Purchase.SubAssemblyItems;
@@ -133,7 +135,11 @@ namespace MyTraining1101Demo.EntityFrameworkCore
         public virtual DbSet<SubAssembly> SubAssemblies { get; set; }
 
         public virtual DbSet<SubAssemblyItem> SubAssemblyItems { get; set; }
-        
+
+        public virtual DbSet<ModelWiseItemMaster> ModelWiseItemMasters { get; set; }
+
+        public virtual DbSet<ModelWiseItem> ModelWiseItem { get; set; }
+
         public MyTraining1101DemoDbContext(DbContextOptions<MyTraining1101DemoDbContext> options)
             : base(options)
         {
