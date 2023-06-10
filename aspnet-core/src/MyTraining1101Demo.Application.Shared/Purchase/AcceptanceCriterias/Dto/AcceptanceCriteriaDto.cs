@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MyTraining1101Demo.Purchase.AcceptanceCriterias.Dto
+﻿namespace MyTraining1101Demo.Purchase.AcceptanceCriterias.Dto
 {
+    using System;
     public class AcceptanceCriteriaDto
     {
         public Guid Id { get; set; }

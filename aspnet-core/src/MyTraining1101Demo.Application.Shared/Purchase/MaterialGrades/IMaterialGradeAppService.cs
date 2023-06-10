@@ -1,12 +1,11 @@
-﻿using Abp.Application.Services.Dto;
-using MyTraining1101Demo.Purchase.MaterialGrades.Dto;
-using MyTraining1101Demo.Purchase.Shared;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
-namespace MyTraining1101Demo.Purchase.MaterialGrades
+﻿namespace MyTraining1101Demo.Purchase.MaterialGrades
 {
+    using Abp.Application.Services.Dto;
+    using MyTraining1101Demo.Purchase.MaterialGrades.Dto;
+    using MyTraining1101Demo.Purchase.Shared;
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
     public interface IMaterialGradeAppService
     {
         Task<PagedResultDto<MaterialGradeDto>> GetMaterialGrades(MaterialGradeSearchDto input);

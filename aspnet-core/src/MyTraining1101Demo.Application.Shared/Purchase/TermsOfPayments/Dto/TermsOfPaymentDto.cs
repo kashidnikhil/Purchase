@@ -1,7 +1,6 @@
-﻿using System;
-
-namespace MyTraining1101Demo.Purchase.TermsOfPayments.Dto
+﻿namespace MyTraining1101Demo.Purchase.TermsOfPayments.Dto
 {
+    using System;
     public class TermsOfPaymentDto
     {
         public Guid Id { get; set; }

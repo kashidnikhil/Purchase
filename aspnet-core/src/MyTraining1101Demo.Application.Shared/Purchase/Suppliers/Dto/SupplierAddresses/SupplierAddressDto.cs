@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierAddresses
+﻿namespace MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierAddresses
 {
+    using System;
     public class SupplierAddressDto
     {
         public Guid Id { get; set; }

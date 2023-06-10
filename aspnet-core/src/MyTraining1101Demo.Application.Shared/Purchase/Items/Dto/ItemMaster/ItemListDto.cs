@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MyTraining1101Demo.Purchase.Items.Dto.ItemMaster
+﻿namespace MyTraining1101Demo.Purchase.Items.Dto.ItemMaster
 {
+    using System;
     public class ItemListDto
     {
         public Guid Id { get; set; }

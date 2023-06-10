@@ -1,14 +1,11 @@
-﻿using Abp.Application.Services.Dto;
-using MyTraining1101Demo.Purchase.Shared;
-using MyTraining1101Demo.Purchase.TermsOfPayments.Dto;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MyTraining1101Demo.Purchase.TermsOfPayments
+﻿namespace MyTraining1101Demo.Purchase.TermsOfPayments
 {
+    using Abp.Application.Services.Dto;
+    using MyTraining1101Demo.Purchase.Shared;
+    using MyTraining1101Demo.Purchase.TermsOfPayments.Dto;
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
     public class TermsOfPaymentAppService : MyTraining1101DemoAppServiceBase, ITermsOfPaymentAppService
     {
         private readonly ITermsOfPaymentManager _termsOfPaymentManager;

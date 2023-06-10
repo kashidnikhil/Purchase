@@ -1,10 +1,7 @@
-﻿using MyTraining1101Demo.Purchase.Items.Enums;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MyTraining1101Demo.Purchase.Items.Dto.ItemStorageConditionMaster
+﻿namespace MyTraining1101Demo.Purchase.Items.Dto.ItemStorageConditionMaster
 {
+    using MyTraining1101Demo.Purchase.Items.Enums;
+    using System;
     public class ItemStorageConditionDto
     {
         public Guid Id { get; set; }

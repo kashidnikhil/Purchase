@@ -1,7 +1,6 @@
-﻿using System;
-
-namespace MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierAddresses
+﻿namespace MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierAddresses
 {
+    using System;
     public class SupplierAddressInputDto
     {
         public Guid? Id { get; set; }

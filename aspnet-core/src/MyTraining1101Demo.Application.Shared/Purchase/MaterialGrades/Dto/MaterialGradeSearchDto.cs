@@ -1,8 +1,7 @@
-﻿using Abp.Runtime.Validation;
-using MyTraining1101Demo.Dto;
-
-namespace MyTraining1101Demo.Purchase.MaterialGrades.Dto
+﻿namespace MyTraining1101Demo.Purchase.MaterialGrades.Dto
 {
+    using Abp.Runtime.Validation;
+    using MyTraining1101Demo.Dto;
     public class MaterialGradeSearchDto : PagedAndSortedInputDto, IShouldNormalize
     {
         public string SearchString { get; set; }

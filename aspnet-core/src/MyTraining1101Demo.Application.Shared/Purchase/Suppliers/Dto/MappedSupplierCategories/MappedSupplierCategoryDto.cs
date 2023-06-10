@@ -1,7 +1,6 @@
-﻿using System;
-
-namespace MyTraining1101Demo.Purchase.Suppliers.Dto.MappedSupplierCategories
+﻿namespace MyTraining1101Demo.Purchase.Suppliers.Dto.MappedSupplierCategories
 {
+    using System;
     public class MappedSupplierCategoryDto
     {
         public Guid Id { get; set; }

@@ -1,7 +1,6 @@
-﻿using System;
-
-namespace MyTraining1101Demo.Purchase.Units.Dto
+﻿namespace MyTraining1101Demo.Purchase.Units.Dto
 {
+    using System;
     public class UnitDto
     {
         public Guid Id { get; set; }

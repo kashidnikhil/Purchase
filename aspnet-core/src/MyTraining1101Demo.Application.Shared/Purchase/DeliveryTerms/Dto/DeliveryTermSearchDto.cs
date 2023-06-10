@@ -1,8 +1,7 @@
-﻿using Abp.Runtime.Validation;
-using MyTraining1101Demo.Dto;
-
-namespace MyTraining1101Demo.Purchase.DeliveryTerms.Dto
+﻿namespace MyTraining1101Demo.Purchase.DeliveryTerms.Dto
 {
+    using Abp.Runtime.Validation;
+    using MyTraining1101Demo.Dto;
     public class DeliveryTermSearchDto : PagedAndSortedInputDto, IShouldNormalize
     {
         public string SearchString { get; set; }

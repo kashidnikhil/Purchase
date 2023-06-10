@@ -1,11 +1,10 @@
-﻿using MyTraining1101Demo.Purchase.Companies.Dto.CompanyAddresses;
-using MyTraining1101Demo.Purchase.Companies.Dto.CompanyContactPersons;
-using MyTraining1101Demo.Purchase.Suppliers.Dto.MappedSupplierCategories;
-using System;
-using System.Collections.Generic;
-
-namespace MyTraining1101Demo.Purchase.Companies.Dto.CompanyMaster
+﻿namespace MyTraining1101Demo.Purchase.Companies.Dto.CompanyMaster
 {
+    using MyTraining1101Demo.Purchase.Companies.Dto.CompanyAddresses;
+    using MyTraining1101Demo.Purchase.Companies.Dto.CompanyContactPersons;
+    using MyTraining1101Demo.Purchase.Suppliers.Dto.MappedSupplierCategories;
+    using System;
+    using System.Collections.Generic;
     public class CompanyDto
     {
         public Guid Id { get; set; }

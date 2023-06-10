@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierContactPersons
+﻿namespace MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierContactPersons
 {
+    using System;
     public class SupplierContactPersonInputDto
     {
         public Guid? Id { get; set; }

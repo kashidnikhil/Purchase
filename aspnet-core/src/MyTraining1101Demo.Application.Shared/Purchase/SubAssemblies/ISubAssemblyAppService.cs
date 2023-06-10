@@ -1,12 +1,11 @@
-﻿using Abp.Application.Services.Dto;
-using MyTraining1101Demo.Purchase.Shared;
-using MyTraining1101Demo.Purchase.SubAssemblies.Dto;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
-namespace MyTraining1101Demo.Purchase.SubAssemblyItems
+﻿namespace MyTraining1101Demo.Purchase.SubAssemblyItems
 {
+    using Abp.Application.Services.Dto;
+    using MyTraining1101Demo.Purchase.Shared;
+    using MyTraining1101Demo.Purchase.SubAssemblies.Dto;
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
     public interface ISubAssemblyAppService
     {
         Task<PagedResultDto<SubAssemblyListDto>> GetSubAssemblies(SubAssemblySearchDto input);

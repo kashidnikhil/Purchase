@@ -1,7 +1,6 @@
-﻿using System;
-
-namespace MyTraining1101Demo.Purchase.MaterialGrades.Dto
+﻿namespace MyTraining1101Demo.Purchase.MaterialGrades.Dto
 {
+    using System;
     public class MaterialGradeDto
     {
         public Guid Id { get; set; }

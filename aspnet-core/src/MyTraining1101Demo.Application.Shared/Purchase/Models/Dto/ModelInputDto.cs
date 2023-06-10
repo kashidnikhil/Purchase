@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MyTraining1101Demo.Purchase.Models.Dto
+﻿namespace MyTraining1101Demo.Purchase.Models.Dto
 {
+    using System;
     public class ModelInputDto
     {
         public Guid? Id { get; set; }

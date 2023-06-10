@@ -1,7 +1,6 @@
-﻿using System;
-
-namespace MyTraining1101Demo.Purchase.SubAssemblyItems.Dto
+﻿namespace MyTraining1101Demo.Purchase.SubAssemblyItems.Dto
 {
+    using System;
     public class SubAssemblyItemInputDto
     {
         public Guid? Id { get; set; }

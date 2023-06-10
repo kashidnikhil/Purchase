@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MyTraining1101Demo.Purchase.Suppliers.Dto.MappedSupplierCategories
+﻿namespace MyTraining1101Demo.Purchase.Suppliers.Dto.MappedSupplierCategories
 {
+    using System;
     public class MappedSupplierCategoryInputDto
     {
         public Guid? Id { get; set; }

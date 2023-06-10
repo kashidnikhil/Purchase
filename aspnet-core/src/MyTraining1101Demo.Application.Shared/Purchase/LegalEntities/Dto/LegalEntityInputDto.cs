@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MyTraining1101Demo.Purchase.LegalEntities.Dto
+﻿namespace MyTraining1101Demo.Purchase.LegalEntities.Dto
 {
+    using System;
     public class LegalEntityInputDto
     {
         public Guid? Id { get; set; }

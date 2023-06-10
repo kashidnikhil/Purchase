@@ -1,12 +1,11 @@
-﻿using Abp.Application.Services.Dto;
-using MyTraining1101Demo.Purchase.LegalEntities.Dto;
-using MyTraining1101Demo.Purchase.Shared;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
-namespace MyTraining1101Demo.Purchase.LegalEntities
+﻿namespace MyTraining1101Demo.Purchase.LegalEntities
 {
+    using Abp.Application.Services.Dto;
+    using MyTraining1101Demo.Purchase.LegalEntities.Dto;
+    using MyTraining1101Demo.Purchase.Shared;
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
     public class LegalEntityAppService : MyTraining1101DemoAppServiceBase, ILegalEntityAppService
     {
         private readonly ILegalEntityManager _LegalEntityManager;

@@ -1,7 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace MyTraining1101Demo.Purchase.Items.Enums
+﻿namespace MyTraining1101Demo.Purchase.Items.Enums
 {
+    using System.ComponentModel.DataAnnotations;
     public enum ItemType
     {
         [Display(Name = "Analogue")]

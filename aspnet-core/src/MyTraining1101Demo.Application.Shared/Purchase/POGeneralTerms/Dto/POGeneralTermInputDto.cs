@@ -1,7 +1,6 @@
-﻿using System;
-
-namespace MyTraining1101Demo.Purchase.POGeneralTerms.Dto
+﻿namespace MyTraining1101Demo.Purchase.POGeneralTerms.Dto
 {
+    using System;
     public class POGeneralTermInputDto
     {
         public Guid? Id { get; set; }

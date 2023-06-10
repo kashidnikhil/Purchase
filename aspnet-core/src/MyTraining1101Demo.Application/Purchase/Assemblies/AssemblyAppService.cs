@@ -1,7 +1,6 @@
 ﻿namespace MyTraining1101Demo.Purchase.Assemblies
 {
     using Abp.Application.Services.Dto;
-    using MyTraining1101Demo.Purchase.AcceptanceCriterias.Dto;
     using MyTraining1101Demo.Purchase.Assemblies.Dto;
     using MyTraining1101Demo.Purchase.Shared;
     using System;

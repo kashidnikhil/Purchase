@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierBanks
+﻿namespace MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierBanks
 {
+    using System;
     public class SupplierBankInputDto
     {
         public Guid? Id { get; set; }

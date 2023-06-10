@@ -1,7 +1,6 @@
-﻿using System;
-
-namespace MyTraining1101Demo.Purchase.DeliveryTerms.Dto
+﻿namespace MyTraining1101Demo.Purchase.DeliveryTerms.Dto
 {
+    using System;
     public class DeliveryTermInputDto
     {
         public Guid? Id { get; set; }

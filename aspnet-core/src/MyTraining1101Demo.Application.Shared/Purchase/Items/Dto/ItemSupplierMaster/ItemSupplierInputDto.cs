@@ -1,7 +1,6 @@
-﻿using System;
-
-namespace MyTraining1101Demo.Purchase.Items.Dto.ItemSupplierMaster
+﻿namespace MyTraining1101Demo.Purchase.Items.Dto.ItemSupplierMaster
 {
+    using System;
     public class ItemSupplierInputDto
     {
         public Guid? Id { get; set; }

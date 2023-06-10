@@ -1,8 +1,7 @@
-﻿using Abp.Runtime.Validation;
-using MyTraining1101Demo.Dto;
-
-namespace MyTraining1101Demo.Purchase.POGeneralTerms.Dto
+﻿namespace MyTraining1101Demo.Purchase.POGeneralTerms.Dto
 {
+    using Abp.Runtime.Validation;
+    using MyTraining1101Demo.Dto;
     public class POGeneralTermSearchDto : PagedAndSortedInputDto, IShouldNormalize
     {
         public string SearchString { get; set; }

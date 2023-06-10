@@ -1,7 +1,6 @@
-﻿using System;
-
-namespace MyTraining1101Demo.Purchase.LegalEntities.Dto
+﻿namespace MyTraining1101Demo.Purchase.LegalEntities.Dto
 {
+    using System;
     public class LegalEntityDto
     {
         public Guid Id { get; set; }

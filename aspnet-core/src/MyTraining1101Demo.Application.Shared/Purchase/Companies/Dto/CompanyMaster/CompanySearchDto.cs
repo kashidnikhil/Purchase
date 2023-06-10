@@ -1,8 +1,7 @@
-﻿using Abp.Runtime.Validation;
-using MyTraining1101Demo.Dto;
-
-namespace MyTraining1101Demo.Purchase.Companies.Dto.CompanyMaster
+﻿namespace MyTraining1101Demo.Purchase.Companies.Dto.CompanyMaster
 {
+    using Abp.Runtime.Validation;
+    using MyTraining1101Demo.Dto;
     public class CompanySearchDto : PagedAndSortedInputDto, IShouldNormalize
     {
         public string SearchString { get; set; }

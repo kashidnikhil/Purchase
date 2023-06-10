@@ -1,7 +1,6 @@
-﻿using System;
-
-namespace MyTraining1101Demo.Purchase.Items.Dto.ProcurementMaster
+﻿namespace MyTraining1101Demo.Purchase.Items.Dto.ProcurementMaster
 {
+    using System;
     public class ProcurementInputDto
     {
         public Guid? Id { get; set; }

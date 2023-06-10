@@ -1,12 +1,11 @@
-﻿using MyTraining1101Demo.Purchase.Suppliers.Dto.MappedSupplierCategories;
-using MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierAddresses;
-using MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierBanks;
-using MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierContactPersons;
-using System;
-using System.Collections.Generic;
-
-namespace MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierMaster
+﻿namespace MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierMaster
 {
+    using MyTraining1101Demo.Purchase.Suppliers.Dto.MappedSupplierCategories;
+    using MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierAddresses;
+    using MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierBanks;
+    using MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierContactPersons;
+    using System;
+    using System.Collections.Generic;
     public class SupplierDto
     {
         public Guid Id { get; set; }

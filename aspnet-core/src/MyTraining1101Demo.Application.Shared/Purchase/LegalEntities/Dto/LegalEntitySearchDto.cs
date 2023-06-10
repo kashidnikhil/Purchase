@@ -1,8 +1,7 @@
-﻿using Abp.Runtime.Validation;
-using MyTraining1101Demo.Dto;
-
-namespace MyTraining1101Demo.Purchase.LegalEntities.Dto
+﻿namespace MyTraining1101Demo.Purchase.LegalEntities.Dto
 {
+    using Abp.Runtime.Validation;
+    using MyTraining1101Demo.Dto;
     public class LegalEntitySearchDto : PagedAndSortedInputDto, IShouldNormalize
     {
         public string SearchString { get; set; }

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MyTraining1101Demo.Purchase.SubAssemblyItems.Dto
+﻿namespace MyTraining1101Demo.Purchase.SubAssemblyItems.Dto
 {
+    using System;
     public class SubAssemblyItemDto
     {
         public Guid Id { get; set; }

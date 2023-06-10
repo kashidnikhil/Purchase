@@ -1,14 +1,11 @@
-﻿using Abp.Application.Services.Dto;
-using MyTraining1101Demo.Purchase.Shared;
-using MyTraining1101Demo.Purchase.SupplierCategories.Dto;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MyTraining1101Demo.Purchase.SupplierCategories
+﻿namespace MyTraining1101Demo.Purchase.SupplierCategories
 {
+    using Abp.Application.Services.Dto;
+    using MyTraining1101Demo.Purchase.Shared;
+    using MyTraining1101Demo.Purchase.SupplierCategories.Dto;
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
     public class SupplierCategoryAppService : MyTraining1101DemoAppServiceBase, ISupplierCategoryAppService
     {
         private readonly ISupplierCategoryManager _supplierCategoryManager;
