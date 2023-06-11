@@ -1,13 +1,10 @@
 import { Component, EventEmitter, Injector, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import {
-    LegalEntityDto,
-    LegalEntityInputDto,
-    LegalEntityServiceProxy,
-    ResponseDto,
-    UnitDto,
-    UnitInputDto,
-    UnitServiceProxy,
+    ItemCategoryDto,
+    ItemCategoryInputDto,
+    ItemCategoryServiceProxy,
+    ResponseDto
 } from '@shared/service-proxies/service-proxies';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { map as _map, filter as _filter } from 'lodash-es';
@@ -27,24 +24,24 @@ export class CreateOrEditItemCategoryModalComponent extends AppComponentBase {
 
     active = false;
     saving = false;
-    legalEntityItem : LegalEntityDto = new LegalEntityDto();
+    itemCategory : ItemCategoryDto = new ItemCategoryDto();
     
     constructor(
         injector: Injector,
-        private _legalEntityService : LegalEntityServiceProxy
+        private _itemCategoryService: ItemCategoryServiceProxy
     ) {
         super(injector);
     }
 
-    show(legalEntityId?: string): void {
-        if (!legalEntityId) {
-            this.legalEntityItem = new LegalEntityDto({id : null, name: "", description: ""}); 
+    show(itemCategoryId?: string): void {
+        if (!itemCategoryId) {
+            this.itemCategory = new ItemCategoryDto({id : null, name: "", description: "",itemCategoryCode : 0}); 
             this.active = true;
             this.modal.show();
         }
         else{
-            this._legalEntityService.getLegalEntityById(legalEntityId).subscribe((response : UnitDto)=> {
-                this.legalEntityItem = response;
+            this._itemCategoryService.getItemCategoryById(itemCategoryId).subscribe((response : ItemCategoryDto)=> {
+                this.itemCategory = response;
                 this.active = true;
                 this.modal.show();
             });
@@ -57,11 +54,11 @@ export class CreateOrEditItemCategoryModalComponent extends AppComponentBase {
     }
 
     save(): void {
-        let input = new LegalEntityInputDto();
-        input = this.legalEntityItem;
+        let input = new ItemCategoryInputDto();
+        input = this.itemCategory;
         this.saving = true;
-        this._legalEntityService
-            .insertOrUpdateLegalEntity(input)
+        this._itemCategoryService
+            .insertOrUpdateItemCategory(input)
             .pipe(
                 finalize(() => {
                     this.saving = false;

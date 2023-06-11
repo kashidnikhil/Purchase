@@ -11,11 +11,11 @@
 >
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <form *ngIf="active" #unitForm="ngForm" novalidate (ngSubmit)="save()">
+            <form *ngIf="active" #itemCategoryForm="ngForm" novalidate (ngSubmit)="save()">
                 <div class="modal-header">
                     <h4 class="modal-title">
-                        <span *ngIf="legalEntityItem.id">{{ 'EditUnit' | localize }}: {{ legalEntityItem.name }}</span>
-                        <span *ngIf="!legalEntityItem.id">{{ 'CreateNewUnit' | localize }}</span>
+                        <span *ngIf="itemCategory.id">{{ 'EditItemCategory' | localize }}: {{ itemCategory.name }}</span>
+                        <span *ngIf="!itemCategory.id">{{ 'CreateNewItemCategory' | localize }}</span>
                     </h4>
                     <button
                         type="button"
@@ -29,11 +29,11 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label>{{"Name" | localize}}</label>
-                        <input #nameInput id="name" class="form-control" type="text" [(ngModel)]="legalEntityItem.name" name="name"  required>
+                        <input #nameInput id="name" class="form-control" type="text" [(ngModel)]="itemCategory.name" name="name"  required>
                     </div>
                     <div class="form-group">
                         <label>{{"Description" | localize}}</label>
-                         <input class="form-control" type="text" name="description"  [(ngModel)]="legalEntityItem.description" required>
+                         <input class="form-control" type="text" name="description"  [(ngModel)]="itemCategory.description">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -48,7 +48,7 @@
                     <button
                         type="submit"
                         class="btn btn-primary font-weight-bold"
-                        [disabled]="!unitForm.form.valid"
+                        [disabled]="!itemCategoryForm.form.valid"
                         [buttonBusy]="saving"
                         [busyText]="l('SavingWithThreeDot')"
                     >
