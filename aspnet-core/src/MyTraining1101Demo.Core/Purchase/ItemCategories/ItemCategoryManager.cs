@@ -177,5 +177,25 @@
             }
         }
 
+
+        public async Task<ItemCategoryDto?> FindRecentlyAddedItemCategoryFromDB()
+        {
+            try
+            {
+                var itemMaster = await this._itemCategoryRepository.GetAll().IgnoreQueryFilters()
+                    .OrderByDescending(x => x.ItemCategoryCode)
+                    .FirstOrDefaultAsync();
+
+                return ObjectMapper.Map<ItemCategoryDto?>(itemMaster);
+
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.Message, ex);
+                throw ex;
+            }
+        }
+
+
     }
 }

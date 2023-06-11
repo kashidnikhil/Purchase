@@ -38,6 +38,17 @@
         {
             try
             {
+                var existingItemCategory = await this._itemCategoryManager.FindRecentlyAddedItemCategoryFromDB();
+                if (existingItemCategory == null)
+                {
+                    input.ItemCategoryCode = 10001;
+                }
+                else
+                {
+                    input.ItemCategoryCode = existingItemCategory.ItemCategoryCode + 10000;
+                }
+
+
                 var insertedOrUpdatedItemCategory = await this._itemCategoryManager.InsertOrUpdateItemCategoryIntoDB(input);
 
                 return insertedOrUpdatedItemCategory;

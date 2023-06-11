@@ -20,6 +20,8 @@
 
         Task<IList<ItemCategoryDto>> GetItemCategoryListFromDB();
 
+        Task<ItemCategoryDto?> FindRecentlyAddedItemCategoryFromDB();
+
         Task<bool> RestoreItemCategory(Guid itemCategoryId);
     }
 }
