@@ -88,6 +88,12 @@ export class AppNavigationService {
                         '/app/main/suppliers'
                     ),
                     new AppMenuItem(
+                        'Item Categories',
+                        'Pages.Administration.AuditLogs',
+                        'flaticon-folder-1',
+                        '/app/main/item-categories'
+                    ),
+                    new AppMenuItem(
                         'Companies',
                         'Pages.Administration.AuditLogs',
                         'flaticon-folder-1',

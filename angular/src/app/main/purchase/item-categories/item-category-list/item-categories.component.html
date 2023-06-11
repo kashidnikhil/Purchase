@@ -1,9 +1,9 @@
 <div [@routerTransition]>
     <div class="content d-flex flex-column flex-column-fluid">
-        <sub-header [title]="'Units' | localize" [description]="'UnitsHeaderInfo' | localize">
+        <sub-header [title]="'Item Categories' | localize" [description]="'UnitsHeaderInfo' | localize">
             <div role="actions">
                 <button
-                    (click)="createUnit()"
+                    (click)="createItemCategory()"
                     class="btn btn-primary"
                 >
                 <!-- *ngIf="'Pages.Administration.Users.Create' | permission" -->
@@ -29,7 +29,7 @@
                                                 [placeholder]="l('SearchWithThreeDot')"
                                                 type="text"
                                             />
-                                            <button (click)="getLegalEntities()" class="btn btn-primary" type="submit">
+                                            <button (click)="getItemCategories()" class="btn btn-primary" type="submit">
                                                 <i class="flaticon-search-1" [attr.aria-label]="l('Search')"></i>
                                             </button>
                                         </div>
@@ -45,7 +45,7 @@
                             <p-table
                                 #dataTable
                                 sortMode="multiple"
-                                (onLazyLoad)="getLegalEntities($event)"
+                                (onLazyLoad)="getItemCategories($event)"
                                 [value]="primengTableHelper.records"
                                 rows="{{ primengTableHelper.defaultRecordsCountPerPage }}"
                                 [paginator]="false"
@@ -119,7 +119,7 @@
                                                         <a
                                                             href="javascript:;"
                                                             class="dropdown-item"
-                                                            (click)="createOrEditLegalEntityModal.show(record.id)"
+                                                            (click)="createOrEditItemCategoryModal.show(record.id)"
                                                         >
                                                             {{ 'Edit' | localize }}
                                                         </a>
@@ -136,7 +136,7 @@
                                                         <a
                                                             href="javascript:;"
                                                             class="dropdown-item"
-                                                            (click)="deleteLegalEntity(record)"
+                                                            (click)="deleteItemCategory(record)"
                                                         >
                                                             {{ 'Delete' | localize }}
                                                         </a>
@@ -162,7 +162,7 @@
                                 <p-paginator
                                     [rows]="primengTableHelper.defaultRecordsCountPerPage"
                                     #paginator
-                                    (onPageChange)="getLegalEntities($event)"
+                                    (onPageChange)="getItemCategories($event)"
                                     [totalRecords]="primengTableHelper.totalRecordsCount"
                                     [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
                                     [showCurrentPageReport]="true"
@@ -176,6 +176,6 @@
                 </div>
             </div>
         </div>
-        <create-edit-legal-entity-modal #createOrEditLegalEntityModal (modalSave)="getLegalEntities()" (restoreLegalEntity)="restoreLegalEntity($event)"></create-edit-legal-entity-modal>
+        <create-edit-item-category-modal #createOrEditLegalEntityModal (modalSave)="getItemCategories()" (restoreLegalEntity)="restoreItemCategory($event)"></create-edit-item-category-modal>
     </div>
 </div>

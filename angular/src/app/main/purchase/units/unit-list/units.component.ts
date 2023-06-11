@@ -66,7 +66,7 @@ export class UnitsComponent extends AppComponentBase implements AfterViewInit {
         this.createOrEditUnitModal.show();
     }
 
-    deleteTechnique(unit: UnitDto): void {
+    deleteUnit(unit: UnitDto): void {
         this.message.confirm(this.l('UnitDeleteWarningMessage', unit.name), this.l('AreYouSure'), (isConfirmed) => {
             if (isConfirmed) {
                 this._unitService.deleteUnit(unit.id).subscribe(() => {

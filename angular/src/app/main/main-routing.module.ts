@@ -78,6 +78,10 @@ import { RouterModule } from '@angular/router';
                         path: 'sub-assembly-items',
                         loadChildren: () => import('./purchase/sub-assembly-items/sub-assembly-items.module').then(m => m.SubAssemblyItemsModule)
                     },
+                    {
+                        path: 'item-categories',
+                        loadChildren: () => import('./purchase/item-categories/item-categories.module').then(m => m.ItemCategoriesModule)
+                    },
                        
                                       
                     { path: '', redirectTo: 'dashboard', pathMatch: 'full' },

@@ -2,21 +2,21 @@ import { Component, Injector, ViewChild, ViewEncapsulation, AfterViewInit } from
 import { ActivatedRoute } from '@angular/router';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { AppComponentBase } from '@shared/common/app-component-base';
-import { LegalEntityDto, LegalEntityServiceProxy, ResponseDto, UnitDto, UnitServiceProxy } from '@shared/service-proxies/service-proxies';
+import { ItemCategoryServiceProxy, LegalEntityDto, LegalEntityServiceProxy, ResponseDto, UnitDto, UnitServiceProxy } from '@shared/service-proxies/service-proxies';
 import { LazyLoadEvent } from 'primeng/api';
 import { Paginator } from 'primeng/paginator';
 import { Table } from 'primeng/table';
 import { finalize } from 'rxjs/operators';
-import { CreateOrEditLegalEntityModalComponent } from '../create-edit-legal-entity/create-or-edit-legal-entity-modal.component';
+import { CreateOrEditItemCategoryModalComponent } from '../create-edit-item-category/create-or-edit-item-category-modal.component';
 
 @Component({
-    templateUrl: './legal-entities.component.html',
+    templateUrl: './item-categories.component.html',
     encapsulation: ViewEncapsulation.None,
-    styleUrls: ['./legal-entities.component.less'],
+    styleUrls: ['./item-categories.component.less'],
     animations: [appModuleAnimation()],
 })
-export class LegalEntitiesComponent extends AppComponentBase implements AfterViewInit {
-    @ViewChild('createOrEditLegalEntityModal', { static: true }) createOrEditLegalEntityModal: CreateOrEditLegalEntityModalComponent;
+export class ItemCategoriesComponent extends AppComponentBase implements AfterViewInit {
+    @ViewChild('createOrEditItemCategoryModal', { static: true }) createOrEditItemCategoryModal: CreateOrEditItemCategoryModalComponent;
     @ViewChild('dataTable', { static: true }) dataTable: Table;
     @ViewChild('paginator', { static: true }) paginator: Paginator;
     
@@ -25,7 +25,7 @@ export class LegalEntitiesComponent extends AppComponentBase implements AfterVie
 
     constructor(
         injector: Injector,
-        private _legalEntityService: LegalEntityServiceProxy,
+        private _itemCategoryService: ItemCategoryServiceProxy,
         private _activatedRoute: ActivatedRoute
     ) {
         super(injector);
@@ -36,15 +36,15 @@ export class LegalEntitiesComponent extends AppComponentBase implements AfterVie
         this.primengTableHelper.adjustScroll(this.dataTable);
     }
 
-    getLegalEntities(event?: LazyLoadEvent) {
+    getItemCategories(event?: LazyLoadEvent) {
         if (this.primengTableHelper.shouldResetPaging(event)) {
             this.paginator.changePage(0);
             return;
         }
 
         this.primengTableHelper.showLoadingIndicator();
-        this._legalEntityService
-            .getLegalEntities(
+        this._itemCategoryService
+            .getItemCategories(
                     this.filterText,
                     this.primengTableHelper.getSorting(this.dataTable),
                     this.primengTableHelper.getMaxResultCount(this.paginator, event),
@@ -62,14 +62,14 @@ export class LegalEntitiesComponent extends AppComponentBase implements AfterVie
         this.paginator.changePage(this.paginator.getPage());
     }
 
-    createUnit(): void {
-        this.createOrEditLegalEntityModal.show();
+    createItemCategory(): void {
+        this.createOrEditItemCategoryModal.show();
     }
 
-    deleteLegalEntity(legalEntity: LegalEntityDto): void {
+    deleteItemCategory(legalEntity: LegalEntityDto): void {
         this.message.confirm(this.l('UnitDeleteWarningMessage', legalEntity.name), this.l('AreYouSure'), (isConfirmed) => {
             if (isConfirmed) {
-                this._legalEntityService.deleteLegalEntity(legalEntity.id).subscribe(() => {
+                this._itemCategoryService.deleteItemCategory(legalEntity.id).subscribe(() => {
                     this.reloadPage();
                     this.notify.success(this.l('SuccessfullyDeleted'));
                 });
@@ -77,12 +77,12 @@ export class LegalEntitiesComponent extends AppComponentBase implements AfterVie
         });
     }
 
-    restoreLegalEntity(legalEntityResponse: ResponseDto):void {
-        if(legalEntityResponse.id == null){
-            if(legalEntityResponse.isExistingDataAlreadyDeleted){
-                this.message.confirm(this.l('UnitRestoreMessage', legalEntityResponse.name), this.l('AreYouSure'), async (isConfirmed) => {
+    restoreItemCategory(itemCategoryResponse: ResponseDto):void {
+        if(itemCategoryResponse.id == null){
+            if(itemCategoryResponse.isExistingDataAlreadyDeleted){
+                this.message.confirm(this.l('UnitRestoreMessage', itemCategoryResponse.name), this.l('AreYouSure'), async (isConfirmed) => {
                     if (isConfirmed) {
-                        this._legalEntityService.restoreLegalEntity(legalEntityResponse.restoringItemId).subscribe(() => {
+                        this._itemCategoryService.restoreItemCategory(itemCategoryResponse.restoringItemId).subscribe(() => {
                             this.reloadPage();
                             this.notify.success(this.l('UnitSuccessfullyRestored'));
                         });
@@ -90,14 +90,14 @@ export class LegalEntitiesComponent extends AppComponentBase implements AfterVie
                 });
             }
             else{
-                this.notify.error(this.l('ExistingUnitErrorMessage',legalEntityResponse.name));
+                this.notify.error(this.l('ExistingUnitErrorMessage',itemCategoryResponse.name));
             }
         }
         else{
-            if(legalEntityResponse.isExistingDataAlreadyDeleted){
-                this.message.confirm(this.l('NewUnitErrorMessage', legalEntityResponse.name), this.l('AreYouSure'), async (isConfirmed) => {
+            if(itemCategoryResponse.isExistingDataAlreadyDeleted){
+                this.message.confirm(this.l('NewUnitErrorMessage', itemCategoryResponse.name), this.l('AreYouSure'), async (isConfirmed) => {
                     if (isConfirmed) {
-                        this._legalEntityService.restoreLegalEntity(legalEntityResponse.restoringItemId).subscribe(() => {
+                        this._itemCategoryService.restoreItemCategory(itemCategoryResponse.restoringItemId).subscribe(() => {
                             this.reloadPage();
                             this.notify.success(this.l('UnitSuccessfullyRestored'));
                         });
@@ -105,7 +105,7 @@ export class LegalEntitiesComponent extends AppComponentBase implements AfterVie
                 });
             }   
             else{
-                this.notify.error(this.l('ExistingUnitErrorMessage',legalEntityResponse.name));
+                this.notify.error(this.l('ExistingUnitErrorMessage',itemCategoryResponse.name));
             }
         }
     }

@@ -56,6 +56,8 @@ using MyTraining1101Demo.Purchase.Companies.Dto.CompanyContactPersons;
 using MyTraining1101Demo.Purchase.Companies.Dto.CompanyMaster;
 using MyTraining1101Demo.Purchase.DeliveryTerms;
 using MyTraining1101Demo.Purchase.DeliveryTerms.Dto;
+using MyTraining1101Demo.Purchase.ItemCategories;
+using MyTraining1101Demo.Purchase.ItemCategories.Dto;
 using MyTraining1101Demo.Purchase.Items.CalibrationAgenciesMaster;
 using MyTraining1101Demo.Purchase.Items.CalibrationTypeMaster;
 using MyTraining1101Demo.Purchase.Items.Dto.CalibrationAgenciesMaster;
@@ -385,6 +387,9 @@ namespace MyTraining1101Demo
                 .ForMember(dto => dto.SubAssemblyName, options => options.MapFrom(x => x.SubAssembly.Name))
                 .ForMember(dto => dto.ItemName, options => options.MapFrom(x => x.Item.ItemName))
                 .ReverseMap();
+
+            configuration.CreateMap<ItemCategory, ItemCategoryDto>().ReverseMap();
+            configuration.CreateMap<ItemCategory, ItemCategoryInputDto>().ReverseMap();
             /* ADD YOUR OWN CUSTOM AUTOMAPPER MAPPINGS HERE */
         }
     }

@@ -18,6 +18,7 @@ using MyTraining1101Demo.Purchase.Companies.CompanyAddresses;
 using MyTraining1101Demo.Purchase.Companies.CompanyContactPersons;
 using MyTraining1101Demo.Purchase.Companies.CompanyMaster;
 using MyTraining1101Demo.Purchase.DeliveryTerms;
+using MyTraining1101Demo.Purchase.ItemCategories;
 using MyTraining1101Demo.Purchase.Items.CalibrationAgenciesMaster;
 using MyTraining1101Demo.Purchase.Items.CalibrationTypeMaster;
 using MyTraining1101Demo.Purchase.Items.ItemAccesoriesMaster;
@@ -139,6 +140,8 @@ namespace MyTraining1101Demo.EntityFrameworkCore
         public virtual DbSet<ModelWiseItemMaster> ModelWiseItemMasters { get; set; }
 
         public virtual DbSet<ModelWiseItem> ModelWiseItem { get; set; }
+
+        public virtual DbSet<ItemCategory> ItemCategories { get; set; }
 
         public MyTraining1101DemoDbContext(DbContextOptions<MyTraining1101DemoDbContext> options)
             : base(options)
