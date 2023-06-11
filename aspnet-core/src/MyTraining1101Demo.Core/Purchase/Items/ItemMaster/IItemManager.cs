@@ -17,12 +17,14 @@
 
         Task<ItemMasterDto> GetItemMasterByIdFromDB(Guid itemId);
 
-        Task<ItemMasterDto?> GetItemMasterByNameFromDB(ItemCategory itemCategory, string itemName);
+        Task<ItemMasterDto?> GetItemMasterByNameFromDB(Guid itemCategory, string itemName);
 
-        Task<ItemMasterDto?> FindItemMasterByCategoryIdFromDB(ItemCategory itemCategory);
+        Task<ItemMasterDto?> FindItemMasterByCategoryIdFromDB(Guid itemCategory);
 
         Task<IList<ItemMasterListDto>> GetItemMasterListFromDB();
 
         Task<IList<ItemListDto>> GetItemListForSubAssemblyPageDropdownFromDB();
+
+        Task<ResponseDto> ForceInsertOrUpdateItemMasterIntoDB(ItemMasterInputDto input);
     }
 }

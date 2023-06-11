@@ -7439,6 +7439,62 @@ export class ItemServiceProxy {
     }
 
     /**
+     * @param body (optional) 
+     * @return Success
+     */
+    forceInsertOrUpdateItem(body: ItemMasterInputDto | undefined): Observable<ResponseDto> {
+        let url_ = this.baseUrl + "/api/services/app/Item/ForceInsertOrUpdateItem";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processForceInsertOrUpdateItem(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processForceInsertOrUpdateItem(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ResponseDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ResponseDto>;
+        }));
+    }
+
+    protected processForceInsertOrUpdateItem(response: HttpResponseBase): Observable<ResponseDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ResponseDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ResponseDto>(null as any);
+    }
+
+    /**
      * @param itemId (optional) 
      * @return Success
      */
@@ -28368,18 +28424,6 @@ export interface IItemAttachmentInputDto {
     itemId: string | undefined;
 }
 
-export enum ItemCategory {
-    LabInstruments = 10001,
-    OfficeEquipments = 20001,
-    RM = 30001,
-    Books = 40001,
-    Glassware = 50001,
-    Chemicals = 60001,
-    Material = 70001,
-    FurnitureAndFixtures = 80001,
-    ToolsAndTackles = 90001,
-}
-
 export class ItemCategoryDto implements IItemCategoryDto {
     id!: string;
     name!: string | undefined;
@@ -28518,7 +28562,6 @@ export interface IItemListDto {
 
 export class ItemMasterDto implements IItemMasterDto {
     id!: string;
-    itemCategory!: ItemCategory;
     categoryId!: number | undefined;
     itemId!: number | undefined;
     genericName!: string | undefined;
@@ -28570,6 +28613,7 @@ export class ItemMasterDto implements IItemMasterDto {
     purchasedBy!: number | undefined;
     weightPerUOM!: number | undefined;
     sellingPrice!: number | undefined;
+    itemCategoryId!: string | undefined;
     itemCalibrationAgencies!: CalibrationAgencyDto[] | undefined;
     itemCalibrationTypes!: CalibrationTypeDto[] | undefined;
     itemAttachments!: ItemAttachmentDto[] | undefined;
@@ -28592,7 +28636,6 @@ export class ItemMasterDto implements IItemMasterDto {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
-            this.itemCategory = _data["itemCategory"];
             this.categoryId = _data["categoryId"];
             this.itemId = _data["itemId"];
             this.genericName = _data["genericName"];
@@ -28644,6 +28687,7 @@ export class ItemMasterDto implements IItemMasterDto {
             this.purchasedBy = _data["purchasedBy"];
             this.weightPerUOM = _data["weightPerUOM"];
             this.sellingPrice = _data["sellingPrice"];
+            this.itemCategoryId = _data["itemCategoryId"];
             if (Array.isArray(_data["itemCalibrationAgencies"])) {
                 this.itemCalibrationAgencies = [] as any;
                 for (let item of _data["itemCalibrationAgencies"])
@@ -28702,7 +28746,6 @@ export class ItemMasterDto implements IItemMasterDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
-        data["itemCategory"] = this.itemCategory;
         data["categoryId"] = this.categoryId;
         data["itemId"] = this.itemId;
         data["genericName"] = this.genericName;
@@ -28754,6 +28797,7 @@ export class ItemMasterDto implements IItemMasterDto {
         data["purchasedBy"] = this.purchasedBy;
         data["weightPerUOM"] = this.weightPerUOM;
         data["sellingPrice"] = this.sellingPrice;
+        data["itemCategoryId"] = this.itemCategoryId;
         if (Array.isArray(this.itemCalibrationAgencies)) {
             data["itemCalibrationAgencies"] = [];
             for (let item of this.itemCalibrationAgencies)
@@ -28805,7 +28849,6 @@ export class ItemMasterDto implements IItemMasterDto {
 
 export interface IItemMasterDto {
     id: string;
-    itemCategory: ItemCategory;
     categoryId: number | undefined;
     itemId: number | undefined;
     genericName: string | undefined;
@@ -28857,6 +28900,7 @@ export interface IItemMasterDto {
     purchasedBy: number | undefined;
     weightPerUOM: number | undefined;
     sellingPrice: number | undefined;
+    itemCategoryId: string | undefined;
     itemCalibrationAgencies: CalibrationAgencyDto[] | undefined;
     itemCalibrationTypes: CalibrationTypeDto[] | undefined;
     itemAttachments: ItemAttachmentDto[] | undefined;
@@ -28870,7 +28914,7 @@ export interface IItemMasterDto {
 
 export class ItemMasterInputDto implements IItemMasterInputDto {
     id!: string | undefined;
-    itemCategory!: ItemCategory;
+    itemCategoryId!: string;
     categoryId!: number | undefined;
     itemId!: number | undefined;
     genericName!: string | undefined;
@@ -28944,7 +28988,7 @@ export class ItemMasterInputDto implements IItemMasterInputDto {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
-            this.itemCategory = _data["itemCategory"];
+            this.itemCategoryId = _data["itemCategoryId"];
             this.categoryId = _data["categoryId"];
             this.itemId = _data["itemId"];
             this.genericName = _data["genericName"];
@@ -29054,7 +29098,7 @@ export class ItemMasterInputDto implements IItemMasterInputDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
-        data["itemCategory"] = this.itemCategory;
+        data["itemCategoryId"] = this.itemCategoryId;
         data["categoryId"] = this.categoryId;
         data["itemId"] = this.itemId;
         data["genericName"] = this.genericName;
@@ -29157,7 +29201,7 @@ export class ItemMasterInputDto implements IItemMasterInputDto {
 
 export interface IItemMasterInputDto {
     id: string | undefined;
-    itemCategory: ItemCategory;
+    itemCategoryId: string;
     categoryId: number | undefined;
     itemId: number | undefined;
     genericName: string | undefined;
@@ -34530,6 +34574,7 @@ export class ResponseDto implements IResponseDto {
     name!: string | undefined;
     isExistingDataAlreadyDeleted!: boolean;
     dataMatchFound!: boolean;
+    recentlyAddedItem!: ItemMasterInputDto;
 
     constructor(data?: IResponseDto) {
         if (data) {
@@ -34547,6 +34592,7 @@ export class ResponseDto implements IResponseDto {
             this.name = _data["name"];
             this.isExistingDataAlreadyDeleted = _data["isExistingDataAlreadyDeleted"];
             this.dataMatchFound = _data["dataMatchFound"];
+            this.recentlyAddedItem = _data["recentlyAddedItem"] ? ItemMasterInputDto.fromJS(_data["recentlyAddedItem"]) : <any>undefined;
         }
     }
 
@@ -34564,6 +34610,7 @@ export class ResponseDto implements IResponseDto {
         data["name"] = this.name;
         data["isExistingDataAlreadyDeleted"] = this.isExistingDataAlreadyDeleted;
         data["dataMatchFound"] = this.dataMatchFound;
+        data["recentlyAddedItem"] = this.recentlyAddedItem ? this.recentlyAddedItem.toJSON() : <any>undefined;
         return data;
     }
 }
@@ -34574,6 +34621,7 @@ export interface IResponseDto {
     name: string | undefined;
     isExistingDataAlreadyDeleted: boolean;
     dataMatchFound: boolean;
+    recentlyAddedItem: ItemMasterInputDto;
 }
 
 export class RoleEditDto implements IRoleEditDto {

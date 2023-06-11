@@ -18,7 +18,7 @@
 
         Task<ItemCategoryDto> GetItemCategoryByIdFromDB(Guid itemCategoryId);
 
-        Task<IList<ItemCategoryDto>> GetItemCategoryListFromDB();
+        Task<List<ItemCategoryDto>> GetItemCategoryListFromDB();
 
         Task<ItemCategoryDto?> FindRecentlyAddedItemCategoryFromDB();
 

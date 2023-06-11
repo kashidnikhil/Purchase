@@ -140,7 +140,7 @@
             }
         }
 
-        public async Task<IList<ItemCategoryDto>> GetItemCategoryListFromDB()
+        public async Task<List<ItemCategoryDto>> GetItemCategoryListFromDB()
         {
             try
             {

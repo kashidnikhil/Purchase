@@ -1,7 +1,7 @@
 import { formatDate } from "@angular/common";
 import { Injectable } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
-import { CalibrationAgencyDto, CalibrationTypeDto, ItemAccessoryDto, ItemAttachmentDto, ItemMasterDto, ItemRateRevisionDto, ItemSpareDto, ItemStorageConditionDto, ItemSupplierDto, ProcurementDto } from "@shared/service-proxies/service-proxies";
+import { CalibrationAgencyDto, CalibrationTypeDto, ItemAccessoryDto, ItemAttachmentDto, ItemCategoryDto, ItemMasterDto, ItemRateRevisionDto, ItemSpareDto, ItemStorageConditionDto, ItemSupplierDto, ProcurementDto } from "@shared/service-proxies/service-proxies";
 
 @Injectable()
 export class ItemFormBuilderService{
@@ -17,7 +17,7 @@ export class ItemFormBuilderService{
         let itemAttachment : ItemAttachmentDto = new ItemAttachmentDto();
         let form = this.formBuilder.group({
             id: new FormControl(itemMaster.id, []),
-            itemCategory: new FormControl({value : itemMaster.itemCategory ? <number>itemMaster.itemCategory : null, disabled: itemMaster.id != null ? true : false}, [Validators.required]),
+            itemCategoryId: new FormControl({value : itemMaster.itemCategoryId ? itemMaster.itemCategoryId : null, disabled: itemMaster.id != null ? true : false}, [Validators.required]),
             itemId: new FormControl(itemMaster.itemId, []),
             categoryId: new FormControl(itemMaster.categoryId, []),
             genericName: new FormControl(itemMaster.genericName, []),
@@ -62,7 +62,7 @@ export class ItemFormBuilderService{
             id: new FormControl(itemMaster.id, []),
             categoryId: new FormControl(itemMaster.categoryId, []),
             itemId: new FormControl(itemMaster.itemId, []),
-            itemCategory: new FormControl({value : itemMaster.itemCategory ? <number>itemMaster.itemCategory : null, disabled: itemMaster.id != null ? true : false}, [Validators.required]),
+            itemCategoryId: new FormControl({value : itemMaster.itemCategoryId ? itemMaster.itemCategoryId : null, disabled: itemMaster.id != null ? true : false}, [Validators.required]),
             //itemCategory: new FormControl(itemMaster.itemCategory ? <number>itemMaster.itemCategory : null, []),
             genericName: new FormControl(itemMaster.genericName, []),
             itemName: new FormControl({value : itemMaster.itemName ? itemMaster.itemName : null, disabled: itemMaster.id != null ? true : false}, [Validators.required]),
@@ -124,7 +124,7 @@ export class ItemFormBuilderService{
             id: new FormControl(itemMaster.id, []),
             categoryId: new FormControl(itemMaster.categoryId, []),
             itemId: new FormControl(itemMaster.itemId, []),
-            itemCategory: new FormControl({value : itemMaster.itemCategory ? <number>itemMaster.itemCategory : null, disabled: itemMaster.id != null ? true : false}, [Validators.required]),
+            itemCategoryId: new FormControl({value : itemMaster.itemCategoryId ? itemMaster.itemCategoryId : null, disabled: itemMaster.id != null ? true : false}, [Validators.required]),
             //itemCategory: new FormControl(itemMaster.itemCategory ? <number>itemMaster.itemCategory : null, []),
             genericName: new FormControl(itemMaster.genericName, []),
             itemName: new FormControl({value : itemMaster.itemName ? itemMaster.itemName : null, disabled: itemMaster.id != null ? true : false}, [Validators.required]),
@@ -197,7 +197,7 @@ export class ItemFormBuilderService{
             id: new FormControl(itemMaster.id, []),
             categoryId: new FormControl(itemMaster.categoryId, []),
             itemId: new FormControl(itemMaster.itemId, []),
-            itemCategory: new FormControl({value : itemMaster.itemCategory ? <number>itemMaster.itemCategory : null, disabled: itemMaster.id != null ? true : false}, [Validators.required]),
+            itemCategoryId: new FormControl({value : itemMaster.itemCategoryId ? itemMaster.itemCategoryId : null, disabled: itemMaster.id != null ? true : false}, [Validators.required]),
             // itemCategory: new FormControl(itemMaster.itemCategory ? <number>itemMaster.itemCategory : null, []),
             genericName: new FormControl(itemMaster.genericName, []),
             itemName: new FormControl({value : itemMaster.itemName ? itemMaster.itemName : null, disabled: itemMaster.id != null ? true : false}, [Validators.required]),
@@ -239,7 +239,7 @@ export class ItemFormBuilderService{
             id: new FormControl(itemMaster.id, []),
             categoryId: new FormControl(itemMaster.categoryId, []),
             itemId: new FormControl(itemMaster.itemId, []),
-            itemCategory: new FormControl({value : itemMaster.itemCategory ? <number>itemMaster.itemCategory : null, disabled: itemMaster.id != null ? true : false}, [Validators.required]),
+            itemCategoryId: new FormControl({value : itemMaster.itemCategoryId ? itemMaster.itemCategoryId : null, disabled: itemMaster.id != null ? true : false}, [Validators.required]),
             // itemCategory: new FormControl(itemMaster.itemCategory ? <number>itemMaster.itemCategory : null, []),
             genericName: new FormControl(itemMaster.genericName, []),
             itemName: new FormControl({value : itemMaster.itemName ? itemMaster.itemName : null, disabled: itemMaster.id != null ? true : false}, [Validators.required]),
@@ -309,7 +309,7 @@ export class ItemFormBuilderService{
             id: new FormControl(itemMaster.id, []),
             categoryId: new FormControl(itemMaster.categoryId, []),
             itemId: new FormControl(itemMaster.itemId, []),
-            itemCategory: new FormControl({value : itemMaster.itemCategory ? <number>itemMaster.itemCategory : null, disabled: itemMaster.id != null ? true : false}, [Validators.required]),
+            itemCategoryId: new FormControl({value : itemMaster.itemCategoryId ? itemMaster.itemCategoryId : null, disabled: itemMaster.id != null ? true : false}, [Validators.required]),
             //itemCategory: new FormControl(itemMaster.itemCategory ? <number>itemMaster.itemCategory : null, []),
             genericName: new FormControl(itemMaster.genericName, [Validators.required]),
             itemName: new FormControl({value : itemMaster.itemName ? itemMaster.itemName : null, disabled: itemMaster.id != null ? true : false}, [Validators.required]),
@@ -377,7 +377,7 @@ export class ItemFormBuilderService{
             id: new FormControl(itemMaster.id, []),
             categoryId: new FormControl(itemMaster.categoryId, []),
             itemId: new FormControl(itemMaster.itemId, []),
-            itemCategory: new FormControl({value : itemMaster.itemCategory ? <number>itemMaster.itemCategory : null, disabled: itemMaster.id != null ? true : false}, [Validators.required]),
+            itemCategoryId: new FormControl({value : itemMaster.itemCategoryId ? itemMaster.itemCategoryId : null, disabled: itemMaster.id != null ? true : false}, [Validators.required]),
             //itemCategory: new FormControl(itemMaster.itemCategory ? <number>itemMaster.itemCategory : null, []),
             genericName: new FormControl(itemMaster.genericName, []),
             itemName: new FormControl({value : itemMaster.itemName ? itemMaster.itemName : null, disabled: itemMaster.id != null ? true : false}, [Validators.required]),
@@ -436,7 +436,7 @@ export class ItemFormBuilderService{
             id: new FormControl(itemMaster.id, []),
             categoryId: new FormControl(itemMaster.categoryId, []),
             itemId: new FormControl(itemMaster.itemId, []),
-            itemCategory: new FormControl({value : itemMaster.itemCategory ? <number>itemMaster.itemCategory : null, disabled: itemMaster.id != null ? true : false}, [Validators.required]),
+            itemCategoryId: new FormControl({value : itemMaster.itemCategoryId ? itemMaster.itemCategoryId : null, disabled: itemMaster.id != null ? true : false}, [Validators.required]),
             // itemCategory: new FormControl(itemMaster.itemCategory ? <number>itemMaster.itemCategory : null, []),
             genericName: new FormControl(itemMaster.genericName, []),
             itemName: new FormControl({value : itemMaster.itemName ? itemMaster.itemName : null, disabled: itemMaster.id != null ? true : false}, [Validators.required]),
@@ -521,7 +521,7 @@ export class ItemFormBuilderService{
             id: new FormControl(itemMaster.id, []),
             categoryId: new FormControl(itemMaster.categoryId, []),
             itemId: new FormControl(itemMaster.itemId, []),
-            itemCategory: new FormControl(itemMaster.itemCategory ? <number>itemMaster.itemCategory : null, []),
+            itemCategoryId: new FormControl(itemMaster.itemCategoryId ? itemMaster.itemCategoryId : null, []),
             genericName: new FormControl(itemMaster.genericName, []),
             itemName: new FormControl({value : itemMaster.itemName ? itemMaster.itemName : null, disabled: itemMaster.id != null ? true : false}, [Validators.required]),
             alias: new FormControl(itemMaster.alias, []),
@@ -589,9 +589,9 @@ export class ItemFormBuilderService{
         });
     }
 
-    public loadCategoryWiseItemForm(itemMaster : ItemMasterDto) : FormGroup{
-        let categoryId = itemMaster.itemCategory; 
-        
+    public loadCategoryWiseItemForm(itemMaster : ItemMasterDto, itemCategoryList : ItemCategoryDto[]) : FormGroup{
+        let categoryId = itemCategoryList.find(x=> x.id == itemMaster.itemCategoryId).itemCategoryCode;
+  
         if(categoryId == 10001){
             return this.createLabInstrumentTypeForm(itemMaster);
         }
@@ -634,7 +634,7 @@ export class ItemFormBuilderService{
                 id: new FormControl(itemMaster.id, []),
                 categoryId: new FormControl(itemMaster.categoryId, []),
                 itemId: new FormControl(itemMaster.itemId, []),
-                itemCategory: new FormControl(itemMaster.itemCategory ? <number>itemMaster.itemCategory : null, [Validators.required]),
+                itemCategoryId: new FormControl(itemMaster.itemCategoryId ? itemMaster.itemCategoryId : null, [Validators.required]),
                 genericName: new FormControl(itemMaster.genericName, []),
                 itemName: new FormControl(itemMaster.itemName, [Validators.required]),
                 alias: new FormControl(itemMaster.alias, []),

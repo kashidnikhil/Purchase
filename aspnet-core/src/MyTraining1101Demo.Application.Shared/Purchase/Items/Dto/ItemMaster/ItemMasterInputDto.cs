@@ -15,9 +15,9 @@
     public class ItemMasterInputDto
     {
         public Guid? Id { get; set; }
-        public ItemCategory ItemCategory { get; set; }
+        public Guid ItemCategoryId { get; set; }
 
-        public int? CategoryId { get; set; }
+        public long? CategoryId { get; set; }
 
         public int? ItemId { get; set; }
 

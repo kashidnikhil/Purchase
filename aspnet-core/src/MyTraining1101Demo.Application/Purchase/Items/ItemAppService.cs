@@ -1,6 +1,8 @@
 ﻿namespace MyTraining1101Demo.Purchase.Items
 {
     using Abp.Application.Services.Dto;
+    using Microsoft.EntityFrameworkCore.Metadata;
+    using MyTraining1101Demo.Purchase.ItemCategories;
     using MyTraining1101Demo.Purchase.Items.CalibrationAgenciesMaster;
     using MyTraining1101Demo.Purchase.Items.CalibrationTypeMaster;
     using MyTraining1101Demo.Purchase.Items.Dto.ItemMaster;
@@ -29,6 +31,7 @@
         private readonly IProcurementManager _itemProcurementManager;
         private readonly IItemSpareManager _itemSpareManager;
         private readonly IItemAccessoryManager _itemAccessoryManager;
+        private readonly IItemCategoryManager _itemCategoryManager; 
         public ItemAppService(
           IItemManager itemManager,
           ICalibrationAgencyManager calibrationAgencyManager,
@@ -39,7 +42,8 @@
           IItemSupplierManager itemSupplierManager,
           IProcurementManager itemProcurementManager,
           IItemAccessoryManager itemAccessoryManager,
-          IItemSpareManager itemSpareManager
+          IItemSpareManager itemSpareManager,
+          IItemCategoryManager itemCategoryManager
          )
         {
             _itemManager = itemManager;
@@ -52,6 +56,7 @@
             _itemProcurementManager = itemProcurementManager;
             _itemSpareManager = itemSpareManager;
             _itemAccessoryManager = itemAccessoryManager;
+            _itemCategoryManager = itemCategoryManager;
         }
 
         public async Task<PagedResultDto<ItemMasterListDto>> GetItems(ItemMasterSearchDto input)
@@ -74,15 +79,16 @@
             try
             {
 
-                var existingItem = await this._itemManager.GetItemMasterByNameFromDB(input.ItemCategory, input.ItemName);
+                var existingItem = await this._itemManager.GetItemMasterByNameFromDB(input.ItemCategoryId, input.ItemName);
                 if (existingItem == null)
                 {
-                    var maximumCategoryExistingItem = await this._itemManager.FindItemMasterByCategoryIdFromDB(input.ItemCategory);
+                    var maximumCategoryExistingItem = await this._itemManager.FindItemMasterByCategoryIdFromDB(input.ItemCategoryId);
                     if (maximumCategoryExistingItem != null) {
                         input.CategoryId = maximumCategoryExistingItem.CategoryId + 1;
                     }
                     else { 
-                        input.CategoryId = (int)input.ItemCategory;
+                        var exsitingItemCategory = await this._itemCategoryManager.GetItemCategoryByIdFromDB(input.ItemCategoryId);
+                        input.CategoryId = exsitingItemCategory.ItemCategoryCode;
                     }
                     input.ItemId = 1;
                 }
@@ -98,81 +104,30 @@
 
                 if (insertedOrUpdatedItem.Id != Guid.Empty)
                 {
-                    if (input.ItemCalibrationAgencies != null && input.ItemCalibrationAgencies.Count > 0)
-                    {
-                        input.ItemCalibrationAgencies.ForEach(itemCalibrationAgency =>
-                        {
-                            itemCalibrationAgency.ItemId = insertedOrUpdatedItem.Id;
-                        });
-                        await this._calibrationAgencyManager.BulkInsertOrUpdateItemCalibrationAgencies(input.ItemCalibrationAgencies);
-                    }
+                    
+                }
+                return insertedOrUpdatedItem;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.Message, ex);
+                throw ex;
+            }
+        }
 
-                    if (input.ItemCalibrationTypes != null && input.ItemCalibrationTypes.Count > 0)
-                    {
-                        input.ItemCalibrationTypes.ForEach(ItemCalibrationType =>
-                        {
-                            ItemCalibrationType.ItemId = insertedOrUpdatedItem.Id;
-                        });
-                        await this._calibrationTypeManager.BulkInsertOrUpdateItemCalibrationTypes(input.ItemCalibrationTypes);
+        public async Task<ResponseDto> ForceInsertOrUpdateItem(ItemMasterInputDto input)
+        {
+            try
+            {
+                var insertedOrUpdatedItem = await this._itemManager.ForceInsertOrUpdateItemMasterIntoDB(input);
+                if (insertedOrUpdatedItem.DataMatchFound)
+                {
+                    return insertedOrUpdatedItem;
+                }
 
-                    }
-
-                    if (input.ItemAttachments != null && input.ItemAttachments.Count > 0)
-                    {
-                        input.ItemAttachments.ForEach(ItemAttachment =>
-                        {
-                            ItemAttachment.ItemId = insertedOrUpdatedItem.Id;
-                        });
-                        await this._itemAttachmentManager.BulkInsertOrUpdateItemAttachments(input.ItemAttachments);
-                    }
-
-                    if (input.ItemStorageConditions != null && input.ItemStorageConditions.Count > 0)
-                    {
-                        input.ItemStorageConditions.ForEach(ItemStorageCondition =>
-                        {
-                            ItemStorageCondition.ItemId = insertedOrUpdatedItem.Id;
-                        });
-                        await this._itemStorageConditionManager.BulkInsertOrUpdateItemStorageConditions(input.ItemStorageConditions);
-                    }
-
-                    if (input.ItemSuppliers != null && input.ItemSuppliers.Count > 0)
-                    {
-                        input.ItemSuppliers.ForEach(ItemSupplier =>
-                        {
-                            ItemSupplier.ItemId = insertedOrUpdatedItem.Id;
-                        });
-                        await this._itemSupplierManager.BulkInsertOrUpdateItemSuppliers(input.ItemSuppliers);
-                    }
-
-                    if (input.ItemProcurements != null && input.ItemProcurements.Count > 0)
-                    {
-                        input.ItemProcurements.ForEach(ItemProcurement =>
-                        {
-                            ItemProcurement.ItemId = insertedOrUpdatedItem.Id;
-                        });
-                        await this._itemProcurementManager.BulkInsertOrUpdateItemProcurements(input.ItemProcurements);
-                    }
-
-                    if (input.ItemSpares != null && input.ItemSpares.Count > 0)
-                    {
-                        input.ItemSpares.ForEach(ItemSpare =>
-                        {
-                            ItemSpare.ItemId = insertedOrUpdatedItem.Id;
-                        });
-                        await this._itemSpareManager.BulkInsertOrUpdateItemSpares(input.ItemSpares);
-                    }
-
-                    if (input.ItemAccessories != null && input.ItemAccessories.Count > 0)
-                    {
-                        input.ItemAccessories.ForEach(ItemAccessory =>
-                        {
-                            ItemAccessory.ItemId = insertedOrUpdatedItem.Id;
-                        });
-                        await this._itemAccessoryManager.BulkInsertOrUpdateItemAccessories(input.ItemAccessories);
-                    }
-
-                    //This is used for inserting item rate. Used for maintaining rate history
-                    await this._itemRateRevisionManager.InsertItemRateRevision (input, insertedOrUpdatedItem.Id);
+                if (insertedOrUpdatedItem.Id != Guid.Empty)
+                {
+                    await this.InsertOrUpdateSubItemsAndItemRateRevision(input, (Guid)insertedOrUpdatedItem.Id);
                 }
                 return insertedOrUpdatedItem;
             }
@@ -268,5 +223,90 @@
             }
         }
 
+        private async Task InsertOrUpdateSubItemsAndItemRateRevision(ItemMasterInputDto input, Guid insertedOrUpdatedItemId) {
+            try
+            {
+                if (input.ItemCalibrationAgencies != null && input.ItemCalibrationAgencies.Count > 0)
+                {
+                    input.ItemCalibrationAgencies.ForEach(itemCalibrationAgency =>
+                    {
+                        itemCalibrationAgency.ItemId = insertedOrUpdatedItemId;
+                    });
+                    await this._calibrationAgencyManager.BulkInsertOrUpdateItemCalibrationAgencies(input.ItemCalibrationAgencies);
+                }
+
+                if (input.ItemCalibrationTypes != null && input.ItemCalibrationTypes.Count > 0)
+                {
+                    input.ItemCalibrationTypes.ForEach(ItemCalibrationType =>
+                    {
+                        ItemCalibrationType.ItemId = insertedOrUpdatedItemId;
+                    });
+                    await this._calibrationTypeManager.BulkInsertOrUpdateItemCalibrationTypes(input.ItemCalibrationTypes);
+
+                }
+
+                if (input.ItemAttachments != null && input.ItemAttachments.Count > 0)
+                {
+                    input.ItemAttachments.ForEach(ItemAttachment =>
+                    {
+                        ItemAttachment.ItemId = insertedOrUpdatedItemId;
+                    });
+                    await this._itemAttachmentManager.BulkInsertOrUpdateItemAttachments(input.ItemAttachments);
+                }
+
+                if (input.ItemStorageConditions != null && input.ItemStorageConditions.Count > 0)
+                {
+                    input.ItemStorageConditions.ForEach(ItemStorageCondition =>
+                    {
+                        ItemStorageCondition.ItemId = insertedOrUpdatedItemId;
+                    });
+                    await this._itemStorageConditionManager.BulkInsertOrUpdateItemStorageConditions(input.ItemStorageConditions);
+                }
+
+                if (input.ItemSuppliers != null && input.ItemSuppliers.Count > 0)
+                {
+                    input.ItemSuppliers.ForEach(ItemSupplier =>
+                    {
+                        ItemSupplier.ItemId = insertedOrUpdatedItemId;
+                    });
+                    await this._itemSupplierManager.BulkInsertOrUpdateItemSuppliers(input.ItemSuppliers);
+                }
+
+                if (input.ItemProcurements != null && input.ItemProcurements.Count > 0)
+                {
+                    input.ItemProcurements.ForEach(ItemProcurement =>
+                    {
+                        ItemProcurement.ItemId = insertedOrUpdatedItemId;
+                    });
+                    await this._itemProcurementManager.BulkInsertOrUpdateItemProcurements(input.ItemProcurements);
+                }
+
+                if (input.ItemSpares != null && input.ItemSpares.Count > 0)
+                {
+                    input.ItemSpares.ForEach(ItemSpare =>
+                    {
+                        ItemSpare.ItemId = insertedOrUpdatedItemId;
+                    });
+                    await this._itemSpareManager.BulkInsertOrUpdateItemSpares(input.ItemSpares);
+                }
+
+                if (input.ItemAccessories != null && input.ItemAccessories.Count > 0)
+                {
+                    input.ItemAccessories.ForEach(ItemAccessory =>
+                    {
+                        ItemAccessory.ItemId = insertedOrUpdatedItemId;
+                    });
+                    await this._itemAccessoryManager.BulkInsertOrUpdateItemAccessories(input.ItemAccessories);
+                }
+
+                //This is used for inserting item rate. Used for maintaining rate history
+                await this._itemRateRevisionManager.InsertItemRateRevision(input, insertedOrUpdatedItemId);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.Message, ex);
+                throw ex;
+            }
+        }
     }
 }

@@ -59,9 +59,17 @@ export class ItemMasterListComponent extends AppComponentBase implements AfterVi
     }
 
     checkForExistingItem(itemMasterResponse: ResponseDto):void {
+        console.log(itemMasterResponse.recentlyAddedItem);
         if(itemMasterResponse.dataMatchFound){
-            this.notify.error(this.l('ExistingItemErrorMessage',itemMasterResponse.name));
-        
+            // this.notify.error(this.l('ExistingItemErrorMessage',itemMasterResponse.name));
+            this.message.confirm(this.l('ItemMasterCopyAddMessage', itemMasterResponse.recentlyAddedItem.itemName), this.l('AreYouSure'), (isConfirmed) => {
+                if (isConfirmed) {
+                    this._itemMasterService.forceInsertOrUpdateItem(itemMasterResponse.recentlyAddedItem).subscribe(() => {
+                        this.reloadPage();
+                        this.notify.info(this.l('SavedSuccessfully'));
+                    });
+                }
+            });
         }
     }
 

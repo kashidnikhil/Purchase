@@ -15,8 +15,7 @@
     public class ItemMasterDto
     {
         public Guid Id { get; set; }
-        public ItemCategory ItemCategory { get; set; }
-
+        
         public int? CategoryId { get; set; }
 
         public int? ItemId { get; set; }
@@ -117,6 +116,8 @@
         public decimal? WeightPerUOM { get; set; }
 
         public decimal? SellingPrice { get; set; }
+
+        public Guid? ItemCategoryId { get; set; }
 
         public IList<CalibrationAgencyDto> ItemCalibrationAgencies { get; set; }
 

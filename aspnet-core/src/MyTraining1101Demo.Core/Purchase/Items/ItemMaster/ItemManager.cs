@@ -9,7 +9,6 @@
     using Microsoft.Extensions.Configuration;
     using MyTraining1101Demo.Configuration;
     using MyTraining1101Demo.Purchase.Items.Dto.ItemMaster;
-    using MyTraining1101Demo.Purchase.Items.Enums;
     using MyTraining1101Demo.Purchase.Shared;
     using System;
     using System.Collections.Generic;
@@ -78,9 +77,10 @@
             {
                 Guid itemMasterId = Guid.Empty;
                 var existingItemMaster = await this._itemMasterRepository.GetAll()
-                    .Where(x => !x.IsDeleted && x.ItemCategory == input.ItemCategory && x.ItemName.ToLower().Trim() == input.ItemName.Trim().ToLower())
+                    .Include(x => x.ItemCategory)
+                    .Where(x => !x.IsDeleted && x.ItemCategoryId == input.ItemCategoryId && x.ItemName.ToLower().Trim() == input.ItemName.Trim().ToLower())
                     .FirstOrDefaultAsync();
-                
+
                 if (existingItemMaster != null)
                 {
                     if (input.Id != existingItemMaster.Id)
@@ -89,6 +89,7 @@
                         {
                             Id = input.Id == Guid.Empty ? null : input.Id,
                             Name = existingItemMaster.ItemName,
+                            RecentlyAddedItem = input,
                             DataMatchFound = true
                         };
                     }
@@ -107,7 +108,7 @@
                 }
                 else
                 {
-                    
+
                     var mappedItemMaster = ObjectMapper.Map<Item>(input);
                     itemMasterId = await this._itemMasterRepository.InsertOrUpdateAndGetIdAsync(mappedItemMaster);
                     await CurrentUnitOfWork.SaveChangesAsync();
@@ -161,13 +162,14 @@
             }
         }
 
-        public async Task<ItemMasterDto?> GetItemMasterByNameFromDB(ItemCategory itemCategory, string itemName)
+        public async Task<ItemMasterDto?> GetItemMasterByNameFromDB(Guid itemCategory, string itemName)
         {
             try
             {
                 var itemMaster = await this._itemMasterRepository.GetAll()
-                    .Where(x => x.ItemCategory == itemCategory && x.ItemName.ToLower().Trim() == itemName.Trim().ToLower())
-                    .OrderByDescending(x=> x.ItemId)
+                    .Include(x => x.ItemCategory)
+                    .Where(x => x.ItemCategoryId == itemCategory && x.ItemName.ToLower().Trim() == itemName.Trim().ToLower())
+                    .OrderByDescending(x => x.ItemId)
                     .FirstOrDefaultAsync();
 
                 return ObjectMapper.Map<ItemMasterDto?>(itemMaster);
@@ -180,13 +182,13 @@
             }
         }
 
-        public async Task<ItemMasterDto?> FindItemMasterByCategoryIdFromDB(ItemCategory itemCategory)
+        public async Task<ItemMasterDto?> FindItemMasterByCategoryIdFromDB(Guid itemCategory)
         {
             try
             {
                 var itemMaster = await this._itemMasterRepository.GetAll()
-                    .Where(x => x.ItemCategory == itemCategory)
-                    .OrderByDescending(x=> x.CategoryId)
+                    .Where(x => x.ItemCategoryId == itemCategory)
+                    .OrderByDescending(x => x.CategoryId)
                     .FirstOrDefaultAsync();
 
                 return ObjectMapper.Map<ItemMasterDto?>(itemMaster);
@@ -232,6 +234,26 @@
                 throw ex;
             }
 
+        }
+
+        public async Task<ResponseDto> ForceInsertOrUpdateItemMasterIntoDB(ItemMasterInputDto input) {
+            try
+            {
+                Guid itemMasterId = Guid.Empty;
+                var mappedItemMaster = ObjectMapper.Map<Item>(input);
+                itemMasterId = await this._itemMasterRepository.InsertOrUpdateAndGetIdAsync(mappedItemMaster);
+                await CurrentUnitOfWork.SaveChangesAsync();
+                return new ResponseDto
+                {
+                    Id = itemMasterId,
+                    DataMatchFound = false
+                };
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.Message, ex);
+                throw ex;
+            }
         }
     }
 }

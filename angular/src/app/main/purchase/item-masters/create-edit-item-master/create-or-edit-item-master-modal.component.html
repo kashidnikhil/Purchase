@@ -21,17 +21,17 @@
                             <div class="form-group">
                                 <label>{{"ItemCategory" | localize}}</label>
                                 <select placeholder="Select Item Category" class="form-control" #itemCategoryInput
-                                    formControlName="itemCategory" id="itemCategory" name="itemCategory"
+                                    formControlName="itemCategoryId" id="itemCategoryId" name="itemCategoryId"
                                     (change)="onItemCategorySelect($event.target.value)"
-                                    [ngClass]="{ 'is-invalid': submitted && itemMasterForm.get('itemCategory').errors }">
+                                    [ngClass]="{ 'is-invalid': submitted && itemMasterForm.get('itemCategoryId').errors }">
                                     <option *ngFor="let itemCategory of itemCategoriesList"
-                                        value="{{ itemCategory.value }}">
-                                        {{ itemCategory.title }}
+                                        value="{{ itemCategory.id }}">
+                                        {{ itemCategory.name }}
                                     </option>
                                 </select>
-                                <div *ngIf="submitted && itemMasterForm.get('itemCategory').errors"
+                                <div *ngIf="submitted && itemMasterForm.get('itemCategoryId').errors"
                                     class="invalid-feedback">
-                                    <div *ngIf="itemMasterForm.get('itemCategory').errors.required">
+                                    <div *ngIf="itemMasterForm.get('itemCategoryId').errors.required">
                                         Item Category is required</div>
                                 </div>
                             </div>

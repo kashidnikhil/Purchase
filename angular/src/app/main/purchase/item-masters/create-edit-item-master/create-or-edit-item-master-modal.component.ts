@@ -9,6 +9,8 @@ import {
     ItemAccessoryInputDto,
     ItemAttachmentDto,
     ItemAttachmentInputDto,
+    ItemCategoryDto,
+    ItemCategoryServiceProxy,
     ItemMasterDto,
     ItemMasterInputDto,
     ItemMasterListDto,
@@ -60,7 +62,7 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
     submitted: boolean = false;
     saving: boolean = false;
     
-    itemCategoriesList: DropdownDto[] = [];
+    itemCategoriesList: ItemCategoryDto[] = [];
     itemTypeList: DropdownDto[] = [];
     amcRequirementList: DropdownDto[] = [];
     itemMobilityList: DropdownDto[] = [];
@@ -84,7 +86,8 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
         private _materialGradeServie: MaterialGradeServiceProxy,
         private _unitService : UnitServiceProxy,
         private _itemMockService: ItemMockService,
-        private _itemFormBuilderService: ItemFormBuilderService
+        private _itemFormBuilderService: ItemFormBuilderService,
+        private _itemCategoryService : ItemCategoryServiceProxy
     ) {
         super(injector);
     }
@@ -100,17 +103,17 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
         else {
             this._itemMasterService.getItemMasterById(itemMasterId).subscribe((response:ItemMasterDto) => {
                 let itemMaster = response;
-                this.itemMasterForm = this._itemFormBuilderService.loadCategoryWiseItemForm(itemMaster);
+                this.itemMasterForm = this._itemFormBuilderService.loadCategoryWiseItemForm(itemMaster,this.itemCategoriesList);
                 this.active = true;
                 this.modal.show();
             });
         }
     }
 
-    onItemCategorySelect(categoryId : number){
+    onItemCategorySelect(selectedCategoryId : string){
         let itemMaster = new ItemMasterDto();
-        itemMaster.itemCategory = categoryId;
-        this.itemMasterForm = this._itemFormBuilderService.loadCategoryWiseItemForm(itemMaster);
+        itemMaster.itemCategoryId = selectedCategoryId;
+        this.itemMasterForm = this._itemFormBuilderService.loadCategoryWiseItemForm(itemMaster,this.itemCategoriesList);
     }
 
     get itemCalibrationTypes(): FormArray {
@@ -370,8 +373,8 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
         this.unitList = await this._unitService.getUnitList().toPromise();
     }
 
-    loadItemCategories() {
-        this.itemCategoriesList = this._itemMockService.loadItemCategories();
+    async loadItemCategories() {
+        this.itemCategoriesList = await this._itemCategoryService.getItemCategoryList().toPromise();
     }
 
     loadItemTypes() {
@@ -513,7 +516,7 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
             }
 
         });
-        let result = tempCalibrationTypeList.length > 1 ? tempCalibrationTypeList : null;
+        let result = tempCalibrationTypeList.length > 0 ? tempCalibrationTypeList : null;
         return result;
     }
 
@@ -533,7 +536,7 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
             }
 
         });
-        let result = tempCalibrationAgencyList.length > 1 ? tempCalibrationAgencyList : null;
+        let result = tempCalibrationAgencyList.length > 0 ? tempCalibrationAgencyList : null;
         return result;
     }
 
@@ -552,7 +555,7 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
             }
 
         });
-        let result = tempItemSupplierList.length > 1 ? tempItemSupplierList : null;
+        let result = tempItemSupplierList.length > 0 ? tempItemSupplierList : null;
         return result;
     }
 
@@ -571,7 +574,7 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
             }
 
         });
-        let result = tempItemAccessoryList.length > 1 ? tempItemAccessoryList : null;
+        let result = tempItemAccessoryList.length > 0 ? tempItemAccessoryList : null;
         return result;
     }
 
@@ -590,7 +593,7 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
             }
 
         });
-        let result = tempItemSpareList.length > 1 ? tempItemSpareList : null;
+        let result = tempItemSpareList.length > 0 ? tempItemSpareList : null;
         return result;
     }
 
@@ -610,7 +613,7 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
             }
 
         });
-        let result = tempItemAttachmentList.length > 1 ? tempItemAttachmentList : null;
+        let result = tempItemAttachmentList.length > 0 ? tempItemAttachmentList : null;
         return result;
     }
 
@@ -631,7 +634,7 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
             }
 
         });
-        let result = tempItemStorageConditionList.length > 1 ? tempItemStorageConditionList : null;
+        let result = tempItemStorageConditionList.length > 0 ? tempItemStorageConditionList : null;
         return result;
     }
 
@@ -654,7 +657,7 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
             }
 
         });
-        let result = tempItemProcurementList.length > 1 ? tempItemProcurementList : null;
+        let result = tempItemProcurementList.length > 0 ? tempItemProcurementList : null;
         return result;
     }
 
@@ -680,7 +683,7 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
                 tempItemRateRevisionList.push(tempItemRateRevision);
             }
         });
-        let result = tempItemRateRevisionList.length > 1 ? tempItemRateRevisionList : null;
+        let result = tempItemRateRevisionList.length > 0 ? tempItemRateRevisionList : null;
         return result;
     }
 

@@ -1,5 +1,6 @@
 ﻿using Abp.Domain.Entities.Auditing;
 using Microsoft.EntityFrameworkCore;
+using MyTraining1101Demo.Purchase.ItemCategories;
 using MyTraining1101Demo.Purchase.Items.Enums;
 using MyTraining1101Demo.Purchase.MaterialGrades;
 using MyTraining1101Demo.Purchase.Suppliers.SupplierMaster;
@@ -12,9 +13,8 @@ namespace MyTraining1101Demo.Purchase.Items.ItemMaster
     [Table("Items")]
     public class Item : FullAuditedEntity<Guid>
     {
-        public ItemCategory ItemCategory { get; set; }
-
-        public int? CategoryId { get; set; }
+        
+        public long? CategoryId { get; set; }
 
         public int? ItemId { get; set; }
 
@@ -131,6 +131,9 @@ namespace MyTraining1101Demo.Purchase.Items.ItemMaster
 
         [Precision(18, 2)]
         public decimal? SellingPrice { get; set; }
+
+        public virtual Guid? ItemCategoryId { get; set; }
+        public virtual ItemCategory ItemCategory { get; set; }
 
     }
 }

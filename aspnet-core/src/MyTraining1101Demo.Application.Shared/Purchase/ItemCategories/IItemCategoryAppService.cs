@@ -16,7 +16,7 @@
 
         Task<ItemCategoryDto> GetItemCategoryById(Guid itemCategoryId);
 
-        Task<IList<ItemCategoryDto>> GetItemCategoryList();
+        Task<List<ItemCategoryDto>> GetItemCategoryList();
 
         Task<bool> RestoreItemCategory(Guid itemCategoryId);
     }

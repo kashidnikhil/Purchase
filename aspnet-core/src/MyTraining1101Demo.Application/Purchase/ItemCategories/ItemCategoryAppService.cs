@@ -89,7 +89,7 @@
             }
         }
 
-        public async Task<IList<ItemCategoryDto>> GetItemCategoryList()
+        public async Task<List<ItemCategoryDto>> GetItemCategoryList()
         {
             try
             {

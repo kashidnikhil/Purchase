@@ -1,5 +1,6 @@
 ﻿namespace MyTraining1101Demo.Purchase.Shared
 {
+    using MyTraining1101Demo.Purchase.Items.Dto.ItemMaster;
     using System;
     public class ResponseDto
     {
@@ -13,6 +14,8 @@
         public bool IsExistingDataAlreadyDeleted { get; set; }
 
         public bool DataMatchFound { get; set; }
+
+        public ItemMasterInputDto RecentlyAddedItem { get; set; }
 
     }
 }
