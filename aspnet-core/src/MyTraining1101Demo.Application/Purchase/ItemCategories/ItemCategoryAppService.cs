@@ -45,7 +45,7 @@
                 }
                 else
                 {
-                    input.ItemCategoryCode = existingItemCategory.ItemCategoryCode + 10000;
+                    input.ItemCategoryCode = input.ItemCategoryCode != null && input.ItemCategoryCode != 0 ? input.ItemCategoryCode : existingItemCategory.ItemCategoryCode + 10000;
                 }
 
 
