@@ -2,7 +2,7 @@ import { Component, Injector, ViewChild, ViewEncapsulation, AfterViewInit } from
 import { ActivatedRoute } from '@angular/router';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { AppComponentBase } from '@shared/common/app-component-base';
-import { ItemCategoryServiceProxy, LegalEntityDto, LegalEntityServiceProxy, ResponseDto, UnitDto, UnitServiceProxy } from '@shared/service-proxies/service-proxies';
+import { ItemCategoryDto, ItemCategoryServiceProxy,  ResponseDto } from '@shared/service-proxies/service-proxies';
 import { LazyLoadEvent } from 'primeng/api';
 import { Paginator } from 'primeng/paginator';
 import { Table } from 'primeng/table';
@@ -66,10 +66,10 @@ export class ItemCategoriesComponent extends AppComponentBase implements AfterVi
         this.createOrEditItemCategoryModal.show();
     }
 
-    deleteItemCategory(legalEntity: LegalEntityDto): void {
-        this.message.confirm(this.l('UnitDeleteWarningMessage', legalEntity.name), this.l('AreYouSure'), (isConfirmed) => {
+    deleteItemCategory(itemCategory: ItemCategoryDto): void {
+        this.message.confirm(this.l('ItemCategoryDeleteWarningMessage', itemCategory.name), this.l('AreYouSure'), (isConfirmed) => {
             if (isConfirmed) {
-                this._itemCategoryService.deleteItemCategory(legalEntity.id).subscribe(() => {
+                this._itemCategoryService.deleteItemCategory(itemCategory.id).subscribe(() => {
                     this.reloadPage();
                     this.notify.success(this.l('SuccessfullyDeleted'));
                 });
@@ -80,11 +80,11 @@ export class ItemCategoriesComponent extends AppComponentBase implements AfterVi
     restoreItemCategory(itemCategoryResponse: ResponseDto):void {
         if(itemCategoryResponse.id == null){
             if(itemCategoryResponse.isExistingDataAlreadyDeleted){
-                this.message.confirm(this.l('UnitRestoreMessage', itemCategoryResponse.name), this.l('AreYouSure'), async (isConfirmed) => {
+                this.message.confirm(this.l('ItemCategoryRestoreMessage', itemCategoryResponse.name), this.l('AreYouSure'), async (isConfirmed) => {
                     if (isConfirmed) {
                         this._itemCategoryService.restoreItemCategory(itemCategoryResponse.restoringItemId).subscribe(() => {
                             this.reloadPage();
-                            this.notify.success(this.l('UnitSuccessfullyRestored'));
+                            this.notify.success(this.l('ItemCategorySuccessfullyRestored'));
                         });
                     }
                 });
@@ -95,17 +95,17 @@ export class ItemCategoriesComponent extends AppComponentBase implements AfterVi
         }
         else{
             if(itemCategoryResponse.isExistingDataAlreadyDeleted){
-                this.message.confirm(this.l('NewUnitErrorMessage', itemCategoryResponse.name), this.l('AreYouSure'), async (isConfirmed) => {
+                this.message.confirm(this.l('NewItemCategoryErrorMessage', itemCategoryResponse.name), this.l('AreYouSure'), async (isConfirmed) => {
                     if (isConfirmed) {
                         this._itemCategoryService.restoreItemCategory(itemCategoryResponse.restoringItemId).subscribe(() => {
                             this.reloadPage();
-                            this.notify.success(this.l('UnitSuccessfullyRestored'));
+                            this.notify.success(this.l('ItemCategorySuccessfullyRestored'));
                         });
                     }
                 });
             }   
             else{
-                this.notify.error(this.l('ExistingUnitErrorMessage',itemCategoryResponse.name));
+                this.notify.error(this.l('ExistingItemCategoryErrorMessage',itemCategoryResponse.name));
             }
         }
     }

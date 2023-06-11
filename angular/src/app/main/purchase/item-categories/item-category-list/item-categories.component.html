@@ -1,6 +1,6 @@
 <div [@routerTransition]>
     <div class="content d-flex flex-column flex-column-fluid">
-        <sub-header [title]="'Item Categories' | localize" [description]="'UnitsHeaderInfo' | localize">
+        <sub-header [title]="'ItemCategories' | localize" [description]="'ItemCategoriesHeaderInfo' | localize">
             <div role="actions">
                 <button
                     (click)="createItemCategory()"
@@ -8,7 +8,7 @@
                 >
                 <!-- *ngIf="'Pages.Administration.Users.Create' | permission" -->
                     <i class="fa fa-plus"></i>
-                    {{ 'CreateNewUnit' | localize }}
+                    {{ 'CreateNewItemCategory' | localize }}
                 </button>
             </div>
         </sub-header>
@@ -176,6 +176,6 @@
                 </div>
             </div>
         </div>
-        <create-edit-item-category-modal #createOrEditLegalEntityModal (modalSave)="getItemCategories()" (restoreLegalEntity)="restoreItemCategory($event)"></create-edit-item-category-modal>
+        <create-edit-item-category-modal #createOrEditLegalEntityModal (modalSave)="getItemCategories()" (restoreItemCategory)="restoreItemCategory($event)"></create-edit-item-category-modal>
     </div>
 </div>

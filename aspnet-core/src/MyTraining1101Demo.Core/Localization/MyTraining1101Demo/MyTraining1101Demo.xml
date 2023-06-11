@@ -1379,6 +1379,16 @@
 	  <text name="ExistingSubAssemblyItemErrorMessage">Sub Assembly Item {0} cannot be added. Sub Assembly Item already exists</text>
 	  <text name="NewSubAssemblyItemErrorMessage">No new instance of sub assembly item with name {0} cannot be added.Sub assembly item with name {0} already exists. Do you want to restore the sub assembly item?</text>
 
+	  <!-- Item category section-->
+	  <text name="ItemCategories">Item Categories</text>
+	  <text name="ItemCategoriesHeaderInfo">Manage item categories.</text>
+	  <text name="CreateNewItemCategory">Create new item category</text>
+	  <text name="EditItemCategory">Edit item category</text>
+	  <text name="ItemCategoryDeleteWarningMessage">Item category {0} will be deleted.</text>
+	  <text name="ItemCategoryRestoreMessage">Item Category with name {0} already exists. Do you want to restore this item category?</text>
+	  <text name="ItemCategorySuccessfullyRestored">Item Category restored successfully</text>
+	  <text name="ExistingItemCategoryErrorMessage">Item Category {0} cannot be added. Sub Assembly Item already exists</text>
+	  <text name="NewItemCategoryErrorMessage">No new instance of item category with name {0} cannot be added.Item category item with name {0} already exists. Do you want to restore the item category?</text>
 </texts>
 </localizationDictionary>
 
