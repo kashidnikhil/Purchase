@@ -8,12 +8,9 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using MyTraining1101Demo.Configuration;
-    using MyTraining1101Demo.Purchase.Items.Dto.ItemMaster;
     using MyTraining1101Demo.Purchase.ModelWiseItems.ModelWiseItemMasters.Dto;
     using MyTraining1101Demo.Purchase.Shared;
-    using MyTraining1101Demo.Purchase.SubAssemblies.Dto;
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Dynamic.Core;
     using System.Threading.Tasks;
