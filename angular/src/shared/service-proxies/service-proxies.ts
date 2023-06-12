@@ -9609,6 +9609,258 @@ export class ModelServiceProxy {
 }
 
 @Injectable()
+export class ModelWiseItemServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @param searchString (optional) 
+     * @param sorting (optional) 
+     * @param maxResultCount (optional) 
+     * @param skipCount (optional) 
+     * @return Success
+     */
+    getModelWiseItems(searchString: string | undefined, sorting: string | undefined, maxResultCount: number | undefined, skipCount: number | undefined): Observable<PagedResultDtoOfModelWiseItemMasterListDto> {
+        let url_ = this.baseUrl + "/api/services/app/ModelWiseItem/GetModelWiseItems?";
+        if (searchString === null)
+            throw new Error("The parameter 'searchString' cannot be null.");
+        else if (searchString !== undefined)
+            url_ += "SearchString=" + encodeURIComponent("" + searchString) + "&";
+        if (sorting === null)
+            throw new Error("The parameter 'sorting' cannot be null.");
+        else if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetModelWiseItems(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetModelWiseItems(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PagedResultDtoOfModelWiseItemMasterListDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PagedResultDtoOfModelWiseItemMasterListDto>;
+        }));
+    }
+
+    protected processGetModelWiseItems(response: HttpResponseBase): Observable<PagedResultDtoOfModelWiseItemMasterListDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PagedResultDtoOfModelWiseItemMasterListDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PagedResultDtoOfModelWiseItemMasterListDto>(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    insertOrUpdateModelWiseItem(body: ModelWiseItemMasterInputDto | undefined): Observable<ResponseDto> {
+        let url_ = this.baseUrl + "/api/services/app/ModelWiseItem/InsertOrUpdateModelWiseItem";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processInsertOrUpdateModelWiseItem(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processInsertOrUpdateModelWiseItem(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ResponseDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ResponseDto>;
+        }));
+    }
+
+    protected processInsertOrUpdateModelWiseItem(response: HttpResponseBase): Observable<ResponseDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ResponseDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ResponseDto>(null as any);
+    }
+
+    /**
+     * @param modelWiseItemMasterId (optional) 
+     * @return Success
+     */
+    deleteModelWiseItemMasterData(modelWiseItemMasterId: string | undefined): Observable<boolean> {
+        let url_ = this.baseUrl + "/api/services/app/ModelWiseItem/DeleteModelWiseItemMasterData?";
+        if (modelWiseItemMasterId === null)
+            throw new Error("The parameter 'modelWiseItemMasterId' cannot be null.");
+        else if (modelWiseItemMasterId !== undefined)
+            url_ += "modelWiseItemMasterId=" + encodeURIComponent("" + modelWiseItemMasterId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDeleteModelWiseItemMasterData(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDeleteModelWiseItemMasterData(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<boolean>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<boolean>;
+        }));
+    }
+
+    protected processDeleteModelWiseItemMasterData(response: HttpResponseBase): Observable<boolean> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+    
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<boolean>(null as any);
+    }
+
+    /**
+     * @param modelWiseItemMasterId (optional) 
+     * @return Success
+     */
+    getItemMasterById(modelWiseItemMasterId: string | undefined): Observable<ModelWiseItemMasterDto> {
+        let url_ = this.baseUrl + "/api/services/app/ModelWiseItem/GetItemMasterById?";
+        if (modelWiseItemMasterId === null)
+            throw new Error("The parameter 'modelWiseItemMasterId' cannot be null.");
+        else if (modelWiseItemMasterId !== undefined)
+            url_ += "modelWiseItemMasterId=" + encodeURIComponent("" + modelWiseItemMasterId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetItemMasterById(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetItemMasterById(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ModelWiseItemMasterDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ModelWiseItemMasterDto>;
+        }));
+    }
+
+    protected processGetItemMasterById(response: HttpResponseBase): Observable<ModelWiseItemMasterDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ModelWiseItemMasterDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ModelWiseItemMasterDto>(null as any);
+    }
+}
+
+@Injectable()
 export class NotificationServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -29271,7 +29523,12 @@ export class ItemMasterListDto implements IItemMasterListDto {
     genericName!: string | undefined;
     itemName!: string | undefined;
     make!: string | undefined;
+    model!: string | undefined;
+    serialNumber!: string | undefined;
+    specifications!: string | undefined;
     unitName!: string | undefined;
+    purchaseValue!: number | undefined;
+    purchaseDate!: DateTime | undefined;
 
     constructor(data?: IItemMasterListDto) {
         if (data) {
@@ -29290,7 +29547,12 @@ export class ItemMasterListDto implements IItemMasterListDto {
             this.genericName = _data["genericName"];
             this.itemName = _data["itemName"];
             this.make = _data["make"];
+            this.model = _data["model"];
+            this.serialNumber = _data["serialNumber"];
+            this.specifications = _data["specifications"];
             this.unitName = _data["unitName"];
+            this.purchaseValue = _data["purchaseValue"];
+            this.purchaseDate = _data["purchaseDate"] ? DateTime.fromISO(_data["purchaseDate"].toString()) : <any>undefined;
         }
     }
 
@@ -29309,7 +29571,12 @@ export class ItemMasterListDto implements IItemMasterListDto {
         data["genericName"] = this.genericName;
         data["itemName"] = this.itemName;
         data["make"] = this.make;
+        data["model"] = this.model;
+        data["serialNumber"] = this.serialNumber;
+        data["specifications"] = this.specifications;
         data["unitName"] = this.unitName;
+        data["purchaseValue"] = this.purchaseValue;
+        data["purchaseDate"] = this.purchaseDate ? this.purchaseDate.toString() : <any>undefined;
         return data;
     }
 }
@@ -29321,7 +29588,12 @@ export interface IItemMasterListDto {
     genericName: string | undefined;
     itemName: string | undefined;
     make: string | undefined;
+    model: string | undefined;
+    serialNumber: string | undefined;
+    specifications: string | undefined;
     unitName: string | undefined;
+    purchaseValue: number | undefined;
+    purchaseDate: DateTime | undefined;
 }
 
 export enum ItemMobility {
@@ -31463,6 +31735,246 @@ export interface IModelInputDto {
     description: string | undefined;
 }
 
+export class ModelWiseItemDto implements IModelWiseItemDto {
+    id!: string;
+    comments!: string | undefined;
+    itemId!: string | undefined;
+    modelWiseItemMasterId!: string | undefined;
+
+    constructor(data?: IModelWiseItemDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.comments = _data["comments"];
+            this.itemId = _data["itemId"];
+            this.modelWiseItemMasterId = _data["modelWiseItemMasterId"];
+        }
+    }
+
+    static fromJS(data: any): ModelWiseItemDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ModelWiseItemDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["comments"] = this.comments;
+        data["itemId"] = this.itemId;
+        data["modelWiseItemMasterId"] = this.modelWiseItemMasterId;
+        return data;
+    }
+}
+
+export interface IModelWiseItemDto {
+    id: string;
+    comments: string | undefined;
+    itemId: string | undefined;
+    modelWiseItemMasterId: string | undefined;
+}
+
+export class ModelWiseItemInputDto implements IModelWiseItemInputDto {
+    id!: string;
+    comments!: string | undefined;
+    itemId!: string | undefined;
+    modelWiseItemMasterId!: string | undefined;
+
+    constructor(data?: IModelWiseItemInputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.comments = _data["comments"];
+            this.itemId = _data["itemId"];
+            this.modelWiseItemMasterId = _data["modelWiseItemMasterId"];
+        }
+    }
+
+    static fromJS(data: any): ModelWiseItemInputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ModelWiseItemInputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["comments"] = this.comments;
+        data["itemId"] = this.itemId;
+        data["modelWiseItemMasterId"] = this.modelWiseItemMasterId;
+        return data;
+    }
+}
+
+export interface IModelWiseItemInputDto {
+    id: string;
+    comments: string | undefined;
+    itemId: string | undefined;
+    modelWiseItemMasterId: string | undefined;
+}
+
+export class ModelWiseItemMasterDto implements IModelWiseItemMasterDto {
+    id!: string | undefined;
+    modelId!: string | undefined;
+    modelWiseItemData!: ModelWiseItemDto[] | undefined;
+
+    constructor(data?: IModelWiseItemMasterDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.modelId = _data["modelId"];
+            if (Array.isArray(_data["modelWiseItemData"])) {
+                this.modelWiseItemData = [] as any;
+                for (let item of _data["modelWiseItemData"])
+                    this.modelWiseItemData!.push(ModelWiseItemDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ModelWiseItemMasterDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ModelWiseItemMasterDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["modelId"] = this.modelId;
+        if (Array.isArray(this.modelWiseItemData)) {
+            data["modelWiseItemData"] = [];
+            for (let item of this.modelWiseItemData)
+                data["modelWiseItemData"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IModelWiseItemMasterDto {
+    id: string | undefined;
+    modelId: string | undefined;
+    modelWiseItemData: ModelWiseItemDto[] | undefined;
+}
+
+export class ModelWiseItemMasterInputDto implements IModelWiseItemMasterInputDto {
+    id!: string;
+    modelId!: string | undefined;
+    modelWiseItemData!: ModelWiseItemInputDto[] | undefined;
+
+    constructor(data?: IModelWiseItemMasterInputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.modelId = _data["modelId"];
+            if (Array.isArray(_data["modelWiseItemData"])) {
+                this.modelWiseItemData = [] as any;
+                for (let item of _data["modelWiseItemData"])
+                    this.modelWiseItemData!.push(ModelWiseItemInputDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ModelWiseItemMasterInputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ModelWiseItemMasterInputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["modelId"] = this.modelId;
+        if (Array.isArray(this.modelWiseItemData)) {
+            data["modelWiseItemData"] = [];
+            for (let item of this.modelWiseItemData)
+                data["modelWiseItemData"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IModelWiseItemMasterInputDto {
+    id: string;
+    modelId: string | undefined;
+    modelWiseItemData: ModelWiseItemInputDto[] | undefined;
+}
+
+export class ModelWiseItemMasterListDto implements IModelWiseItemMasterListDto {
+    id!: string;
+    modelName!: string | undefined;
+
+    constructor(data?: IModelWiseItemMasterListDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.modelName = _data["modelName"];
+        }
+    }
+
+    static fromJS(data: any): ModelWiseItemMasterListDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ModelWiseItemMasterListDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["modelName"] = this.modelName;
+        return data;
+    }
+}
+
+export interface IModelWiseItemMasterListDto {
+    id: string;
+    modelName: string | undefined;
+}
+
 export class MoveOrganizationUnitInput implements IMoveOrganizationUnitInput {
     id!: number;
     newParentId!: number | undefined;
@@ -32801,6 +33313,54 @@ export class PagedResultDtoOfModelDto implements IPagedResultDtoOfModelDto {
 export interface IPagedResultDtoOfModelDto {
     totalCount: number;
     items: ModelDto[] | undefined;
+}
+
+export class PagedResultDtoOfModelWiseItemMasterListDto implements IPagedResultDtoOfModelWiseItemMasterListDto {
+    totalCount!: number;
+    items!: ModelWiseItemMasterListDto[] | undefined;
+
+    constructor(data?: IPagedResultDtoOfModelWiseItemMasterListDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.totalCount = _data["totalCount"];
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(ModelWiseItemMasterListDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfModelWiseItemMasterListDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfModelWiseItemMasterListDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IPagedResultDtoOfModelWiseItemMasterListDto {
+    totalCount: number;
+    items: ModelWiseItemMasterListDto[] | undefined;
 }
 
 export class PagedResultDtoOfNameValueDto implements IPagedResultDtoOfNameValueDto {

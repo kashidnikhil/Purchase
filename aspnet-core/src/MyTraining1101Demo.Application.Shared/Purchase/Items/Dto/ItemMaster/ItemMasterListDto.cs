@@ -15,6 +15,16 @@
 
         public string Make { get; set; }
 
+        public string Model { get; set; }
+
+        public string SerialNumber { get; set; }
+
+        public string Specifications { get; set; }
+
         public string UnitName { get; set; }
+
+        public decimal? PurchaseValue { get; set; }
+
+        public DateTime? PurchaseDate { get; set; }
     }
 }
