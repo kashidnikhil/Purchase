@@ -1,11 +1,12 @@
 import { Component, EventEmitter, Injector, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { AppComponentBase } from '@shared/common/app-component-base';
-import {ItemMasterInputDto,ItemMasterListDto,ItemServiceProxy,ModelDto,ModelServiceProxy,ModelWiseItemDto,ModelWiseItemMasterDto,ModelWiseItemServiceProxy,ResponseDto} from '@shared/service-proxies/service-proxies';
+import {ItemMasterInputDto,ItemMasterListDto,ItemServiceProxy,ModelDto,ModelServiceProxy,ModelWiseItemDto,ModelWiseItemMasterDto,ModelWiseItemMasterInputDto,ModelWiseItemServiceProxy,ResponseDto} from '@shared/service-proxies/service-proxies';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { map as _map, filter as _filter } from 'lodash-es';
 import { finalize } from 'rxjs/operators';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { TabsetComponent } from 'ngx-bootstrap/tabs';
+import { formatDate } from '@angular/common';
 
 @Component({
     selector: 'create-or-edit-model-wise-item-modal',
@@ -13,9 +14,8 @@ import { TabsetComponent } from 'ngx-bootstrap/tabs';
     encapsulation: ViewEncapsulation.None,
     styleUrls: ['create-or-edit-model-wise-item-modal.component.less']
 })
-export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
-    @ViewChild('createOrEditModelWiseItemModal', { static: true }) modal: ModalDirective;
-    @ViewChild(TabsetComponent) tabSet: TabsetComponent;
+export class CreateOrEditModelWiseItemMasterModalComponent extends AppComponentBase {
+    @ViewChild('createOrEditModal', { static: true }) modal: ModalDirective;
     @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
 
 
@@ -67,10 +67,25 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
         });
     }
 
+    onItemSelect(itemId : string, indexValue: number){
+        let selectedItem = this.itemMasterList.find(x=> x.id == itemId);
+        console.log(selectedItem);
+        const modelWiseItemArray = this.modelWiseItemData;
+        modelWiseItemArray.at(indexValue).patchValue({
+            itemDescription : this.parseFieldValue(selectedItem.genericName) + this.parseFieldValue(selectedItem.itemName) + this.parseFieldValue(selectedItem.make) + this.parseFieldValue(selectedItem.model) + this.parseFieldValue(selectedItem.serialNumber) + this.parseFieldValue(selectedItem.specifications) + this.parseFieldValue(formatDate(new Date(<string><unknown>selectedItem.purchaseDate), "yyyy-MM-dd", "en")) + this.parseFieldValue(<string><unknown>selectedItem.purchaseValue) 
+        });
+    }
+
+    parseFieldValue(inputString : string){
+        let value = inputString ? inputString + " - " : "";
+        return value;
+    }
+
     createModelWiseItemData(modelWiseItem: ModelWiseItemDto): FormGroup {
         return this.formBuilder.group({
             id: new FormControl(modelWiseItem.id, []),
             itemId: new FormControl(modelWiseItem.itemId, []),
+            itemDescription : new FormControl({value : "", disabled: true}, []),
             comments: new FormControl(modelWiseItem.comments, [])
         });
     }
@@ -110,12 +125,12 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
     save(): void {
         this.submitted = true;
         if (this.modelWiseItemMasterForm.valid) {
-            let input = new ItemMasterInputDto();
+            let input = new ModelWiseItemMasterInputDto();
             this.saving = true;
             input = this.modelWiseItemMasterForm.getRawValue();
             
-            this._itemMasterService
-                .insertOrUpdateItem(input)
+            this._modelWiseItemService
+                .insertOrUpdateModelWiseItem(input)
                 .pipe(
                     finalize(() => {
                         this.saving = false;

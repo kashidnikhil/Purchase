@@ -7,7 +7,7 @@ import { LazyLoadEvent } from 'primeng/api';
 import { Paginator } from 'primeng/paginator';
 import { Table } from 'primeng/table';
 import { finalize } from 'rxjs/operators';
-import { CreateOrEditItemMasterModalComponent } from '../create-edit-model-wise-item/create-or-edit-model-wise-item-modal.component';
+import { CreateOrEditModelWiseItemMasterModalComponent } from '../create-edit-model-wise-item/create-or-edit-model-wise-item-modal.component';
 // import { CreateOrEditLegalEntityModalComponent } from '../create-edit-legal-entity/create-or-edit-legal-entity-modal.component';
 
 @Component({
@@ -17,7 +17,7 @@ import { CreateOrEditItemMasterModalComponent } from '../create-edit-model-wise-
     animations: [appModuleAnimation()],
 })
 export class ModelWiseItemsComponent extends AppComponentBase implements AfterViewInit {
-    @ViewChild('createOrEditModelWiseItemModal', { static: true }) createOrEditModelWiseItemModal: CreateOrEditItemMasterModalComponent;
+    @ViewChild('createOrEditModelWiseItemModal', { static: true }) createOrEditModelWiseItemModal: CreateOrEditModelWiseItemMasterModalComponent;
     @ViewChild('dataTable', { static: true }) dataTable: Table;
     @ViewChild('paginator', { static: true }) paginator: Paginator;
     

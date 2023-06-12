@@ -5,7 +5,7 @@
     using System.Collections.Generic;
     public class ModelWiseItemMasterInputDto
     {
-        public Guid Id { get; set; }
+        public Guid? Id { get; set; }
 
         public Guid? ModelId { get; set; }
 

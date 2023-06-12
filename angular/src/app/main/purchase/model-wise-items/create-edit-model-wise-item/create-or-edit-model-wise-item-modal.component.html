@@ -1,15 +1,15 @@
-<div appBsModal #createOrEditItemMasterModal="bs-modal" (onShown)="onShown()"
+<div appBsModal #createOrEditModal="bs-modal" (onShown)="onShown()"
     class="modal fade create-or-edit-user-modal" tabindex="-1" role="dialog"
-    aria-labelledby="createOrEditItemMasterModal" aria-hidden="true"
+    aria-labelledby="createOrEditModal" aria-hidden="true"
     [config]="{ backdrop: 'static', keyboard: !saving }">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form *ngIf="active && modelWiseItemMasterForm" [formGroup]="modelWiseItemMasterForm" novalidate (ngSubmit)="save()">
                 <div class="modal-header">
                     <h4 class="modal-title">
-                        <span *ngIf="modelWiseItemMasterForm.get('id')?.value">{{ 'EditItem' | localize }}: {{
+                        <span *ngIf="modelWiseItemMasterForm.get('id')?.value">{{ 'EditModelWiseItem' | localize }}: {{
                             modelWiseItemMasterForm.get('itemName')?.value }}</span>
-                        <span *ngIf="!modelWiseItemMasterForm.get('id').value">{{ 'CreateNewItem' | localize }}</span>
+                        <span *ngIf="!modelWiseItemMasterForm.get('id').value">{{ 'CreateNewModelWiseItem' | localize }}</span>
                     </h4>
                     <button type="button" class="btn-close" (click)="close()" [attr.aria-label]="l('Close')"
                         [disabled]="saving">
@@ -17,21 +17,21 @@
                 </div>
                 <div class="modal-body">
                     <div class="col-md-12 row mb-4">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="form-group">
                                 <label>{{"Model" | localize}}</label>
                                 <select placeholder="Select Model" class="form-control" #modelIdInput
                                     formControlName="modelId" id="modelId" name="modelId"
-                                    [ngClass]="{ 'is-invalid': submitted && modelWiseItemMasterForm.get('itemCategoryId').errors }">
+                                    [ngClass]="{ 'is-invalid': submitted && modelWiseItemMasterForm.get('modelId').errors }">
                                     <option *ngFor="let modelItem of modelList"
                                         value="{{ modelItem.id }}">
                                         {{ modelItem.name }}
                                     </option>
                                 </select>
-                                <div *ngIf="submitted && modelWiseItemMasterForm.get('itemCategoryId').errors"
+                                <div *ngIf="submitted && modelWiseItemMasterForm.get('modelId').errors"
                                     class="invalid-feedback">
-                                    <div *ngIf="modelWiseItemMasterForm.get('itemCategoryId').errors.required">
-                                        Item Category is required</div>
+                                    <div *ngIf="modelWiseItemMasterForm.get('modelId').errors.required">
+                                        Model is required</div>
                                 </div>
                             </div>
                         </div>
@@ -40,7 +40,7 @@
                         <div class="mb-4">
                             <button type="button" class="btn btn-primary" (click)="addModelWiseItemData()">
                                 <i class="fa fa-plus"></i>
-                                {{ 'AddCalibrationType' | localize }}
+                                {{ 'AddItem' | localize }}
                             </button>
                         </div>
                         <div formArrayName="modelWiseItemData" class="mb-4">
@@ -52,7 +52,9 @@
                                             <div class="form-group">
                                                 <label>{{"Item" | localize}}</label>
                                                 <select placeholder="Select Item" class="form-control" #itemIdInput
-                                                    formControlName="itemId" id="itemId" name="itemId">
+                                                    formControlName="itemId" id="itemId" name="itemId"
+                                                    (change)="onItemSelect($event.target.value,index)"
+                                                    >
                                                     <option *ngFor="let itemMaster of itemMasterList"
                                                         value="{{ itemMaster.id }}">
                                                         {{ itemMaster.itemName }}
@@ -71,9 +73,22 @@
                                         </div>
                                     </div>
                                     <div class="col-md-12 row mb-4">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>{{"ItemDescription" | localize}}</label>
+                                                <textarea #itemDescriptionInput id="itemDescription" class="form-control" type="text"
+                                                    rows="3" name="itemDescription" formControlName="itemDescription"></textarea>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="col-md-12 row mb-4">
-
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>{{"Comments" | localize}}</label>
+                                                <textarea #commentsInput id="comments" class="form-control" type="text"
+                                                    rows="3" name="comments" formControlName="comments"></textarea>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

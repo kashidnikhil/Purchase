@@ -31784,7 +31784,7 @@ export interface IModelWiseItemDto {
 }
 
 export class ModelWiseItemInputDto implements IModelWiseItemInputDto {
-    id!: string;
+    id!: string | undefined;
     comments!: string | undefined;
     itemId!: string | undefined;
     modelWiseItemMasterId!: string | undefined;
@@ -31825,7 +31825,7 @@ export class ModelWiseItemInputDto implements IModelWiseItemInputDto {
 }
 
 export interface IModelWiseItemInputDto {
-    id: string;
+    id: string | undefined;
     comments: string | undefined;
     itemId: string | undefined;
     modelWiseItemMasterId: string | undefined;
@@ -31884,7 +31884,7 @@ export interface IModelWiseItemMasterDto {
 }
 
 export class ModelWiseItemMasterInputDto implements IModelWiseItemMasterInputDto {
-    id!: string;
+    id!: string | undefined;
     modelId!: string | undefined;
     modelWiseItemData!: ModelWiseItemInputDto[] | undefined;
 
@@ -31930,7 +31930,7 @@ export class ModelWiseItemMasterInputDto implements IModelWiseItemMasterInputDto
 }
 
 export interface IModelWiseItemMasterInputDto {
-    id: string;
+    id: string | undefined;
     modelId: string | undefined;
     modelWiseItemData: ModelWiseItemInputDto[] | undefined;
 }
