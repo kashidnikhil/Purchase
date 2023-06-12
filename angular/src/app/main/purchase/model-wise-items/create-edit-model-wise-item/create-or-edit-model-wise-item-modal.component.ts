@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Injector, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { AppComponentBase } from '@shared/common/app-component-base';
-import {ItemMasterInputDto,ItemMasterListDto,ItemServiceProxy,ModelWiseItemDto,ModelWiseItemMasterDto,ModelWiseItemServiceProxy,ResponseDto} from '@shared/service-proxies/service-proxies';
+import {ItemMasterInputDto,ItemMasterListDto,ItemServiceProxy,ModelDto,ModelServiceProxy,ModelWiseItemDto,ModelWiseItemMasterDto,ModelWiseItemServiceProxy,ResponseDto} from '@shared/service-proxies/service-proxies';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { map as _map, filter as _filter } from 'lodash-es';
 import { finalize } from 'rxjs/operators';
@@ -24,11 +24,13 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
     submitted: boolean = false;
     saving: boolean = false;
     itemMasterList  : ItemMasterListDto [] = [];
+    modelList  : ModelDto [] = [];
     
     constructor(
         injector: Injector,
         private formBuilder: FormBuilder,
         private _itemMasterService: ItemServiceProxy,
+        private _modelService: ModelServiceProxy,
         private _modelWiseItemService: ModelWiseItemServiceProxy
     ) {
         super(injector);
@@ -56,6 +58,7 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
         let modelWiseItem : ModelWiseItemDto = new ModelWiseItemDto();
         return this.formBuilder.group({
             id: new FormControl(modelWiseItemMaster.id, []),
+            modelId: new FormControl(modelWiseItemMaster.modelId, []),
             modelWiseItemData: modelWiseItemMaster.modelWiseItemData && modelWiseItemMaster.modelWiseItemData.length > 0 ? this.formBuilder.array(
                 modelWiseItemMaster.modelWiseItemData.map((x : ModelWiseItemDto) =>
                     this.createModelWiseItemData(x)
@@ -88,13 +91,17 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
     }
 
     async loadDropdownList() {
+        await this.loadModels();
         await this.loadItemMasters();
+    }
+
+    async loadModels() {
+        this.modelList = await this._modelService.getModelList().toPromise();
     }
 
     async loadItemMasters() {
         this.itemMasterList = await this._itemMasterService.getItemMasterList().toPromise();
     }
-
 
     onShown(): void {
         // document.getElementById('name').focus();

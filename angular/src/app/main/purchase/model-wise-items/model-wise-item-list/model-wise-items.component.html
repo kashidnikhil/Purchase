@@ -114,10 +114,10 @@
                                                         <a
                                                             href="javascript:;"
                                                             class="dropdown-item"
+                                                            (click)="createOrEditModelWiseItemModal.show(record.id)"
                                                         >
                                                             {{ 'Edit' | localize }}
                                                         </a>
-                                                        <!-- (click)="createOrEditModelWiseItemModal.show(record.id)" -->
                                                     </li>
                                                     <li role="menuitem">
                                                     <!-- *ngIf="
@@ -167,6 +167,6 @@
                 </div>
             </div>
         </div>
-        <!-- <create-edit-legal-entity-modal #createOrEditModelWiseItemModal (modalSave)="getModelWiseItems()"></create-edit-legal-entity-modal> -->
+        <create-or-edit-model-wise-item-modal #createOrEditModelWiseItemModal (modalSave)="getModelWiseItems()"></create-or-edit-model-wise-item-modal>
     </div>
 </div>
