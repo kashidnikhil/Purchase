@@ -1,0 +1,937 @@
+<div appBsModal #createOrEditItemMasterModal="bs-modal" (onShown)="onShown()"
+    class="modal fade create-or-edit-user-modal" tabindex="-1" role="dialog"
+    aria-labelledby="createOrEditItemMasterModal" aria-hidden="true"
+    [config]="{ backdrop: 'static', keyboard: !saving }">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active && itemMasterForm" [formGroup]="itemMasterForm" novalidate (ngSubmit)="save()">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="itemMasterForm.get('id')?.value">{{ 'EditItem' | localize }}: {{
+                            itemMasterForm.get('itemName')?.value }}</span>
+                        <span *ngIf="!itemMasterForm.get('id').value">{{ 'CreateNewItem' | localize }}</span>
+                    </h4>
+                    <button type="button" class="btn-close" (click)="close()" [attr.aria-label]="l('Close')"
+                        [disabled]="saving">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-12 row mb-4">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>{{"ItemCategory" | localize}}</label>
+                                <select placeholder="Select Item Category" class="form-control" #itemCategoryInput
+                                    formControlName="itemCategoryId" id="itemCategoryId" name="itemCategoryId"
+                                    (change)="onItemCategorySelect($event.target.value)"
+                                    [ngClass]="{ 'is-invalid': submitted && itemMasterForm.get('itemCategoryId').errors }">
+                                    <option *ngFor="let itemCategory of itemCategoriesList"
+                                        value="{{ itemCategory.id }}">
+                                        {{ itemCategory.name }}
+                                    </option>
+                                </select>
+                                <div *ngIf="submitted && itemMasterForm.get('itemCategoryId').errors"
+                                    class="invalid-feedback">
+                                    <div *ngIf="itemMasterForm.get('itemCategoryId').errors.required">
+                                        Item Category is required</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>{{"ItemName" | localize}}</label>
+                                <input #itemNameInput id="itemName" class="form-control" type="text" name="itemName"
+                                    formControlName="itemName"
+                                    [ngClass]="{ 'is-invalid': submitted && itemMasterForm.get('itemName').errors }">
+                                <div *ngIf="submitted && itemMasterForm.get('itemName').errors"
+                                    class="invalid-feedback">
+                                    <div *ngIf="itemMasterForm.get('itemName').errors.required">
+                                        Item Name is required</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row mb-4">
+                        <div class="col-md-6" *ngIf="itemMasterForm.contains('genericName')">
+                            <div class="form-group">
+                                <label>{{"GenericName" | localize}}</label>
+                                <input #genericNameInput id="genericName" class="form-control" type="text"
+                                    name="genericName" formControlName="genericName">
+                            </div>
+                        </div>
+                        <div class="col-md-6" *ngIf="itemMasterForm.contains('alias')">
+                            <div class="form-group">
+                                <label>{{"Alias" | localize}}</label>
+                                <input #aliasInput id="alias" class="form-control" type="text" name="alias"
+                                    formControlName="alias">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row mb-4">
+                        <div class="col-md-4" *ngIf="itemMasterForm.contains('itemType')">
+                            <div class="form-group">
+                                <label>{{"ItemType" | localize}}</label>
+                                <select placeholder="Select Item Type" class="form-control" #itemTypeInput
+                                    formControlName="itemType" id="itemType" name="itemType">
+                                    <option *ngFor="let itemType of itemTypeList" value="{{ itemType.value }}">
+                                        {{ itemType.title }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3" *ngIf="itemMasterForm.contains('amcRequired')">
+                            <div class="form-group">
+                                <label>{{"AMCRequired" | localize}}</label>
+                                <select placeholder="Select Option" class="form-control" #amcRequiredInput
+                                    formControlName="amcRequired" id="amcRequired" name="amcRequired">
+                                    <option *ngFor="let option of amcRequirementList" value="{{ option.value }}">
+                                        {{ option.title }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-5" *ngIf="itemMasterForm.contains('make')">
+                            <div class="form-group">
+                                <label>{{"Make" | localize}}</label>
+                                <input #makeInput id="model" class="form-control" type="text" name="make"
+                                    formControlName="make">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row mb-4">
+                        <div class="col-md-6" *ngIf="itemMasterForm.contains('model')">
+                            <div class="form-group">
+                                <label>{{"Model" | localize}}</label>
+                                <input #modelInput id="model" class="form-control" type="text" name="model"
+                                    formControlName="model">
+                            </div>
+                        </div>
+                        <div class="col-md-6" *ngIf="itemMasterForm.contains('serialNumber')">
+                            <div class="form-group">
+                                <label>{{"SerialNumber" | localize}}</label>
+                                <input #serialNumberInput id="serialNumber" class="form-control" type="text"
+                                    name="serialNumber" formControlName="serialNumber">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row mb-4">
+                        <div class="col-md-12" *ngIf="itemMasterForm.contains('specifications')">
+                            <div class="form-group">
+                                <label>{{"Specifications" | localize}}</label>
+                                <textarea #specificationsInput id="specifications" class="form-control" type="text"
+                                    rows="3" name="specifications" formControlName="specifications"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row mb-4">
+                        <div class="col-md-8" *ngIf="itemMasterForm.contains('storageConditions')">
+                            <div class="form-group">
+                                <label>{{"StorageConditions" | localize}}</label>
+                                <input #storageConditionsInput id="storageConditions" class="form-control" type="text"
+                                    name="storageConditions" formControlName="storageConditions">
+                            </div>
+                        </div>
+                        <div class="col-md-4" *ngIf="itemMasterForm.contains('itemMobility')">
+                            <div class="form-group">
+                                <label>{{"ItemMobility" | localize}}</label>
+                                <select placeholder="Select Option" class="form-control" #itemMobilityInput
+                                    formControlName="itemMobility" id="itemMobility" name="itemMobility">
+                                    <option *ngFor="let itemMobility of itemMobilityList"
+                                        value="{{ itemMobility.value }}">
+                                        {{ itemMobility.title }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row mb-4">
+                        <div class="col-md-4" *ngIf="itemMasterForm.contains('calibrationRequirement')">
+                            <div class="form-group">
+                                <label>{{"CalibrationRequirement" | localize}}</label>
+                                <select placeholder="Select Option" class="form-control" #calibrationRequirementInput
+                                    formControlName="calibrationRequirement" id="calibrationRequirement"
+                                    name="calibrationRequirement">
+                                    <option *ngFor="let calibrationRequirement of calibrationRequirementList"
+                                        value="{{ calibrationRequirement.value }}">
+                                        {{ calibrationRequirement.title }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4" *ngIf="itemMasterForm.contains('supplierId')">
+                            <div class="form-group">
+                                <label>{{"SuppliedBy" | localize}}</label>
+                                <select placeholder="Select Option" class="form-control" #supplierIdInput
+                                    formControlName="supplierId" id="supplierId" name="supplierId">
+                                    <option *ngFor="let supplierItem of supplierList" value="{{ supplierItem.id }}">
+                                        {{ supplierItem.name }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4" *ngIf="itemMasterForm.contains('status')">
+                            <div class="form-group">
+                                <label>{{"ItemStatus" | localize}}</label>
+                                <select placeholder="Select Item Status" class="form-control" #statusInput
+                                    formControlName="status" id="status" name="status">
+                                    <option *ngFor="let itemStatus of itemStatusList" value="{{ itemStatus.value }}">
+                                        {{ itemStatus.title }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row mb-4">
+                        <div class="col-md-3" *ngIf="itemMasterForm.contains('gst')">
+                            <div class="form-group">
+                                <label>{{"GST%" | localize}}</label>
+                                <input #gstInput id="gst" class="form-control" type="number" name="gst"
+                                    formControlName="gst"
+                                    [ngClass]="{ 'is-invalid': submitted && itemMasterForm.get('gst').errors }">
+                                <div *ngIf="submitted && itemMasterForm.get('gst').errors" class="invalid-feedback">
+                                    <div *ngIf="itemMasterForm.get('gst').errors.required">
+                                        GST is required</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3" *ngIf="itemMasterForm.contains('hsnCode')">
+                            <div class="form-group">
+                                <label>{{"HSNCode" | localize}}</label>
+                                <input #hsnCodeInput id="hsnCode" class="form-control" type="text" name="hsnCode"
+                                    formControlName="hsnCode"
+                                    [ngClass]="{ 'is-invalid': submitted && itemMasterForm.get('hsnCode').errors }">
+                                <div *ngIf="submitted && itemMasterForm.get('hsnCode').errors" class="invalid-feedback">
+                                    <div *ngIf="itemMasterForm.get('hsnCode').errors.required">
+                                        HSN Code is required</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3" *ngIf="itemMasterForm.contains('purchaseValue')">
+                            <div class="form-group">
+                                <label>{{"PurchaseValue" | localize}}</label>
+                                <input #purchaseValueInput id="purchaseValue" class="form-control" type="number"
+                                    name="purchaseValue" formControlName="purchaseValue">
+                            </div>
+                        </div>
+                        <div class="col-md-3" *ngIf="itemMasterForm.contains('purchaseDate')">
+                            <div class="form-group">
+                                <label>{{"PurchaseDate" | localize}}</label>
+                                <input #purchaseDateInput id="purchaseDate" class="form-control" type="date"
+                                    name="purchaseDate" formControlName="purchaseDate">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row mb-4">
+                        <div class="col-md-3" *ngIf="itemMasterForm.contains('orderingRate')">
+                            <div class="form-group">
+                                <label>{{"OrderingRate" | localize}}</label>
+                                <input #orderingRateInput id="orderingRate" class="form-control" type="number"
+                                    name="orderingRate" formControlName="orderingRate">
+                            </div>
+                        </div>
+                        <div class="col-md-3" *ngIf="itemMasterForm.contains('quantity')">
+                            <div class="form-group">
+                                <label>{{"Quantity" | localize}}</label>
+                                <input #quantityInput id="quantity" class="form-control" type="number" name="quantity"
+                                    formControlName="quantity">
+                            </div>
+                        </div>
+                        <div class="col-md-3" *ngIf="itemMasterForm.contains('ratePerQuantity')">
+                            <div class="form-group">
+                                <label>{{"RatePerQuantity" | localize}}</label>
+                                <input #ratePerQuantityInput id="ratePerQuantity" class="form-control" type="number"
+                                    name="ratePerQuantity" formControlName="ratePerQuantity">
+                            </div>
+                        </div>
+                        <div class="col-md-3" *ngIf="itemMasterForm.contains('rateAsOnDate')">
+                            <div class="form-group">
+                                <label>{{"RateAsOnDate" | localize}}</label>
+                                <input #rateAsOnDateInput id="rateAsOnDate" class="form-control" type="number"
+                                    name="rateAsOnDate" formControlName="rateAsOnDate">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row mb-4">
+                        <div class="col-md-3" *ngIf="itemMasterForm.contains('leadTime')">
+                            <div class="form-group">
+                                <label>{{"LeadTime" | localize}}</label>
+                                <input #leadTimeInput id="leadTime" class="form-control" type="number" name="leadTime"
+                                    step="1" formControlName="leadTime">
+                            </div>
+                        </div>
+                        <div class="col-md-7" *ngIf="itemMasterForm.contains('supplierItemName')">
+                            <div class="form-group">
+                                <label>{{"SupplierItemName" | localize}}</label>
+                                <input #supplierItemNameInput id="supplierItemName" class="form-control" type="text"
+                                    name="supplierItemName" formControlName="supplierItemName">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row mb-4" *ngIf="itemMasterForm.contains('discardedReason')">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>{{"DiscardedReason" | localize}}</label>
+                                <textarea #discardedReasonInput id="discardedReason" class="form-control" type="text"
+                                    rows="2" name="discardedReason" formControlName="discardedReason"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row mb-4">
+                        <div class="col-md-4" *ngIf="itemMasterForm.contains('materialGradeId')">
+                            <div class="form-group">
+                                <label>{{"MaterialGrade" | localize}}</label>
+                                <select placeholder="Select Material Grade" class="form-control" #materialGradeIdInput
+                                    formControlName="materialGradeId" id="materialGradeId" name="materialGradeId">
+                                    <option *ngFor="let materialGradeItem of materialGradeList"
+                                        value="{{ materialGradeItem.id }}">
+                                        {{ materialGradeItem.name }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4" *ngIf="itemMasterForm.contains('unitOrderId')">
+                            <div class="form-group">
+                                <label>{{"UnitOrdering" | localize}}</label>
+                                <select placeholder="Select Unit Ordering" class="form-control" #unitOrderIdInput
+                                    formControlName="unitOrderId" id="unitOrderId" name="unitOrderId">
+                                    <option *ngFor="let unitItem of unitList" value="{{ unitItem.id }}">
+                                        {{ unitItem.name }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4" *ngIf="itemMasterForm.contains('unitStockId')">
+                            <div class="form-group">
+                                <label>{{"UnitStock" | localize}}</label>
+                                <select placeholder="Select Unit Stock" class="form-control" #unitStockIdInput
+                                    formControlName="unitStockId" id="unitStockId" name="unitStockId">
+                                    <option *ngFor="let unitItem of unitList" value="{{ unitItem.id }}">
+                                        {{ unitItem.name }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row mb-4">
+                        <div class="col-md-6" *ngIf="itemMasterForm.contains('comment')">
+                            <div class="form-group">
+                                <label>{{"Comment" | localize}}</label>
+                                <textarea #commentInput id="comment" class="form-control" type="text" rows="2"
+                                    name="comment" formControlName="comment"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-6" *ngIf="itemMasterForm.contains('msl')">
+                            <div class="form-group">
+                                <label>{{"MSL" | localize}}</label>
+                                <textarea #mslInput id="msl" class="form-control" type="text" rows="2" name="msl"
+                                    formControlName="msl"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row mb-4">
+                        <div class="col-md-3" *ngIf="itemMasterForm.contains('ctqRequirement')">
+                            <div class="form-group">
+                                <label>{{"CTQRequirement" | localize}}</label>
+                                <select placeholder="Select Option" class="form-control" #ctqRequirementInput
+                                    formControlName="ctqRequirement" id="ctqRequirement" name="ctqRequirement">
+                                    <option *ngFor="let ctqRequirementItem of hazardousList"
+                                        value="{{ ctqRequirementItem.value }}">
+                                        {{ ctqRequirementItem.title }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6" *ngIf="itemMasterForm.contains('ctqSpecifications')">
+                            <div class="form-group">
+                                <label>{{"CTQSpecifications" | localize}}</label>
+                                <input #ctqSpecificationsInput id="ctqSpecifications" class="form-control" type="text"
+                                    name="ctqSpecifications" formControlName="ctqSpecifications">
+                            </div>
+                        </div>
+                        <div class="col-md-3" *ngIf="itemMasterForm.contains('minimumOrderQuantity')">
+                            <div class="form-group">
+                                <label>{{"MinOrderQty" | localize}}</label>
+                                <input #minimumOrderQuantityInput id="minimumOrderQuantity" class="form-control"
+                                    type="number" name="minimumOrderQuantity" formControlName="minimumOrderQuantity">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row mb-4">
+                        <div class="col-md-3" *ngIf="itemMasterForm.contains('expiryApplicable')">
+                            <div class="form-group">
+                                <label>{{"ExpiryApplicable" | localize}}</label>
+                                <select placeholder="Select Option" class="form-control" #expiryApplicableInput
+                                    formControlName="expiryApplicable" id="expiryApplicable" name="expiryApplicable">
+                                    <option *ngFor="let applicableItem of hazardousList"
+                                        value="{{ applicableItem.value }}">
+                                        {{ applicableItem.title }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3" *ngIf="itemMasterForm.contains('orderingUOMId')">
+                            <div class="form-group">
+                                <label>{{"OrderingUOM" | localize}}</label>
+                                <select placeholder="Select Option" class="form-control" #orderingUOMIdInput
+                                    formControlName="orderingUOMId" id="orderingUOMId" name="orderingUOMId">
+                                    <option *ngFor="let orderingUOMItem of unitList" value="{{ orderingUOMItem.id }}">
+                                        {{ orderingUOMItem.name }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3" *ngIf="itemMasterForm.contains('stockUOMId')">
+                            <div class="form-group">
+                                <label>{{"StockUOM" | localize}}</label>
+                                <select placeholder="Select Option" class="form-control" #stockUOMIdInput
+                                    formControlName="stockUOMId" id="stockUOMId" name="stockUOMId">
+                                    <option *ngFor="let stockUOMItem of unitList" value="{{ stockUOMItem.id }}">
+                                        {{ stockUOMItem.name }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3" *ngIf="itemMasterForm.contains('quantityPerOrderingUOM')">
+                            <div class="form-group">
+                                <label>{{"QtyPerOrderingUOM" | localize}}</label>
+                                <input #quantityPerOrderingUOMInput id="quantityPerOrderingUOM" class="form-control"
+                                    step="1" type="number" name="quantityPerOrderingUOM"
+                                    formControlName="quantityPerOrderingUOM">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row mb-4">
+                        <div class="col-md-3" *ngIf="itemMasterForm.contains('author')">
+                            <div class="form-group">
+                                <label>{{"Author" | localize}}</label>
+                                <input #authorInput id="author" class="form-control" type="text" name="author"
+                                    formControlName="author">
+                            </div>
+                        </div>
+                        <div class="col-md-3" *ngIf="itemMasterForm.contains('publication')">
+                            <div class="form-group">
+                                <label>{{"Publication" | localize}}</label>
+                                <input #publicationInput id="publication" class="form-control" type="text"
+                                    name="publication" formControlName="publication">
+                            </div>
+                        </div>
+                        <div class="col-md-3" *ngIf="itemMasterForm.contains('publicationYear')">
+                            <div class="form-group">
+                                <label>{{"PublicationYear" | localize}}</label>
+                                <select placeholder="Select Option" class="form-control" #publicationYearInput
+                                    formControlName="publicationYear" id="publicationYear" name="publicationYear">
+                                    <option *ngFor="let year of yearList" value="{{ year.value }}">
+                                        {{ year.title }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3" *ngIf="itemMasterForm.contains('subjectCategory')">
+                            <div class="form-group">
+                                <label>{{"SubjectCategory" | localize}}</label>
+                                <select placeholder="Select Option" class="form-control" #subjectCategoryInput
+                                    formControlName="subjectCategory" id="subjectCategory" name="subjectCategory">
+                                    <option *ngFor="let subjectCategoryItem of subjectCategoryList"
+                                        value="{{ subjectCategoryItem.value }}">
+                                        {{ subjectCategoryItem.title }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="itemMasterForm.contains('itemAccessories')">
+                        <div class="mb-4">
+                            <button type="button" class="btn btn-primary" (click)="addItemAccessory()">
+                                <i class="fa fa-plus"></i>
+                                {{ 'AddItemAccessory' | localize }}
+                            </button>
+                        </div>
+                        <div formArrayName="itemAccessories" class="mb-4">
+                            <div class="card mb-3"
+                                *ngFor="let itemAccessory of itemAccessories.controls; let index = index">
+                                <div [formGroupName]="index" class="p-3">
+                                    <div class="col-md-12 row mb-4">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>{{"ItemAccessory" | localize}}</label>
+                                                <select placeholder="Select Item Category" class="form-control"
+                                                    #accessoryIdInput formControlName="accessoryId" id="accessoryId"
+                                                    name="accessoryId">
+                                                    <option *ngFor="let accessoryItem of itemMasterList"
+                                                        value="{{ accessoryItem.id }}">
+                                                        {{ accessoryItem.itemName }}
+                                                    </option>
+                                                </select>
+                                                <!-- <div *ngIf="submitted && calibrationAgencyItem.get('supplierId').errors"
+                                                    class="invalid-feedback">
+                                                    <div *ngIf="calibrationAgencyItem.get('supplierId').errors.required">
+                                                        Supplier is required</div>
+                                                </div> -->
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <div class="mt-5 text-center">
+                                                <h3>
+                                                    <i class="fa fa-trash"
+                                                        *ngIf="!itemAccessory.value.id && itemAccessories.controls.length > 1"
+                                                        (click)="deleteItemAccessory(index)"></i>
+                                                </h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="itemMasterForm.contains('itemCalibrationTypes')">
+                        <div class="mb-4">
+                            <button type="button" class="btn btn-primary" (click)="addCalibrationType()">
+                                <i class="fa fa-plus"></i>
+                                {{ 'AddCalibrationType' | localize }}
+                            </button>
+                        </div>
+                        <div formArrayName="itemCalibrationTypes" class="mb-4">
+                            <div class="card mb-3"
+                                *ngFor="let calibrationTypeItem of itemCalibrationTypes.controls; let index = index">
+                                <div [formGroupName]="index" class="p-3">
+                                    <div class="col-md-12 row mb-4">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>{{"CalibrationType" | localize}}</label>
+                                                <select placeholder="Select Item Category" class="form-control" #typeInput
+                                                    formControlName="type" id="type" name="type"
+                                                    [ngClass]="{ 'is-invalid': submitted && calibrationTypeItem.get('type').errors }">
+                                                    <option *ngFor="let calibrationType of calibrationTypeList"
+                                                        value="{{ calibrationType.value }}">
+                                                        {{ calibrationType.title }}
+                                                    </option>
+                                                </select>
+                                                <div *ngIf="submitted && calibrationTypeItem.get('type').errors"
+                                                    class="invalid-feedback">
+                                                    <div *ngIf="calibrationTypeItem.get('type').errors.required">
+                                                        Calibration Type is required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="form-group">
+                                                <label>{{"CalibrationFrequency" | localize}}</label>
+                                                <select placeholder="Select Item Category" class="form-control"
+                                                    #frequencyInput formControlName="frequency" id="frequency"
+                                                    name="frequency"
+                                                    [ngClass]="{ 'is-invalid': submitted && calibrationTypeItem.get('frequency').errors }">
+                                                    <option *ngFor="let calibrationFrequency of calibrationFrequencyList"
+                                                        value="{{ calibrationFrequency.value }}">
+                                                        {{ calibrationFrequency.title }}
+                                                    </option>
+                                                </select>
+                                                <div *ngIf="submitted && calibrationTypeItem.get('frequency').errors"
+                                                    class="invalid-feedback">
+                                                    <div *ngIf="calibrationTypeItem.get('frequency').errors.required">
+                                                        Calibration Frequency is required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <div class="mt-5 text-center">
+                                                <h3>
+                                                    <i class="fa fa-trash"
+                                                        *ngIf="!calibrationTypeItem.value.id && itemCalibrationTypes.controls.length > 1"
+                                                        (click)="deleteCalibrationTypeItem(index)"></i>
+                                                </h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="itemMasterForm.contains('itemCalibrationAgencies')">
+                        <div class="mb-4">
+                            <button type="button" class="btn btn-primary" (click)="addCalibrationAgency()">
+                                <i class="fa fa-plus"></i>
+                                {{ 'AddCalibrationAgency' | localize }}
+                            </button>
+                        </div>
+                        <div formArrayName="itemCalibrationAgencies" class="mb-4">
+                            <div class="card mb-3"
+                                *ngFor="let calibrationAgencyItem of itemCalibrationAgencies.controls; let index = index">
+                                <div [formGroupName]="index" class="p-3">
+                                    <div class="col-md-12 row mb-4">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>{{"Supplier" | localize}}</label>
+                                                <select placeholder="Select Item Category" class="form-control"
+                                                    #supplierIdInput formControlName="supplierId" id="supplierId"
+                                                    name="supplierId"
+                                                    [ngClass]="{ 'is-invalid': submitted && calibrationAgencyItem.get('supplierId').errors }">
+                                                    <option *ngFor="let supplierItem of supplierList"
+                                                        value="{{ supplierItem.id }}">
+                                                        {{ supplierItem.name }}
+                                                    </option>
+                                                </select>
+                                                <div *ngIf="submitted && calibrationAgencyItem.get('supplierId').errors"
+                                                    class="invalid-feedback">
+                                                    <div *ngIf="calibrationAgencyItem.get('supplierId').errors.required">
+                                                        Supplier is required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <div class="mt-5 text-center">
+                                                <h3>
+                                                    <i class="fa fa-trash"
+                                                        *ngIf="!calibrationAgencyItem.value.id && itemCalibrationAgencies.controls.length > 1"
+                                                        (click)="deleteCalibrationAgencyItem(index)"></i>
+                                                </h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="itemMasterForm.contains('itemSuppliers')">
+                        <div class="mb-4">
+                            <button type="button" class="btn btn-primary" (click)="addItemSupplier()">
+                                <i class="fa fa-plus"></i>
+                                {{ 'AddNewSupplier' | localize }}
+                            </button>
+                        </div>
+                        <div formArrayName="itemSuppliers" class="mb-4">
+                            <div class="card mb-3" *ngFor="let itemSupplier of itemSuppliers.controls; let index = index">
+                                <div [formGroupName]="index" class="p-3">
+                                    <div class="col-md-12 row mb-4">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>{{"Supplier" | localize}}</label>
+                                                <select placeholder="Select Item Category" class="form-control"
+                                                    #supplierIdInput formControlName="supplierId" id="supplierId"
+                                                    name="supplierId">
+                                                    <option *ngFor="let supplierItem of supplierList"
+                                                        value="{{ supplierItem.id }}">
+                                                        {{ supplierItem.name }}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <div class="mt-5 text-center">
+                                                <h3>
+                                                    <i class="fa fa-trash"
+                                                        *ngIf="!itemSupplier.value.id && itemSuppliers.controls.length > 1"
+                                                        (click)="deleteItemSupplier(index)"></i>
+                                                </h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="itemMasterForm.contains('itemSpares')">
+                        <div class="mb-4">
+                            <button type="button" class="btn btn-primary" (click)="addItemSpare()">
+                                <i class="fa fa-plus"></i>
+                                {{ 'AddNewItemSpare' | localize }}
+                            </button>
+                        </div>
+                        <div formArrayName="itemSpares" class="mb-4">
+                            <div class="card mb-3" *ngFor="let itemSpare of itemSpares.controls; let index = index">
+                                <div [formGroupName]="index" class="p-3">
+                                    <div class="col-md-12 row mb-4">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>{{"ItemSpare" | localize}}</label>
+                                                <select placeholder="Select Item" class="form-control" #itemSparesIdInput
+                                                    formControlName="itemSparesId" id="itemSparesId" name="itemSparesId">
+                                                    <option *ngFor="let itemMaster of itemMasterList"
+                                                        value="{{ itemMaster.id }}">
+                                                        {{ itemMaster.itemName }}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <div class="mt-5 text-center">
+                                                <h3>
+                                                    <i class="fa fa-trash"
+                                                        *ngIf="!itemSpare.value.id && itemSpares.controls.length > 1"
+                                                        (click)="deleteItemSpare(index)"></i>
+                                                </h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="itemMasterForm.contains('itemAttachments')">
+                        <div class="mb-4">
+                            <button type="button" class="btn btn-primary" (click)="addItemAttachment()">
+                                <i class="fa fa-plus"></i>
+                                {{ 'AddNewItemAttachment' | localize }}
+                            </button>
+                        </div>
+                        <div formArrayName="itemAttachments" class="mb-4">
+                            <div class="card mb-3"
+                                *ngFor="let itemAttachment of itemAttachments.controls; let index = index">
+                                <div [formGroupName]="index" class="p-3">
+                                    <div class="col-md-12 row mb-4">
+                                        <div class="col-md-5">
+                                            <div class="form-group">
+                                                <label>{{"Path" | localize}}</label>
+                                                <input #pathInput id="path" class="form-control" type="text" name="path"
+                                                    formControlName="path">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>{{"Description" | localize}}</label>
+                                                <input #descriptionInput id="description" class="form-control" type="text"
+                                                    name="description" formControlName="description">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <div class="mt-5 text-center">
+                                                <h3>
+                                                    <i class="fa fa-trash"
+                                                        *ngIf="!itemAttachment.value.id && itemAttachments.controls.length > 1"
+                                                        (click)="deleteItemAttachment(index)"></i>
+                                                </h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="itemMasterForm.contains('itemStorageConditions')">
+                        <div class="mb-4">
+                            <button type="button" class="btn btn-primary" (click)="addItemStorageCondition()">
+                                <i class="fa fa-plus"></i>
+                                {{ 'AddItemStorageCondition' | localize }}
+                            </button>
+                        </div>
+                        <div formArrayName="itemStorageConditions" class="mb-4">
+                            <div class="card mb-3"
+                                *ngFor="let itemStorageCondition of itemStorageConditions.controls; let index = index">
+                                <div [formGroupName]="index" class="p-3">
+                                    <div class="col-md-12 row mb-4">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>{{"Hazardous" | localize}}</label>
+                                                <select placeholder="Select Option" class="form-control" #hazardousInput
+                                                    formControlName="hazardous" id="hazardous" name="hazardous">
+                                                    <option *ngFor="let hazardousItem of hazardousList"
+                                                        value="{{ hazardousItem.value }}">
+                                                        {{ hazardousItem.title }}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>{{"ThresholdQuantity" | localize}}</label>
+                                                <input #thresholdQuantityInput id="thresholdQuantity" class="form-control"
+                                                    step="1" type="number" name="thresholdQuantity"
+                                                    formControlName="thresholdQuantity">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="form-group">
+                                                <label>{{"Location" | localize}}</label>
+                                                <input #locationInput id="location" class="form-control" type="text"
+                                                    name="location" formControlName="location">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <div class="mt-5 text-center">
+                                                <h3>
+                                                    <i class="fa fa-trash"
+                                                        *ngIf="!itemStorageCondition.value.id && itemStorageConditions.controls.length > 1"
+                                                        (click)="deleteItemStorageCondition(index)"></i>
+                                                </h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="itemMasterForm.contains('itemProcurements')">
+                        <div class="mb-4">
+                            <button type="button" class="btn btn-primary" (click)="addItemProcurement()">
+                                <i class="fa fa-plus"></i>
+                                {{ 'AddItemProcurement' | localize }}
+                            </button>
+                        </div>
+                        <div formArrayName="itemProcurements" class="mb-4">
+                            <div class="card mb-3"
+                                *ngFor="let itemProcurement of itemProcurements.controls; let index = index">
+                                <div [formGroupName]="index" class="p-3">
+                                    <div class="col-md-12 row mb-4">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label>{{"Make" | localize}}</label>
+                                                <input #makeInput id="make" class="form-control" type="text" name="make"
+                                                    formControlName="make">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>{{"CatalogueNumber" | localize}}</label>
+                                                <input #makeInput id="make" class="form-control" type="text" name="make"
+                                                    formControlName="make">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label>{{"RatePerPack" | localize}}</label>
+                                                <input #ratePerPackInput id="ratePerPack" class="form-control" type="number"
+                                                    name="ratePerPack" formControlName="ratePerPack">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>{{"QuantityPerOrderingUOM" | localize}}</label>
+                                                <input #quantityPerOrderingUOMInput id="quantityPerOrderingUOM"
+                                                    class="form-control" type="number" name="quantityPerOrderingUOM"
+                                                    formControlName="quantityPerOrderingUOM">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <div class="mt-5 text-center">
+                                                <h3>
+                                                    <i class="fa fa-trash"
+                                                        *ngIf="!itemProcurement.value.id && itemProcurements.controls.length > 1"
+                                                        (click)="deleteItemProcurement(index)"></i>
+                                                </h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="itemMasterForm.contains('itemRateRevisions')">
+                        <div class="mb-4">
+                            <button type="button" class="btn btn-primary" (click)="addItemRateRevision()">
+                                <i class="fa fa-plus"></i>
+                                {{ 'AddItemRateRevision' | localize }}
+                            </button>
+                        </div>
+                        <div formArrayName="itemRateRevisions" class="mb-4">
+                            <div class="card mb-3"
+                                *ngFor="let itemRateRevision of itemRateRevisions.controls; let index = index">
+                                <div [formGroupName]="index" class="p-3">
+                                    <div class="col-md-12 row mb-4">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>{{"DateOfEntry" | localize}}</label>
+                                                <input #dateOfEntryInput id="dateOfEntry" class="form-control" type="date"
+                                                    name="dateOfEntry" formControlName="dateOfEntry">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>{{"StockUOM" | localize}}</label>
+                                                <select placeholder="Select Option" class="form-control" #stockUOMIdInput
+                                                    formControlName="stockUOMId" id="stockUOMId" name="stockUOMId">
+                                                    <option *ngFor="let UOMItem of unitList"
+                                                        value="{{ UOMItem.id }}">
+                                                        {{ UOMItem.name }}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label>{{"Make" | localize}}</label>
+                                                <input #makeInput id="make" class="form-control" type="text" name="make"
+                                                    formControlName="make">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>{{"CatalogueNumber" | localize}}</label>
+                                                <input #catalogueNumberInput id="catalogueNumber" class="form-control"
+                                                    type="text" name="catalogueNumber" formControlName="catalogueNumber">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <div class="mt-5 text-center">
+                                                <h3>
+                                                    <i class="fa fa-trash"
+                                                        *ngIf="!itemRateRevision.value.id && itemRateRevisions.controls.length > 1"
+                                                        (click)="deleteItemRateRevision(index)"></i>
+                                                </h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 row mb-4">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label>{{"OrderingUOM" | localize}}</label>
+                                                <select placeholder="Select Option" class="form-control" #stockUOMIdInput
+                                                    formControlName="stockUOMId" id="stockUOMId" name="stockUOMId">
+                                                    <option *ngFor="let orderingUOMItem of unitList"
+                                                        value="{{ orderingUOMItem.id }}">
+                                                        {{ orderingUOMItem.name }}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>{{"RatePerOrderingQuantity" | localize}}</label>
+                                                <input #ratePerOrderingQuantityInput id="ratePerOrderingQuantity" class="form-control"
+                                                step="1" type="number" name="ratePerOrderingQuantity" 
+                                                formControlName="ratePerOrderingQuantity">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label>{{"OrderingQuantity" | localize}}</label>
+                                                <input #orderingQuantityInput id="orderingQuantity" class="form-control"
+                                                step="1" type="number" name="orderingQuantity" 
+                                                formControlName="orderingQuantity"
+                                                (keyup)="calculateRatePerStockUOM(itemRateRevision)">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label>{{"StockPerQuantity" | localize}}</label>
+                                                <input #stockQuantityPerOrderingUOMInput id="stockQuantityPerOrderingUOM" class="form-control"
+                                                step="1" type="number" name="stockQuantityPerOrderingUOM" formControlName="stockQuantityPerOrderingUOM">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>{{"RatePerStockUOM" | localize}}</label>
+                                                <input disabled #ratePerStockUOMInput id="ratePerStockUOM" class="form-control"
+                                                step="1" type="number" name="ratePerStockUOM" formControlName="ratePerStockUOM">
+                                            </div>
+                                        </div>
+    
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-light-primary font-weight-bold"
+                        (click)="close()">
+                        {{ 'Cancel' | localize }}
+                    </button>
+                    <button type="submit" class="btn btn-primary font-weight-bold" [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')">
+                        <i class="fa fa-save"></i>
+                        <span>{{ 'Save' | localize }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
