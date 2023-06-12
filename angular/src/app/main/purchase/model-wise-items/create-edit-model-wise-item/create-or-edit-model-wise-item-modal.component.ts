@@ -58,8 +58,7 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
             id: new FormControl(modelWiseItemMaster.id, []),
             modelWiseItemData: modelWiseItemMaster.modelWiseItemData && modelWiseItemMaster.modelWiseItemData.length > 0 ? this.formBuilder.array(
                 modelWiseItemMaster.modelWiseItemData.map((x : ModelWiseItemDto) =>
-                    // this.createCalibrationType(x)
-                    console.log(x)
+                    this.createModelWiseItemData(x)
                 )
             ) : this.formBuilder.array([this.createModelWiseItemData(modelWiseItem)]),
         });
@@ -115,7 +114,6 @@ export class CreateOrEditItemMasterModalComponent extends AppComponentBase {
                         this.saving = false;
                     })
                 )
-                
                 .subscribe((response: ResponseDto) => {
                     if(!response.dataMatchFound){
                         this.notify.info(this.l('SavedSuccessfully'));
