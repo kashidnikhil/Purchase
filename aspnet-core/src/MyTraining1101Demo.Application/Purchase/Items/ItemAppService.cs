@@ -104,7 +104,7 @@
 
                 if (insertedOrUpdatedItem.Id != Guid.Empty)
                 {
-                    
+                    await this.InsertOrUpdateSubItemsAndItemRateRevision(input, (Guid)insertedOrUpdatedItem.Id);
                 }
                 return insertedOrUpdatedItem;
             }

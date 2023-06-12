@@ -84,6 +84,10 @@ using MyTraining1101Demo.Purchase.MaterialGrades;
 using MyTraining1101Demo.Purchase.MaterialGrades.Dto;
 using MyTraining1101Demo.Purchase.Models;
 using MyTraining1101Demo.Purchase.Models.Dto;
+using MyTraining1101Demo.Purchase.ModelWiseItems.ModelWiseItemMasters;
+using MyTraining1101Demo.Purchase.ModelWiseItems.ModelWiseItemMasters.Dto;
+using MyTraining1101Demo.Purchase.ModelWiseItems.ModelWiseItems;
+using MyTraining1101Demo.Purchase.ModelWiseItems.ModelWiseItems.Dto;
 using MyTraining1101Demo.Purchase.POGeneralTerms;
 using MyTraining1101Demo.Purchase.POGeneralTerms.Dto;
 using MyTraining1101Demo.Purchase.SubAssemblies;
@@ -390,6 +394,22 @@ namespace MyTraining1101Demo
 
             configuration.CreateMap<ItemCategory, ItemCategoryDto>().ReverseMap();
             configuration.CreateMap<ItemCategory, ItemCategoryInputDto>().ReverseMap();
+
+            configuration.CreateMap<ModelWiseItemMaster, ModelWiseItemMasterListDto>()
+                .ForMember(dto => dto.ModelName, options => options.MapFrom(x => x.Model.Name))
+                .ReverseMap();
+
+            configuration.CreateMap<ModelWiseItemMaster, ModelWiseItemMasterDto>().ReverseMap();
+            configuration.CreateMap<ModelWiseItemMaster, ModelWiseItemMasterInputDto>().ReverseMap();
+            configuration.CreateMap<ModelWiseItemMaster, ModelWiseItemMasterListDto>()
+                .ForMember(dto => dto.ModelName, options => options.MapFrom(x => x.Model.Name))
+                .ForMember(dto => dto.Id, options => options.MapFrom(x => x.Id))
+                .ReverseMap();
+
+
+            configuration.CreateMap<ModelWiseItem, ModelWiseItemDto>().ReverseMap();
+            configuration.CreateMap<ModelWiseItem, ModelWiseItemInputDto>().ReverseMap();
+           
             /* ADD YOUR OWN CUSTOM AUTOMAPPER MAPPINGS HERE */
         }
     }

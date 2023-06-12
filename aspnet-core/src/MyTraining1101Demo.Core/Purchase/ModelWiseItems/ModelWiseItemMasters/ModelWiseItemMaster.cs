@@ -8,7 +8,6 @@
     [Table("ModelWiseItemMaster")]
     public class ModelWiseItemMaster : FullAuditedEntity<Guid>
     {
-
         public virtual Guid? ModelId { get; set; }
         public virtual Model Model { get; set; }
     }
