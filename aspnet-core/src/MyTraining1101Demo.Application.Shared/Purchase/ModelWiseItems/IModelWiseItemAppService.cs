@@ -1,13 +1,10 @@
-﻿using Abp.Application.Services.Dto;
-using MyTraining1101Demo.Purchase.ModelWiseItems.ModelWiseItemMasters.Dto;
-using MyTraining1101Demo.Purchase.Shared;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MyTraining1101Demo.Purchase.ModelWiseItems
+﻿namespace MyTraining1101Demo.Purchase.ModelWiseItems
 {
+    using Abp.Application.Services.Dto;
+    using MyTraining1101Demo.Purchase.ModelWiseItems.ModelWiseItemMasters.Dto;
+    using MyTraining1101Demo.Purchase.Shared;
+    using System;
+    using System.Threading.Tasks;
     public interface IModelWiseItemAppService
     {
         Task<PagedResultDto<ModelWiseItemMasterListDto>> GetModelWiseItems(ModelWiseItemMasterSearchDto input);
@@ -16,6 +13,6 @@ namespace MyTraining1101Demo.Purchase.ModelWiseItems
 
         Task<bool> DeleteModelWiseItemMasterData(Guid modelWiseItemMasterId);
 
-        Task<ModelWiseItemMasterDto> GetItemMasterById(Guid modelWiseItemMasterId);
+        Task<ModelWiseItemMasterDto> GetModelWiseItemMasterById(Guid modelWiseItemMasterId);
     }
 }

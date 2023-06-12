@@ -9807,8 +9807,8 @@ export class ModelWiseItemServiceProxy {
      * @param modelWiseItemMasterId (optional) 
      * @return Success
      */
-    getItemMasterById(modelWiseItemMasterId: string | undefined): Observable<ModelWiseItemMasterDto> {
-        let url_ = this.baseUrl + "/api/services/app/ModelWiseItem/GetItemMasterById?";
+    getModelWiseItemMasterById(modelWiseItemMasterId: string | undefined): Observable<ModelWiseItemMasterDto> {
+        let url_ = this.baseUrl + "/api/services/app/ModelWiseItem/GetModelWiseItemMasterById?";
         if (modelWiseItemMasterId === null)
             throw new Error("The parameter 'modelWiseItemMasterId' cannot be null.");
         else if (modelWiseItemMasterId !== undefined)
@@ -9824,11 +9824,11 @@ export class ModelWiseItemServiceProxy {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetItemMasterById(response_);
+            return this.processGetModelWiseItemMasterById(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetItemMasterById(response_ as any);
+                    return this.processGetModelWiseItemMasterById(response_ as any);
                 } catch (e) {
                     return _observableThrow(e) as any as Observable<ModelWiseItemMasterDto>;
                 }
@@ -9837,7 +9837,7 @@ export class ModelWiseItemServiceProxy {
         }));
     }
 
-    protected processGetItemMasterById(response: HttpResponseBase): Observable<ModelWiseItemMasterDto> {
+    protected processGetModelWiseItemMasterById(response: HttpResponseBase): Observable<ModelWiseItemMasterDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :

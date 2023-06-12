@@ -11,6 +11,7 @@
     using MyTraining1101Demo.Purchase.Items.Dto.ItemMaster;
     using MyTraining1101Demo.Purchase.ModelWiseItems.ModelWiseItemMasters.Dto;
     using MyTraining1101Demo.Purchase.Shared;
+    using MyTraining1101Demo.Purchase.SubAssemblies.Dto;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -38,14 +39,17 @@
             {
                 var modelWiseItemMasterQuery = this._modelWiseItemMasterRepository.GetAllIncluding(x=> x.Model)
                     .Where(x => !x.IsDeleted)
-                    .WhereIf(!input.SearchString.IsNullOrWhiteSpace(), item => item.Model.Name.ToLower().Contains(input.SearchString.ToLower()));
+                    .Select(x => new ModelWiseItemMasterListDto
+                    {
+                        Id = x.Id,
+                        ModelName = x.Model.Name
+                    })
+                    .WhereIf(!input.SearchString.IsNullOrWhiteSpace(), item => item.ModelName.ToLower().Contains(input.SearchString.ToLower()));
 
                 var totalCount = await modelWiseItemMasterQuery.CountAsync();
                 var items = await modelWiseItemMasterQuery.OrderBy(input.Sorting).PageBy(input).ToListAsync();
 
-                return new PagedResultDto<ModelWiseItemMasterListDto>(
-                totalCount,
-                ObjectMapper.Map<List<ModelWiseItemMasterListDto>>(items));
+                return new PagedResultDto<ModelWiseItemMasterListDto>(totalCount,items);
             }
             catch (Exception ex)
             {

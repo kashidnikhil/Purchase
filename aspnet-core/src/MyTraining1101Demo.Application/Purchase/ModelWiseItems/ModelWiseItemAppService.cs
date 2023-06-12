@@ -8,7 +8,7 @@
     using System;
     using System.Threading.Tasks;
 
-    public class ModelWiseItemAppService : MyTraining1101DemoAppServiceBase
+    public class ModelWiseItemAppService : MyTraining1101DemoAppServiceBase, IModelWiseItemAppService
     {
         private readonly IModelWiseItemMasterManager _modelWiseItemMasterManager;
         private readonly IModelWiseItemManager _modelWiseItemManager;
@@ -88,7 +88,7 @@
 
         }
 
-        public async Task<ModelWiseItemMasterDto> GetItemMasterById(Guid modelWiseItemMasterId)
+        public async Task<ModelWiseItemMasterDto> GetModelWiseItemMasterById(Guid modelWiseItemMasterId)
         {
             try
             {

@@ -10,7 +10,7 @@
         {
             if (string.IsNullOrEmpty(Sorting))
             {
-                Sorting = "name";
+                Sorting = "ModelName";
             }
         }
     }

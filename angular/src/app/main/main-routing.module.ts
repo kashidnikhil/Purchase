@@ -82,6 +82,10 @@ import { RouterModule } from '@angular/router';
                         path: 'item-categories',
                         loadChildren: () => import('./purchase/item-categories/item-categories.module').then(m => m.ItemCategoriesModule)
                     },
+                    {
+                        path: 'model-wise-items',
+                        loadChildren: () => import('./purchase/model-wise-items/model-wise-items.module').then(m => m.ModelWiseItemsModule )
+                    },
                        
                                       
                     { path: '', redirectTo: 'dashboard', pathMatch: 'full' },

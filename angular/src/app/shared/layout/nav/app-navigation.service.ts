@@ -94,6 +94,12 @@ export class AppNavigationService {
                         '/app/main/item-categories'
                     ),
                     new AppMenuItem(
+                        'Model wise Items',
+                        'Pages.Administration.AuditLogs',
+                        'flaticon-folder-1',
+                        '/app/main/model-wise-items'
+                    ),
+                    new AppMenuItem(
                         'Companies',
                         'Pages.Administration.AuditLogs',
                         'flaticon-folder-1',

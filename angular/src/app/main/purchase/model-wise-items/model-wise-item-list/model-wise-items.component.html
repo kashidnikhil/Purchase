@@ -3,7 +3,7 @@
         <sub-header [title]="'Units' | localize" [description]="'UnitsHeaderInfo' | localize">
             <div role="actions">
                 <button
-                    (click)="createLegalEntity()"
+                    (click)="createModelWiseItem()"
                     class="btn btn-primary"
                 >
                 <!-- *ngIf="'Pages.Administration.Users.Create' | permission" -->
@@ -29,7 +29,7 @@
                                                 [placeholder]="l('SearchWithThreeDot')"
                                                 type="text"
                                             />
-                                            <button (click)="getLegalEntities()" class="btn btn-primary" type="submit">
+                                            <button (click)="getModelWiseItems()" class="btn btn-primary" type="submit">
                                                 <i class="flaticon-search-1" [attr.aria-label]="l('Search')"></i>
                                             </button>
                                         </div>
@@ -45,7 +45,7 @@
                             <p-table
                                 #dataTable
                                 sortMode="multiple"
-                                (onLazyLoad)="getLegalEntities($event)"
+                                (onLazyLoad)="getModelWiseItems($event)"
                                 [value]="primengTableHelper.records"
                                 rows="{{ primengTableHelper.defaultRecordsCountPerPage }}"
                                 [paginator]="false"
@@ -71,15 +71,10 @@
                                             " -->
                                             {{ 'Actions' | localize }}
                                         </th>
-                                        <th style="width: 150px" pSortableColumn="name">
-                                            {{ 'Name' | localize }}
-                                            <p-sortIcon field="name"></p-sortIcon>
+                                        <th style="width: 150px" pSortableColumn="ModelName">
+                                            {{ 'Model Name' | localize }}
+                                            <p-sortIcon field="ModelName"></p-sortIcon>
                                         </th>
-                                        <th style="width: 150px" pSortableColumn="description">
-                                            {{ 'Description' | localize }}
-                                            <p-sortIcon field="description"></p-sortIcon>
-                                        </th>
-                                       
                                     </tr>
                                 </ng-template>
                                 <ng-template pTemplate="body" let-record="$implicit">
@@ -119,10 +114,10 @@
                                                         <a
                                                             href="javascript:;"
                                                             class="dropdown-item"
-                                                            (click)="createOrEditLegalEntityModal.show(record.id)"
                                                         >
                                                             {{ 'Edit' | localize }}
                                                         </a>
+                                                        <!-- (click)="createOrEditModelWiseItemModal.show(record.id)" -->
                                                     </li>
                                                     <li role="menuitem">
                                                     <!-- *ngIf="
@@ -136,7 +131,7 @@
                                                         <a
                                                             href="javascript:;"
                                                             class="dropdown-item"
-                                                            (click)="deleteLegalEntity(record)"
+                                                            (click)="deleteModelWiseItem(record)"
                                                         >
                                                             {{ 'Delete' | localize }}
                                                         </a>
@@ -145,12 +140,8 @@
                                             </div>
                                         </td>
                                         <td style="width: 150px">
-                                            <span class="p-column-title">{{ 'Name' | localize }}</span>
+                                            <span class="p-column-title">{{ 'Model Name' | localize }}</span>
                                             {{ record.name }}
-                                        </td>
-                                        <td style="width: 150px">
-                                            <span class="p-column-title">{{ 'Description' | localize }}</span>
-                                            {{ record.description }}
                                         </td>
                                     </tr>
                                 </ng-template>
@@ -162,7 +153,7 @@
                                 <p-paginator
                                     [rows]="primengTableHelper.defaultRecordsCountPerPage"
                                     #paginator
-                                    (onPageChange)="getLegalEntities($event)"
+                                    (onPageChange)="getModelWiseItems($event)"
                                     [totalRecords]="primengTableHelper.totalRecordsCount"
                                     [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
                                     [showCurrentPageReport]="true"
@@ -176,6 +167,6 @@
                 </div>
             </div>
         </div>
-        <create-edit-legal-entity-modal #createOrEditLegalEntityModal (modalSave)="getLegalEntities()" (restoreLegalEntity)="restoreLegalEntity($event)"></create-edit-legal-entity-modal>
+        <!-- <create-edit-legal-entity-modal #createOrEditModelWiseItemModal (modalSave)="getModelWiseItems()"></create-edit-legal-entity-modal> -->
     </div>
 </div>

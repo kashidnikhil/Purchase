@@ -62,7 +62,7 @@ export class LegalEntitiesComponent extends AppComponentBase implements AfterVie
         this.paginator.changePage(this.paginator.getPage());
     }
 
-    createUnit(): void {
+    createLegalEntity(): void {
         this.createOrEditLegalEntityModal.show();
     }
 
