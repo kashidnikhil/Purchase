@@ -64,7 +64,6 @@ export class ItemFormBuilderService{
             categoryId: new FormControl(itemMaster.categoryId, []),
             itemId: new FormControl(itemMaster.itemId, []),
             itemCategoryId: new FormControl({value : itemMaster.itemCategoryId ? itemMaster.itemCategoryId : null, disabled: itemMaster.id != null ? true : false}, [Validators.required]),
-            //itemCategory: new FormControl(itemMaster.itemCategory ? <number>itemMaster.itemCategory : null, []),
             genericName: new FormControl(itemMaster.genericName, []),
             itemName: new FormControl({value : itemMaster.itemName ? itemMaster.itemName : null, disabled: itemMaster.id != null ? true : false}, [Validators.required]),
             alias: new FormControl(itemMaster.alias, []),
@@ -121,12 +120,13 @@ export class ItemFormBuilderService{
         let itemSpare : ItemSpareDto = new ItemSpareDto();
         let itemAttachment : ItemAttachmentDto = new ItemAttachmentDto();
         let itemStorageCondition: ItemStorageConditionDto = new ItemStorageConditionDto();
+        let itemProcurement : ProcurementDto = new ProcurementDto();
+        let itemRateRevision: ItemRateRevisionDto = new ItemRateRevisionDto();
        return this.formBuilder.group({
             id: new FormControl(itemMaster.id, []),
             categoryId: new FormControl(itemMaster.categoryId, []),
             itemId: new FormControl(itemMaster.itemId, []),
             itemCategoryId: new FormControl({value : itemMaster.itemCategoryId ? itemMaster.itemCategoryId : null, disabled: itemMaster.id != null ? true : false}, [Validators.required]),
-            //itemCategory: new FormControl(itemMaster.itemCategory ? <number>itemMaster.itemCategory : null, []),
             genericName: new FormControl(itemMaster.genericName, []),
             itemName: new FormControl({value : itemMaster.itemName ? itemMaster.itemName : null, disabled: itemMaster.id != null ? true : false}, [Validators.required]),
             alias: new FormControl(itemMaster.alias, []),
@@ -153,10 +153,13 @@ export class ItemFormBuilderService{
             discardedOn: new FormControl(itemMaster.discardedOn ? formatDate(new Date(<string><unknown>itemMaster.discardedOn), "yyyy-MM-dd", "en") : null, []),
             discardApprovedBy : new FormControl(itemMaster.discardApprovedBy ? <number>itemMaster.discardApprovedBy : null, []),
             discardedReason : new FormControl(itemMaster.discardedReason ? itemMaster.discardedReason : null, []),
+            quantity : new FormControl(itemMaster.quantity ? <number>itemMaster.quantity : null, []),
             stockUOMId : new FormControl(itemMaster.stockUOMId ? itemMaster.stockUOMId : null, []),
             orderingUOMId : new FormControl(itemMaster.orderingUOMId ? itemMaster.orderingUOMId : null, []),
             quantityPerOrderingUOM: new FormControl(itemMaster.quantityPerOrderingUOM ? parseFloat(itemMaster.quantityPerOrderingUOM.toString()).toFixed(2) : null, []),
             minimumOrderQuantity : new FormControl(itemMaster.minimumOrderQuantity ? parseFloat(itemMaster.minimumOrderQuantity.toString()).toFixed(2) : null, []),
+            comment : new FormControl(itemMaster.comment ? itemMaster.comment : null, []),
+            msl: new FormControl(itemMaster.msl ? itemMaster.msl : null, []),
             itemAccessories: itemMaster.itemAccessories && itemMaster.itemAccessories.length > 0 ? this.formBuilder.array(
                 itemMaster.itemAccessories.map((x: ItemAccessoryDto) =>
                     this.createItemAccessory(x)
@@ -182,11 +185,16 @@ export class ItemFormBuilderService{
                     this.createItemStorageCondition(x)
                 )
             ) : this.formBuilder.array([this.createItemStorageCondition(itemStorageCondition)]),
-            // itemRateRevisions: itemMaster.itemRateRevisions && itemMaster.itemRateRevisions.length > 0 ? this.formBuilder.array(
-            //     itemMaster.itemRateRevisions.map((x: ItemRateRevisionDto) =>
-            //         this.createItemRateRevision(x)
-            //     )
-            // ) : this.formBuilder.array([this.createItemRateRevision(itemRateRevision)])
+            itemProcurements: itemMaster.itemProcurements && itemMaster.itemProcurements.length > 0 ? this.formBuilder.array(
+                itemMaster.itemProcurements.map((x: ProcurementDto) =>
+                    this.createItemProcurement(x)
+                )
+            ) : this.formBuilder.array([this.createItemProcurement(itemProcurement)]),
+            itemRateRevisions: itemMaster.itemRateRevisions && itemMaster.itemRateRevisions.length > 0 ? this.formBuilder.array(
+                itemMaster.itemRateRevisions.map((x: ItemRateRevisionDto) =>
+                    this.createItemRateRevision(x)
+                )
+            ) : this.formBuilder.array([this.createItemRateRevision(itemRateRevision)])
         });
 
     }
