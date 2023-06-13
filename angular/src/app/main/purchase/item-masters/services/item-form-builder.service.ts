@@ -23,6 +23,7 @@ export class ItemFormBuilderService{
             genericName: new FormControl(itemMaster.genericName, []),
             itemName: new FormControl({value : itemMaster.itemName ? itemMaster.itemName : null, disabled: itemMaster.id != null ? true : false}, [Validators.required]),
             alias: new FormControl(itemMaster.alias, []),
+            supplierId: new FormControl(itemMaster.supplierId, []),
             hsnCode : new FormControl(itemMaster.hsnCode, []),
             gst : new FormControl(itemMaster.gst ? parseFloat(itemMaster.gst.toString()).toFixed(2) : null, []),
             purchaseValue : new FormControl(itemMaster.purchaseValue ? parseFloat(itemMaster.purchaseValue.toString()).toFixed(2) : null, []),
@@ -59,6 +60,8 @@ export class ItemFormBuilderService{
         let itemSupplier: ItemSupplierDto = new ItemSupplierDto();
         let itemAttachment : ItemAttachmentDto = new ItemAttachmentDto();
         let itemSpare : ItemSpareDto = new ItemSpareDto();
+        let itemProcurement : ProcurementDto = new ProcurementDto();
+        let itemRateRevision: ItemRateRevisionDto = new ItemRateRevisionDto();
         return this.formBuilder.group({
             id: new FormControl(itemMaster.id, []),
             categoryId: new FormControl(itemMaster.categoryId, []),
@@ -94,7 +97,14 @@ export class ItemFormBuilderService{
             publication : new FormControl(itemMaster.publication ? itemMaster.publication : null, []),
             publicationYear : new FormControl(itemMaster.publicationYear ? <number>itemMaster.publicationYear : null, []),
             subjectCategory : new FormControl(itemMaster.subjectCategory ? <number>itemMaster.subjectCategory : null, []),
+            comment : new FormControl(itemMaster.comment ? itemMaster.comment : null, []),
+            msl: new FormControl(itemMaster.msl ? itemMaster.msl : null, []),
+            unitOrderId : new FormControl(itemMaster.unitOrderId ? itemMaster.unitOrderId : null, []),
+            unitStockId : new FormControl(itemMaster.unitStockId ? itemMaster.unitStockId : null, []),
+            stockUOMId : new FormControl(itemMaster.stockUOMId ? itemMaster.stockUOMId : null, []),
             purchasedBy : new FormControl(itemMaster.purchasedBy ? <number>itemMaster.purchasedBy : null, []),
+            quantityPerOrderingUOM: new FormControl(itemMaster.quantityPerOrderingUOM ? parseFloat(itemMaster.quantityPerOrderingUOM.toString()).toFixed(2) : null, []),
+            minimumOrderQuantity : new FormControl(itemMaster.minimumOrderQuantity ? parseFloat(itemMaster.minimumOrderQuantity.toString()).toFixed(2) : null, []),
             itemSuppliers: itemMaster.itemSuppliers && itemMaster.itemSuppliers.length > 0 ? this.formBuilder.array(
                 itemMaster.itemSuppliers.map((x: ItemSupplierDto) =>
                     this.createItemSupplier(x)
@@ -109,8 +119,17 @@ export class ItemFormBuilderService{
                 itemMaster.itemAttachments.map((x: ItemAttachmentDto) =>
                     this.createItemAttachment(x)
                 )
-            ) : this.formBuilder.array([this.createItemAttachment(itemAttachment)])
-           
+            ) : this.formBuilder.array([this.createItemAttachment(itemAttachment)]),
+            itemProcurements: itemMaster.itemProcurements && itemMaster.itemProcurements.length > 0 ? this.formBuilder.array(
+                itemMaster.itemProcurements.map((x: ProcurementDto) =>
+                    this.createItemProcurement(x)
+                )
+            ) : this.formBuilder.array([this.createItemProcurement(itemProcurement)]),
+            itemRateRevisions: itemMaster.itemRateRevisions && itemMaster.itemRateRevisions.length > 0 ? this.formBuilder.array(
+                itemMaster.itemRateRevisions.map((x: ItemRateRevisionDto) =>
+                    this.createItemRateRevision(x)
+                )
+            ) : this.formBuilder.array([this.createItemRateRevision(itemRateRevision)])
         });
     }
 
@@ -477,7 +496,6 @@ export class ItemFormBuilderService{
             categoryId: new FormControl(itemMaster.categoryId, []),
             itemId: new FormControl(itemMaster.itemId, []),
             itemCategoryId: new FormControl({value : itemMaster.itemCategoryId ? itemMaster.itemCategoryId : null, disabled: itemMaster.id != null ? true : false}, [Validators.required]),
-            // itemCategory: new FormControl(itemMaster.itemCategory ? <number>itemMaster.itemCategory : null, []),
             genericName: new FormControl(itemMaster.genericName, []),
             itemName: new FormControl({value : itemMaster.itemName ? itemMaster.itemName : null, disabled: itemMaster.id != null ? true : false}, [Validators.required]),
             alias: new FormControl(itemMaster.alias, []),
