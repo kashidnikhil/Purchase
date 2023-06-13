@@ -1,15 +1,14 @@
-﻿using Abp.Domain.Repositories;
-using Abp.Domain.Uow;
-using Microsoft.Extensions.Configuration;
-using MyTraining1101Demo.Configuration;
-using MyTraining1101Demo.Purchase.ModelWiseItems.ModelWiseItems.Dto;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace MyTraining1101Demo.Purchase.ModelWiseItems.ModelWiseItems
+﻿namespace MyTraining1101Demo.Purchase.ModelWiseItems.ModelWiseItems
 {
+    using Abp.Domain.Repositories;
+    using Abp.Domain.Uow;
+    using Microsoft.Extensions.Configuration;
+    using MyTraining1101Demo.Configuration;
+    using MyTraining1101Demo.Purchase.ModelWiseItems.ModelWiseItems.Dto;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
     public class ModelWiseItemManager : MyTraining1101DemoDomainServiceBase,IModelWiseItemManager
     {
         private readonly IRepository<ModelWiseItem, Guid> _modelWiseItemRepository;
