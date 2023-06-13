@@ -73,12 +73,30 @@
             try
             {
 
-                var isCalibrationAgnciesDeleted = await this._modelWiseItemManager.BulkDeleteModelWiseItems(modelWiseItemMasterId);
+                var isModelWiseItemsDeleted = await this._modelWiseItemManager.BulkDeleteModelWiseItems(modelWiseItemMasterId);
 
                
                 var isModelWiseItemMasterDeleted = await this._modelWiseItemMasterManager.DeleteModelWiseItemMasterFromDB(modelWiseItemMasterId);
 
                 return isModelWiseItemMasterDeleted;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.Message, ex);
+                throw ex;
+            }
+
+        }
+
+        public async Task<bool> DeleteModelWiseItemData(Guid modelWiseItemId)
+        {
+            try
+            {
+
+                var isModelWiseItemDeleted = await this._modelWiseItemManager.DeleteModelWiseItemFromDB(modelWiseItemId);
+
+
+                return isModelWiseItemDeleted;
             }
             catch (Exception ex)
             {

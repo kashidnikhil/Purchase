@@ -66,8 +66,8 @@
                                             <div class="mt-5 text-center">
                                                 <h3>
                                                     <i class="fa fa-trash"
-                                                        *ngIf="!modelWiseItem.value.id && modelWiseItemData.controls.length > 1"
-                                                        (click)="deleteModelWiseItemData(index)"></i>
+                                                        *ngIf="modelWiseItemData.controls.length > 0"
+                                                        (click)="deleteModelWiseItemData(index,modelWiseItem.value.id)"></i>
                                                 </h3>
                                             </div>
                                         </div>

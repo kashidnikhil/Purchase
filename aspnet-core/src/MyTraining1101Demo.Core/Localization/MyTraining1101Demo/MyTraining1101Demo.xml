@@ -1403,8 +1403,9 @@
 	  <text name="ModelWiseItemSuccessfullyRestored">Item Category restored successfully</text>
 	  <text name="ModelWiseItemCategoryErrorMessage">Item Category {0} cannot be added. Sub Assembly Item already exists</text>
 	  <text name="NewModelWiseItemErrorMessage">No new instance of item category with name {0} cannot be added.Item category item with name {0} already exists. Do you want to restore the item category?</text>
-	  
-</texts>
+	  <text name="DeletedSuccessfully">Deleted Successfully</text>
+	  <text name="CannotDeleteAtThisMoment">Something went wrong. Cannot delete at this moment</text>
+  </texts>
 </localizationDictionary>
 
     

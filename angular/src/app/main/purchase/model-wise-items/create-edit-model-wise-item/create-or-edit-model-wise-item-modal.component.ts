@@ -70,7 +70,7 @@ export class CreateOrEditModelWiseItemMasterModalComponent extends AppComponentB
     onItemSelect(itemId : string, indexValue?: number) : string|null{
         if(itemId){
             let selectedItem = this.itemMasterList.find(x=> x.id == itemId);
-            if(indexValue){
+            if(indexValue != null){
                 const modelWiseItemArray = this.modelWiseItemData;
                 modelWiseItemArray.at(indexValue).patchValue({
                     itemDescription : this.parseFieldValue(selectedItem.genericName) + this.parseFieldValue(selectedItem.itemName) + this.parseFieldValue(selectedItem.make) + this.parseFieldValue(selectedItem.model) + this.parseFieldValue(selectedItem.serialNumber) + this.parseFieldValue(selectedItem.specifications) + this.parseFieldValue(formatDate(new Date(<string><unknown>selectedItem.purchaseDate), "yyyy-MM-dd", "en")) + this.parseFieldValue(<string><unknown>selectedItem.purchaseValue) 
@@ -108,9 +108,23 @@ export class CreateOrEditModelWiseItemMasterModalComponent extends AppComponentB
         this.modelWiseItemData.push(modelWiseItemForm);
     }
 
-    deleteModelWiseItemData(indexValue: number) {
-        const modelWiseItemArray = this.modelWiseItemData;
-        modelWiseItemArray.removeAt(indexValue);
+    deleteModelWiseItemData(indexValue: number, modelWiseItemId : string) {
+        if(modelWiseItemId){
+            this._modelWiseItemService.deleteModelWiseItemData(modelWiseItemId).subscribe((response : boolean) =>{
+                if(response){
+                    this.notify.info(this.l('DeletedSuccessfully'));
+                    this.close();
+                    // this.modalSave.emit(null);
+                }
+                else{
+                    this.notify.error(this.l('CannotDeleteAtThisMoment'));
+                }
+            });
+        }
+        else{
+            const modelWiseItemArray = this.modelWiseItemData;
+            modelWiseItemArray.removeAt(indexValue);
+        }
     }
 
     async loadDropdownList() {

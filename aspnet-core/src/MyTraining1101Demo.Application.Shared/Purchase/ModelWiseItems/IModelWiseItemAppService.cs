@@ -13,6 +13,8 @@
 
         Task<bool> DeleteModelWiseItemMasterData(Guid modelWiseItemMasterId);
 
+        Task<bool> DeleteModelWiseItemData(Guid modelWiseItemId);
+
         Task<ModelWiseItemMasterDto> GetModelWiseItemMasterById(Guid modelWiseItemMasterId);
     }
 }

@@ -64,17 +64,18 @@ namespace MyTraining1101Demo.Purchase.ModelWiseItems.ModelWiseItems
         {
             try
             {
+                bool isModelWiseItemsDeleted = false;
                 var modelWiseItems = await this.GetModelWiseItemListFromDB(modelWiseItemMasterId);
 
                 if (modelWiseItems.Count > 0)
                 {
                     for (int i = 0; i < modelWiseItems.Count; i++)
                     {
-                        await this.DeleteModelWiseItemFromDB(modelWiseItems[i].Id);
+                        isModelWiseItemsDeleted = await this.DeleteModelWiseItemFromDB(modelWiseItems[i].Id);
                     }
                 }
 
-                return true;
+                return isModelWiseItemsDeleted;
             }
             catch (Exception ex)
             {
@@ -83,7 +84,7 @@ namespace MyTraining1101Demo.Purchase.ModelWiseItems.ModelWiseItems
         }
 
         [UnitOfWork]
-        private async Task DeleteModelWiseItemFromDB(Guid modelWiseItemId)
+        public async Task<bool> DeleteModelWiseItemFromDB(Guid modelWiseItemId)
         {
             try
             {
@@ -92,6 +93,8 @@ namespace MyTraining1101Demo.Purchase.ModelWiseItems.ModelWiseItems
                 await this._modelWiseItemRepository.DeleteAsync(modelWiseItem);
 
                 await CurrentUnitOfWork.SaveChangesAsync();
+
+                return true;
             }
             catch (Exception ex)
             {
