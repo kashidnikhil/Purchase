@@ -67,13 +67,21 @@ export class CreateOrEditModelWiseItemMasterModalComponent extends AppComponentB
         });
     }
 
-    onItemSelect(itemId : string, indexValue: number){
-        let selectedItem = this.itemMasterList.find(x=> x.id == itemId);
-        console.log(selectedItem);
-        const modelWiseItemArray = this.modelWiseItemData;
-        modelWiseItemArray.at(indexValue).patchValue({
-            itemDescription : this.parseFieldValue(selectedItem.genericName) + this.parseFieldValue(selectedItem.itemName) + this.parseFieldValue(selectedItem.make) + this.parseFieldValue(selectedItem.model) + this.parseFieldValue(selectedItem.serialNumber) + this.parseFieldValue(selectedItem.specifications) + this.parseFieldValue(formatDate(new Date(<string><unknown>selectedItem.purchaseDate), "yyyy-MM-dd", "en")) + this.parseFieldValue(<string><unknown>selectedItem.purchaseValue) 
-        });
+    onItemSelect(itemId : string, indexValue?: number) : string|null{
+        if(itemId){
+            let selectedItem = this.itemMasterList.find(x=> x.id == itemId);
+            if(indexValue){
+                const modelWiseItemArray = this.modelWiseItemData;
+                modelWiseItemArray.at(indexValue).patchValue({
+                    itemDescription : this.parseFieldValue(selectedItem.genericName) + this.parseFieldValue(selectedItem.itemName) + this.parseFieldValue(selectedItem.make) + this.parseFieldValue(selectedItem.model) + this.parseFieldValue(selectedItem.serialNumber) + this.parseFieldValue(selectedItem.specifications) + this.parseFieldValue(formatDate(new Date(<string><unknown>selectedItem.purchaseDate), "yyyy-MM-dd", "en")) + this.parseFieldValue(<string><unknown>selectedItem.purchaseValue) 
+                });
+                return null;
+            }
+            else{
+                return this.parseFieldValue(selectedItem?.genericName) + this.parseFieldValue(selectedItem?.itemName) + this.parseFieldValue(selectedItem?.make) + this.parseFieldValue(selectedItem?.model) + this.parseFieldValue(selectedItem?.serialNumber) + this.parseFieldValue(selectedItem?.specifications) + this.parseFieldValue(formatDate(new Date(<string><unknown>selectedItem?.purchaseDate), "yyyy-MM-dd", "en")) + this.parseFieldValue(<string><unknown>selectedItem?.purchaseValue);
+            }
+        }
+        return null;
     }
 
     parseFieldValue(inputString : string){
@@ -85,7 +93,7 @@ export class CreateOrEditModelWiseItemMasterModalComponent extends AppComponentB
         return this.formBuilder.group({
             id: new FormControl(modelWiseItem.id, []),
             itemId: new FormControl(modelWiseItem.itemId, []),
-            itemDescription : new FormControl({value : "", disabled: true}, []),
+            itemDescription : new FormControl({value : this.onItemSelect(modelWiseItem.itemId,null), disabled: true}, []),
             comments: new FormControl(modelWiseItem.comments, [])
         });
     }
@@ -154,15 +162,5 @@ export class CreateOrEditModelWiseItemMasterModalComponent extends AppComponentB
         this.submitted = false;
         this.active = false;
         this.modal.hide();
-    }
-
-    calculateRatePerStockUOM(itemRateRevisionForm : FormGroup) : void{
-        let tempItemRateRevision = itemRateRevisionForm.value;
-        let tempRatePerStockUOM = tempItemRateRevision.ratePerOrderingQuantity != null && tempItemRateRevision.orderingQuantity != null ? parseFloat((tempItemRateRevision.ratePerOrderingQuantity / tempItemRateRevision.orderingQuantity).toString()).toFixed(2) : 0;
-        itemRateRevisionForm.patchValue(
-            {
-                ratePerStockUOM : tempRatePerStockUOM
-            }
-        );
     }
 }
