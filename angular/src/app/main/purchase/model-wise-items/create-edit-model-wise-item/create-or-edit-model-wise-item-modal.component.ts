@@ -73,12 +73,12 @@ export class CreateOrEditModelWiseItemMasterModalComponent extends AppComponentB
             if(indexValue != null){
                 const modelWiseItemArray = this.modelWiseItemData;
                 modelWiseItemArray.at(indexValue).patchValue({
-                    itemDescription : this.parseFieldValue(selectedItem.genericName) + this.parseFieldValue(selectedItem.itemName) + this.parseFieldValue(selectedItem.make) + this.parseFieldValue(selectedItem.model) + this.parseFieldValue(selectedItem.serialNumber) + this.parseFieldValue(selectedItem.specifications) + this.parseFieldValue(formatDate(new Date(<string><unknown>selectedItem.purchaseDate), "yyyy-MM-dd", "en")) + this.parseFieldValue(<string><unknown>selectedItem.purchaseValue) 
+                    itemDescription : this.parseFieldValue(selectedItem.genericName) + this.parseFieldValue(selectedItem.itemName) + this.parseFieldValue(selectedItem.make) + this.parseFieldValue(selectedItem.model) + this.parseFieldValue(selectedItem.serialNumber) + this.parseFieldValue(selectedItem.specifications) + this.parseFieldValue(formatDate(new Date(<string><unknown>selectedItem.purchaseDate), "dd-MM-yyyy", "en")) + this.parseFieldValue(<string><unknown>selectedItem.purchaseValue) 
                 });
                 return null;
             }
             else{
-                return this.parseFieldValue(selectedItem?.genericName) + this.parseFieldValue(selectedItem?.itemName) + this.parseFieldValue(selectedItem?.make) + this.parseFieldValue(selectedItem?.model) + this.parseFieldValue(selectedItem?.serialNumber) + this.parseFieldValue(selectedItem?.specifications) + this.parseFieldValue(formatDate(new Date(<string><unknown>selectedItem?.purchaseDate), "yyyy-MM-dd", "en")) + this.parseFieldValue(<string><unknown>selectedItem?.purchaseValue);
+                return this.parseFieldValue(selectedItem?.genericName) + this.parseFieldValue(selectedItem?.itemName) + this.parseFieldValue(selectedItem?.make) + this.parseFieldValue(selectedItem?.model) + this.parseFieldValue(selectedItem?.serialNumber) + this.parseFieldValue(selectedItem?.specifications) + this.parseFieldValue(formatDate(new Date(<string><unknown>selectedItem?.purchaseDate), "dd-MM-yyyy", "en")) + this.parseFieldValue(<string><unknown>selectedItem?.purchaseValue);
             }
         }
         return null;
