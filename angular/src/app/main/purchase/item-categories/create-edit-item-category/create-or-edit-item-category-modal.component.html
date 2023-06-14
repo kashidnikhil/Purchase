@@ -29,7 +29,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label>{{"Name" | localize}}</label>
-                        <input #nameInput id="name" class="form-control" type="text" [(ngModel)]="itemCategory.name" name="name"  required>
+                        <input #nameInput id="name" class="form-control" [disabled]="itemCategory.id" type="text" [(ngModel)]="itemCategory.name" name="name"  required>
                     </div>
                     <div class="form-group">
                         <label>{{"Description" | localize}}</label>
