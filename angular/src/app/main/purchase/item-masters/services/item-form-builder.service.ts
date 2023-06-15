@@ -69,6 +69,8 @@ export class ItemFormBuilderService{
         if(categoryName == 'Airobix Parts'){
             return this.createAirobixPartsTypeForm(itemMaster);
         }
+
+        return this.createCommonTypeForm(itemMaster);
     }
 
     private createBookTypeForm(itemMaster: ItemMasterDto) : FormGroup

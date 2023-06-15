@@ -400,6 +400,22 @@
                         </div>
                     </div>
                     <div class="col-md-12 row mb-4">
+                        <div class="col-md-4" *ngIf="itemMasterForm.contains('weightPerUOM')">
+                            <div class="form-group">
+                                <label>{{"Weight Per UOM" | localize}}</label>
+                                <input #weightPerUOMInput id="weightPerUOM" class="form-control" type="number" name="author"
+                                    formControlName="weightPerUOM">
+                            </div>
+                        </div>
+                        <div class="col-md-4" *ngIf="itemMasterForm.contains('sellingPrice')">
+                            <div class="form-group">
+                                <label>{{"Selling Price" | localize}}</label>
+                                <input #sellingPriceInput id="sellingPrice" class="form-control" type="number"
+                                    name="sellingPrice" formControlName="sellingPrice">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row mb-4">
                         <div class="col-md-3" *ngIf="itemMasterForm.contains('author')">
                             <div class="form-group">
                                 <label>{{"Author" | localize}}</label>
