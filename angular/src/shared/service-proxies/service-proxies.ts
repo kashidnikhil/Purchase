@@ -9242,6 +9242,258 @@ export class MaterialGradeServiceProxy {
 }
 
 @Injectable()
+export class MaterialRequisitionServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @param searchString (optional) 
+     * @param sorting (optional) 
+     * @param maxResultCount (optional) 
+     * @param skipCount (optional) 
+     * @return Success
+     */
+    getMaterialRequisitions(searchString: string | undefined, sorting: string | undefined, maxResultCount: number | undefined, skipCount: number | undefined): Observable<PagedResultDtoOfMaterialRequisitionMasterListDto> {
+        let url_ = this.baseUrl + "/api/services/app/MaterialRequisition/GetMaterialRequisitions?";
+        if (searchString === null)
+            throw new Error("The parameter 'searchString' cannot be null.");
+        else if (searchString !== undefined)
+            url_ += "SearchString=" + encodeURIComponent("" + searchString) + "&";
+        if (sorting === null)
+            throw new Error("The parameter 'sorting' cannot be null.");
+        else if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetMaterialRequisitions(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetMaterialRequisitions(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PagedResultDtoOfMaterialRequisitionMasterListDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PagedResultDtoOfMaterialRequisitionMasterListDto>;
+        }));
+    }
+
+    protected processGetMaterialRequisitions(response: HttpResponseBase): Observable<PagedResultDtoOfMaterialRequisitionMasterListDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PagedResultDtoOfMaterialRequisitionMasterListDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PagedResultDtoOfMaterialRequisitionMasterListDto>(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    insertOrUpdateMaterialRequisition(body: MaterialRequisitionInputDto | undefined): Observable<ResponseDto> {
+        let url_ = this.baseUrl + "/api/services/app/MaterialRequisition/InsertOrUpdateMaterialRequisition";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processInsertOrUpdateMaterialRequisition(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processInsertOrUpdateMaterialRequisition(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ResponseDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ResponseDto>;
+        }));
+    }
+
+    protected processInsertOrUpdateMaterialRequisition(response: HttpResponseBase): Observable<ResponseDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ResponseDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ResponseDto>(null as any);
+    }
+
+    /**
+     * @param materialRequisitionId (optional) 
+     * @return Success
+     */
+    deleteMaterialRequisition(materialRequisitionId: string | undefined): Observable<boolean> {
+        let url_ = this.baseUrl + "/api/services/app/MaterialRequisition/DeleteMaterialRequisition?";
+        if (materialRequisitionId === null)
+            throw new Error("The parameter 'materialRequisitionId' cannot be null.");
+        else if (materialRequisitionId !== undefined)
+            url_ += "materialRequisitionId=" + encodeURIComponent("" + materialRequisitionId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDeleteMaterialRequisition(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDeleteMaterialRequisition(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<boolean>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<boolean>;
+        }));
+    }
+
+    protected processDeleteMaterialRequisition(response: HttpResponseBase): Observable<boolean> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+    
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<boolean>(null as any);
+    }
+
+    /**
+     * @param materialRequisitionId (optional) 
+     * @return Success
+     */
+    getSupplierCategoryById(materialRequisitionId: string | undefined): Observable<MaterialRequisitionDto> {
+        let url_ = this.baseUrl + "/api/services/app/MaterialRequisition/GetSupplierCategoryById?";
+        if (materialRequisitionId === null)
+            throw new Error("The parameter 'materialRequisitionId' cannot be null.");
+        else if (materialRequisitionId !== undefined)
+            url_ += "materialRequisitionId=" + encodeURIComponent("" + materialRequisitionId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetSupplierCategoryById(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetSupplierCategoryById(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<MaterialRequisitionDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<MaterialRequisitionDto>;
+        }));
+    }
+
+    protected processGetSupplierCategoryById(response: HttpResponseBase): Observable<MaterialRequisitionDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = MaterialRequisitionDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<MaterialRequisitionDto>(null as any);
+    }
+}
+
+@Injectable()
 export class ModelServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -31612,6 +31864,211 @@ export interface IMaterialGradeInputDto {
     description: string | undefined;
 }
 
+export class MaterialRequisitionDto implements IMaterialRequisitionDto {
+    id!: string;
+    mriDate!: DateTime;
+    mriNumber!: string | undefined;
+    location!: MaterialRequisitionLocationType;
+    userId!: number | undefined;
+    usedFor!: string | undefined;
+    itemType!: number;
+    projectNumber!: string | undefined;
+    comments!: string | undefined;
+    requireByDate!: DateTime;
+    additionalComments!: string | undefined;
+
+    constructor(data?: IMaterialRequisitionDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.mriDate = _data["mriDate"] ? DateTime.fromISO(_data["mriDate"].toString()) : <any>undefined;
+            this.mriNumber = _data["mriNumber"];
+            this.location = _data["location"];
+            this.userId = _data["userId"];
+            this.usedFor = _data["usedFor"];
+            this.itemType = _data["itemType"];
+            this.projectNumber = _data["projectNumber"];
+            this.comments = _data["comments"];
+            this.requireByDate = _data["requireByDate"] ? DateTime.fromISO(_data["requireByDate"].toString()) : <any>undefined;
+            this.additionalComments = _data["additionalComments"];
+        }
+    }
+
+    static fromJS(data: any): MaterialRequisitionDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new MaterialRequisitionDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["mriDate"] = this.mriDate ? this.mriDate.toString() : <any>undefined;
+        data["mriNumber"] = this.mriNumber;
+        data["location"] = this.location;
+        data["userId"] = this.userId;
+        data["usedFor"] = this.usedFor;
+        data["itemType"] = this.itemType;
+        data["projectNumber"] = this.projectNumber;
+        data["comments"] = this.comments;
+        data["requireByDate"] = this.requireByDate ? this.requireByDate.toString() : <any>undefined;
+        data["additionalComments"] = this.additionalComments;
+        return data;
+    }
+}
+
+export interface IMaterialRequisitionDto {
+    id: string;
+    mriDate: DateTime;
+    mriNumber: string | undefined;
+    location: MaterialRequisitionLocationType;
+    userId: number | undefined;
+    usedFor: string | undefined;
+    itemType: number;
+    projectNumber: string | undefined;
+    comments: string | undefined;
+    requireByDate: DateTime;
+    additionalComments: string | undefined;
+}
+
+export class MaterialRequisitionInputDto implements IMaterialRequisitionInputDto {
+    id!: string | undefined;
+    mriDate!: DateTime;
+    mriNumber!: string | undefined;
+    location!: MaterialRequisitionLocationType;
+    userId!: number | undefined;
+    usedFor!: string | undefined;
+    itemType!: number;
+    projectNumber!: string | undefined;
+    comments!: string | undefined;
+    requireByDate!: DateTime;
+    additionalComments!: string | undefined;
+
+    constructor(data?: IMaterialRequisitionInputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.mriDate = _data["mriDate"] ? DateTime.fromISO(_data["mriDate"].toString()) : <any>undefined;
+            this.mriNumber = _data["mriNumber"];
+            this.location = _data["location"];
+            this.userId = _data["userId"];
+            this.usedFor = _data["usedFor"];
+            this.itemType = _data["itemType"];
+            this.projectNumber = _data["projectNumber"];
+            this.comments = _data["comments"];
+            this.requireByDate = _data["requireByDate"] ? DateTime.fromISO(_data["requireByDate"].toString()) : <any>undefined;
+            this.additionalComments = _data["additionalComments"];
+        }
+    }
+
+    static fromJS(data: any): MaterialRequisitionInputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new MaterialRequisitionInputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["mriDate"] = this.mriDate ? this.mriDate.toString() : <any>undefined;
+        data["mriNumber"] = this.mriNumber;
+        data["location"] = this.location;
+        data["userId"] = this.userId;
+        data["usedFor"] = this.usedFor;
+        data["itemType"] = this.itemType;
+        data["projectNumber"] = this.projectNumber;
+        data["comments"] = this.comments;
+        data["requireByDate"] = this.requireByDate ? this.requireByDate.toString() : <any>undefined;
+        data["additionalComments"] = this.additionalComments;
+        return data;
+    }
+}
+
+export interface IMaterialRequisitionInputDto {
+    id: string | undefined;
+    mriDate: DateTime;
+    mriNumber: string | undefined;
+    location: MaterialRequisitionLocationType;
+    userId: number | undefined;
+    usedFor: string | undefined;
+    itemType: number;
+    projectNumber: string | undefined;
+    comments: string | undefined;
+    requireByDate: DateTime;
+    additionalComments: string | undefined;
+}
+
+export enum MaterialRequisitionLocationType {
+    HeadOffice = 1,
+    Factory = 2,
+}
+
+export class MaterialRequisitionMasterListDto implements IMaterialRequisitionMasterListDto {
+    id!: string;
+    mriDate!: DateTime;
+    mriNumber!: string | undefined;
+    location!: MaterialRequisitionLocationType;
+
+    constructor(data?: IMaterialRequisitionMasterListDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.mriDate = _data["mriDate"] ? DateTime.fromISO(_data["mriDate"].toString()) : <any>undefined;
+            this.mriNumber = _data["mriNumber"];
+            this.location = _data["location"];
+        }
+    }
+
+    static fromJS(data: any): MaterialRequisitionMasterListDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new MaterialRequisitionMasterListDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["mriDate"] = this.mriDate ? this.mriDate.toString() : <any>undefined;
+        data["mriNumber"] = this.mriNumber;
+        data["location"] = this.location;
+        return data;
+    }
+}
+
+export interface IMaterialRequisitionMasterListDto {
+    id: string;
+    mriDate: DateTime;
+    mriNumber: string | undefined;
+    location: MaterialRequisitionLocationType;
+}
+
 export class MemberActivity implements IMemberActivity {
     name!: string | undefined;
     earnings!: string | undefined;
@@ -33322,6 +33779,54 @@ export class PagedResultDtoOfMaterialGradeDto implements IPagedResultDtoOfMateri
 export interface IPagedResultDtoOfMaterialGradeDto {
     totalCount: number;
     items: MaterialGradeDto[] | undefined;
+}
+
+export class PagedResultDtoOfMaterialRequisitionMasterListDto implements IPagedResultDtoOfMaterialRequisitionMasterListDto {
+    totalCount!: number;
+    items!: MaterialRequisitionMasterListDto[] | undefined;
+
+    constructor(data?: IPagedResultDtoOfMaterialRequisitionMasterListDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.totalCount = _data["totalCount"];
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(MaterialRequisitionMasterListDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfMaterialRequisitionMasterListDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfMaterialRequisitionMasterListDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IPagedResultDtoOfMaterialRequisitionMasterListDto {
+    totalCount: number;
+    items: MaterialRequisitionMasterListDto[] | undefined;
 }
 
 export class PagedResultDtoOfModelDto implements IPagedResultDtoOfModelDto {

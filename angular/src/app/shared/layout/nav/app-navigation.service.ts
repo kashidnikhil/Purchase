@@ -122,9 +122,28 @@ export class AppNavigationService {
                         'Pages.Administration.AuditLogs',
                         'flaticon-folder-1',
                         '/app/main/item-masters'
+                    ),
+                    new AppMenuItem(
+                        'Transactions',
+                        'Pages.Administration.AuditLogs',
+                        'flaticon-folder-1',
+                        '',
+                        [],
+                        [
+                            new AppMenuItem(
+                                'Material Requisitions',
+                                'Pages.Administration.AuditLogs',
+                                'flaticon-folder-1',
+                                '/app/main/transactions/material-requisitions'
+                            ),
+                            new AppMenuItem(
+                                'Material Indentations',
+                                'Pages.Administration.AuditLogs',
+                                'flaticon-folder-1',
+                                '/app/main/transactions/material-indentations'
+                            )
+                        ]
                     )
-
-                    
                 ]
             ),
             new AppMenuItem('Dashboard', 'Pages.Tenant.Dashboard', 'flaticon-line-graph', '/app/main/dashboard'),

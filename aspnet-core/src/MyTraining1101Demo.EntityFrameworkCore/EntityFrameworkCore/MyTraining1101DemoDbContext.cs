@@ -44,6 +44,7 @@ using MyTraining1101Demo.Purchase.Suppliers.SupplierBanks;
 using MyTraining1101Demo.Purchase.Suppliers.SupplierContactPersons;
 using MyTraining1101Demo.Purchase.Suppliers.SupplierMaster;
 using MyTraining1101Demo.Purchase.TermsOfPayments;
+using MyTraining1101Demo.Purchase.Transactions.MaterialRequisitionMaster;
 using MyTraining1101Demo.Purchase.Units;
 using MyTraining1101Demo.Storage;
 
@@ -142,6 +143,8 @@ namespace MyTraining1101Demo.EntityFrameworkCore
         public virtual DbSet<ModelWiseItem> ModelWiseItem { get; set; }
 
         public virtual DbSet<ItemCategory> ItemCategories { get; set; }
+
+        public virtual DbSet<MaterialRequisition> MaterialRequisitions { get; set; }
 
         public MyTraining1101DemoDbContext(DbContextOptions<MyTraining1101DemoDbContext> options)
             : base(options)

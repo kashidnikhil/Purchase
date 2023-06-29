@@ -86,6 +86,10 @@ import { RouterModule } from '@angular/router';
                         path: 'model-wise-items',
                         loadChildren: () => import('./purchase/model-wise-items/model-wise-items.module').then(m => m.ModelWiseItemsModule )
                     },
+                    {
+                        path: 'transactions',
+                        loadChildren: () => import('./purchase/transactions/transactions.module').then(m => m.TransactionsModule ) 
+                    },
                        
                                       
                     { path: '', redirectTo: 'dashboard', pathMatch: 'full' },

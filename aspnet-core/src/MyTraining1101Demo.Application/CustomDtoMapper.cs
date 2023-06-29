@@ -108,6 +108,8 @@ using MyTraining1101Demo.Purchase.Suppliers.SupplierContactPersons;
 using MyTraining1101Demo.Purchase.Suppliers.SupplierMaster;
 using MyTraining1101Demo.Purchase.TermsOfPayments;
 using MyTraining1101Demo.Purchase.TermsOfPayments.Dto;
+using MyTraining1101Demo.Purchase.Transactions.Dto.MaterialRequisitionMaster;
+using MyTraining1101Demo.Purchase.Transactions.MaterialRequisitionMaster;
 using MyTraining1101Demo.Purchase.Units;
 using MyTraining1101Demo.Purchase.Units.Dto;
 using MyTraining1101Demo.Sessions.Dto;
@@ -409,7 +411,11 @@ namespace MyTraining1101Demo
 
             configuration.CreateMap<ModelWiseItem, ModelWiseItemDto>().ReverseMap();
             configuration.CreateMap<ModelWiseItem, ModelWiseItemInputDto>().ReverseMap();
-           
+
+            configuration.CreateMap<MaterialRequisition, MaterialRequisitionMasterListDto>().ReverseMap();
+            configuration.CreateMap<MaterialRequisition, MaterialRequisitionInputDto>().ReverseMap();
+            configuration.CreateMap<MaterialRequisition, MaterialRequisitionDto>().ReverseMap();
+
             /* ADD YOUR OWN CUSTOM AUTOMAPPER MAPPINGS HERE */
         }
     }

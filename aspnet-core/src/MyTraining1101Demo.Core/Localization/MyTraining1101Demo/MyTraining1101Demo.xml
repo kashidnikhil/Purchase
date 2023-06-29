@@ -1405,6 +1405,12 @@
 	  <text name="NewModelWiseItemErrorMessage">No new instance of item category with name {0} cannot be added.Item category item with name {0} already exists. Do you want to restore the item category?</text>
 	  <text name="DeletedSuccessfully">Deleted Successfully</text>
 	  <text name="CannotDeleteAtThisMoment">Something went wrong. Cannot delete at this moment</text>
+
+	  <!-- Material Requisition section-->
+	  <text name="MaterialRequisitions">Material Requisitions</text>
+	  <text name="MaterialRequisitionsHeaderInfo">Manage material requisitions.</text>
+	  <text name="CreateNewMaterialRequisition">Create new material requisition</text>
+	  <text name="MaterialRequisitionDeleteWarningMessage">Material requisition {0} will be deleted.</text>
   </texts>
 </localizationDictionary>
 
