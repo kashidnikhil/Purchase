@@ -61,7 +61,7 @@
 
         }
 
-        public async Task<MaterialRequisitionDto> GetSupplierCategoryById(Guid materialRequisitionId)
+        public async Task<MaterialRequisitionDto> GetMaterialRequisitionById(Guid materialRequisitionId)
         {
             try
             {
