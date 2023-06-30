@@ -7,6 +7,7 @@ import { LazyLoadEvent } from 'primeng/api';
 import { Paginator } from 'primeng/paginator';
 import { Table } from 'primeng/table';
 import { finalize } from 'rxjs/operators';
+import { CreateOrEditMaterialRequisitionModalComponent } from '../create-edit-material-requisition/create-or-edit-material-requisition-modal.component';
 // import { CreateOrEditTermsOfPaymentModalComponent } from '../create-edit-terms-of-payment/create-or-edit-terms-of-payment-modal.component';
 
 @Component({
@@ -16,7 +17,7 @@ import { finalize } from 'rxjs/operators';
     animations: [appModuleAnimation()],
 })
 export class MaterialRequisitionsComponent extends AppComponentBase implements AfterViewInit {
-    @ViewChild('createOrEditMaterialRequisitionModal', { static: true }) createOrEditMaterialRequisitionModal: any; //CreateOrEditTermsOfPaymentModalComponent;
+    @ViewChild('createOrEditMaterialRequisitionModal', { static: true }) createOrEditMaterialRequisitionModal: CreateOrEditMaterialRequisitionModalComponent;
     @ViewChild('dataTable', { static: true }) dataTable: Table;
     @ViewChild('paginator', { static: true }) paginator: Paginator;
     
