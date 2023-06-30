@@ -9440,8 +9440,8 @@ export class MaterialRequisitionServiceProxy {
      * @param materialRequisitionId (optional) 
      * @return Success
      */
-    getSupplierCategoryById(materialRequisitionId: string | undefined): Observable<MaterialRequisitionDto> {
-        let url_ = this.baseUrl + "/api/services/app/MaterialRequisition/GetSupplierCategoryById?";
+    getMaterialRequisitionById(materialRequisitionId: string | undefined): Observable<MaterialRequisitionDto> {
+        let url_ = this.baseUrl + "/api/services/app/MaterialRequisition/GetMaterialRequisitionById?";
         if (materialRequisitionId === null)
             throw new Error("The parameter 'materialRequisitionId' cannot be null.");
         else if (materialRequisitionId !== undefined)
@@ -9457,11 +9457,11 @@ export class MaterialRequisitionServiceProxy {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetSupplierCategoryById(response_);
+            return this.processGetMaterialRequisitionById(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetSupplierCategoryById(response_ as any);
+                    return this.processGetMaterialRequisitionById(response_ as any);
                 } catch (e) {
                     return _observableThrow(e) as any as Observable<MaterialRequisitionDto>;
                 }
@@ -9470,7 +9470,7 @@ export class MaterialRequisitionServiceProxy {
         }));
     }
 
-    protected processGetSupplierCategoryById(response: HttpResponseBase): Observable<MaterialRequisitionDto> {
+    protected processGetMaterialRequisitionById(response: HttpResponseBase): Observable<MaterialRequisitionDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -32025,6 +32025,7 @@ export class MaterialRequisitionMasterListDto implements IMaterialRequisitionMas
     id!: string;
     mriDate!: DateTime;
     mriNumber!: string | undefined;
+    projectNumber!: string | undefined;
     location!: MaterialRequisitionLocationType;
 
     constructor(data?: IMaterialRequisitionMasterListDto) {
@@ -32041,6 +32042,7 @@ export class MaterialRequisitionMasterListDto implements IMaterialRequisitionMas
             this.id = _data["id"];
             this.mriDate = _data["mriDate"] ? DateTime.fromISO(_data["mriDate"].toString()) : <any>undefined;
             this.mriNumber = _data["mriNumber"];
+            this.projectNumber = _data["projectNumber"];
             this.location = _data["location"];
         }
     }
@@ -32057,6 +32059,7 @@ export class MaterialRequisitionMasterListDto implements IMaterialRequisitionMas
         data["id"] = this.id;
         data["mriDate"] = this.mriDate ? this.mriDate.toString() : <any>undefined;
         data["mriNumber"] = this.mriNumber;
+        data["projectNumber"] = this.projectNumber;
         data["location"] = this.location;
         return data;
     }
@@ -32066,6 +32069,7 @@ export interface IMaterialRequisitionMasterListDto {
     id: string;
     mriDate: DateTime;
     mriNumber: string | undefined;
+    projectNumber: string | undefined;
     location: MaterialRequisitionLocationType;
 }
 

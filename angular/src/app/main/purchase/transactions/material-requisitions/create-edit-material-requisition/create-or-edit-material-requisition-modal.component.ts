@@ -1,14 +1,16 @@
 import { Component, EventEmitter, Injector, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import {
+    MaterialRequisitionDto,
+    MaterialRequisitionInputDto,
+    MaterialRequisitionServiceProxy,
     ResponseDto,
-    TermsOfPaymentDto,
-    TermsOfPaymentInputDto,
     TermsOfPaymentServiceProxy,
 } from '@shared/service-proxies/service-proxies';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { map as _map, filter as _filter } from 'lodash-es';
 import { finalize } from 'rxjs/operators';
+import { FormGroup } from '@angular/forms';
 
 @Component({
     selector: 'create-edit-material-requisition-modal',
@@ -22,26 +24,30 @@ export class CreateOrEditMaterialRequisitionModalComponent extends AppComponentB
     @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
     // @Output() restoreTermsOfPayment: EventEmitter<ResponseDto> = new EventEmitter<ResponseDto>();
 
+    materialRequisitionForm!: FormGroup;
     active = false;
     saving = false;
-    termsOfPaymentItem : TermsOfPaymentDto = new TermsOfPaymentDto();
+    materialRequisitionItem : MaterialRequisitionDto = new MaterialRequisitionDto();
+    
     
     constructor(
         injector: Injector,
+        private _materialRequisitionService : MaterialRequisitionServiceProxy,
         private _termsOfPaymentService : TermsOfPaymentServiceProxy
     ) {
         super(injector);
     }
 
-    show(termsOfPaymentId?: string): void {
-        if (!termsOfPaymentId) {
-            this.termsOfPaymentItem = new TermsOfPaymentDto({id : null, name: "", description: ""}); 
+    async show(materialRequisitionId?: string){
+        if (!materialRequisitionId) {
+            //Needs to change this line of code. 
+            //this.materialRequisitionForm = new TermsOfPaymentDto({id : null, name: "", description: ""}); 
             this.active = true;
             this.modal.show();
         }
         else{
-            this._termsOfPaymentService.getTermsOfPaymentById(termsOfPaymentId).subscribe((response : TermsOfPaymentDto)=> {
-                this.termsOfPaymentItem  = response;
+            this._materialRequisitionService.getMaterialRequisitionById(materialRequisitionId).subscribe((response : MaterialRequisitionDto)=> {
+                this.materialRequisitionItem  = response;
                 this.active = true;
                 this.modal.show();
             });
@@ -54,27 +60,29 @@ export class CreateOrEditMaterialRequisitionModalComponent extends AppComponentB
     }
 
     save(): void {
-        let input = new TermsOfPaymentInputDto();
-        input = this.termsOfPaymentItem;
-        this.saving = true;
-        this._termsOfPaymentService
-            .insertOrUpdateTermsOfPayment(input)
-            .pipe(
-                finalize(() => {
-                    this.saving = false;
-                })
-            )
-            .subscribe((response : ResponseDto) => {
-                if(!response.dataMatchFound){
-                    this.notify.info(this.l('SavedSuccessfully'));
-                    this.close();
-                    this.modalSave.emit(null);
-                }
-                else{
-                    this.close();
-                    // this.restoreTermsOfPayment.emit(response);
-                }
-            });
+        if (this.materialRequisitionForm.valid) {
+            let input = new MaterialRequisitionInputDto();
+            input = this.materialRequisitionForm.getRawValue();
+            this.saving = true;
+            this._materialRequisitionService.insertOrUpdateMaterialRequisition(input)
+                .pipe(
+                    finalize(() => {
+                        this.saving = false;
+                    })
+                )
+                .subscribe((response : ResponseDto) => {
+                    if(!response.dataMatchFound){
+                        this.notify.info(this.l('SavedSuccessfully'));
+                        this.close();
+                        this.modalSave.emit(null);
+                    }
+                    else{
+                        this.close();
+                        // this.restoreTermsOfPayment.emit(response);
+                    }
+                });
+        }
+        
     }
 
     close(): void {
