@@ -9,7 +9,6 @@
     using Microsoft.Extensions.Configuration;
     using MyTraining1101Demo.Configuration;
     using MyTraining1101Demo.Purchase.Shared;
-    using MyTraining1101Demo.Purchase.SupplierCategories.Dto;
     using MyTraining1101Demo.Purchase.Transactions.Dto.MaterialRequisitionMaster;
     using System;
     using System.Collections.Generic;
@@ -33,8 +32,17 @@
         }
 
         public async Task<string> GetLatestMRINumberFromDb() {
+            var materialRequisitionNumber = "";
             var materialRequisitionItem = await this._materialRequisitionRepository.GetAll().IgnoreQueryFilters().OrderByDescending(x => x.CreationTime).FirstAsync();
-            return materialRequisitionItem.MRINumber;
+            if (materialRequisitionItem != null)
+            {
+                materialRequisitionNumber = materialRequisitionItem.MRINumber;
+            }
+            else {
+                materialRequisitionNumber = "MR00001";
+            }
+
+            return materialRequisitionNumber;
         }
 
         public async Task<PagedResultDto<MaterialRequisitionMasterListDto>> GetPaginatedMaterialRequisitionListFromDB(MaterialRequisitionSearchDto input)

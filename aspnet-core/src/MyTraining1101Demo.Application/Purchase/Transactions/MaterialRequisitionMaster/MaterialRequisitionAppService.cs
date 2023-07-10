@@ -17,6 +17,20 @@
             _materialRequisitionManager = materialRequisitionManager;
         }
 
+        public async Task<string> GetLatestMaterialRequisitionNumber() {
+            try
+            {
+                var result = await this._materialRequisitionManager.GetLatestMRINumberFromDb();
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.Message, ex);
+                throw ex;
+            }
+        }
+
         public async Task<PagedResultDto<MaterialRequisitionMasterListDto>> GetMaterialRequisitions(MaterialRequisitionSearchDto input)
         {
             try

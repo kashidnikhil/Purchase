@@ -5,6 +5,7 @@ import { TransactionsRoutingModule } from "./transactions-routing.module";
 import { MaterialRequisitionsComponent } from "./material-requisitions/material-requisition-list/material-requisitions.component";
 import { CreateOrEditMaterialRequisitionModalComponent } from "./material-requisitions/create-edit-material-requisition/create-or-edit-material-requisition-modal.component";
 import { ReactiveFormsModule } from "@angular/forms";
+import { MaterialRequisitionMockService } from "@app/shared/common/mock-data-services/material-requisition.mock.service";
 
 @NgModule({
     declarations: [
@@ -17,7 +18,7 @@ import { ReactiveFormsModule } from "@angular/forms";
         ReactiveFormsModule,
         SubheaderModule,
     ],
-    providers: [],
+    providers: [MaterialRequisitionMockService],
 })
 
 export class TransactionsModule {}

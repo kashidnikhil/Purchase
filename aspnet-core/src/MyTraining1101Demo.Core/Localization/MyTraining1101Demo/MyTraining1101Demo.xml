@@ -1412,6 +1412,9 @@
 	  <text name="CreateNewMaterialRequisition">Create new material requisition</text>
 	  <text name="EditMaterialRequisition">Edit material requisition</text>
 	  <text name="MaterialRequisitionDeleteWarningMessage">Material requisition {0} will be deleted.</text>
+	  <text name="MRIDate">MRI Date</text>
+	  <text name="MRINumber">MRI No.</text>
+	  <text name="UsedFor">Used For</text>
   </texts>
 </localizationDictionary>
 

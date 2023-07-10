@@ -14,8 +14,8 @@
             <form *ngIf="active && materialRequisitionForm" [formGroup]="materialRequisitionForm" novalidate (ngSubmit)="save()">
                 <div class="modal-header">
                     <h4 class="modal-title">
-                        <span *ngIf="termsOfPaymentItem.id">{{ 'EditMaterialRequisition' | localize }}: {{ termsOfPaymentItem.name }}</span>
-                        <span *ngIf="!termsOfPaymentItem.id">{{ 'CreateNewMaterialRequisition' | localize }}</span>
+                        <span *ngIf="materialRequisitionForm.get('id')?.value">{{ 'EditMaterialRequisition' | localize }}: {{ materialRequisitionForm.get('itemName')?.value }}</span>
+                        <span *ngIf="!materialRequisitionForm.get('id').value">{{ 'CreateNewMaterialRequisition' | localize }}</span>
                     </h4>
                     <button
                         type="button"
@@ -27,13 +27,58 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label>{{"Name" | localize}}</label>
-                        <input #nameInput id="name" class="form-control" type="text" [(ngModel)]="termsOfPaymentItem.name" name="name"  required>
+                    <div class="col-md-12 row mb-4">
+                        <div class="col-md-3" *ngIf="materialRequisitionForm.contains('mriDate')">
+                            <div class="form-group">
+                                <label>{{"MRIDate" | localize}}</label>
+                                <input #mriDateInput id="mriDate" class="form-control" type="date"
+                                    name="mriDate" formControlName="mriDate">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>{{"MRINumber" | localize}}</label>
+                                <input #mriNumberInput id="mriNumber" class="form-control" type="text"
+                                    name="mriNumber" formControlName="mriNumber">
+                            </div>
+                        </div>
+                        
                     </div>
-                    <div class="form-group">
-                        <label>{{"Description" | localize}}</label>
-                         <input class="form-control" type="text" name="description"  [(ngModel)]="termsOfPaymentItem.description" required>
+                    <div class="col-md-12 row mb-4">
+                        <div class="col-md-3" *ngIf="materialRequisitionForm.contains('location')">
+                            <div class="form-group">
+                                <label>{{"Location" | localize}}</label>
+                                <select placeholder="Select" class="form-control" #locationInput
+                                    formControlName="location" id="location" name="location">
+                                    <option *ngFor="let locationItem of locationList" value="{{ locationItem.value }}">
+                                        {{ locationItem.title }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>{{"User" | localize}}</label>
+                                <select placeholder="Select" class="form-control" #userIdInput
+                                    formControlName="userId" id="userId" name="userId">
+                                    <option *ngFor="let locationItem of locationList" value="{{ locationItem.value }}">
+                                        {{ locationItem.title }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label>{{"UsedFor" | localize}}</label>
+                                <input #usedForInput id="usedFor" class="form-control" type="text"
+                                name="usedFor" formControlName="usedFor">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row mb-4 mt-4">
+                        <div class="col-md-4" *ngFor="let materialRequisitionType of materialRequisitionTypeList"  formControlName="materialRequisitionType">
+                            &nbsp; <input type="radio" id ="materialRequisitionType" [checked]="materialRequisitionType.value == materialRequisitionForm.get('materialRequisitionType')?.value" [value]="materialRequisitionType.value" (change)="selectMaterialRequisition(materialRequisitionType.value)" /> &nbsp; <label> {{ materialRequisitionType.title }} </label>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">

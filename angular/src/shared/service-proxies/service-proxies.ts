@@ -9253,6 +9253,58 @@ export class MaterialRequisitionServiceProxy {
     }
 
     /**
+     * @return Success
+     */
+    getLatestMaterialRequisitionNumber(): Observable<string> {
+        let url_ = this.baseUrl + "/api/services/app/MaterialRequisition/GetLatestMaterialRequisitionNumber";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetLatestMaterialRequisitionNumber(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetLatestMaterialRequisitionNumber(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<string>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<string>;
+        }));
+    }
+
+    protected processGetLatestMaterialRequisitionNumber(response: HttpResponseBase): Observable<string> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+    
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<string>(null as any);
+    }
+
+    /**
      * @param searchString (optional) 
      * @param sorting (optional) 
      * @param maxResultCount (optional) 
@@ -31869,6 +31921,7 @@ export class MaterialRequisitionDto implements IMaterialRequisitionDto {
     mriDate!: DateTime;
     mriNumber!: string | undefined;
     location!: MaterialRequisitionLocationType;
+    materialRequisitionType!: number;
     userId!: number | undefined;
     usedFor!: string | undefined;
     itemType!: number;
@@ -31892,6 +31945,7 @@ export class MaterialRequisitionDto implements IMaterialRequisitionDto {
             this.mriDate = _data["mriDate"] ? DateTime.fromISO(_data["mriDate"].toString()) : <any>undefined;
             this.mriNumber = _data["mriNumber"];
             this.location = _data["location"];
+            this.materialRequisitionType = _data["materialRequisitionType"];
             this.userId = _data["userId"];
             this.usedFor = _data["usedFor"];
             this.itemType = _data["itemType"];
@@ -31915,6 +31969,7 @@ export class MaterialRequisitionDto implements IMaterialRequisitionDto {
         data["mriDate"] = this.mriDate ? this.mriDate.toString() : <any>undefined;
         data["mriNumber"] = this.mriNumber;
         data["location"] = this.location;
+        data["materialRequisitionType"] = this.materialRequisitionType;
         data["userId"] = this.userId;
         data["usedFor"] = this.usedFor;
         data["itemType"] = this.itemType;
@@ -31931,6 +31986,7 @@ export interface IMaterialRequisitionDto {
     mriDate: DateTime;
     mriNumber: string | undefined;
     location: MaterialRequisitionLocationType;
+    materialRequisitionType: number;
     userId: number | undefined;
     usedFor: string | undefined;
     itemType: number;
@@ -31945,6 +32001,7 @@ export class MaterialRequisitionInputDto implements IMaterialRequisitionInputDto
     mriDate!: DateTime;
     mriNumber!: string | undefined;
     location!: MaterialRequisitionLocationType;
+    materialRequisitionType!: number;
     userId!: number | undefined;
     usedFor!: string | undefined;
     itemType!: number;
@@ -31968,6 +32025,7 @@ export class MaterialRequisitionInputDto implements IMaterialRequisitionInputDto
             this.mriDate = _data["mriDate"] ? DateTime.fromISO(_data["mriDate"].toString()) : <any>undefined;
             this.mriNumber = _data["mriNumber"];
             this.location = _data["location"];
+            this.materialRequisitionType = _data["materialRequisitionType"];
             this.userId = _data["userId"];
             this.usedFor = _data["usedFor"];
             this.itemType = _data["itemType"];
@@ -31991,6 +32049,7 @@ export class MaterialRequisitionInputDto implements IMaterialRequisitionInputDto
         data["mriDate"] = this.mriDate ? this.mriDate.toString() : <any>undefined;
         data["mriNumber"] = this.mriNumber;
         data["location"] = this.location;
+        data["materialRequisitionType"] = this.materialRequisitionType;
         data["userId"] = this.userId;
         data["usedFor"] = this.usedFor;
         data["itemType"] = this.itemType;
@@ -32007,6 +32066,7 @@ export interface IMaterialRequisitionInputDto {
     mriDate: DateTime;
     mriNumber: string | undefined;
     location: MaterialRequisitionLocationType;
+    materialRequisitionType: number;
     userId: number | undefined;
     usedFor: string | undefined;
     itemType: number;

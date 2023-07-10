@@ -14,8 +14,8 @@
             <form *ngIf="active" #unitForm="ngForm" novalidate (ngSubmit)="save()">
                 <div class="modal-header">
                     <h4 class="modal-title">
-                        <span *ngIf="legalEntityItem.id">{{ 'EditUnit' | localize }}: {{ legalEntityItem.name }}</span>
-                        <span *ngIf="!legalEntityItem.id">{{ 'CreateNewUnit' | localize }}</span>
+                        <span *ngIf="legalEntityItem.id">{{ 'EditLegalEntity' | localize }}: {{ legalEntityItem.name }}</span>
+                        <span *ngIf="!legalEntityItem.id">{{ 'CreateNewLegalEntity' | localize }}</span>
                     </h4>
                     <button
                         type="button"

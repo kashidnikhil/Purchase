@@ -1,6 +1,6 @@
 <div [@routerTransition]>
     <div class="content d-flex flex-column flex-column-fluid">
-        <sub-header [title]="'Units' | localize" [description]="'UnitsHeaderInfo' | localize">
+        <sub-header [title]="'LegalEntities' | localize" [description]="'LegalEntitiesHeaderInfo' | localize">
             <div role="actions">
                 <button
                     (click)="createLegalEntity()"
@@ -8,7 +8,7 @@
                 >
                 <!-- *ngIf="'Pages.Administration.Users.Create' | permission" -->
                     <i class="fa fa-plus"></i>
-                    {{ 'CreateNewUnit' | localize }}
+                    {{ 'CreateNewLegalEntity' | localize }}
                 </button>
             </div>
         </sub-header>
