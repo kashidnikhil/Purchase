@@ -1,48 +1,37 @@
-<div
-    appBsModal
-    #createOrEditModal="bs-modal"
-    (onShown)="onShown()"
-    class="modal fade create-or-edit-user-modal"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="createOrEditModal"
-    aria-hidden="true"
-    [config]="{ backdrop: 'static', keyboard: !saving }"
->
+<div appBsModal #createOrEditModal="bs-modal" (onShown)="onShown()" class="modal fade create-or-edit-user-modal"
+    tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true"
+    [config]="{ backdrop: 'static', keyboard: !saving }">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <form *ngIf="active && materialRequisitionForm" [formGroup]="materialRequisitionForm" novalidate (ngSubmit)="save()">
+            <form *ngIf="active && materialRequisitionForm" [formGroup]="materialRequisitionForm" novalidate
+                (ngSubmit)="save()">
                 <div class="modal-header">
                     <h4 class="modal-title">
-                        <span *ngIf="materialRequisitionForm.get('id')?.value">{{ 'EditMaterialRequisition' | localize }}: {{ materialRequisitionForm.get('itemName')?.value }}</span>
-                        <span *ngIf="!materialRequisitionForm.get('id').value">{{ 'CreateNewMaterialRequisition' | localize }}</span>
+                        <span *ngIf="materialRequisitionForm.get('id')?.value">{{ 'EditMaterialRequisition' | localize
+                            }}: {{ materialRequisitionForm.get('itemName')?.value }}</span>
+                        <span *ngIf="!materialRequisitionForm.get('id').value">{{ 'CreateNewMaterialRequisition' |
+                            localize }}</span>
                     </h4>
-                    <button
-                        type="button"
-                        class="btn-close"
-                        (click)="close()"
-                        [attr.aria-label]="l('Close')"
-                        [disabled]="saving"
-                    >
+                    <button type="button" class="btn-close" (click)="close()" [attr.aria-label]="l('Close')"
+                        [disabled]="saving">
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="col-md-12 row mb-4">
-                        <div class="col-md-3" *ngIf="materialRequisitionForm.contains('mriDate')">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label>{{"MRIDate" | localize}}</label>
-                                <input #mriDateInput id="mriDate" class="form-control" type="date"
-                                    name="mriDate" formControlName="mriDate">
+                                <input #mriDateInput id="mriDate" class="form-control" type="date" name="mriDate"
+                                    formControlName="mriDate">
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>{{"MRINumber" | localize}}</label>
-                                <input #mriNumberInput id="mriNumber" class="form-control" type="text"
-                                    name="mriNumber" formControlName="mriNumber">
+                                <input #mriNumberInput id="mriNumber" class="form-control" type="text" name="mriNumber"
+                                    formControlName="mriNumber">
                             </div>
                         </div>
-                        
                     </div>
                     <div class="col-md-12 row mb-4">
                         <div class="col-md-3" *ngIf="materialRequisitionForm.contains('location')">
@@ -59,8 +48,8 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>{{"User" | localize}}</label>
-                                <select placeholder="Select" class="form-control" #userIdInput
-                                    formControlName="userId" id="userId" name="userId">
+                                <select placeholder="Select" class="form-control" #userIdInput formControlName="userId"
+                                    id="userId" name="userId">
                                     <option *ngFor="let locationItem of locationList" value="{{ locationItem.value }}">
                                         {{ locationItem.title }}
                                     </option>
@@ -70,32 +59,52 @@
                         <div class="col-md-5">
                             <div class="form-group">
                                 <label>{{"UsedFor" | localize}}</label>
-                                <input #usedForInput id="usedFor" class="form-control" type="text"
-                                name="usedFor" formControlName="usedFor">
+                                <input #usedForInput id="usedFor" class="form-control" type="text" name="usedFor"
+                                    formControlName="usedFor">
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-12 row mb-4 mt-4">
-                        <div class="col-md-4" *ngFor="let materialRequisitionType of materialRequisitionTypeList"  formControlName="materialRequisitionType">
-                            &nbsp; <input type="radio" id ="materialRequisitionType" [checked]="materialRequisitionType.value == materialRequisitionForm.get('materialRequisitionType')?.value" [value]="materialRequisitionType.value" (change)="selectMaterialRequisition(materialRequisitionType.value)" /> &nbsp; <label> {{ materialRequisitionType.title }} </label>
+                    <div class="col-md-12 row mb-4 mt-5">
+                        <div class="col-md-4" *ngFor="let materialRequisitionType of materialRequisitionTypeList">
+                            &nbsp; <input type="radio" id="materialRequisitionType"
+                                formControlName="materialRequisitionType"
+                                [checked]="materialRequisitionType.value == materialRequisitionForm.get('materialRequisitionType')?.value"
+                                [value]="materialRequisitionType.value"
+                                (change)="selectMaterialRequisition(materialRequisitionType.value)" /> &nbsp; <label> {{
+                                materialRequisitionType.title }} </label>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row mb-4">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>{{"ProjectNo" | localize}}</label>
+                                <input #projectNumberInput id="projectNumber" class="form-control" type="text"
+                                    name="projectNumber" formControlName="projectNumber">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>{{"RequiredByDate" | localize}}</label>
+                                <input #requireByDateInput id="requireByDate" class="form-control" type="date" name="requireByDate"
+                                    formControlName="requireByDate">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row mb-4">
+                        <div class="form-group">
+                            <label>{{"Comments" | localize}}</label>
+                            <input #commentsInput id="comments" class="form-control" type="text" name="comments"
+                                formControlName="comments">
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button
-                        [disabled]="saving"
-                        type="button"
-                        class="btn btn-light-primary font-weight-bold"
-                        (click)="close()"
-                    >
+                    <button [disabled]="saving" type="button" class="btn btn-light-primary font-weight-bold"
+                        (click)="close()">
                         {{ 'Cancel' | localize }}
                     </button>
-                    <button
-                        type="submit"
-                        class="btn btn-primary font-weight-bold"
-                        [buttonBusy]="saving"
-                        [busyText]="l('SavingWithThreeDot')"
-                    >
+                    <button type="submit" class="btn btn-primary font-weight-bold" [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')">
                         <i class="fa fa-save"></i>
                         <span>{{ 'Save' | localize }}</span>
                     </button>

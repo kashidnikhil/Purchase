@@ -67,7 +67,7 @@ export class CreateOrEditMaterialRequisitionModalComponent extends AppComponentB
     }
 
     onShown(): void {
-        document.getElementById('name').focus();
+        //document.getElementById('name').focus();
     }
 
     save(): void {
@@ -125,8 +125,10 @@ export class CreateOrEditMaterialRequisitionModalComponent extends AppComponentB
             userId: new FormControl(materialRequisitionItem.userId ? materialRequisitionItem.userId : null, []),
             usedFor: new FormControl(materialRequisitionItem.usedFor, []),
             materialRequisitionType: new FormControl(materialRequisitionItem.materialRequisitionType, []),
-            // alias: new FormControl(itemMaster.alias, []),
-            // itemType: new FormControl(itemMaster.itemType ? <number>itemMaster.itemType : null, []),
+            projectNumber: new FormControl(materialRequisitionItem.projectNumber, []),
+            comments: new FormControl(materialRequisitionItem.comments, []),
+            requireByDate: new FormControl(materialRequisitionItem.requireByDate ? formatDate(new Date(<string><unknown>materialRequisitionItem.requireByDate), "yyyy-MM-dd", "en") : null, []),
+          
             // amcRequired: new FormControl(itemMaster.amcRequired ? <number>itemMaster.amcRequired : null, []),
             // make: new FormControl(itemMaster.make, []),
             // model: new FormControl(itemMaster.model, []),

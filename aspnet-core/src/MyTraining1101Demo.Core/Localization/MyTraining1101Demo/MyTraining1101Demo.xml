@@ -1415,6 +1415,9 @@
 	  <text name="MRIDate">MRI Date</text>
 	  <text name="MRINumber">MRI No.</text>
 	  <text name="UsedFor">Used For</text>
+	  <text name="ProjectNo">Project No.</text>
+	  <text name="Comments">Comments</text>
+	  <text name="RequiredByDate">Required By Date</text>
   </texts>
 </localizationDictionary>
 
