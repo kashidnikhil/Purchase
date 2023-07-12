@@ -38,9 +38,6 @@
             {
                 materialRequisitionNumber = materialRequisitionItem.MRINumber;
             }
-            else {
-                materialRequisitionNumber = "MR00001";
-            }
 
             return materialRequisitionNumber;
         }

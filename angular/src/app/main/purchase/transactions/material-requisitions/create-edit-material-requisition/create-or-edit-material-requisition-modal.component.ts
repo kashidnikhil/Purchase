@@ -47,7 +47,9 @@ export class CreateOrEditMaterialRequisitionModalComponent extends AppComponentB
         await this.loadDropdownList();
         if (!materialRequisitionId) {
             //Need to add the logic for retriving MRINumber
+            let MRINumber = await this.setMRINumber();
             let materialRequisitionItem = new MaterialRequisitionDto();
+            materialRequisitionItem.mriNumber = MRINumber;
             this.materialRequisitionForm = this.initialiseMaterialRequisitionForm(materialRequisitionItem); 
             this.active = true;
             this.modal.show();
@@ -65,6 +67,24 @@ export class CreateOrEditMaterialRequisitionModalComponent extends AppComponentB
         await this.loadMaterialRequisitionType();
         await this.loadMaterialRequisitionLocations();
     }
+
+    async setMRINumber() : Promise<string>{
+        let mriNumber: string = "";
+        mriNumber = await this._materialRequisitionService.getLatestMaterialRequisitionNumber().toPromise();
+        if( mriNumber != "" ){
+            let tmpMriNumberValue : string = ((+mriNumber.slice(2))+1).toString();
+            let finalMRICounter = this.addLeadingZeros(tmpMriNumberValue.toString(),"0", 5);
+            mriNumber = "MR" + finalMRICounter;
+        }
+        else{
+            mriNumber = "MR00001";
+        }
+        return mriNumber;
+    }
+    
+    private addLeadingZeros(text: string, padChar: string, size: number): string {
+        return (String(padChar).repeat(size) + text).substr(size * -1, size);
+      }
 
     onShown(): void {
         //document.getElementById('name').focus();
