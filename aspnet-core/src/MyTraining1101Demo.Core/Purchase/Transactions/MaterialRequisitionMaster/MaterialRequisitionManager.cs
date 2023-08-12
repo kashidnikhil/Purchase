@@ -32,14 +32,23 @@
         }
 
         public async Task<string> GetLatestMRINumberFromDb() {
-            var materialRequisitionNumber = "";
-            var materialRequisitionItem = await this._materialRequisitionRepository.GetAll().IgnoreQueryFilters().OrderByDescending(x => x.CreationTime).FirstAsync();
-            if (materialRequisitionItem != null)
+            try
             {
-                materialRequisitionNumber = materialRequisitionItem.MRINumber;
-            }
+                var materialRequisitionNumber = "";
+                var materialRequisitionItem = await this._materialRequisitionRepository.GetAll().IgnoreQueryFilters().OrderByDescending(x => x.CreationTime).FirstOrDefaultAsync();
+                if (materialRequisitionItem != null)
+                {
+                    materialRequisitionNumber = materialRequisitionItem.MRINumber;
+                }
 
-            return materialRequisitionNumber;
+                return materialRequisitionNumber;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.Message, ex);
+                throw ex;
+            }
+            
         }
 
         public async Task<PagedResultDto<MaterialRequisitionMasterListDto>> GetPaginatedMaterialRequisitionListFromDB(MaterialRequisitionSearchDto input)
