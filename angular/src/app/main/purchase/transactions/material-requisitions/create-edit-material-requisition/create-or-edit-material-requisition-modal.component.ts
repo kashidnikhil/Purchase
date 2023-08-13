@@ -1,6 +1,10 @@
 import { Component, EventEmitter, Injector, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import {
+    ItemCategoryDto,
+    ItemCategoryServiceProxy,
+    ItemMasterListDto,
+    ItemServiceProxy,
     MaterialRequisitionDto,
     MaterialRequisitionInputDto,
     MaterialRequisitionServiceProxy,
@@ -33,12 +37,16 @@ export class CreateOrEditMaterialRequisitionModalComponent extends AppComponentB
 
     locationList: DropdownDto[] = [];
     materialRequisitionTypeList : DropdownDto[] = [];
+    itemCategories: ItemCategoryDto[] =[];
+    itemList : ItemMasterListDto[] = [];
 
     constructor(
         injector: Injector,
         private formBuilder: FormBuilder,
         private _materialRequisitionMockService: MaterialRequisitionMockService,
-        private _materialRequisitionService : MaterialRequisitionServiceProxy
+        private _materialRequisitionService : MaterialRequisitionServiceProxy,
+        private _itemCategoryService: ItemCategoryServiceProxy,
+        private _itemService: ItemServiceProxy
     ) {
         super(injector);
     }
@@ -66,6 +74,7 @@ export class CreateOrEditMaterialRequisitionModalComponent extends AppComponentB
     async loadDropdownList() {
         await this.loadMaterialRequisitionType();
         await this.loadMaterialRequisitionLocations();
+        await this.loadItemCategoryList();
     }
 
     async setMRINumber() : Promise<string>{
@@ -130,6 +139,10 @@ export class CreateOrEditMaterialRequisitionModalComponent extends AppComponentB
         this.materialRequisitionTypeList = this._materialRequisitionMockService.loadMaterialRequisitionType();
     }
 
+    async loadItemCategoryList(){
+        this.itemCategories = await this._itemCategoryService.getItemCategoryList().toPromise();
+    }
+
     selectMaterialRequisition(materialRequisitionType: number){
         this.materialRequisitionForm.patchValue({
             materialRequisitionType: materialRequisitionType
@@ -188,5 +201,10 @@ export class CreateOrEditMaterialRequisitionModalComponent extends AppComponentB
             // quantityPerOrderingUOM : new FormControl(itemMaster.quantityPerOrderingUOM ? parseFloat(itemMaster.quantityPerOrderingUOM.toString()).toFixed(2) : null, []),
             // minimumOrderQuantity : new FormControl(itemMaster.minimumOrderQuantity ? parseFloat(itemMaster.minimumOrderQuantity.toString()).toFixed(2) : null, [])
         });
-}
+    }
+
+    async onItemCategorySelect(itemCategoryId: string){
+        this.itemList = [];
+        this.itemList = await this._itemService.getItemsByItemCategory(itemCategoryId).toPromise();
+    }
 }

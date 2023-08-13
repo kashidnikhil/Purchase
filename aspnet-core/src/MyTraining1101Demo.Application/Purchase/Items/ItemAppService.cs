@@ -1,7 +1,6 @@
 ﻿namespace MyTraining1101Demo.Purchase.Items
 {
     using Abp.Application.Services.Dto;
-    using Microsoft.EntityFrameworkCore.Metadata;
     using MyTraining1101Demo.Purchase.ItemCategories;
     using MyTraining1101Demo.Purchase.Items.CalibrationAgenciesMaster;
     using MyTraining1101Demo.Purchase.Items.CalibrationTypeMaster;
@@ -187,6 +186,20 @@
                     itemMasterData.ItemRateRevisions = await this._itemRateRevisionManager.GetItemRateRevisionListFromDB(itemMasterData.Id);
                 }
                 return itemMasterData;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.Message, ex);
+                throw ex;
+            }
+        }
+
+        public async Task<IList<ItemMasterListDto>> GetItemsByItemCategory(Guid itemCategoryId)
+        {
+            try
+            {
+                var response = await this._itemManager.GetItemListByItemCategoryFromDB(itemCategoryId);
+                return response;
             }
             catch (Exception ex)
             {

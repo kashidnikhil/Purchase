@@ -19,5 +19,7 @@
         Task<IList<ItemMasterListDto>> GetItemMasterList();
 
         Task<IList<ItemListDto>> GetItemMasterListForSubAssemblyPageDropdown();
+
+        Task<IList<ItemMasterListDto>> GetItemsByItemCategory(Guid itemCategoryId);
     }
 }

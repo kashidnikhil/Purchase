@@ -219,6 +219,23 @@
 
         }
 
+        public async Task<IList<ItemMasterListDto>> GetItemListByItemCategoryFromDB(Guid itemCategoryId)
+        {
+            try
+            {
+                var itemMasterQuery = this._itemMasterRepository.GetAll()
+                    .Where(x => !x.IsDeleted && x.ItemCategoryId == itemCategoryId);
+
+                return new List<ItemMasterListDto>(ObjectMapper.Map<List<ItemMasterListDto>>(itemMasterQuery));
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.Message, ex);
+                throw ex;
+            }
+
+        }
+
         public async Task<IList<ItemListDto>> GetItemListForSubAssemblyPageDropdownFromDB()
         {
             try
