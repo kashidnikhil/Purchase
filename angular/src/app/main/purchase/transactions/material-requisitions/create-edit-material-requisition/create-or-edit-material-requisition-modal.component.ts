@@ -70,6 +70,7 @@ export class CreateOrEditMaterialRequisitionModalComponent extends AppComponentB
 
     async setMRINumber() : Promise<string>{
         let mriNumber: string = "";
+        
         mriNumber = await this._materialRequisitionService.getLatestMaterialRequisitionNumber().toPromise();
         if( mriNumber != "" ){
             let tmpMriNumberValue : string = ((+mriNumber.slice(2))+1).toString();

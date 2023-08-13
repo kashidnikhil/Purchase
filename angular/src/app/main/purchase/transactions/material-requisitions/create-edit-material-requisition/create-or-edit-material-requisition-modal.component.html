@@ -74,6 +74,23 @@
                                 materialRequisitionType.title }} </label>
                         </div>
                     </div>
+                    <div class="col-md-12 row mb-4 mt-5" *ngIf="materialRequisitionForm.get('materialRequisitionType').value">
+                        <div *ngIf="materialRequisitionForm.get('materialRequisitionType').value == 1">
+                            <p>
+                                <label>Single item</label>
+                            </p>
+                        </div>
+                        <div *ngIf="materialRequisitionForm.get('materialRequisitionType').value == 2">
+                            <p>
+                                <label>Assembly wise item</label>
+                            </p>
+                        </div>
+                        <div *ngIf="materialRequisitionForm.get('materialRequisitionType').value == 3">
+                            <p>
+                                <label>Model wise item</label>
+                            </p>
+                        </div>
+                    </div>
                     <div class="col-md-12 row mb-4">
                         <div class="col-md-4">
                             <div class="form-group">

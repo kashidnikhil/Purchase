@@ -20,15 +20,15 @@ export class MaterialRequisitionMockService{
     loadMaterialRequisitionType(): DropdownDto[] {
         let itemTypesList = [
             {
-                title: "Single Item",
+                title: "Single item",
                 value: 1
             },
             {
-                title: "Assembly Wise Item",
+                title: "Assembly wise item",
                 value: 2
             },
             {
-                title: "Model Wise Item",
+                title: "Model wise item",
                 value: 3
             }         
         ];
