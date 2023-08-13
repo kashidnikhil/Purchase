@@ -15,7 +15,7 @@
 
         Task<SubAssemblyDto> GetSubAssemblyById(Guid subAssemblyId);
 
-        Task<IList<SubAssemblyDto>> GetSubAssemblyList();
+        Task<IList<SubAssemblyDto>> GetSubAssemblyList(Guid? subAssemblyId);
 
         Task<bool> RestoreSubAssembly(Guid subAssemblyId);
 

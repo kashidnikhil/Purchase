@@ -14831,10 +14831,15 @@ export class SubAssemblyServiceProxy {
     }
 
     /**
+     * @param assemblyId (optional) 
      * @return Success
      */
-    getSubAssemblyList(): Observable<SubAssemblyDto[]> {
-        let url_ = this.baseUrl + "/api/services/app/SubAssembly/GetSubAssemblyList";
+    getSubAssemblyList(assemblyId: string | undefined): Observable<SubAssemblyDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/SubAssembly/GetSubAssemblyList?";
+        if (assemblyId === null)
+            throw new Error("The parameter 'assemblyId' cannot be null.");
+        else if (assemblyId !== undefined)
+            url_ += "assemblyId=" + encodeURIComponent("" + assemblyId) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {

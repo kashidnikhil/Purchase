@@ -96,11 +96,11 @@
             }
         }
 
-        public async Task<IList<SubAssemblyDto>> GetSubAssemblyList()
+        public async Task<IList<SubAssemblyDto>> GetSubAssemblyList(Guid? assemblyId)
         {
             try
             {
-                var response = await this._subAssemblyManager.GetSubAssemblyListFromDB();
+                var response = await this._subAssemblyManager.GetSubAssemblyListFromDB(assemblyId);
                 return response;
             }
             catch (Exception ex)

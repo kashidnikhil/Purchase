@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Injector, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import {
+    AssemblyDto,
+    AssemblyServiceProxy,
     ItemCategoryDto,
     ItemCategoryServiceProxy,
     ItemMasterListDto,
@@ -8,7 +10,11 @@ import {
     MaterialRequisitionDto,
     MaterialRequisitionInputDto,
     MaterialRequisitionServiceProxy,
-    ResponseDto
+    ModelDto,
+    ModelServiceProxy,
+    ResponseDto,
+    SubAssemblyDto,
+    SubAssemblyServiceProxy
 } from '@shared/service-proxies/service-proxies';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { map as _map, filter as _filter } from 'lodash-es';
@@ -39,6 +45,9 @@ export class CreateOrEditMaterialRequisitionModalComponent extends AppComponentB
     materialRequisitionTypeList : DropdownDto[] = [];
     itemCategories: ItemCategoryDto[] =[];
     itemList : ItemMasterListDto[] = [];
+    assemblyList : AssemblyDto[] = [];
+    subAssemblyList: SubAssemblyDto[] =[];
+    modelList: ModelDto[] =[];
 
     constructor(
         injector: Injector,
@@ -46,7 +55,11 @@ export class CreateOrEditMaterialRequisitionModalComponent extends AppComponentB
         private _materialRequisitionMockService: MaterialRequisitionMockService,
         private _materialRequisitionService : MaterialRequisitionServiceProxy,
         private _itemCategoryService: ItemCategoryServiceProxy,
-        private _itemService: ItemServiceProxy
+        private _assemblyService: AssemblyServiceProxy,
+        private _itemService: ItemServiceProxy,
+        private _subAssemblyService: SubAssemblyServiceProxy,
+        private _modelService: ModelServiceProxy,
+        
     ) {
         super(injector);
     }
@@ -75,6 +88,8 @@ export class CreateOrEditMaterialRequisitionModalComponent extends AppComponentB
         await this.loadMaterialRequisitionType();
         await this.loadMaterialRequisitionLocations();
         await this.loadItemCategoryList();
+        await this.loadAssemblyList();
+        await this.loadModelList();
     }
 
     async setMRINumber() : Promise<string>{
@@ -143,6 +158,14 @@ export class CreateOrEditMaterialRequisitionModalComponent extends AppComponentB
         this.itemCategories = await this._itemCategoryService.getItemCategoryList().toPromise();
     }
 
+    async loadAssemblyList(){
+        this.assemblyList = await this._assemblyService.getAssemblyList("").toPromise();
+    }
+
+    async loadModelList(){
+        this.modelList = await this._modelService.getModelList().toPromise();
+    }
+
     selectMaterialRequisition(materialRequisitionType: number){
         this.materialRequisitionForm.patchValue({
             materialRequisitionType: materialRequisitionType
@@ -206,5 +229,15 @@ export class CreateOrEditMaterialRequisitionModalComponent extends AppComponentB
     async onItemCategorySelect(itemCategoryId: string){
         this.itemList = [];
         this.itemList = await this._itemService.getItemsByItemCategory(itemCategoryId).toPromise();
+    }
+
+    async onAssemblySelect(assemblyId: string){
+        this.subAssemblyList = [];
+        this.subAssemblyList = await this._subAssemblyService.getSubAssemblyList(assemblyId).toPromise();
+    }
+
+    async onModelSelect(modelId: string){
+        this.subAssemblyList = [];
+        // this.subAssemblyList = await this._subAssemblyService.getSubAssemblyList(assemblyId).toPromise();
     }
 }

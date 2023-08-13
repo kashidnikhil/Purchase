@@ -145,12 +145,13 @@
             }
         }
 
-        public async Task<IList<SubAssemblyDto>> GetSubAssemblyListFromDB()
+        public async Task<IList<SubAssemblyDto>> GetSubAssemblyListFromDB(Guid? assemblyId)
         {
             try
             {
                 var subAssemblyQuery = this._subAssemblyRepository.GetAll()
-                    .Where(x => !x.IsDeleted);
+                    .Where(x => !x.IsDeleted)
+                    .WhereIf(assemblyId != null && assemblyId != Guid.Empty, x => x.AssemblyId == assemblyId);
 
                 return new List<SubAssemblyDto>(ObjectMapper.Map<List<SubAssemblyDto>>(subAssemblyQuery));
             }

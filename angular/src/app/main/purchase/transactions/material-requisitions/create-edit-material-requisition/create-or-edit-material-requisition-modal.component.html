@@ -74,54 +74,71 @@
                                 materialRequisitionType.title }} </label>
                         </div>
                     </div>
-                    <div class="col-md-12 mb-4 mt-5" *ngIf="materialRequisitionForm.get('materialRequisitionType').value">
-                        <div class="d-flex justify-content-between"
-                            *ngIf="materialRequisitionForm.get('materialRequisitionType').value == 1">
-                            <div class="form-group">
-                                <label>{{"Item Category" | localize}}</label>
+                    <div class="col-md-12 mb-4 mt-5"
+                        *ngIf="materialRequisitionForm.get('materialRequisitionType').value">
+                        <div class="row col-md-12"
+                        *ngIf="materialRequisitionForm.get('materialRequisitionType').value == 1">
+                        <div class="form-group col-md-4">
+                            <label>{{"Item Category" | localize}}</label>
                                 <select placeholder="Select Category" class="form-control" #itemCategoryInput
                                     id="itemCategoryId" name="itemCategory"
                                     (change)="onItemCategorySelect($event.target.value)">
-                                    <option *ngFor="let itemCategory of itemCategories"
-                                        value="{{ itemCategory.id }}">
+                                    <option *ngFor="let itemCategory of itemCategories" value="{{ itemCategory.id }}">
                                         {{ itemCategory.name }}
                                     </option>
                                 </select>
-                            </div>
-                            <div class="form-group" *ngIf="itemList.length > 0">
-                                <label>{{"Item" | localize}}</label>
-                                <select placeholder="Select item" class="form-control" #itemInput
-                                    id="item" name="item">
-                                    <option *ngFor="let item of itemList"
-                                        value="{{ item.id }}">
-                                        {{ item.itemName }}
+                        </div>
+                        <div  class="form-group col-md-4" *ngIf="itemList.length > 0">
+                            <label>{{"Item" | localize}}</label>
+                            <select placeholder="Select item" class="form-control" #itemInput id="item" name="item">
+                                <option *ngFor="let item of itemList" value="{{ item.id }}">
+                                    {{ item.itemName }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-md-4 mt-5">
+                            <button type="button" class="btn btn-primary">
+                                <i class="fa fa-plus"></i>
+                                <span>{{ 'Add' | localize }}</span>
+                            </button>
+                        </div>
+                        </div>
+                        <div class="row col-md-12"
+                            *ngIf="materialRequisitionForm.get('materialRequisitionType').value == 2">
+                            <div class="form-group col-md-5">
+                                <label>{{"Assembly" | localize}}</label>
+                                <select placeholder="Select Assembly" class="form-control" #assemblyIdInput
+                                    id="assemblyId" name="assemblyId" (change)="onAssemblySelect($event.target.value)">
+                                    <option *ngFor="let assemblyItem of assemblyList" value="{{ assemblyItem.id }}">
+                                        {{ assemblyItem.name }}
                                     </option>
                                 </select>
                             </div>
-                            <button type="button" class="btn btn-primary">
-                                <i class="fa fa-plus"></i>
-                                <span>{{ 'Add' | localize }}</span>
-                            </button>
+                            <div class="col-md-4 mt-5">
+                                <button type="button" class="btn btn-primary">
+                                    <i class="fa fa-plus"></i>
+                                    <span>{{ 'Add' | localize }}</span>
+                                </button>
+                            </div>
                         </div>
-                        <div class="d-flex justify-content-around"
-                            *ngIf="materialRequisitionForm.get('materialRequisitionType').value == 2">
-                            <p>
-                                <label>Assembly wise item</label>
-                            </p>
-                            <button type="button" class="btn btn-primary">
-                                <i class="fa fa-plus"></i>
-                                <span>{{ 'Add' | localize }}</span>
-                            </button>
-                        </div>
-                        <div class="d-flex justify-content-around"
+                        <div class="row col-md-12"
                             *ngIf="materialRequisitionForm.get('materialRequisitionType').value == 3">
-                            <p>
-                                <label>Model wise item</label>
-                            </p>
-                            <button type="button" class="btn btn-primary">
-                                <i class="fa fa-plus"></i>
-                                <span>{{ 'Add' | localize }}</span>
-                            </button>
+                            <div class="form-group col-md-5">
+                                <label>{{"Model" | localize}}</label>
+                                <select placeholder="Select model" class="form-control" #modelIdInput
+                                    id="modelId" name="modelId"
+                                    (change)="onModelSelect($event.target.value)">
+                                    <option *ngFor="let model of modelList" value="{{ model.id }}">
+                                        {{ model.name }}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 mt-5">
+                                <button type="button" class="btn btn-primary">
+                                    <i class="fa fa-plus"></i>
+                                    <span>{{ 'Add' | localize }}</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-12 row mb-4">
