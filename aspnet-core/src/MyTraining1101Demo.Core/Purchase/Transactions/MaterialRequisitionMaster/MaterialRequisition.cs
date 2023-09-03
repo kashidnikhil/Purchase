@@ -14,7 +14,7 @@
 
         public MaterialRequisitionLocationType Location { get; set; }
 
-        public int MaterialRequisitionType { get; set; }
+        public MaterialRequisitionType MaterialRequisitionType { get; set; }
 
         public long? UserId { get; set; }
 

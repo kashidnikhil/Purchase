@@ -108,7 +108,9 @@ using MyTraining1101Demo.Purchase.Suppliers.SupplierContactPersons;
 using MyTraining1101Demo.Purchase.Suppliers.SupplierMaster;
 using MyTraining1101Demo.Purchase.TermsOfPayments;
 using MyTraining1101Demo.Purchase.TermsOfPayments.Dto;
+using MyTraining1101Demo.Purchase.Transactions.Dto.MaterialRequisitionItem;
 using MyTraining1101Demo.Purchase.Transactions.Dto.MaterialRequisitionMaster;
+using MyTraining1101Demo.Purchase.Transactions.MaterialRequisitionItemMaster;
 using MyTraining1101Demo.Purchase.Transactions.MaterialRequisitionMaster;
 using MyTraining1101Demo.Purchase.Units;
 using MyTraining1101Demo.Purchase.Units.Dto;
@@ -415,6 +417,9 @@ namespace MyTraining1101Demo
             configuration.CreateMap<MaterialRequisition, MaterialRequisitionMasterListDto>().ReverseMap();
             configuration.CreateMap<MaterialRequisition, MaterialRequisitionInputDto>().ReverseMap();
             configuration.CreateMap<MaterialRequisition, MaterialRequisitionDto>().ReverseMap();
+
+            configuration.CreateMap<MaterialRequisitionItem, MaterialRequisitionItemDto>().ReverseMap();
+            configuration.CreateMap<MaterialRequisitionItem, MaterialRequisitionItemInputDto>().ReverseMap();
 
             /* ADD YOUR OWN CUSTOM AUTOMAPPER MAPPINGS HERE */
         }
