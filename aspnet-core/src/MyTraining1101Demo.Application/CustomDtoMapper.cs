@@ -332,6 +332,7 @@ namespace MyTraining1101Demo
             configuration.CreateMap<Item, ItemMasterInputDto>().ReverseMap();
             configuration.CreateMap<Item, ItemMasterListDto>()
                 .ForMember(dto => dto.UnitName, options => options.MapFrom(x => x.OrderingUOM.Name))
+                .ForMember(dto => dto.CategoryName, options => options.MapFrom(x => x.ItemCategory.Name))
                 .ReverseMap();
             configuration.CreateMap<Item, ItemListDto>().ReverseMap(); 
 

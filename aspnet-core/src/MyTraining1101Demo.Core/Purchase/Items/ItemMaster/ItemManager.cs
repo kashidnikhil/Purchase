@@ -223,7 +223,7 @@
         {
             try
             {
-                var itemMasterQuery = this._itemMasterRepository.GetAll()
+                var itemMasterQuery = this._itemMasterRepository.GetAllIncluding(x=> x.ItemCategory)
                     .Where(x => !x.IsDeleted && x.ItemCategoryId == itemCategoryId);
 
                 return new List<ItemMasterListDto>(ObjectMapper.Map<List<ItemMasterListDto>>(itemMasterQuery));

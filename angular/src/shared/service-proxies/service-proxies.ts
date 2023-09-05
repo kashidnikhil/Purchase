@@ -29948,6 +29948,7 @@ export interface IItemMasterInputDto {
 export class ItemMasterListDto implements IItemMasterListDto {
     id!: string;
     categoryId!: number;
+    categoryName!: string | undefined;
     itemId!: number;
     genericName!: string | undefined;
     itemName!: string | undefined;
@@ -29972,6 +29973,7 @@ export class ItemMasterListDto implements IItemMasterListDto {
         if (_data) {
             this.id = _data["id"];
             this.categoryId = _data["categoryId"];
+            this.categoryName = _data["categoryName"];
             this.itemId = _data["itemId"];
             this.genericName = _data["genericName"];
             this.itemName = _data["itemName"];
@@ -29996,6 +29998,7 @@ export class ItemMasterListDto implements IItemMasterListDto {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
         data["categoryId"] = this.categoryId;
+        data["categoryName"] = this.categoryName;
         data["itemId"] = this.itemId;
         data["genericName"] = this.genericName;
         data["itemName"] = this.itemName;
@@ -30013,6 +30016,7 @@ export class ItemMasterListDto implements IItemMasterListDto {
 export interface IItemMasterListDto {
     id: string;
     categoryId: number;
+    categoryName: string | undefined;
     itemId: number;
     genericName: string | undefined;
     itemName: string | undefined;

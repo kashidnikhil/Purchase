@@ -229,6 +229,7 @@ export class CreateOrEditMaterialRequisitionModalComponent extends AppComponentB
     async onItemCategorySelect(itemCategoryId: string){
         this.itemList = [];
         this.itemList = await this._itemService.getItemsByItemCategory(itemCategoryId).toPromise();
+        console.log(this.itemList);
     }
 
     async onAssemblySelect(assemblyId: string){
@@ -239,5 +240,17 @@ export class CreateOrEditMaterialRequisitionModalComponent extends AppComponentB
     async onModelSelect(modelId: string){
         this.subAssemblyList = [];
         // this.subAssemblyList = await this._subAssemblyService.getSubAssemblyList(assemblyId).toPromise();
+    }
+
+    onItemCategoryWiseItemsAdd(){
+
+    }
+
+    onAssemblyWiseItemsAdd(){
+        
+    }
+
+    onModelWiseItemsAdd(){
+        
     }
 }

@@ -7,6 +7,8 @@
 
         public int CategoryId { get; set; }
 
+        public string CategoryName { get; set; }
+
         public int ItemId { get; set; }
 
         public string GenericName { get; set; }

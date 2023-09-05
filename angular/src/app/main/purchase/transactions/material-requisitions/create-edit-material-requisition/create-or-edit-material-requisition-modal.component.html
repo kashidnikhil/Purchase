@@ -77,9 +77,9 @@
                     <div class="col-md-12 mb-4 mt-5"
                         *ngIf="materialRequisitionForm.get('materialRequisitionType').value">
                         <div class="row col-md-12"
-                        *ngIf="materialRequisitionForm.get('materialRequisitionType').value == 1">
-                        <div class="form-group col-md-4">
-                            <label>{{"Item Category" | localize}}</label>
+                            *ngIf="materialRequisitionForm.get('materialRequisitionType').value == 1">
+                            <div class="form-group col-md-4">
+                                <label>{{"Item Category" | localize}}</label>
                                 <select placeholder="Select Category" class="form-control" #itemCategoryInput
                                     id="itemCategoryId" name="itemCategory"
                                     (change)="onItemCategorySelect($event.target.value)">
@@ -87,21 +87,21 @@
                                         {{ itemCategory.name }}
                                     </option>
                                 </select>
-                        </div>
-                        <div  class="form-group col-md-4" *ngIf="itemList.length > 0">
+                            </div>
+                            <!-- <div  class="form-group col-md-4" *ngIf="itemList.length > 0">
                             <label>{{"Item" | localize}}</label>
                             <select placeholder="Select item" class="form-control" #itemInput id="item" name="item">
                                 <option *ngFor="let item of itemList" value="{{ item.id }}">
                                     {{ item.itemName }}
                                 </option>
                             </select>
-                        </div>
-                        <div class="col-md-4 mt-5">
-                            <button type="button" class="btn btn-primary">
-                                <i class="fa fa-plus"></i>
-                                <span>{{ 'Add' | localize }}</span>
-                            </button>
-                        </div>
+                        </div> -->
+                            <div class="col-md-4 mt-5">
+                                <button type="button" class="btn btn-primary" (click)="onItemCategoryWiseItemsAdd()">
+                                    <i class="fa fa-plus"></i>
+                                    <span>{{ 'Add' | localize }}</span>
+                                </button>
+                            </div>
                         </div>
                         <div class="row col-md-12"
                             *ngIf="materialRequisitionForm.get('materialRequisitionType').value == 2">
@@ -115,7 +115,7 @@
                                 </select>
                             </div>
                             <div class="col-md-4 mt-5">
-                                <button type="button" class="btn btn-primary">
+                                <button type="button" class="btn btn-primary" (click)="onAssemblyWiseItemsAdd()">
                                     <i class="fa fa-plus"></i>
                                     <span>{{ 'Add' | localize }}</span>
                                 </button>
@@ -125,16 +125,15 @@
                             *ngIf="materialRequisitionForm.get('materialRequisitionType').value == 3">
                             <div class="form-group col-md-5">
                                 <label>{{"Model" | localize}}</label>
-                                <select placeholder="Select model" class="form-control" #modelIdInput
-                                    id="modelId" name="modelId"
-                                    (change)="onModelSelect($event.target.value)">
+                                <select placeholder="Select model" class="form-control" #modelIdInput id="modelId"
+                                    name="modelId" (change)="onModelSelect($event.target.value)">
                                     <option *ngFor="let model of modelList" value="{{ model.id }}">
                                         {{ model.name }}
                                     </option>
                                 </select>
                             </div>
                             <div class="col-md-4 mt-5">
-                                <button type="button" class="btn btn-primary">
+                                <button type="button" class="btn btn-primary" (click)="onModelWiseItemsAdd()">
                                     <i class="fa fa-plus"></i>
                                     <span>{{ 'Add' | localize }}</span>
                                 </button>
@@ -166,7 +165,7 @@
                                     WXYZ
                                 </td>
                             </tr>
-                        </table>            
+                        </table>
                     </div>
                     <div class="col-md-12 row mb-4">
                         <div class="col-md-4">
