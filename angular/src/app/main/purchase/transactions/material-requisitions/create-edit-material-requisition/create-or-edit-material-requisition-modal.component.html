@@ -145,15 +145,23 @@
                             <thead class="primary">
                                 <tr class="uppercase">
                                     <!-- <th colspan="2">MEMBER</th> -->
-                                    <th>Name</th>
+                                    <th *ngIf="materialRequisitionForm.get('materialRequisitionType').value == 1">Category Name</th>
+                                    <th *ngIf="materialRequisitionForm.get('materialRequisitionType').value == 2">Assembly Name</th>
+                                    <th *ngIf="materialRequisitionForm.get('materialRequisitionType').value == 3">Model Name</th>
                                     <th>Item Name</th>
                                     <th>Req. Qty</th>
                                     <th>Unit</th>
                                 </tr>
                             </thead>
                             <tr>
-                                <td>
+                                <td *ngIf="materialRequisitionForm.get('materialRequisitionType').value == 1">
                                     ABCD
+                                </td>
+                                <td *ngIf="materialRequisitionForm.get('materialRequisitionType').value == 2">
+                                    XYZ
+                                </td>
+                                <td *ngIf="materialRequisitionForm.get('materialRequisitionType').value == 3">
+                                    LMNO
                                 </td>
                                 <td>
                                     EFGH
