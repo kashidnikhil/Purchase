@@ -32001,6 +32001,7 @@ export class MaterialRequisitionDto implements IMaterialRequisitionDto {
     comments!: string | undefined;
     requireByDate!: DateTime;
     additionalComments!: string | undefined;
+    materialRequisitionItems!: MaterialRequisitionItemDto[] | undefined;
 
     constructor(data?: IMaterialRequisitionDto) {
         if (data) {
@@ -32025,6 +32026,11 @@ export class MaterialRequisitionDto implements IMaterialRequisitionDto {
             this.comments = _data["comments"];
             this.requireByDate = _data["requireByDate"] ? DateTime.fromISO(_data["requireByDate"].toString()) : <any>undefined;
             this.additionalComments = _data["additionalComments"];
+            if (Array.isArray(_data["materialRequisitionItems"])) {
+                this.materialRequisitionItems = [] as any;
+                for (let item of _data["materialRequisitionItems"])
+                    this.materialRequisitionItems!.push(MaterialRequisitionItemDto.fromJS(item));
+            }
         }
     }
 
@@ -32049,6 +32055,11 @@ export class MaterialRequisitionDto implements IMaterialRequisitionDto {
         data["comments"] = this.comments;
         data["requireByDate"] = this.requireByDate ? this.requireByDate.toString() : <any>undefined;
         data["additionalComments"] = this.additionalComments;
+        if (Array.isArray(this.materialRequisitionItems)) {
+            data["materialRequisitionItems"] = [];
+            for (let item of this.materialRequisitionItems)
+                data["materialRequisitionItems"].push(item.toJSON());
+        }
         return data;
     }
 }
@@ -32066,6 +32077,7 @@ export interface IMaterialRequisitionDto {
     comments: string | undefined;
     requireByDate: DateTime;
     additionalComments: string | undefined;
+    materialRequisitionItems: MaterialRequisitionItemDto[] | undefined;
 }
 
 export class MaterialRequisitionInputDto implements IMaterialRequisitionInputDto {
@@ -32160,9 +32172,74 @@ export interface IMaterialRequisitionInputDto {
     materialRequisitionItems: MaterialRequisitionItemInputDto[] | undefined;
 }
 
+export class MaterialRequisitionItemDto implements IMaterialRequisitionItemDto {
+    id!: string;
+    itemId!: string | undefined;
+    requiredQuantity!: number;
+    materialRequisitionId!: string | undefined;
+    itemName!: string | undefined;
+    itemCategoryName!: string | undefined;
+    unitName!: string | undefined;
+
+    constructor(data?: IMaterialRequisitionItemDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.itemId = _data["itemId"];
+            this.requiredQuantity = _data["requiredQuantity"];
+            this.materialRequisitionId = _data["materialRequisitionId"];
+            this.itemName = _data["itemName"];
+            this.itemCategoryName = _data["itemCategoryName"];
+            this.unitName = _data["unitName"];
+        }
+    }
+
+    static fromJS(data: any): MaterialRequisitionItemDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new MaterialRequisitionItemDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["itemId"] = this.itemId;
+        data["requiredQuantity"] = this.requiredQuantity;
+        data["materialRequisitionId"] = this.materialRequisitionId;
+        data["itemName"] = this.itemName;
+        data["itemCategoryName"] = this.itemCategoryName;
+        data["unitName"] = this.unitName;
+        return data;
+    }
+}
+
+export interface IMaterialRequisitionItemDto {
+    id: string;
+    itemId: string | undefined;
+    requiredQuantity: number;
+    materialRequisitionId: string | undefined;
+    itemName: string | undefined;
+    itemCategoryName: string | undefined;
+    unitName: string | undefined;
+}
+
 export class MaterialRequisitionItemInputDto implements IMaterialRequisitionItemInputDto {
+    id!: string | undefined;
     itemId!: string | undefined;
     materialRequisitionId!: string | undefined;
+    requiredQuantity!: number;
+    itemName!: string | undefined;
+    itemCategoryName!: string | undefined;
+    unitName!: string | undefined;
 
     constructor(data?: IMaterialRequisitionItemInputDto) {
         if (data) {
@@ -32175,8 +32252,13 @@ export class MaterialRequisitionItemInputDto implements IMaterialRequisitionItem
 
     init(_data?: any) {
         if (_data) {
+            this.id = _data["id"];
             this.itemId = _data["itemId"];
             this.materialRequisitionId = _data["materialRequisitionId"];
+            this.requiredQuantity = _data["requiredQuantity"];
+            this.itemName = _data["itemName"];
+            this.itemCategoryName = _data["itemCategoryName"];
+            this.unitName = _data["unitName"];
         }
     }
 
@@ -32189,15 +32271,25 @@ export class MaterialRequisitionItemInputDto implements IMaterialRequisitionItem
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
         data["itemId"] = this.itemId;
         data["materialRequisitionId"] = this.materialRequisitionId;
+        data["requiredQuantity"] = this.requiredQuantity;
+        data["itemName"] = this.itemName;
+        data["itemCategoryName"] = this.itemCategoryName;
+        data["unitName"] = this.unitName;
         return data;
     }
 }
 
 export interface IMaterialRequisitionItemInputDto {
+    id: string | undefined;
     itemId: string | undefined;
     materialRequisitionId: string | undefined;
+    requiredQuantity: number;
+    itemName: string | undefined;
+    itemCategoryName: string | undefined;
+    unitName: string | undefined;
 }
 
 export enum MaterialRequisitionLocationType {

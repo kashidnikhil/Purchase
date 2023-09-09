@@ -9,6 +9,8 @@ import {
     ItemServiceProxy,
     MaterialRequisitionDto,
     MaterialRequisitionInputDto,
+    MaterialRequisitionItemDto,
+    MaterialRequisitionItemInputDto,
     MaterialRequisitionServiceProxy,
     ModelDto,
     ModelServiceProxy,
@@ -19,7 +21,7 @@ import {
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { map as _map, filter as _filter } from 'lodash-es';
 import { finalize } from 'rxjs/operators';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { MaterialRequisitionMockService } from '@app/shared/common/mock-data-services/material-requisition.mock.service';
 import { DropdownDto } from '@app/shared/common/data-models/dropdown';
@@ -48,6 +50,11 @@ export class CreateOrEditMaterialRequisitionModalComponent extends AppComponentB
     assemblyList : AssemblyDto[] = [];
     subAssemblyList: SubAssemblyDto[] =[];
     modelList: ModelDto[] =[];
+    // finalMaterialRequisitionItemList : MaterialRequisitionItemInputDto[] =[];
+
+    selectedItemCategoryId:string="";
+    selectedAssemblyId : string = "";
+    selectedModelId : string = "";
 
     constructor(
         injector: Injector,
@@ -170,6 +177,8 @@ export class CreateOrEditMaterialRequisitionModalComponent extends AppComponentB
         this.materialRequisitionForm.patchValue({
             materialRequisitionType: materialRequisitionType
           });
+          this.materialRequisitionItems?.clear();
+          console.log(this.materialRequisitionForm.value);
     }
 
 
@@ -185,51 +194,16 @@ export class CreateOrEditMaterialRequisitionModalComponent extends AppComponentB
             projectNumber: new FormControl(materialRequisitionItem.projectNumber, []),
             comments: new FormControl(materialRequisitionItem.comments, []),
             requireByDate: new FormControl(materialRequisitionItem.requireByDate ? formatDate(new Date(<string><unknown>materialRequisitionItem.requireByDate), "yyyy-MM-dd", "en") : null, []),
-          
-            // amcRequired: new FormControl(itemMaster.amcRequired ? <number>itemMaster.amcRequired : null, []),
-            // make: new FormControl(itemMaster.make, []),
-            // model: new FormControl(itemMaster.model, []),
-            // serialNumber: new FormControl(itemMaster.serialNumber, []),
-            // specifications: new FormControl(itemMaster.specifications, []),
-            // storageConditions: new FormControl(itemMaster.storageConditions, []),
-            // itemMobility: new FormControl(itemMaster.itemMobility ? <number>itemMaster.itemMobility : null, []),
-            // calibrationRequirement: new FormControl(itemMaster.calibrationRequirement ? <number>itemMaster.calibrationRequirement : null, []),
-            // supplierId: new FormControl(itemMaster.supplierId, []),
-            // hsnCode : new FormControl(itemMaster.hsnCode, []),
-            // gst : new FormControl(itemMaster.gst ? parseFloat(itemMaster.gst.toString()).toFixed(2) : null, []),
-            // purchaseValue : new FormControl(itemMaster.purchaseValue ? parseFloat(itemMaster.purchaseValue.toString()).toFixed(2) : null, []),
-            // purchaseDate: new FormControl(itemMaster.purchaseDate ? formatDate(new Date(<string><unknown>itemMaster.purchaseDate), "yyyy-MM-dd", "en") : null, []),
-            // orderingRate : new FormControl(itemMaster.orderingRate ? parseFloat(itemMaster.orderingRate.toString()).toFixed(2) : null, []),
-            // quantity : new FormControl(itemMaster.quantity ? <number>itemMaster.quantity : null, []),
-            // ratePerQuantity : new FormControl(itemMaster.ratePerQuantity ? parseFloat(itemMaster.ratePerQuantity.toString()).toFixed(2) : null, []), 
-            // rateAsOnDate : new FormControl(itemMaster.rateAsOnDate ? parseFloat(itemMaster.rateAsOnDate.toString()).toFixed(2) : null, []), 
-            // leadTime: new FormControl(itemMaster.leadTime ? <number>itemMaster.leadTime : null, []),
-            // supplierItemName: new FormControl(itemMaster.supplierItemName ? itemMaster.supplierItemName : null, []),
-            // status : new FormControl(itemMaster.status ? <number>itemMaster.status : null, []),
-            // recordedBy : new FormControl(itemMaster.recordedBy ? <number>itemMaster.recordedBy : null, []),
-            // approvedBy : new FormControl(itemMaster.approvedBy ? <number>itemMaster.approvedBy : null, []),
-            // discardedOn: new FormControl(itemMaster.discardedOn ? formatDate(new Date(<string><unknown>itemMaster.discardedOn), "yyyy-MM-dd", "en") : null, []),
-            // discardApprovedBy : new FormControl(itemMaster.discardApprovedBy ? <number>itemMaster.discardApprovedBy : null, []),
-            // discardedReason : new FormControl(itemMaster.discardedReason ? itemMaster.discardedReason : null, []),
-            // comment : new FormControl(itemMaster.comment ? itemMaster.comment : null, []),
-            // msl: new FormControl(itemMaster.msl ? itemMaster.msl : null, []),
-            // materialGradeId : new FormControl(itemMaster.materialGradeId ? itemMaster.materialGradeId : null, []),
-            // unitOrderId : new FormControl(itemMaster.unitOrderId ? itemMaster.unitOrderId : null, []),
-            // unitStockId : new FormControl(itemMaster.unitStockId ? itemMaster.unitStockId : null, []),
-            // stockUOMId : new FormControl(itemMaster.stockUOMId ? itemMaster.stockUOMId : null, []),
-            // orderingUOMId : new FormControl(itemMaster.orderingUOMId ? itemMaster.orderingUOMId : null, []),
-            // ctqRequirement : new FormControl(itemMaster.ctqRequirement ? <number>itemMaster.ctqRequirement : null, []),
-            // ctqSpecifications : new FormControl(itemMaster.ctqSpecifications ? itemMaster.ctqSpecifications : null, []),
-            // expiryApplicable : new FormControl(itemMaster.expiryApplicable ? <number>itemMaster.expiryApplicable : null, []),
-            // quantityPerOrderingUOM : new FormControl(itemMaster.quantityPerOrderingUOM ? parseFloat(itemMaster.quantityPerOrderingUOM.toString()).toFixed(2) : null, []),
-            // minimumOrderQuantity : new FormControl(itemMaster.minimumOrderQuantity ? parseFloat(itemMaster.minimumOrderQuantity.toString()).toFixed(2) : null, [])
+            materialRequisitionItems : materialRequisitionItem.id ?  this.formBuilder.array(
+                materialRequisitionItem.materialRequisitionItems.map((x : MaterialRequisitionItemDto) => 
+                    this.createMaterialRequisitionItem(x))
+            ) : this.formBuilder.array([])
         });
     }
 
     async onItemCategorySelect(itemCategoryId: string){
         this.itemList = [];
         this.itemList = await this._itemService.getItemsByItemCategory(itemCategoryId).toPromise();
-        console.log(this.itemList);
     }
 
     async onAssemblySelect(assemblyId: string){
@@ -243,14 +217,56 @@ export class CreateOrEditMaterialRequisitionModalComponent extends AppComponentB
     }
 
     onItemCategoryWiseItemsAdd(){
-
+        if(this.selectedItemCategoryId !=""){
+            let finalMaterialRequisitionItemList = this.materialRequisitionForm.get('materialRequisitionItems').value;
+            this.itemList.forEach(item =>{
+                if(!finalMaterialRequisitionItemList.some(x=> x.itemId == item.id)){
+                    let tempMaterialRequisitionItem : MaterialRequisitionItemDto = <MaterialRequisitionItemDto>{
+                        itemId: item.id,
+                        requiredQuantity : 0,
+                        itemName: item.itemName,
+                        itemCategoryName : item.categoryName,
+                        unitName : item.unitName
+                    };
+                    let tempMaterialRequisitionForm = this.createMaterialRequisitionItem(tempMaterialRequisitionItem);
+                    this.materialRequisitionItems?.push(tempMaterialRequisitionForm);
+                }
+            });
+            console.log(this.materialRequisitionForm.value);
+        }
     }
 
+    get materialRequisitionItems(): FormArray{
+        return (<FormArray>this.materialRequisitionForm.get('materialRequisitionItems'));
+    }
+
+    // addCustomerPO() {
+    //     let customerPOItem : CustomerPODto = new CustomerPODto();
+    //     let customerPOForm = this.createCustomerPO(customerPOItem);
+    //     this.customerPOs.push(customerPOForm);
+    // }
+
     onAssemblyWiseItemsAdd(){
-        
+        if(this.selectedAssemblyId !=""){
+
+        }
     }
 
     onModelWiseItemsAdd(){
-        
+        if(this.selectedModelId !=""){
+
+        }
+    }
+
+    createMaterialRequisitionItem(materialRequisitionItem : MaterialRequisitionItemDto) : FormGroup {
+        return this.formBuilder.group({
+            id: new FormControl(materialRequisitionItem.id, []),
+            itemCategoryName: new FormControl(materialRequisitionItem.itemCategoryName, []),
+            itemId: new FormControl(materialRequisitionItem.itemId, []),
+            itemName: new FormControl(materialRequisitionItem.itemName, []),
+            materialRequisitionId: new FormControl(materialRequisitionItem.materialRequisitionId, []),
+            requiredQuantity: new FormControl(materialRequisitionItem.requiredQuantity, []),
+            unitName: new FormControl(materialRequisitionItem.unitName, [])
+        });
     }
 }

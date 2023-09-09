@@ -17,6 +17,7 @@
         public virtual Guid? MaterialRequisitionId { get; set; }
         public virtual MaterialRequisition MaterialRequisition { get; set; }
 
+        public int RequiredQuantity { get; set; }
 
     }
 }

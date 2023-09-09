@@ -80,7 +80,7 @@
                             *ngIf="materialRequisitionForm.get('materialRequisitionType').value == 1">
                             <div class="form-group col-md-4">
                                 <label>{{"Item Category" | localize}}</label>
-                                <select placeholder="Select Category" class="form-control" #itemCategoryInput
+                                <select placeholder="Select Category" class="form-control" [(ngModel)]="selectedItemCategoryId" [ngModelOptions]="{standalone: true}" #itemCategoryInput
                                     id="itemCategoryId" name="itemCategory"
                                     (change)="onItemCategorySelect($event.target.value)">
                                     <option *ngFor="let itemCategory of itemCategories" value="{{ itemCategory.id }}">
@@ -107,7 +107,7 @@
                             *ngIf="materialRequisitionForm.get('materialRequisitionType').value == 2">
                             <div class="form-group col-md-5">
                                 <label>{{"Assembly" | localize}}</label>
-                                <select placeholder="Select Assembly" class="form-control" #assemblyIdInput
+                                <select placeholder="Select Assembly" [(ngModel)]="selectedAssemblyId" [ngModelOptions]="{standalone: true}" class="form-control" #assemblyIdInput
                                     id="assemblyId" name="assemblyId" (change)="onAssemblySelect($event.target.value)">
                                     <option *ngFor="let assemblyItem of assemblyList" value="{{ assemblyItem.id }}">
                                         {{ assemblyItem.name }}
@@ -125,7 +125,7 @@
                             *ngIf="materialRequisitionForm.get('materialRequisitionType').value == 3">
                             <div class="form-group col-md-5">
                                 <label>{{"Model" | localize}}</label>
-                                <select placeholder="Select model" class="form-control" #modelIdInput id="modelId"
+                                <select placeholder="Select model" class="form-control" [(ngModel)]="selectedModelId" [ngModelOptions]="{standalone: true}" #modelIdInput id="modelId"
                                     name="modelId" (change)="onModelSelect($event.target.value)">
                                     <option *ngFor="let model of modelList" value="{{ model.id }}">
                                         {{ model.name }}

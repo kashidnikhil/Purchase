@@ -1,4 +1,5 @@
-﻿using MyTraining1101Demo.Purchase.Transactions.Enums;
+﻿using MyTraining1101Demo.Purchase.Transactions.Dto.MaterialRequisitionItem;
+using MyTraining1101Demo.Purchase.Transactions.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -29,5 +30,7 @@ namespace MyTraining1101Demo.Purchase.Transactions.Dto.MaterialRequisitionMaster
         public DateTime RequireByDate { get; set; }
 
         public string AdditionalComments { get; set; }
+
+        public List<MaterialRequisitionItemDto> MaterialRequisitionItems { get; set; }
     }
 }
