@@ -123,5 +123,23 @@
                 throw ex;
             }
         }
+
+        public async Task<List<SubAssemblyItemDto>> GetSubAssemblyItemsByAssemblyIdFromDB(Guid assemblyId)
+        {
+            try
+            {
+                var subAssemblyItemQuery = this._subAssemblyItemRepository.GetAllIncluding(x => x.Item)
+                    .Include(x => x.SubAssembly)
+                    .Where(x => !x.IsDeleted && x.SubAssembly.AssemblyId == assemblyId).ToList();
+
+                var response = new List<SubAssemblyItemDto>(ObjectMapper.Map<List<SubAssemblyItemDto>>(subAssemblyItemQuery));
+                return response;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.Message, ex);
+                throw ex;
+            }
+        }
     }
 }

@@ -14949,6 +14949,69 @@ export class SubAssemblyServiceProxy {
         }
         return _observableOf<boolean>(null as any);
     }
+
+    /**
+     * @param assemblyId (optional) 
+     * @return Success
+     */
+    getSubAssemblyItemList(assemblyId: string | undefined): Observable<SubAssemblyItemDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/SubAssembly/GetSubAssemblyItemList?";
+        if (assemblyId === null)
+            throw new Error("The parameter 'assemblyId' cannot be null.");
+        else if (assemblyId !== undefined)
+            url_ += "assemblyId=" + encodeURIComponent("" + assemblyId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetSubAssemblyItemList(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetSubAssemblyItemList(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<SubAssemblyItemDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<SubAssemblyItemDto[]>;
+        }));
+    }
+
+    protected processGetSubAssemblyItemList(response: HttpResponseBase): Observable<SubAssemblyItemDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(SubAssemblyItemDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<SubAssemblyItemDto[]>(null as any);
+    }
 }
 
 @Injectable()
@@ -32177,6 +32240,7 @@ export class MaterialRequisitionItemDto implements IMaterialRequisitionItemDto {
     itemId!: string | undefined;
     requiredQuantity!: number;
     materialRequisitionId!: string | undefined;
+    subAssemblyName!: string | undefined;
     itemName!: string | undefined;
     itemCategoryName!: string | undefined;
     unitName!: string | undefined;
@@ -32196,6 +32260,7 @@ export class MaterialRequisitionItemDto implements IMaterialRequisitionItemDto {
             this.itemId = _data["itemId"];
             this.requiredQuantity = _data["requiredQuantity"];
             this.materialRequisitionId = _data["materialRequisitionId"];
+            this.subAssemblyName = _data["subAssemblyName"];
             this.itemName = _data["itemName"];
             this.itemCategoryName = _data["itemCategoryName"];
             this.unitName = _data["unitName"];
@@ -32215,6 +32280,7 @@ export class MaterialRequisitionItemDto implements IMaterialRequisitionItemDto {
         data["itemId"] = this.itemId;
         data["requiredQuantity"] = this.requiredQuantity;
         data["materialRequisitionId"] = this.materialRequisitionId;
+        data["subAssemblyName"] = this.subAssemblyName;
         data["itemName"] = this.itemName;
         data["itemCategoryName"] = this.itemCategoryName;
         data["unitName"] = this.unitName;
@@ -32227,6 +32293,7 @@ export interface IMaterialRequisitionItemDto {
     itemId: string | undefined;
     requiredQuantity: number;
     materialRequisitionId: string | undefined;
+    subAssemblyName: string | undefined;
     itemName: string | undefined;
     itemCategoryName: string | undefined;
     unitName: string | undefined;
@@ -32235,8 +32302,10 @@ export interface IMaterialRequisitionItemDto {
 export class MaterialRequisitionItemInputDto implements IMaterialRequisitionItemInputDto {
     id!: string | undefined;
     itemId!: string | undefined;
+    subAssemblyItemId!: string | undefined;
     materialRequisitionId!: string | undefined;
     requiredQuantity!: number;
+    subAssemblyName!: string | undefined;
     itemName!: string | undefined;
     itemCategoryName!: string | undefined;
     unitName!: string | undefined;
@@ -32254,8 +32323,10 @@ export class MaterialRequisitionItemInputDto implements IMaterialRequisitionItem
         if (_data) {
             this.id = _data["id"];
             this.itemId = _data["itemId"];
+            this.subAssemblyItemId = _data["subAssemblyItemId"];
             this.materialRequisitionId = _data["materialRequisitionId"];
             this.requiredQuantity = _data["requiredQuantity"];
+            this.subAssemblyName = _data["subAssemblyName"];
             this.itemName = _data["itemName"];
             this.itemCategoryName = _data["itemCategoryName"];
             this.unitName = _data["unitName"];
@@ -32273,8 +32344,10 @@ export class MaterialRequisitionItemInputDto implements IMaterialRequisitionItem
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
         data["itemId"] = this.itemId;
+        data["subAssemblyItemId"] = this.subAssemblyItemId;
         data["materialRequisitionId"] = this.materialRequisitionId;
         data["requiredQuantity"] = this.requiredQuantity;
+        data["subAssemblyName"] = this.subAssemblyName;
         data["itemName"] = this.itemName;
         data["itemCategoryName"] = this.itemCategoryName;
         data["unitName"] = this.unitName;
@@ -32285,8 +32358,10 @@ export class MaterialRequisitionItemInputDto implements IMaterialRequisitionItem
 export interface IMaterialRequisitionItemInputDto {
     id: string | undefined;
     itemId: string | undefined;
+    subAssemblyItemId: string | undefined;
     materialRequisitionId: string | undefined;
     requiredQuantity: number;
+    subAssemblyName: string | undefined;
     itemName: string | undefined;
     itemCategoryName: string | undefined;
     unitName: string | undefined;

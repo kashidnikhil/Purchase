@@ -4,6 +4,7 @@
     using MyTraining1101Demo.Purchase.Shared;
     using MyTraining1101Demo.Purchase.SubAssemblies;
     using MyTraining1101Demo.Purchase.SubAssemblies.Dto;
+    using MyTraining1101Demo.Purchase.SubAssemblyItems.Dto;
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -115,6 +116,20 @@
             try
             {
                 var response = await this._subAssemblyManager.RestoreSubAssembly(subAssemblyId);
+                return response;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.Message, ex);
+                throw ex;
+            }
+        }
+
+        public async Task<IList<SubAssemblyItemDto>> GetSubAssemblyItemList(Guid assemblyId)
+        {
+            try
+            {
+                var response = await this._subAssemblyItemManager.GetSubAssemblyItemsByAssemblyIdFromDB(assemblyId);
                 return response;
             }
             catch (Exception ex)
