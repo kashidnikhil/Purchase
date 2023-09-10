@@ -139,43 +139,46 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-12 mt-5">
-                        <table class="table table-striped table-hover table-bordered text-center">
-                            <thead class="primary">
+                    <div formArrayName="materialRequisitionItems"  class="col-md-12 mt-5">
+                        <p-table [value]="materialRequisitionItems.controls" styleClass="p-datatable-gridlines">
+                            <ng-template pTemplate="header">
                                 <tr class="uppercase">
-                                    <!-- <th colspan="2">MEMBER</th> -->
-                                    <th *ngIf="materialRequisitionForm.get('materialRequisitionType').value == 1">
+                                    <th class="text-center" *ngIf="materialRequisitionForm.get('materialRequisitionType').value == 1">
                                         Category Name</th>
-                                    <th *ngIf="materialRequisitionForm.get('materialRequisitionType').value == 2">
+                                    <th class="text-center" *ngIf="materialRequisitionForm.get('materialRequisitionType').value == 2">
                                         Assembly Name</th>
-                                    <th *ngIf="materialRequisitionForm.get('materialRequisitionType').value == 3">Model
+                                    <th class="text-center" *ngIf="materialRequisitionForm.get('materialRequisitionType').value == 3">Model
                                         Name</th>
-                                    <th>Item Name</th>
-                                    <th>Req. Qty</th>
-                                    <th>Unit</th>
+                                    <th class="text-center">Item Name</th>
+                                    <th class="text-center">Req. Qty</th>
+                                    <th class="text-center">Unit</th>
                                 </tr>
-                            </thead>
-                            <tr>
-                                <td *ngIf="materialRequisitionForm.get('materialRequisitionType').value == 1">
-                                    ABCD
-                                </td>
-                                <td *ngIf="materialRequisitionForm.get('materialRequisitionType').value == 2">
-                                    XYZ
-                                </td>
-                                <td *ngIf="materialRequisitionForm.get('materialRequisitionType').value == 3">
-                                    LMNO
-                                </td>
-                                <td>
-                                    EFGH
-                                </td>
-                                <td>
-                                    IJKL
-                                </td>
-                                <td>
-                                    WXYZ
-                                </td>
-                            </tr>
-                        </table>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-materialRequisitionItem let-rowIndex="rowIndex">
+                                <tr [formGroupName]="rowIndex">
+                                    <td class="text-center" *ngIf="materialRequisitionForm.get('materialRequisitionType').value == 1">
+                                        <label>{{materialRequisitionItem.value.itemCategoryName}}</label>
+                                    </td>
+                                    <td class="text-center" *ngIf="materialRequisitionForm.get('materialRequisitionType').value == 2">
+                                        <label>{{materialRequisitionItem.value.assemblyName}}</label>
+                                    </td>
+                                    <td class="text-center" *ngIf="materialRequisitionForm.get('materialRequisitionType').value == 3">
+                                        <label>{{materialRequisitionItem.value.modelName}}</label>
+                                    </td>
+                                    <td class="text-center">
+                                        <label>{{materialRequisitionItem.value.itemName}}</label>
+                                    </td>
+                                    <td class="text-center">
+                                        <input #requiredQuantityInput id="requiredQuantityInput" class="form-control" type="number"
+                                        name="requiredQuantity" formControlName="requiredQuantity">
+                                    </td>
+                                    <td class="text-center">
+                                        <label>{{materialRequisitionItem.value.unitName}}</label>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                            
+                        </p-table>
                     </div>
                     <div class="col-md-12 row mb-4">
                         <div class="col-md-4">

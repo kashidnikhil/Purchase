@@ -32240,7 +32240,8 @@ export class MaterialRequisitionItemDto implements IMaterialRequisitionItemDto {
     itemId!: string | undefined;
     requiredQuantity!: number;
     materialRequisitionId!: string | undefined;
-    subAssemblyName!: string | undefined;
+    assemblyName!: string | undefined;
+    modelName!: string | undefined;
     itemName!: string | undefined;
     itemCategoryName!: string | undefined;
     unitName!: string | undefined;
@@ -32260,7 +32261,8 @@ export class MaterialRequisitionItemDto implements IMaterialRequisitionItemDto {
             this.itemId = _data["itemId"];
             this.requiredQuantity = _data["requiredQuantity"];
             this.materialRequisitionId = _data["materialRequisitionId"];
-            this.subAssemblyName = _data["subAssemblyName"];
+            this.assemblyName = _data["assemblyName"];
+            this.modelName = _data["modelName"];
             this.itemName = _data["itemName"];
             this.itemCategoryName = _data["itemCategoryName"];
             this.unitName = _data["unitName"];
@@ -32280,7 +32282,8 @@ export class MaterialRequisitionItemDto implements IMaterialRequisitionItemDto {
         data["itemId"] = this.itemId;
         data["requiredQuantity"] = this.requiredQuantity;
         data["materialRequisitionId"] = this.materialRequisitionId;
-        data["subAssemblyName"] = this.subAssemblyName;
+        data["assemblyName"] = this.assemblyName;
+        data["modelName"] = this.modelName;
         data["itemName"] = this.itemName;
         data["itemCategoryName"] = this.itemCategoryName;
         data["unitName"] = this.unitName;
@@ -32293,7 +32296,8 @@ export interface IMaterialRequisitionItemDto {
     itemId: string | undefined;
     requiredQuantity: number;
     materialRequisitionId: string | undefined;
-    subAssemblyName: string | undefined;
+    assemblyName: string | undefined;
+    modelName: string | undefined;
     itemName: string | undefined;
     itemCategoryName: string | undefined;
     unitName: string | undefined;
@@ -32305,10 +32309,6 @@ export class MaterialRequisitionItemInputDto implements IMaterialRequisitionItem
     subAssemblyItemId!: string | undefined;
     materialRequisitionId!: string | undefined;
     requiredQuantity!: number;
-    subAssemblyName!: string | undefined;
-    itemName!: string | undefined;
-    itemCategoryName!: string | undefined;
-    unitName!: string | undefined;
 
     constructor(data?: IMaterialRequisitionItemInputDto) {
         if (data) {
@@ -32326,10 +32326,6 @@ export class MaterialRequisitionItemInputDto implements IMaterialRequisitionItem
             this.subAssemblyItemId = _data["subAssemblyItemId"];
             this.materialRequisitionId = _data["materialRequisitionId"];
             this.requiredQuantity = _data["requiredQuantity"];
-            this.subAssemblyName = _data["subAssemblyName"];
-            this.itemName = _data["itemName"];
-            this.itemCategoryName = _data["itemCategoryName"];
-            this.unitName = _data["unitName"];
         }
     }
 
@@ -32347,10 +32343,6 @@ export class MaterialRequisitionItemInputDto implements IMaterialRequisitionItem
         data["subAssemblyItemId"] = this.subAssemblyItemId;
         data["materialRequisitionId"] = this.materialRequisitionId;
         data["requiredQuantity"] = this.requiredQuantity;
-        data["subAssemblyName"] = this.subAssemblyName;
-        data["itemName"] = this.itemName;
-        data["itemCategoryName"] = this.itemCategoryName;
-        data["unitName"] = this.unitName;
         return data;
     }
 }
@@ -32361,10 +32353,6 @@ export interface IMaterialRequisitionItemInputDto {
     subAssemblyItemId: string | undefined;
     materialRequisitionId: string | undefined;
     requiredQuantity: number;
-    subAssemblyName: string | undefined;
-    itemName: string | undefined;
-    itemCategoryName: string | undefined;
-    unitName: string | undefined;
 }
 
 export enum MaterialRequisitionLocationType {

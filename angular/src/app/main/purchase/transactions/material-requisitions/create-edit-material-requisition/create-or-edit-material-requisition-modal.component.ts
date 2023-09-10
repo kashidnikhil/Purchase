@@ -208,6 +208,7 @@ export class CreateOrEditMaterialRequisitionModalComponent extends AppComponentB
     }
 
     async onItemCategorySelect(itemCategoryId: string) {
+        this.selectedItem = <ItemMasterListDto>{};
         this.itemList = [];
         this.itemList = await this._itemService.getItemsByItemCategory(itemCategoryId).toPromise();
         if (this.itemList.length > 0) {
@@ -270,7 +271,6 @@ export class CreateOrEditMaterialRequisitionModalComponent extends AppComponentB
                 filtered.push(filteredItem);
             }
         }
-
         this.filteredItemList = filtered;
     }
 
@@ -279,10 +279,12 @@ export class CreateOrEditMaterialRequisitionModalComponent extends AppComponentB
             id: new FormControl(materialRequisitionItem.id, []),
             itemCategoryName: new FormControl(materialRequisitionItem.itemCategoryName, []),
             itemId: new FormControl(materialRequisitionItem.itemId, []),
+            assemblyName: new FormControl(materialRequisitionItem.assemblyName, []),
+            modelName: new FormControl(materialRequisitionItem.modelName, []),
             itemName: new FormControl(materialRequisitionItem.itemName, []),
             materialRequisitionId: new FormControl(materialRequisitionItem.materialRequisitionId, []),
             requiredQuantity: new FormControl(materialRequisitionItem.requiredQuantity, []),
             unitName: new FormControl(materialRequisitionItem.unitName, [])
         });
-    }
+    }  
 }
