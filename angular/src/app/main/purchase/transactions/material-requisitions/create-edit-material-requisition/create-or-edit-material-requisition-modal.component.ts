@@ -56,6 +56,7 @@ export class CreateOrEditMaterialRequisitionModalComponent extends AppComponentB
     filteredItemList: ItemMasterListDto[] = [];
     assemblyList: AssemblyDto[] = [];
     subAssemblyItemList: SubAssemblyItemDto[] = [];
+    filteredSubAssemblyItemList: SubAssemblyItemDto[] = [];
     modelList: ModelDto[] = [];
     // finalMaterialRequisitionItemList : MaterialRequisitionItemInputDto[] =[];
 
@@ -63,6 +64,7 @@ export class CreateOrEditMaterialRequisitionModalComponent extends AppComponentB
     selectedAssemblyId: string = "";
     selectedModelId: string = "";
     selectedItem: ItemMasterListDto;
+    selectedSubAssemblyItem: SubAssemblyItemDto;
 
     constructor(
         injector: Injector,
@@ -209,17 +211,21 @@ export class CreateOrEditMaterialRequisitionModalComponent extends AppComponentB
 
     async onItemCategorySelect(itemCategoryId: string) {
         this.selectedItem = <ItemMasterListDto>{};
+        this.selectedSubAssemblyItem = <SubAssemblyItemDto>{};
         this.itemList = [];
         this.itemList = await this._itemService.getItemsByItemCategory(itemCategoryId).toPromise();
         if (this.itemList.length > 0) {
             this.filteredItemList = this.itemList;
         }
-
     }
 
     async onAssemblySelect(assemblyId: string) {
         this.subAssemblyItemList = [];
         this.subAssemblyItemList = await this._subAssemblyService.getSubAssemblyItemList(assemblyId).toPromise();
+        if(this.subAssemblyItemList.length > 0){
+            this.filteredSubAssemblyItemList = this.subAssemblyItemList;
+        }
+        console.log(this.filteredSubAssemblyItemList);
     }
 
     async onModelSelect(modelId: string) {
@@ -229,7 +235,7 @@ export class CreateOrEditMaterialRequisitionModalComponent extends AppComponentB
 
     onItemCategoryWiseItemsAdd() {
         if (this.selectedItemCategoryId != "" && this.selectedItem.id != "") {
-            let finalMaterialRequisitionItemList = this.materialRequisitionForm.get('materialRequisitionItems').value;
+            let finalMaterialRequisitionItemList = <MaterialRequisitionItemDto[]>this.materialRequisitionForm.get('materialRequisitionItems').value;
             if (!finalMaterialRequisitionItemList.some(x => x.itemId == this.selectedItem.id)) {
                 let tempMaterialRequisitionItem: MaterialRequisitionItemDto = <MaterialRequisitionItemDto>{
                     itemId: this.selectedItem.id,
@@ -245,13 +251,20 @@ export class CreateOrEditMaterialRequisitionModalComponent extends AppComponentB
         }
     }
 
-    get materialRequisitionItems(): FormArray {
-        return (<FormArray>this.materialRequisitionForm.get('materialRequisitionItems'));
-    }
-
     onAssemblyWiseItemsAdd() {
-        if (this.selectedAssemblyId != "") {
-
+        if (this.selectedAssemblyId != "" && this.selectedSubAssemblyItem.id != "") {
+            let finalMaterialRequisitionItemList = <MaterialRequisitionItemDto[]>this.materialRequisitionForm.get('materialRequisitionItems').value;
+            if (!finalMaterialRequisitionItemList.some(x => x.subAssemblyWiseItemId == this.selectedSubAssemblyItem.itemId)) {
+                let tempMaterialRequisitionItem: MaterialRequisitionItemDto = <MaterialRequisitionItemDto>{
+                    subAssemblyItemId: this.selectedSubAssemblyItem.id,
+                    requiredQuantity: 0,
+                    itemName: this.selectedSubAssemblyItem.itemName,
+                    assemblyName: this.selectedSubAssemblyItem.assemblyName,
+                    unitName: ""
+                };
+                let tempMaterialRequisitionForm = this.createMaterialRequisitionItem(tempMaterialRequisitionItem);
+                this.materialRequisitionItems?.push(tempMaterialRequisitionForm);
+            }
         }
     }
 
@@ -260,6 +273,11 @@ export class CreateOrEditMaterialRequisitionModalComponent extends AppComponentB
 
         }
     }
+
+    get materialRequisitionItems(): FormArray {
+        return (<FormArray>this.materialRequisitionForm.get('materialRequisitionItems'));
+    }
+
 
     filterItemList(event: AutoCompleteCompleteEvent) {
         let filtered: ItemMasterListDto[] = [];
@@ -272,6 +290,19 @@ export class CreateOrEditMaterialRequisitionModalComponent extends AppComponentB
             }
         }
         this.filteredItemList = filtered;
+    }
+
+    filterSubAssemblyItems(event: AutoCompleteCompleteEvent) {
+        let filtered: SubAssemblyItemDto[] = [];
+        let query = event.query;
+
+        for (let i = 0; i < (this.subAssemblyItemList as SubAssemblyItemDto[]).length; i++) {
+            let filteredItem = (this.subAssemblyItemList as SubAssemblyItemDto[])[i];
+            if (filteredItem.itemName.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+                filtered.push(filteredItem);
+            }
+        }
+        this.filteredSubAssemblyItemList = filtered;
     }
 
     createMaterialRequisitionItem(materialRequisitionItem: MaterialRequisitionItemDto): FormGroup {

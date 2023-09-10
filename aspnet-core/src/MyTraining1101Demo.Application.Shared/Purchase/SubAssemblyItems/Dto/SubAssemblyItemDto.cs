@@ -9,6 +9,8 @@
 
         public string SubAssemblyName { get; set; }
 
+        public string AssemblyName { get; set; }
+
         public Guid? SubAssemblyId { get; set; }
 
     }

@@ -32238,6 +32238,8 @@ export interface IMaterialRequisitionInputDto {
 export class MaterialRequisitionItemDto implements IMaterialRequisitionItemDto {
     id!: string;
     itemId!: string | undefined;
+    subAssemblyItemId!: string | undefined;
+    subAssemblyWiseItemId!: string | undefined;
     requiredQuantity!: number;
     materialRequisitionId!: string | undefined;
     assemblyName!: string | undefined;
@@ -32259,6 +32261,8 @@ export class MaterialRequisitionItemDto implements IMaterialRequisitionItemDto {
         if (_data) {
             this.id = _data["id"];
             this.itemId = _data["itemId"];
+            this.subAssemblyItemId = _data["subAssemblyItemId"];
+            this.subAssemblyWiseItemId = _data["subAssemblyWiseItemId"];
             this.requiredQuantity = _data["requiredQuantity"];
             this.materialRequisitionId = _data["materialRequisitionId"];
             this.assemblyName = _data["assemblyName"];
@@ -32280,6 +32284,8 @@ export class MaterialRequisitionItemDto implements IMaterialRequisitionItemDto {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
         data["itemId"] = this.itemId;
+        data["subAssemblyItemId"] = this.subAssemblyItemId;
+        data["subAssemblyWiseItemId"] = this.subAssemblyWiseItemId;
         data["requiredQuantity"] = this.requiredQuantity;
         data["materialRequisitionId"] = this.materialRequisitionId;
         data["assemblyName"] = this.assemblyName;
@@ -32294,6 +32300,8 @@ export class MaterialRequisitionItemDto implements IMaterialRequisitionItemDto {
 export interface IMaterialRequisitionItemDto {
     id: string;
     itemId: string | undefined;
+    subAssemblyItemId: string | undefined;
+    subAssemblyWiseItemId: string | undefined;
     requiredQuantity: number;
     materialRequisitionId: string | undefined;
     assemblyName: string | undefined;
@@ -36947,6 +36955,7 @@ export class SubAssemblyItemDto implements ISubAssemblyItemDto {
     itemId!: string | undefined;
     itemName!: string | undefined;
     subAssemblyName!: string | undefined;
+    assemblyName!: string | undefined;
     subAssemblyId!: string | undefined;
 
     constructor(data?: ISubAssemblyItemDto) {
@@ -36964,6 +36973,7 @@ export class SubAssemblyItemDto implements ISubAssemblyItemDto {
             this.itemId = _data["itemId"];
             this.itemName = _data["itemName"];
             this.subAssemblyName = _data["subAssemblyName"];
+            this.assemblyName = _data["assemblyName"];
             this.subAssemblyId = _data["subAssemblyId"];
         }
     }
@@ -36981,6 +36991,7 @@ export class SubAssemblyItemDto implements ISubAssemblyItemDto {
         data["itemId"] = this.itemId;
         data["itemName"] = this.itemName;
         data["subAssemblyName"] = this.subAssemblyName;
+        data["assemblyName"] = this.assemblyName;
         data["subAssemblyId"] = this.subAssemblyId;
         return data;
     }
@@ -36991,6 +37002,7 @@ export interface ISubAssemblyItemDto {
     itemId: string | undefined;
     itemName: string | undefined;
     subAssemblyName: string | undefined;
+    assemblyName: string | undefined;
     subAssemblyId: string | undefined;
 }
 

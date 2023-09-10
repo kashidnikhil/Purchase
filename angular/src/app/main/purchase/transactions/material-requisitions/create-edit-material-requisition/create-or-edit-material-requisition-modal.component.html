@@ -89,7 +89,7 @@
                                     </option>
                                 </select>
                             </div>
-                            <div class="form-group col-md-4 mt-6" *ngIf="itemList.length > 0">
+                            <div class="form-group col-md-4 mt-6">
                                 <p-autoComplete [(ngModel)]="selectedItem" [ngModelOptions]="{standalone: true}" [suggestions]="filteredItemList" placeholder = "Search items"
                                 field="itemName" (completeMethod)="filterItemList($event)"></p-autoComplete>
                             </div>
@@ -111,6 +111,10 @@
                                         {{ assemblyItem.name }}
                                     </option>
                                 </select>
+                            </div>
+                            <div class="form-group col-md-4 mt-6">
+                                <p-autoComplete [(ngModel)]="selectedSubAssemblyItem" [ngModelOptions]="{standalone: true}" [suggestions]="filteredSubAssemblyItemList" placeholder = "Search items"
+                                field="itemName" (completeMethod)="filterSubAssemblyItems($event)"></p-autoComplete>
                             </div>
                             <div class="col-md-4 mt-5">
                                 <button type="button" class="btn btn-primary" (click)="onAssemblyWiseItemsAdd()">

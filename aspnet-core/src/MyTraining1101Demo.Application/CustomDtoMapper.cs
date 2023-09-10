@@ -395,6 +395,7 @@ namespace MyTraining1101Demo
             configuration.CreateMap<SubAssemblyItem, SubAssemblyItemDto>()
                 .ForMember(dto => dto.SubAssemblyName, options => options.MapFrom(x => x.SubAssembly.Name))
                 .ForMember(dto => dto.ItemName, options => options.MapFrom(x => x.Item.ItemName))
+                .ForMember(dto => dto.AssemblyName, options => options.MapFrom(x => x.SubAssembly.Assembly.Name))
                 .ReverseMap();
 
             configuration.CreateMap<ItemCategory, ItemCategoryDto>().ReverseMap();
@@ -421,6 +422,7 @@ namespace MyTraining1101Demo
 
             configuration.CreateMap<MaterialRequisitionItem, MaterialRequisitionItemDto>()
                 .ForMember(dto => dto.AssemblyName, options => options.MapFrom(x => x.SubAssemblyItem.SubAssembly.Assembly.Name))
+                .ForMember(dto => dto.SubAssemblyWiseItemId, options => options.MapFrom(x => x.SubAssemblyItem.ItemId))
                 .ForMember(dto => dto.ItemCategoryName, options => options.MapFrom(x => x.Item.ItemCategory.Name))
                 //.ForMember(dto => dto.ModelName, options => options.MapFrom(x => x..Name))
                 .ReverseMap();

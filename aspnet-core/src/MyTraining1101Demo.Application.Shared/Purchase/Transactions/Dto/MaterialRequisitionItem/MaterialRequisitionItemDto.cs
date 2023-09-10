@@ -8,6 +8,10 @@ namespace MyTraining1101Demo.Purchase.Transactions.Dto.MaterialRequisitionItem
 
         public Guid? ItemId { get; set; }
 
+        public Guid? SubAssemblyItemId { get; set; }
+        public Guid? SubAssemblyWiseItemId { get; set; }
+
+
         public int RequiredQuantity { get; set; }
         public Guid? MaterialRequisitionId { get; set; }
 

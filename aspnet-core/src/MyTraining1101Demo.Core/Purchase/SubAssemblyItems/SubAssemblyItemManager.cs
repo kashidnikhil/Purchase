@@ -129,7 +129,7 @@
             try
             {
                 var subAssemblyItemQuery = this._subAssemblyItemRepository.GetAllIncluding(x => x.Item)
-                    .Include(x => x.SubAssembly)
+                    .Include(x => x.SubAssembly).ThenInclude(x=> x.Assembly)
                     .Where(x => !x.IsDeleted && x.SubAssembly.AssemblyId == assemblyId).ToList();
 
                 var response = new List<SubAssemblyItemDto>(ObjectMapper.Map<List<SubAssemblyItemDto>>(subAssemblyItemQuery));
