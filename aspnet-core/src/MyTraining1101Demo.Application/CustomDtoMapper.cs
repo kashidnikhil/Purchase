@@ -419,7 +419,11 @@ namespace MyTraining1101Demo
             configuration.CreateMap<MaterialRequisition, MaterialRequisitionInputDto>().ReverseMap();
             configuration.CreateMap<MaterialRequisition, MaterialRequisitionDto>().ReverseMap();
 
-            configuration.CreateMap<MaterialRequisitionItem, MaterialRequisitionItemDto>().ReverseMap();
+            configuration.CreateMap<MaterialRequisitionItem, MaterialRequisitionItemDto>()
+                .ForMember(dto => dto.AssemblyName, options => options.MapFrom(x => x.SubAssemblyItem.SubAssembly.Assembly.Name))
+                .ForMember(dto => dto.ItemCategoryName, options => options.MapFrom(x => x.Item.ItemCategory.Name))
+                //.ForMember(dto => dto.ModelName, options => options.MapFrom(x => x..Name))
+                .ReverseMap();
             configuration.CreateMap<MaterialRequisitionItem, MaterialRequisitionItemInputDto>().ReverseMap();
 
             /* ADD YOUR OWN CUSTOM AUTOMAPPER MAPPINGS HERE */
