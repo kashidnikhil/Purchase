@@ -2,6 +2,7 @@
 {
     using Abp.Domain.Repositories;
     using Abp.Domain.Uow;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using MyTraining1101Demo.Configuration;
     using MyTraining1101Demo.Purchase.Transactions.Dto.MaterialRequisitionItem;
@@ -25,16 +26,16 @@
             _appConfiguration = configurationAccessor.Configuration;
         }
 
-        public async Task<Guid> BulkInsertOrUpdateMaterialRequisitionItems(List<MaterialRequisitionItemInputDto> materialRequuuisitionItemInputList)
+        public async Task<Guid> BulkInsertOrUpdateMaterialRequisitionItems(List<MaterialRequisitionItemInputDto> materialRequisitionItemInputList)
         {
             try
             {
                 Guid itemId = Guid.Empty;
-                var mappedItemCalibrationTypes = ObjectMapper.Map<List<MaterialRequisitionItem>>(materialRequuuisitionItemInputList);
-                for (int i = 0; i < mappedItemCalibrationTypes.Count; i++)
+                var mappedMaterialRequisitionItems = ObjectMapper.Map<List<MaterialRequisitionItem>>(materialRequisitionItemInputList);
+                for (int i = 0; i < mappedMaterialRequisitionItems.Count; i++)
                 {
-                    itemId = (Guid)mappedItemCalibrationTypes[i].ItemId;
-                    await this.InsertOrUpdateMaterialRequisitionItemIntoDB(mappedItemCalibrationTypes[i]);
+                    itemId = (Guid)mappedMaterialRequisitionItems[i].ItemId;
+                    await this.InsertOrUpdateMaterialRequisitionItemIntoDB(mappedMaterialRequisitionItems[i]);
                 }
                 return itemId;
             }
@@ -104,6 +105,9 @@
             try
             {
                 var materialRequsitionItemQuery = this._materialRequisitionItemRepository.GetAll()
+                    .Include(x=> x.SubAssemblyItem).ThenInclude(x=> x.Item)
+                    .Include(x => x.SubAssemblyItem).ThenInclude(x=> x.SubAssembly).ThenInclude(x=> x.Assembly)
+                    .Include(x=> x.Item).ThenInclude(x=> x.ItemCategory)
                     .Where(x => !x.IsDeleted && x.MaterialRequisitionId == materialRequsitionId);
 
                 return new List<MaterialRequisitionItemDto>(ObjectMapper.Map<List<MaterialRequisitionItemDto>>(materialRequsitionItemQuery));

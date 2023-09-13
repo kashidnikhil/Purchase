@@ -88,8 +88,14 @@
         {
             try
             {
-                var response = await this._materialRequisitionManager.GetMaterialRequisitionByIdFromDB(materialRequisitionId);
-                return response;
+                var materialRequisitionData = await this._materialRequisitionManager.GetMaterialRequisitionByIdFromDB(materialRequisitionId);
+
+                if (materialRequisitionData.Id != Guid.Empty)
+                {
+                    materialRequisitionData.MaterialRequisitionItems = await this._materialRequisitionItemManager.GetMaterialRequisitionItemListFromDB(materialRequisitionData.Id);
+
+                }
+                return materialRequisitionData;
             }
             catch (Exception ex)
             {

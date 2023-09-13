@@ -116,6 +116,7 @@ using MyTraining1101Demo.Purchase.Units;
 using MyTraining1101Demo.Purchase.Units.Dto;
 using MyTraining1101Demo.Sessions.Dto;
 using MyTraining1101Demo.WebHooks.Dto;
+using System;
 
 namespace MyTraining1101Demo
 {
@@ -424,6 +425,7 @@ namespace MyTraining1101Demo
                 .ForMember(dto => dto.AssemblyName, options => options.MapFrom(x => x.SubAssemblyItem.SubAssembly.Assembly.Name))
                 .ForMember(dto => dto.SubAssemblyWiseItemId, options => options.MapFrom(x => x.SubAssemblyItem.ItemId))
                 .ForMember(dto => dto.ItemCategoryName, options => options.MapFrom(x => x.Item.ItemCategory.Name))
+                .ForMember(dto => dto.ItemName, options => options.MapFrom(x=> x.ItemId!= Guid.Empty? x.Item.ItemName : x.SubAssemblyItemId != Guid.Empty ? x.SubAssemblyItem.Item.ItemName : ""))
                 //.ForMember(dto => dto.ModelName, options => options.MapFrom(x => x..Name))
                 .ReverseMap();
             configuration.CreateMap<MaterialRequisitionItem, MaterialRequisitionItemInputDto>().ReverseMap();

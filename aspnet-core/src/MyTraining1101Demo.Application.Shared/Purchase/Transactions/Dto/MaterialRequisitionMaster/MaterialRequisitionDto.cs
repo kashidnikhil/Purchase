@@ -31,6 +31,6 @@ namespace MyTraining1101Demo.Purchase.Transactions.Dto.MaterialRequisitionMaster
 
         public string AdditionalComments { get; set; }
 
-        public List<MaterialRequisitionItemDto> MaterialRequisitionItems { get; set; }
+        public IList<MaterialRequisitionItemDto> MaterialRequisitionItems { get; set; }
     }
 }

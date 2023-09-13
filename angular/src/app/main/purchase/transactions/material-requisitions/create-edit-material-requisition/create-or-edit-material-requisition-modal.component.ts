@@ -47,7 +47,7 @@ export class CreateOrEditMaterialRequisitionModalComponent extends AppComponentB
     materialRequisitionForm!: FormGroup;
     active = false;
     saving = false;
-    materialRequisitionItem: MaterialRequisitionDto = new MaterialRequisitionDto();
+    // materialRequisitionItem: MaterialRequisitionDto = new MaterialRequisitionDto();
 
     locationList: DropdownDto[] = [];
     materialRequisitionTypeList: DropdownDto[] = [];
@@ -94,9 +94,10 @@ export class CreateOrEditMaterialRequisitionModalComponent extends AppComponentB
         }
         else {
             this._materialRequisitionService.getMaterialRequisitionById(materialRequisitionId).subscribe((response: MaterialRequisitionDto) => {
-                this.materialRequisitionItem = response;
+                let materialRequisitionItem = response;
+                this.materialRequisitionForm = this.initialiseMaterialRequisitionForm(materialRequisitionItem);
                 this.active = true;
-                this.modal.show();
+                this.modal.show();  
             });
         }
     }
@@ -198,7 +199,7 @@ export class CreateOrEditMaterialRequisitionModalComponent extends AppComponentB
             location: new FormControl(materialRequisitionItem.location ? materialRequisitionItem.location : null, []),
             userId: new FormControl(materialRequisitionItem.userId ? materialRequisitionItem.userId : null, []),
             usedFor: new FormControl(materialRequisitionItem.usedFor, []),
-            materialRequisitionType: new FormControl(materialRequisitionItem.materialRequisitionType, []),
+            materialRequisitionType: new FormControl(materialRequisitionItem.materialRequisitionType, [Validators.required]),
             projectNumber: new FormControl(materialRequisitionItem.projectNumber, []),
             comments: new FormControl(materialRequisitionItem.comments, []),
             requireByDate: new FormControl(materialRequisitionItem.requireByDate ? formatDate(new Date(<string><unknown>materialRequisitionItem.requireByDate), "yyyy-MM-dd", "en") : null, []),
