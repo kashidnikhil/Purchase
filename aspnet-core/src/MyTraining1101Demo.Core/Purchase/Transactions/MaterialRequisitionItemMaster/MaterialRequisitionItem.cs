@@ -21,6 +21,8 @@
         public virtual Guid? SubAssemblyItemId { get; set; }
         public virtual SubAssemblyItem SubAssemblyItem { get; set; }
 
+
+
         public int RequiredQuantity { get; set; }
 
     }

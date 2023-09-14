@@ -10282,6 +10282,69 @@ export class ModelWiseItemServiceProxy {
         }
         return _observableOf<ModelWiseItemMasterDto>(null as any);
     }
+
+    /**
+     * @param modelId (optional) 
+     * @return Success
+     */
+    getModelWiseItemList(modelId: string | undefined): Observable<ModelWiseItemDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/ModelWiseItem/GetModelWiseItemList?";
+        if (modelId === null)
+            throw new Error("The parameter 'modelId' cannot be null.");
+        else if (modelId !== undefined)
+            url_ += "modelId=" + encodeURIComponent("" + modelId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetModelWiseItemList(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetModelWiseItemList(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ModelWiseItemDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ModelWiseItemDto[]>;
+        }));
+    }
+
+    protected processGetModelWiseItemList(response: HttpResponseBase): Observable<ModelWiseItemDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(ModelWiseItemDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ModelWiseItemDto[]>(null as any);
+    }
 }
 
 @Injectable()
@@ -32603,6 +32666,9 @@ export interface IModelInputDto {
 export class ModelWiseItemDto implements IModelWiseItemDto {
     id!: string;
     comments!: string | undefined;
+    modelName!: string | undefined;
+    itemName!: string | undefined;
+    modelId!: string | undefined;
     itemId!: string | undefined;
     modelWiseItemMasterId!: string | undefined;
 
@@ -32619,6 +32685,9 @@ export class ModelWiseItemDto implements IModelWiseItemDto {
         if (_data) {
             this.id = _data["id"];
             this.comments = _data["comments"];
+            this.modelName = _data["modelName"];
+            this.itemName = _data["itemName"];
+            this.modelId = _data["modelId"];
             this.itemId = _data["itemId"];
             this.modelWiseItemMasterId = _data["modelWiseItemMasterId"];
         }
@@ -32635,6 +32704,9 @@ export class ModelWiseItemDto implements IModelWiseItemDto {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
         data["comments"] = this.comments;
+        data["modelName"] = this.modelName;
+        data["itemName"] = this.itemName;
+        data["modelId"] = this.modelId;
         data["itemId"] = this.itemId;
         data["modelWiseItemMasterId"] = this.modelWiseItemMasterId;
         return data;
@@ -32644,6 +32716,9 @@ export class ModelWiseItemDto implements IModelWiseItemDto {
 export interface IModelWiseItemDto {
     id: string;
     comments: string | undefined;
+    modelName: string | undefined;
+    itemName: string | undefined;
+    modelId: string | undefined;
     itemId: string | undefined;
     modelWiseItemMasterId: string | undefined;
 }

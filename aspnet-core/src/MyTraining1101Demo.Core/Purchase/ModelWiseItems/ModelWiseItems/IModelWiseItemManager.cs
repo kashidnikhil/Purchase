@@ -15,5 +15,7 @@ namespace MyTraining1101Demo.Purchase.ModelWiseItems.ModelWiseItems
         Task<bool> DeleteModelWiseItemFromDB(Guid modelWiseItemId);
 
         Task<IList<ModelWiseItemDto>> GetModelWiseItemListFromDB(Guid modelWiseItemMasterId);
+
+        Task<IList<ModelWiseItemDto>> GetModelWiseItemListByModelIdFromDB(Guid modelId);
     }
 }

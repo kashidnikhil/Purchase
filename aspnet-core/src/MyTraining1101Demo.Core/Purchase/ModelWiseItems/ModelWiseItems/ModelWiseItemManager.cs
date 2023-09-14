@@ -2,6 +2,7 @@
 {
     using Abp.Domain.Repositories;
     using Abp.Domain.Uow;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using MyTraining1101Demo.Configuration;
     using MyTraining1101Demo.Purchase.ModelWiseItems.ModelWiseItems.Dto;
@@ -108,6 +109,24 @@
             {
                 var modelWiseItemQuery = this._modelWiseItemRepository.GetAll()
                     .Where(x => !x.IsDeleted && x.ModelWiseItemMasterId == modelWiseItemMasterId);
+
+                return new List<ModelWiseItemDto>(ObjectMapper.Map<List<ModelWiseItemDto>>(modelWiseItemQuery));
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.Message, ex);
+                throw ex;
+            }
+
+        }
+
+        public async Task<IList<ModelWiseItemDto>> GetModelWiseItemListByModelIdFromDB(Guid modelId)
+        {
+            try
+            {
+                var modelWiseItemQuery = this._modelWiseItemRepository.GetAllIncluding(x=> x.Item)
+                    .Include(x=> x.ModelWiseItemMaster).ThenInclude(x=> x.Model)
+                    .Where(x => !x.IsDeleted && x.ModelWiseItemMaster.ModelId == modelId);
 
                 return new List<ModelWiseItemDto>(ObjectMapper.Map<List<ModelWiseItemDto>>(modelWiseItemQuery));
             }

@@ -7,6 +7,12 @@
 
         public string Comments { get; set; }
 
+        public string ModelName { get; set; }
+
+        public string ItemName { get; set; }
+
+        public Guid? ModelId { get; set; }
+
         public Guid? ItemId { get; set; }
 
         public Guid? ModelWiseItemMasterId { get; set; }

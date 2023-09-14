@@ -414,7 +414,11 @@ namespace MyTraining1101Demo
                 .ReverseMap();
 
 
-            configuration.CreateMap<ModelWiseItem, ModelWiseItemDto>().ReverseMap();
+            configuration.CreateMap<ModelWiseItem, ModelWiseItemDto>()
+                .ForMember(dto => dto.ModelName, options => options.MapFrom(x => x.ModelWiseItemMaster.Model.Name))
+                .ForMember(dto => dto.ItemName, options => options.MapFrom(x => x.Item.ItemName))
+                .ForMember(dto => dto.ModelId, options => options.MapFrom(x => x.ModelWiseItemMaster.ModelId))
+                .ReverseMap();
             configuration.CreateMap<ModelWiseItem, ModelWiseItemInputDto>().ReverseMap();
 
             configuration.CreateMap<MaterialRequisition, MaterialRequisitionMasterListDto>().ReverseMap();

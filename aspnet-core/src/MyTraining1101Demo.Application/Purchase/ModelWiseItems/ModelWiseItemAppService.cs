@@ -4,8 +4,8 @@
     using MyTraining1101Demo.Purchase.ModelWiseItems.ModelWiseItemMasters;
     using MyTraining1101Demo.Purchase.ModelWiseItems.ModelWiseItemMasters.Dto;
     using MyTraining1101Demo.Purchase.ModelWiseItems.ModelWiseItems;
+    using MyTraining1101Demo.Purchase.ModelWiseItems.ModelWiseItems.Dto;
     using MyTraining1101Demo.Purchase.Shared;
-    using MyTraining1101Demo.Purchase.SubAssemblies.Dto;
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -119,6 +119,20 @@
                     modelWiseItemMasterData.ModelWiseItemData = await this._modelWiseItemManager.GetModelWiseItemListFromDB(modelWiseItemMasterId);
                 }
                 return modelWiseItemMasterData;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.Message, ex);
+                throw ex;
+            }
+        }
+
+        public async Task<IList<ModelWiseItemDto>> GetModelWiseItemList(Guid modelId)
+        {
+            try
+            {
+                var response = await this._modelWiseItemManager.GetModelWiseItemListByModelIdFromDB(modelId);
+                return response;
             }
             catch (Exception ex)
             {

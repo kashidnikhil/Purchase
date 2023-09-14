@@ -14,6 +14,8 @@ import {
     MaterialRequisitionServiceProxy,
     ModelDto,
     ModelServiceProxy,
+    ModelWiseItemDto,
+    ModelWiseItemServiceProxy,
     ResponseDto,
     SubAssemblyDto,
     SubAssemblyItemDto,
@@ -57,6 +59,8 @@ export class CreateOrEditMaterialRequisitionModalComponent extends AppComponentB
     assemblyList: AssemblyDto[] = [];
     subAssemblyItemList: SubAssemblyItemDto[] = [];
     filteredSubAssemblyItemList: SubAssemblyItemDto[] = [];
+    modelItemList: ModelWiseItemDto[] = [];
+    filteredModelItemList: ModelWiseItemDto[] = [];
     modelList: ModelDto[] = [];
     // finalMaterialRequisitionItemList : MaterialRequisitionItemInputDto[] =[];
 
@@ -65,6 +69,7 @@ export class CreateOrEditMaterialRequisitionModalComponent extends AppComponentB
     selectedModelId: string = "";
     selectedItem: ItemMasterListDto;
     selectedSubAssemblyItem: SubAssemblyItemDto;
+    selectedModelWiseItem: ModelWiseItemDto;
 
     constructor(
         injector: Injector,
@@ -75,6 +80,7 @@ export class CreateOrEditMaterialRequisitionModalComponent extends AppComponentB
         private _assemblyService: AssemblyServiceProxy,
         private _itemService: ItemServiceProxy,
         private _subAssemblyService: SubAssemblyServiceProxy,
+        private _modelWiseItemService: ModelWiseItemServiceProxy, 
         private _modelService: ModelServiceProxy,
 
     ) {
@@ -213,6 +219,7 @@ export class CreateOrEditMaterialRequisitionModalComponent extends AppComponentB
     async onItemCategorySelect(itemCategoryId: string) {
         this.selectedItem = <ItemMasterListDto>{};
         this.selectedSubAssemblyItem = <SubAssemblyItemDto>{};
+        this.selectedModelWiseItem = <ModelWiseItemDto>{}; 
         this.itemList = [];
         this.itemList = await this._itemService.getItemsByItemCategory(itemCategoryId).toPromise();
         if (this.itemList.length > 0) {
@@ -222,16 +229,25 @@ export class CreateOrEditMaterialRequisitionModalComponent extends AppComponentB
 
     async onAssemblySelect(assemblyId: string) {
         this.subAssemblyItemList = [];
+        this.selectedItem = <ItemMasterListDto>{};
+        this.selectedSubAssemblyItem = <SubAssemblyItemDto>{};
+        this.selectedModelWiseItem = <ModelWiseItemDto>{}; 
         this.subAssemblyItemList = await this._subAssemblyService.getSubAssemblyItemList(assemblyId).toPromise();
         if(this.subAssemblyItemList.length > 0){
             this.filteredSubAssemblyItemList = this.subAssemblyItemList;
         }
-        console.log(this.filteredSubAssemblyItemList);
     }
 
     async onModelSelect(modelId: string) {
-        this.subAssemblyItemList = [];
-        // this.subAssemblyList = await this._subAssemblyService.getSubAssemblyList(assemblyId).toPromise();
+        this.modelItemList = [];
+        this.selectedItem = <ItemMasterListDto>{};
+        this.selectedSubAssemblyItem = <SubAssemblyItemDto>{};
+        this.selectedModelWiseItem = <ModelWiseItemDto>{}; 
+        this.modelItemList = await this._modelWiseItemService.getModelWiseItemList(modelId).toPromise();
+        if(this.modelItemList.length > 0){
+            this.filteredModelItemList = this.modelItemList;
+        }
+        console.log(this.modelItemList);
     }
 
     onItemCategoryWiseItemsAdd() {
@@ -304,6 +320,19 @@ export class CreateOrEditMaterialRequisitionModalComponent extends AppComponentB
             }
         }
         this.filteredSubAssemblyItemList = filtered;
+    }
+
+    filterModelWiseItems(event: AutoCompleteCompleteEvent) {
+        let filtered: ModelWiseItemDto[] = [];
+        let query = event.query;
+
+        for (let i = 0; i < (this.modelItemList as ModelWiseItemDto[]).length; i++) {
+            let filteredItem = (this.modelItemList as ModelWiseItemDto[])[i];
+            if (filteredItem.itemName.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+                filtered.push(filteredItem);
+            }
+        }
+        this.filteredModelItemList = filtered;
     }
 
     createMaterialRequisitionItem(materialRequisitionItem: MaterialRequisitionItemDto): FormGroup {
