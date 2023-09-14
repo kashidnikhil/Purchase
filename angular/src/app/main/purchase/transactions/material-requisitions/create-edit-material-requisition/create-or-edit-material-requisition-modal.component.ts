@@ -286,8 +286,19 @@ export class CreateOrEditMaterialRequisitionModalComponent extends AppComponentB
     }
 
     onModelWiseItemsAdd() {
-        if (this.selectedModelId != "") {
-
+        if (this.selectedModelId != "" && this.selectedModelWiseItem.id != "") {
+            let finalMaterialRequisitionItemList = <MaterialRequisitionItemDto[]>this.materialRequisitionForm.get('materialRequisitionItems').value;
+            if (!finalMaterialRequisitionItemList.some(x => x.modelItemId == this.selectedModelWiseItem.itemId)) {
+                let tempMaterialRequisitionItem: MaterialRequisitionItemDto = <MaterialRequisitionItemDto>{
+                    modelWiseItemId: this.selectedModelWiseItem.id,
+                    requiredQuantity: 0,
+                    itemName: this.selectedModelWiseItem.itemName,
+                    modelName: this.selectedModelWiseItem.modelName,
+                    unitName: ""
+                };
+                let tempMaterialRequisitionForm = this.createMaterialRequisitionItem(tempMaterialRequisitionItem);
+                this.materialRequisitionItems?.push(tempMaterialRequisitionForm);
+            }
         }
     }
 
@@ -340,6 +351,8 @@ export class CreateOrEditMaterialRequisitionModalComponent extends AppComponentB
             id: new FormControl(materialRequisitionItem.id, []),
             itemCategoryName: new FormControl(materialRequisitionItem.itemCategoryName, []),
             itemId: new FormControl(materialRequisitionItem.itemId, []),
+            subAssemblyItemId: new FormControl(materialRequisitionItem.subAssemblyItemId, []),
+            modelWiseItemId: new FormControl(materialRequisitionItem.modelWiseItemId, []),
             assemblyName: new FormControl(materialRequisitionItem.assemblyName, []),
             modelName: new FormControl(materialRequisitionItem.modelName, []),
             itemName: new FormControl(materialRequisitionItem.itemName, []),

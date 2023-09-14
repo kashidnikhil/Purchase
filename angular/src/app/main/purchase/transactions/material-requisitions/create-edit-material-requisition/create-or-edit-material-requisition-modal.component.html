@@ -139,7 +139,7 @@
                                 <p-autoComplete [(ngModel)]="selectedModelWiseItem" [ngModelOptions]="{standalone: true}" [suggestions]="filteredModelItemList" placeholder = "Search items"
                                 field="itemName" (completeMethod)="filterModelWiseItems($event)"></p-autoComplete>
                             </div>
-                            <div class="col-md-4 mt-5">
+                            <div class="col-md-3 mt-5">
                                 <button type="button" class="btn btn-primary" (click)="onModelWiseItemsAdd()">
                                     <i class="fa fa-plus"></i>
                                     <span>{{ 'Add' | localize }}</span>

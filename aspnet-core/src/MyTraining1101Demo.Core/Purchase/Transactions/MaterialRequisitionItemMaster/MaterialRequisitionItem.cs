@@ -2,6 +2,7 @@
 {
     using Abp.Domain.Entities.Auditing;
     using MyTraining1101Demo.Purchase.Items.ItemMaster;
+    using MyTraining1101Demo.Purchase.ModelWiseItems.ModelWiseItems;
     using MyTraining1101Demo.Purchase.SubAssemblyItems;
     using MyTraining1101Demo.Purchase.Transactions.MaterialRequisitionMaster;
     using System;
@@ -21,6 +22,8 @@
         public virtual Guid? SubAssemblyItemId { get; set; }
         public virtual SubAssemblyItem SubAssemblyItem { get; set; }
 
+        public virtual Guid? ModelWiseItemId { get; set; }
+        public virtual ModelWiseItem ModelWiseItem { get; set; }
 
 
         public int RequiredQuantity { get; set; }

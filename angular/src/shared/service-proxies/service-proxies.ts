@@ -32303,6 +32303,8 @@ export class MaterialRequisitionItemDto implements IMaterialRequisitionItemDto {
     itemId!: string | undefined;
     subAssemblyItemId!: string | undefined;
     subAssemblyWiseItemId!: string | undefined;
+    modelWiseItemId!: string | undefined;
+    modelItemId!: string | undefined;
     requiredQuantity!: number;
     materialRequisitionId!: string | undefined;
     assemblyName!: string | undefined;
@@ -32326,6 +32328,8 @@ export class MaterialRequisitionItemDto implements IMaterialRequisitionItemDto {
             this.itemId = _data["itemId"];
             this.subAssemblyItemId = _data["subAssemblyItemId"];
             this.subAssemblyWiseItemId = _data["subAssemblyWiseItemId"];
+            this.modelWiseItemId = _data["modelWiseItemId"];
+            this.modelItemId = _data["modelItemId"];
             this.requiredQuantity = _data["requiredQuantity"];
             this.materialRequisitionId = _data["materialRequisitionId"];
             this.assemblyName = _data["assemblyName"];
@@ -32349,6 +32353,8 @@ export class MaterialRequisitionItemDto implements IMaterialRequisitionItemDto {
         data["itemId"] = this.itemId;
         data["subAssemblyItemId"] = this.subAssemblyItemId;
         data["subAssemblyWiseItemId"] = this.subAssemblyWiseItemId;
+        data["modelWiseItemId"] = this.modelWiseItemId;
+        data["modelItemId"] = this.modelItemId;
         data["requiredQuantity"] = this.requiredQuantity;
         data["materialRequisitionId"] = this.materialRequisitionId;
         data["assemblyName"] = this.assemblyName;
@@ -32365,6 +32371,8 @@ export interface IMaterialRequisitionItemDto {
     itemId: string | undefined;
     subAssemblyItemId: string | undefined;
     subAssemblyWiseItemId: string | undefined;
+    modelWiseItemId: string | undefined;
+    modelItemId: string | undefined;
     requiredQuantity: number;
     materialRequisitionId: string | undefined;
     assemblyName: string | undefined;

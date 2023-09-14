@@ -428,8 +428,9 @@ namespace MyTraining1101Demo
             configuration.CreateMap<MaterialRequisitionItem, MaterialRequisitionItemDto>()
                 .ForMember(dto => dto.AssemblyName, options => options.MapFrom(x => x.SubAssemblyItem.SubAssembly.Assembly.Name))
                 .ForMember(dto => dto.SubAssemblyWiseItemId, options => options.MapFrom(x => x.SubAssemblyItem.ItemId))
+                .ForMember(dto => dto.ModelItemId, options => options.MapFrom(x => x.ModelWiseItem.ItemId))
                 .ForMember(dto => dto.ItemCategoryName, options => options.MapFrom(x => x.Item.ItemCategory.Name))
-                .ForMember(dto => dto.ItemName, options => options.MapFrom(x=> x.ItemId!= Guid.Empty? x.Item.ItemName : x.SubAssemblyItemId != Guid.Empty ? x.SubAssemblyItem.Item.ItemName : ""))
+                .ForMember(dto => dto.ItemName, options => options.MapFrom(x=> x.ItemId!= Guid.Empty? x.Item.ItemName : x.SubAssemblyItemId != Guid.Empty ? x.SubAssemblyItem.Item.ItemName : x.ModelWiseItemId != Guid.Empty ? x.ModelWiseItem.Item.ItemName : ""))
                 //.ForMember(dto => dto.ModelName, options => options.MapFrom(x => x..Name))
                 .ReverseMap();
             configuration.CreateMap<MaterialRequisitionItem, MaterialRequisitionItemInputDto>().ReverseMap();
