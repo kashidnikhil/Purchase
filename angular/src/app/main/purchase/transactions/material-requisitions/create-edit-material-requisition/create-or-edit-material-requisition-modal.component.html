@@ -94,7 +94,7 @@
                                 field="itemName" (completeMethod)="filterItemList($event)"></p-autoComplete>
                             </div>
                             <div class="col-md-4 mt-5">
-                                <button type="button" class="btn btn-primary" (click)="onItemCategoryWiseItemsAdd()">
+                                <button type="button" class="btn btn-primary" [disabled]="selectedItem?.id == '' || selectedItem?.id == null " (click)="onItemCategoryWiseItemsAdd()">
                                     <i class="fa fa-plus"></i>
                                     <span>{{ 'Add' | localize }}</span>
                                 </button>
@@ -117,7 +117,7 @@
                                 field="itemName" (completeMethod)="filterSubAssemblyItems($event)"></p-autoComplete>
                             </div>
                             <div class="col-md-3 mt-5">
-                                <button type="button" class="btn btn-primary" (click)="onAssemblyWiseItemsAdd()">
+                                <button type="button" class="btn btn-primary" [disabled]="selectedSubAssemblyItem?.id == '' || selectedSubAssemblyItem?.id == null "  (click)="onAssemblyWiseItemsAdd()">
                                     <i class="fa fa-plus"></i>
                                     <span>{{ 'Add' | localize }}</span>
                                 </button>
@@ -140,7 +140,7 @@
                                 field="itemName" (completeMethod)="filterModelWiseItems($event)"></p-autoComplete>
                             </div>
                             <div class="col-md-3 mt-5">
-                                <button type="button" class="btn btn-primary" (click)="onModelWiseItemsAdd()">
+                                <button type="button" class="btn btn-primary"  [disabled]="selectedModelWiseItem?.id == '' || selectedModelWiseItem?.id == null " (click)="onModelWiseItemsAdd()">
                                     <i class="fa fa-plus"></i>
                                     <span>{{ 'Add' | localize }}</span>
                                 </button>
