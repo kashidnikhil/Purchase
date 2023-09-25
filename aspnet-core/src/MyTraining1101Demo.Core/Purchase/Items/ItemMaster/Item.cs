@@ -1,15 +1,15 @@
-﻿using Abp.Domain.Entities.Auditing;
-using Microsoft.EntityFrameworkCore;
-using MyTraining1101Demo.Purchase.ItemCategories;
-using MyTraining1101Demo.Purchase.Items.Enums;
-using MyTraining1101Demo.Purchase.MaterialGrades;
-using MyTraining1101Demo.Purchase.Suppliers.SupplierMaster;
-using MyTraining1101Demo.Purchase.Units;
-using System;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace MyTraining1101Demo.Purchase.Items.ItemMaster
+﻿namespace MyTraining1101Demo.Purchase.Items.ItemMaster
 {
+    using Abp.Domain.Entities.Auditing;
+    using Microsoft.EntityFrameworkCore;
+    using MyTraining1101Demo.Purchase.ItemCategories;
+    using MyTraining1101Demo.Purchase.Items.Enums;
+    using MyTraining1101Demo.Purchase.MaterialGrades;
+    using MyTraining1101Demo.Purchase.Suppliers.SupplierMaster;
+    using MyTraining1101Demo.Purchase.Units;
+    using System;
+    using System.ComponentModel.DataAnnotations.Schema;
+
     [Table("Items")]
     public class Item : FullAuditedEntity<Guid>
     {

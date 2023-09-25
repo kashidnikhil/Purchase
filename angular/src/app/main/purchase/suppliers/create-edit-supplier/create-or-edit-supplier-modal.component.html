@@ -153,27 +153,6 @@
                                         <label>{{"Category" | localize}}</label> &nbsp;&nbsp;
                                         <p-multiSelect [options]="supplierCategoryList" formControlName="supplierCategories"  optionLabel="name" display="chip"></p-multiSelect>
                                     </div>
-                                    <!-- <div class="form-check form-check-inline mt-5">
-                                        <input class="form-check-input" type="radio" name="category" id="category"
-                                            (change)="supplierForm.value.category = 1"
-                                            [checked]="supplierForm.value.category == 1"
-                                            [value]="supplierForm.value.category">
-                                        <label class="form-check-label" for="inlineRadio1">Manufacturer</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="category" id="category"
-                                            (change)="supplierForm.value.category = 2"
-                                            [checked]="supplierForm.value.category == 2"
-                                            [value]="supplierForm.value.category">
-                                        <label class="form-check-label" for="inlineRadio1">Trader</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="category" id="category"
-                                            (change)="supplierForm.value.category = 3"
-                                            [checked]="supplierForm.value.category == 3"
-                                            [value]="supplierForm.value.category">
-                                        <label class="form-check-label" for="inlineRadio1">Service Provider</label>
-                                    </div> -->
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
@@ -186,6 +165,120 @@
                                                 {{ paymentModeItem.title }}
                                             </option>
                                         </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>{{"PAN" | localize}}</label>
+                                        <input #panInput id="pan" class="form-control" type="text"
+                                            formControlName="pan" name="pan" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>{{"LicenseDetails" | localize}}</label>
+                                        <input #licenseDetailsInput id="licenseDetails" class="form-control" type="text"
+                                            formControlName="licenseDetails" name="licenseDetails" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>{{"Status" | localize}}</label>
+                                        <select placeholder="Select Status" class="form-control" #deliveryByInput
+                                            formControlName="status" id="status" name="status">
+                                            <option *ngFor="let status of statusList"
+                                                value="{{ status.value }}">
+                                                {{ status.title }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row mb-4">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>{{"ReferredBy" | localize}}</label>
+                                            <input #referredByInput id="referredBy" class="form-control" type="text"
+                                                formControlName="referredBy" name="referredBy" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>{{"PAN" | localize}}</label>
+                                        <input #panInput id="pan" class="form-control" type="text"
+                                            formControlName="pan" name="pan" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>{{"LicenseDetails" | localize}}</label>
+                                        <input #licenseDetailsInput id="licenseDetails" class="form-control" type="text"
+                                            formControlName="licenseDetails" name="licenseDetails" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>{{"Status" | localize}}</label>
+                                        <select placeholder="Select Status" class="form-control" #deliveryByInput
+                                            formControlName="status" id="status" name="status">
+                                            <option *ngFor="let status of statusList"
+                                                value="{{ status.value }}">
+                                                {{ status.title }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row mb-4">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>{{"PositiveObservation" | localize}}</label>
+                                            <input #positiveObservationInput id="positiveObservation" class="form-control" type="text"
+                                                formControlName="positiveObservation" name="positiveObservation" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>{{"NegativeObservation" | localize}}</label>
+                                            <input #negativeObservationInput id="negativeObservation" class="form-control" type="text"
+                                                formControlName="negativeObservation" name="negativeObservation" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>{{"ServicesProvided" | localize}}</label>
+                                        <input #servicesProvidedInput id="servicesProvided" class="form-control" type="text"
+                                            formControlName="servicesProvided" name="servicesProvided" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>{{"CommentsOrObservations" | localize}}</label>
+                                        <input #commentsOrObservationsInput id="commentsOrObservations" class="form-control" type="text"
+                                            formControlName="commentsOrObservations" name="commentsOrObservations" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>{{"CommentsOrCEOApproval" | localize}}</label>
+                                        <input #commentsOrApprovalByCeoInput id="commentsOrApprovalByCeo" class="form-control" type="text"
+                                            formControlName="commentsOrApprovalByCeo" name="commentsOrApprovalByCeo" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>{{"PORelatedComments" | localize}}</label>
+                                        <input #poCommentsInput id="poComments" class="form-control" type="text"
+                                            formControlName="poComments" name="poComments" />
                                     </div>
                                 </div>
                             </div>
@@ -204,7 +297,6 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="float-end">
-
                                         <button type="button" class="btn btn-success mt-5" (click)="changeTab(1)">
                                             {{ 'Next' | localize }} &nbsp;
                                             <i class="fa fa-arrow-right"></i>

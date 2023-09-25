@@ -45,6 +45,9 @@ export class CreateOrEditSupplierModalComponent extends AppComponentBase {
     paymentModeList: DropdownDto[] = [];
     bankPaymentModeList: DropdownDto[] = [];
     deliveryList: DropdownDto[] = [];
+    msmeStatusList: DropdownDto[] = [];
+    statusList: DropdownDto[] = [];
+    
 
     constructor(
         injector: Injector,
@@ -91,6 +94,18 @@ export class CreateOrEditSupplierModalComponent extends AppComponentBase {
             yearOfEstablishment: new FormControl(supplierItem.yearOfEstablishment, []),
             deliveryBy: new FormControl(supplierItem.deliveryBy, []),
             category: new FormControl(supplierItem.category, []),
+            servicesProvided: new FormControl(supplierItem.servicesProvided, []),
+            commentsOrObservations: new FormControl(supplierItem.commentsOrObservations, []),
+            commentsOrApprovalByCeo: new FormControl(supplierItem.commentsOrApprovalByCeo, []),
+            poComments: new FormControl(supplierItem.poComments, []),
+            pan: new FormControl(supplierItem.pan, []),
+            licenseDetails: new FormControl(supplierItem.licenseDetails, []),
+            msmeStatus: new FormControl(supplierItem.msmeStatus, []),
+            msmeNumber: new FormControl(supplierItem.msmeNumber, []),
+            statusChangeReason: new FormControl(supplierItem.statusChangeReason, []),
+            referredBy: new FormControl(supplierItem.referredBy, []),
+            positiveObservation: new FormControl(supplierItem.positiveObservation, []),
+            negativeObservation: new FormControl(supplierItem.negativeObservation, []),
             paymentMode: new FormControl(supplierItem.paymentMode, []),
             supplierCategories : [this.unMapSupplierCategories(supplierItem.supplierCategories), []],
             // supplierCategories: new FormControl(<SupplierCategoryDto[]>(this.unMapSupplierCategories(supplierItem.supplierCategories)), []),
@@ -196,6 +211,8 @@ export class CreateOrEditSupplierModalComponent extends AppComponentBase {
         this.loadPaymentModeList();
         this.loadBankPaymentModeList();
         this.loadDeliveryList();
+        this.loadMSMEStatusList();
+        this.loadStatusList();
         await this.loadLegalEntityList();
         await this.loadSupplierCategoryList();
     }
@@ -236,6 +253,35 @@ export class CreateOrEditSupplierModalComponent extends AppComponentBase {
         ];
         return this.deliveryList;
     }
+
+    loadMSMEStatusList(): DropdownDto[] {
+        this.msmeStatusList = [
+            {
+                title: "Yes",
+                value: 1
+            },
+            {
+                title: "No",
+                value: 2
+            }
+        ];
+        return this.msmeStatusList;
+    }
+
+    loadStatusList(): DropdownDto[] {
+        this.statusList = [
+            {
+                title: "Inactive",
+                value: 1
+            },
+            {
+                title: "Active",
+                value: 2
+            }
+        ];
+        return this.statusList;
+    }
+
 
     loadBankPaymentModeList(): DropdownDto[] {
         this.bankPaymentModeList = [

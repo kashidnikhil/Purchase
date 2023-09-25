@@ -1257,6 +1257,7 @@
 	  <text name="MICRCode">MICR Code</text>
 	  <text name="IFSCCode">IFSC Code</text>
 	  <text name="RTGS">RTGS</text>
+	  <text name="ServicesProvided">Services Provided</text>
 	  <text name="AddressType">Address Type</text>
 	  <text name="Designation">Designation</text>
 	  <text name="MobileNumber">Mobile Number</text>
@@ -1269,15 +1270,25 @@
 	  <text name="SupplierSuccessfullyRestored">Supplier restored successfully</text>
 	  <text name="ExistingSupplierErrorMessage">Supplier {0} cannot be added. Supplier already exists</text>
 	  <text name="NewSupplierErrorMessage">No new instance of supplier with name {0} cannot be added.Supplier with name {0} already exists. Do you want to restore the supplier?</text>
+	  <text name="CommentsOrObservations">Comments / Observations</text>
+	  <text name="CommentsOrCEOApproval">Comment/ Approval By CEO</text>
+	  <text name="PORelatedComments">PO related Comments</text>
+	  <text name="PAN">PAN</text>
+	  <text name="LicenseDetails">Details of License</text>
+	  <text name="PositiveObservation">Positive Observation</text>
+	  <text name="NegativeObservation">Negative Observation</text>\
+	  <text name="ReferredBy">Referred By</text>
+	  
+	  
 
-	  <!-- Comapnies section-->
+	  <!-- Companies section-->
 	  <text name="Companies">Companies</text>
 	  <text name="CompaniesHeaderInfo">Manage companies.</text>
 	  <text name="CreateNewCompany">Create New Company</text>
 	  <text name="EditCompany">Edit Company</text>
 	  <text name="CompanyName">Company Name</text>
 
-	  <!-- Comapnies section-->
+	  <!-- Models section-->
 	  <text name="Models">Models</text>
 	  <text name="ModelsHeaderInfo">Manage models.</text>
 	  <text name="CreateNewModel">Create New Model</text>

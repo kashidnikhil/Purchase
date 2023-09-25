@@ -33003,6 +33003,11 @@ export interface IMoveTenantsToAnotherEditionDto {
     targetEditionId: number;
 }
 
+export enum MSMEStatus {
+    Yes = 1,
+    No = 2,
+}
+
 export class NameValue implements INameValue {
     name!: string | undefined;
     value!: string | undefined;
@@ -37917,6 +37922,20 @@ export class SupplierDto implements ISupplierDto {
     deliveryBy!: number | undefined;
     paymentMode!: number | undefined;
     category!: number | undefined;
+    servicesProvided!: string | undefined;
+    commentsOrObservations!: string | undefined;
+    commentsOrApprovalByCeo!: string | undefined;
+    poComments!: string | undefined;
+    licenseDetails!: string | undefined;
+    status!: SupplierStatus;
+    msmeStatus!: MSMEStatus;
+    msmeNumber!: number | undefined;
+    pan!: string | undefined;
+    statusChangeReason!: string | undefined;
+    statusChangeDate!: DateTime | undefined;
+    referredBy!: string | undefined;
+    positiveObservation!: string | undefined;
+    negativeObservation!: string | undefined;
     supplierAddresses!: SupplierAddressDto[] | undefined;
     supplierBanks!: SupplierBankDto[] | undefined;
     supplierContactPersons!: SupplierContactPersonDto[] | undefined;
@@ -37948,6 +37967,20 @@ export class SupplierDto implements ISupplierDto {
             this.deliveryBy = _data["deliveryBy"];
             this.paymentMode = _data["paymentMode"];
             this.category = _data["category"];
+            this.servicesProvided = _data["servicesProvided"];
+            this.commentsOrObservations = _data["commentsOrObservations"];
+            this.commentsOrApprovalByCeo = _data["commentsOrApprovalByCeo"];
+            this.poComments = _data["poComments"];
+            this.licenseDetails = _data["licenseDetails"];
+            this.status = _data["status"];
+            this.msmeStatus = _data["msmeStatus"];
+            this.msmeNumber = _data["msmeNumber"];
+            this.pan = _data["pan"];
+            this.statusChangeReason = _data["statusChangeReason"];
+            this.statusChangeDate = _data["statusChangeDate"] ? DateTime.fromISO(_data["statusChangeDate"].toString()) : <any>undefined;
+            this.referredBy = _data["referredBy"];
+            this.positiveObservation = _data["positiveObservation"];
+            this.negativeObservation = _data["negativeObservation"];
             if (Array.isArray(_data["supplierAddresses"])) {
                 this.supplierAddresses = [] as any;
                 for (let item of _data["supplierAddresses"])
@@ -37995,6 +38028,20 @@ export class SupplierDto implements ISupplierDto {
         data["deliveryBy"] = this.deliveryBy;
         data["paymentMode"] = this.paymentMode;
         data["category"] = this.category;
+        data["servicesProvided"] = this.servicesProvided;
+        data["commentsOrObservations"] = this.commentsOrObservations;
+        data["commentsOrApprovalByCeo"] = this.commentsOrApprovalByCeo;
+        data["poComments"] = this.poComments;
+        data["licenseDetails"] = this.licenseDetails;
+        data["status"] = this.status;
+        data["msmeStatus"] = this.msmeStatus;
+        data["msmeNumber"] = this.msmeNumber;
+        data["pan"] = this.pan;
+        data["statusChangeReason"] = this.statusChangeReason;
+        data["statusChangeDate"] = this.statusChangeDate ? this.statusChangeDate.toString() : <any>undefined;
+        data["referredBy"] = this.referredBy;
+        data["positiveObservation"] = this.positiveObservation;
+        data["negativeObservation"] = this.negativeObservation;
         if (Array.isArray(this.supplierAddresses)) {
             data["supplierAddresses"] = [];
             for (let item of this.supplierAddresses)
@@ -38035,6 +38082,20 @@ export interface ISupplierDto {
     deliveryBy: number | undefined;
     paymentMode: number | undefined;
     category: number | undefined;
+    servicesProvided: string | undefined;
+    commentsOrObservations: string | undefined;
+    commentsOrApprovalByCeo: string | undefined;
+    poComments: string | undefined;
+    licenseDetails: string | undefined;
+    status: SupplierStatus;
+    msmeStatus: MSMEStatus;
+    msmeNumber: number | undefined;
+    pan: string | undefined;
+    statusChangeReason: string | undefined;
+    statusChangeDate: DateTime | undefined;
+    referredBy: string | undefined;
+    positiveObservation: string | undefined;
+    negativeObservation: string | undefined;
     supplierAddresses: SupplierAddressDto[] | undefined;
     supplierBanks: SupplierBankDto[] | undefined;
     supplierContactPersons: SupplierContactPersonDto[] | undefined;
@@ -38057,6 +38118,20 @@ export class SupplierInputDto implements ISupplierInputDto {
     deliveryBy!: number | undefined;
     paymentMode!: number | undefined;
     category!: number | undefined;
+    servicesProvided!: string | undefined;
+    commentsOrObservations!: string | undefined;
+    commentsOrApprovalByCeo!: string | undefined;
+    poComments!: string | undefined;
+    licenseDetails!: string | undefined;
+    status!: SupplierStatus;
+    msmeStatus!: MSMEStatus;
+    msmeNumber!: number | undefined;
+    pan!: string | undefined;
+    statusChangeReason!: string | undefined;
+    statusChangeDate!: DateTime | undefined;
+    referredBy!: string | undefined;
+    positiveObservation!: string | undefined;
+    negativeObservation!: string | undefined;
     supplierCategories!: MappedSupplierCategoryInputDto[] | undefined;
     supplierAddresses!: SupplierAddressInputDto[] | undefined;
     supplierContactPersons!: SupplierContactPersonInputDto[] | undefined;
@@ -38088,6 +38163,20 @@ export class SupplierInputDto implements ISupplierInputDto {
             this.deliveryBy = _data["deliveryBy"];
             this.paymentMode = _data["paymentMode"];
             this.category = _data["category"];
+            this.servicesProvided = _data["servicesProvided"];
+            this.commentsOrObservations = _data["commentsOrObservations"];
+            this.commentsOrApprovalByCeo = _data["commentsOrApprovalByCeo"];
+            this.poComments = _data["poComments"];
+            this.licenseDetails = _data["licenseDetails"];
+            this.status = _data["status"];
+            this.msmeStatus = _data["msmeStatus"];
+            this.msmeNumber = _data["msmeNumber"];
+            this.pan = _data["pan"];
+            this.statusChangeReason = _data["statusChangeReason"];
+            this.statusChangeDate = _data["statusChangeDate"] ? DateTime.fromISO(_data["statusChangeDate"].toString()) : <any>undefined;
+            this.referredBy = _data["referredBy"];
+            this.positiveObservation = _data["positiveObservation"];
+            this.negativeObservation = _data["negativeObservation"];
             if (Array.isArray(_data["supplierCategories"])) {
                 this.supplierCategories = [] as any;
                 for (let item of _data["supplierCategories"])
@@ -38135,6 +38224,20 @@ export class SupplierInputDto implements ISupplierInputDto {
         data["deliveryBy"] = this.deliveryBy;
         data["paymentMode"] = this.paymentMode;
         data["category"] = this.category;
+        data["servicesProvided"] = this.servicesProvided;
+        data["commentsOrObservations"] = this.commentsOrObservations;
+        data["commentsOrApprovalByCeo"] = this.commentsOrApprovalByCeo;
+        data["poComments"] = this.poComments;
+        data["licenseDetails"] = this.licenseDetails;
+        data["status"] = this.status;
+        data["msmeStatus"] = this.msmeStatus;
+        data["msmeNumber"] = this.msmeNumber;
+        data["pan"] = this.pan;
+        data["statusChangeReason"] = this.statusChangeReason;
+        data["statusChangeDate"] = this.statusChangeDate ? this.statusChangeDate.toString() : <any>undefined;
+        data["referredBy"] = this.referredBy;
+        data["positiveObservation"] = this.positiveObservation;
+        data["negativeObservation"] = this.negativeObservation;
         if (Array.isArray(this.supplierCategories)) {
             data["supplierCategories"] = [];
             for (let item of this.supplierCategories)
@@ -38175,6 +38278,20 @@ export interface ISupplierInputDto {
     deliveryBy: number | undefined;
     paymentMode: number | undefined;
     category: number | undefined;
+    servicesProvided: string | undefined;
+    commentsOrObservations: string | undefined;
+    commentsOrApprovalByCeo: string | undefined;
+    poComments: string | undefined;
+    licenseDetails: string | undefined;
+    status: SupplierStatus;
+    msmeStatus: MSMEStatus;
+    msmeNumber: number | undefined;
+    pan: string | undefined;
+    statusChangeReason: string | undefined;
+    statusChangeDate: DateTime | undefined;
+    referredBy: string | undefined;
+    positiveObservation: string | undefined;
+    negativeObservation: string | undefined;
     supplierCategories: MappedSupplierCategoryInputDto[] | undefined;
     supplierAddresses: SupplierAddressInputDto[] | undefined;
     supplierContactPersons: SupplierContactPersonInputDto[] | undefined;
@@ -38220,6 +38337,11 @@ export class SupplierListDto implements ISupplierListDto {
 export interface ISupplierListDto {
     id: string;
     name: string | undefined;
+}
+
+export enum SupplierStatus {
+    Inactive = 1,
+    Active = 2,
 }
 
 export class SwitchedAccountAuthenticateResultModel implements ISwitchedAccountAuthenticateResultModel {
