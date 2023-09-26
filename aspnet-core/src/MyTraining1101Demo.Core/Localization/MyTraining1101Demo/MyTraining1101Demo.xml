@@ -1278,6 +1278,9 @@
 	  <text name="PositiveObservation">Positive Observation</text>
 	  <text name="NegativeObservation">Negative Observation</text>\
 	  <text name="ReferredBy">Referred By</text>
+	  <text name="StatusChangeReason">Reason for Status Change</text>
+	  <text name="MSMEStatus">MSME Status</text>
+	  <text name="MSMENumber">MSME Number</text>
 	  
 	  
 

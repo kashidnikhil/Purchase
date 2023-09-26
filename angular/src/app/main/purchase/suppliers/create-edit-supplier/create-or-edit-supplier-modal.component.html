@@ -16,7 +16,7 @@
                 </div>
                 <div class="modal-body">
                     <tabset #tabs class="nav-tabs">
-                        <tab class="pt-5" (selectTab)="changeTab(0)"   heading="{{ 'GeneralInfo' | localize }}">
+                        <tab class="pt-5" (selectTab)="changeTab(0)" heading="{{ 'GeneralInfo' | localize }}">
                             <div class="col-md-12 row mb-4">
                                 <div class="form-group mb-1">
                                     <label>{{"SupplierName" | localize}}</label>
@@ -151,7 +151,9 @@
                                 <div class="col-md-8 mt-5">
                                     <div class="form-group">
                                         <label>{{"Category" | localize}}</label> &nbsp;&nbsp;
-                                        <p-multiSelect [options]="supplierCategoryList" formControlName="supplierCategories"  optionLabel="name" display="chip"></p-multiSelect>
+                                        <p-multiSelect [options]="supplierCategoryList"
+                                            formControlName="supplierCategories" optionLabel="name"
+                                            display="chip"></p-multiSelect>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -169,48 +171,61 @@
                                 </div>
                             </div>
                             <div class="row mb-4">
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <div class="form-group">
-                                        <label>{{"PAN" | localize}}</label>
-                                        <input #panInput id="pan" class="form-control" type="text"
-                                            formControlName="pan" name="pan" />
+                                        <label>{{"MSMEStatus" | localize}}</label>
+                                        <select placeholder="Select Status" class="form-control" #msmeInput
+                                            formControlName="msmeStatus" id="msmeStatus" name="msmeStatus">
+                                            <option *ngFor="let msmeStatus of msmeStatusList"
+                                                value="{{ msmeStatus.value }}">
+                                                {{ msmeStatus.title }}
+                                            </option>
+                                        </select>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-5">
                                     <div class="form-group">
-                                        <label>{{"LicenseDetails" | localize}}</label>
-                                        <input #licenseDetailsInput id="licenseDetails" class="form-control" type="text"
-                                            formControlName="licenseDetails" name="licenseDetails" />
+                                        <label>{{"MSMENumber" | localize}}</label>
+                                        <input #msmeNumberInput id="msmeNumber" class="form-control" type="text"
+                                            formControlName="msmeNumber" name="msmeNumber" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3 mb-4">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>{{"ReferredBy" | localize}}</label>
+                                        <input #referredByInput id="referredBy" class="form-control" type="text"
+                                            formControlName="referredBy" name="referredBy" />
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label>{{"Status" | localize}}</label>
-                                        <select placeholder="Select Status" class="form-control" #deliveryByInput
+                                        <select placeholder="Select Status" class="form-control" #statusInput
                                             formControlName="status" id="status" name="status">
-                                            <option *ngFor="let status of statusList"
-                                                value="{{ status.value }}">
+                                            <option *ngFor="let status of statusList" value="{{ status.value }}">
                                                 {{ status.title }}
                                             </option>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="row mb-4">
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>{{"ReferredBy" | localize}}</label>
-                                            <input #referredByInput id="referredBy" class="form-control" type="text"
-                                                formControlName="referredBy" name="referredBy" />
-                                        </div>
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label>{{"StatusChangeReason" | localize}}</label>
+                                        <input #statusChangeReasonInput id="statusChangeReason" class="form-control"
+                                            type="text" formControlName="statusChangeReason"
+                                            name="statusChangeReason" />
                                     </div>
                                 </div>
                             </div>
+
                             <div class="row mb-4">
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label>{{"PAN" | localize}}</label>
-                                        <input #panInput id="pan" class="form-control" type="text"
-                                            formControlName="pan" name="pan" />
+                                        <input #panInput id="pan" class="form-control" type="text" formControlName="pan"
+                                            name="pan" />
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -220,31 +235,22 @@
                                             formControlName="licenseDetails" name="licenseDetails" />
                                     </div>
                                 </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>{{"Status" | localize}}</label>
-                                        <select placeholder="Select Status" class="form-control" #deliveryByInput
-                                            formControlName="status" id="status" name="status">
-                                            <option *ngFor="let status of statusList"
-                                                value="{{ status.value }}">
-                                                {{ status.title }}
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="row mb-4">
+
+                                <div class="row mb-4 mt-3">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>{{"PositiveObservation" | localize}}</label>
-                                            <input #positiveObservationInput id="positiveObservation" class="form-control" type="text"
-                                                formControlName="positiveObservation" name="positiveObservation" />
+                                            <input #positiveObservationInput id="positiveObservation"
+                                                class="form-control" type="text" formControlName="positiveObservation"
+                                                name="positiveObservation" />
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>{{"NegativeObservation" | localize}}</label>
-                                            <input #negativeObservationInput id="negativeObservation" class="form-control" type="text"
-                                                formControlName="negativeObservation" name="negativeObservation" />
+                                            <input #negativeObservationInput id="negativeObservation"
+                                                class="form-control" type="text" formControlName="negativeObservation"
+                                                name="negativeObservation" />
                                         </div>
                                     </div>
                                 </div>
@@ -254,15 +260,16 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>{{"ServicesProvided" | localize}}</label>
-                                        <input #servicesProvidedInput id="servicesProvided" class="form-control" type="text"
-                                            formControlName="servicesProvided" name="servicesProvided" />
+                                        <input #servicesProvidedInput id="servicesProvided" class="form-control"
+                                            type="text" formControlName="servicesProvided" name="servicesProvided" />
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>{{"CommentsOrObservations" | localize}}</label>
-                                        <input #commentsOrObservationsInput id="commentsOrObservations" class="form-control" type="text"
-                                            formControlName="commentsOrObservations" name="commentsOrObservations" />
+                                        <input #commentsOrObservationsInput id="commentsOrObservations"
+                                            class="form-control" type="text" formControlName="commentsOrObservations"
+                                            name="commentsOrObservations" />
                                     </div>
                                 </div>
                             </div>
@@ -270,8 +277,9 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>{{"CommentsOrCEOApproval" | localize}}</label>
-                                        <input #commentsOrApprovalByCeoInput id="commentsOrApprovalByCeo" class="form-control" type="text"
-                                            formControlName="commentsOrApprovalByCeo" name="commentsOrApprovalByCeo" />
+                                        <input #commentsOrApprovalByCeoInput id="commentsOrApprovalByCeo"
+                                            class="form-control" type="text" formControlName="commentsOrApprovalByCeo"
+                                            name="commentsOrApprovalByCeo" />
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -368,17 +376,19 @@
                                         <div class="row mb-4">
                                             <div class="col-md-6">
                                                 <div class="float-start">
-            
-                                                    <button type="button" class="btn btn-success mt-5" (click)="changeTab(0)">
+
+                                                    <button type="button" class="btn btn-success mt-5"
+                                                        (click)="changeTab(0)">
                                                         <i class="fa fa-arrow-left"></i> &nbsp;
-                                                        {{ 'Previous' | localize }} 
+                                                        {{ 'Previous' | localize }}
                                                     </button>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="float-end">
-            
-                                                    <button type="button" class="btn btn-success mt-5" (click)="changeTab(2)">
+
+                                                    <button type="button" class="btn btn-success mt-5"
+                                                        (click)="changeTab(2)">
                                                         {{ 'Next' | localize }} &nbsp;
                                                         <i class="fa fa-arrow-right"></i>
                                                     </button>
@@ -499,7 +509,7 @@
                                     <div class="float-start">
                                         <button type="button" class="btn btn-success mt-5" (click)="changeTab(1)">
                                             <i class="fa fa-arrow-left"></i> &nbsp;
-                                            {{ 'Previous' | localize }} 
+                                            {{ 'Previous' | localize }}
                                         </button>
                                     </div>
                                 </div>
@@ -507,17 +517,17 @@
                         </tab>
                     </tabset>
                 </div>
-                <div class="modal-footer" >
+                <div class="modal-footer">
                     <div *ngIf="currentTab == 2">
                         <button [disabled]="saving" type="button" class="btn btn-light-primary font-weight-bold"
-                        (click)="close()">
-                        {{ 'Cancel' | localize }}
-                    </button>
-                    <button type="submit" class="btn btn-primary font-weight-bold" [buttonBusy]="saving"
-                        [busyText]="l('SavingWithThreeDot')">
-                        <i class="fa fa-save"></i>
-                        <span>{{ 'Save' | localize }}</span>
-                    </button>
+                            (click)="close()">
+                            {{ 'Cancel' | localize }}
+                        </button>
+                        <button type="submit" class="btn btn-primary font-weight-bold" [buttonBusy]="saving"
+                            [busyText]="l('SavingWithThreeDot')">
+                            <i class="fa fa-save"></i>
+                            <span>{{ 'Save' | localize }}</span>
+                        </button>
                     </div>
                 </div>
             </form>
