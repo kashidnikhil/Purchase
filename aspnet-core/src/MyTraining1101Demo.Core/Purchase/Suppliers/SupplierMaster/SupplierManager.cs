@@ -1,15 +1,11 @@
 ﻿using Abp.Application.Services.Dto;
-using Abp.Domain.Entities;
 using Abp.Domain.Repositories;
 using Abp.Domain.Uow;
 using Abp.Extensions;
 using Abp.Linq.Extensions;
-using IdentityServer4.Validation;
 using Microsoft.EntityFrameworkCore;
-using MyTraining1101Demo.Authorization.Users;
 using MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierMaster;
 using MyTraining1101Demo.Purchase.Suppliers.Enums;
-using MyTraining1101Demo.Purchase.TermsOfPayments.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,7 +54,7 @@ namespace MyTraining1101Demo.Purchase.Suppliers.SupplierMaster
             {
                 var supplierId = Guid.Empty;
                 var existingSupplierMasterItem = await this._supplierRepository.GetAll().AsNoTracking().FirstOrDefaultAsync(x => x.Id == input.Id);
-                var mappedSupplierMasterItem = ObjectMapper.Map<Supplier?>(input);
+                var mappedSupplierMasterItem = ObjectMapper.Map<Supplier>(input);
                 if (mappedSupplierMasterItem != null && mappedSupplierMasterItem.Id != Guid.Empty)
                 {
                     if (existingSupplierMasterItem.Status != mappedSupplierMasterItem.Status)
@@ -68,6 +64,9 @@ namespace MyTraining1101Demo.Purchase.Suppliers.SupplierMaster
                     else {
                         mappedSupplierMasterItem.StatusChangeDate = DateTime.Now;
                     }
+
+                    var tempMSMENumber = (mappedSupplierMasterItem.MSMEStatus == null || mappedSupplierMasterItem.MSMEStatus == MSMEStatus.No) ? mappedSupplierMasterItem.MSMENumber : 0;
+                    mappedSupplierMasterItem.MSMENumber = tempMSMENumber;
 
                     supplierId = await this._supplierRepository.InsertOrUpdateAndGetIdAsync(mappedSupplierMasterItem);
                 }
