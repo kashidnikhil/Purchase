@@ -50,6 +50,20 @@
         {
             try
             {
+                //For updating a materia requisition item, we are hard deleting and inserting a new record. This is to avoid unwanted volume of data.
+                if (input.Id != Guid.Empty) {
+                    using (var uow = UnitOfWorkManager.Begin())
+                    {
+                        using (CurrentUnitOfWork.DisableFilter(AbpDataFilters.SoftDelete))
+                        {
+                            //await this.DeleteMaterialRequisitionItemFromDB(input.Id);
+                            var materialRequisitionItem = await this._materialRequisitionItemRepository.GetAsync(input.Id);
+                            await this._materialRequisitionItemRepository.HardDeleteAsync(materialRequisitionItem);
+                            uow.Complete();
+                        }
+                    }
+                }
+                input.Id = Guid.Empty;
                 var materialRequisitionItemId = await this._materialRequisitionItemRepository.InsertOrUpdateAndGetIdAsync(input);
                 await CurrentUnitOfWork.SaveChangesAsync();
             }
