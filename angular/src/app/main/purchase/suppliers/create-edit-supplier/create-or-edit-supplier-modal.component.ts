@@ -94,6 +94,7 @@ export class CreateOrEditSupplierModalComponent extends AppComponentBase {
             yearOfEstablishment: new FormControl(supplierItem.yearOfEstablishment, []),
             deliveryBy: new FormControl(supplierItem.deliveryBy, []),
             category: new FormControl(supplierItem.category, []),
+            status: new FormControl(supplierItem.status, []),
             servicesProvided: new FormControl(supplierItem.servicesProvided, []),
             commentsOrObservations: new FormControl(supplierItem.commentsOrObservations, []),
             commentsOrApprovalByCeo: new FormControl(supplierItem.commentsOrApprovalByCeo, []),
@@ -126,7 +127,6 @@ export class CreateOrEditSupplierModalComponent extends AppComponentBase {
             ) : this.formBuilder.array([this.createSupplierBank(supplierBankItem)])
 
         });
-        console.log(this.supplierForm.value);
     }
 
     get supplierAddresses(): FormArray {

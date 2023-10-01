@@ -291,6 +291,8 @@ namespace MyTraining1101Demo
                  .ForMember(dto => dto.DeliveryBy, options => options.MapFrom(x => x.DeliveryBy))
                  .ForMember(dto => dto.PaymentMode, options => options.MapFrom(x => x.PaymentMode))
                  .ForMember(dto => dto.Category, options => options.MapFrom(x => x.Category))
+                 .ForMember(dto => dto.Status, options => options.MapFrom(x => x.Status))
+                 .ForMember(dto => dto.StatusChangeDate, options => options.MapFrom(x => x.StatusChangeDate))
                  .ReverseMap();
 
             configuration.CreateMap<Supplier, SupplierListDto>().ReverseMap();

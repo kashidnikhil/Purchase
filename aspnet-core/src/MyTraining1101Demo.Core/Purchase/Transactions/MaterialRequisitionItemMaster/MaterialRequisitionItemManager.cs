@@ -56,7 +56,6 @@
                     {
                         using (CurrentUnitOfWork.DisableFilter(AbpDataFilters.SoftDelete))
                         {
-                            //await this.DeleteMaterialRequisitionItemFromDB(input.Id);
                             var materialRequisitionItem = await this._materialRequisitionItemRepository.GetAsync(input.Id);
                             await this._materialRequisitionItemRepository.HardDeleteAsync(materialRequisitionItem);
                             uow.Complete();

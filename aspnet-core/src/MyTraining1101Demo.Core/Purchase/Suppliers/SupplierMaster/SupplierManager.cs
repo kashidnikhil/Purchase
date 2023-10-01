@@ -1,10 +1,14 @@
 ﻿using Abp.Application.Services.Dto;
+using Abp.Domain.Entities;
 using Abp.Domain.Repositories;
 using Abp.Domain.Uow;
 using Abp.Extensions;
 using Abp.Linq.Extensions;
+using IdentityServer4.Validation;
 using Microsoft.EntityFrameworkCore;
+using MyTraining1101Demo.Authorization.Users;
 using MyTraining1101Demo.Purchase.Suppliers.Dto.SupplierMaster;
+using MyTraining1101Demo.Purchase.Suppliers.Enums;
 using MyTraining1101Demo.Purchase.TermsOfPayments.Dto;
 using System;
 using System.Collections.Generic;
@@ -52,8 +56,27 @@ namespace MyTraining1101Demo.Purchase.Suppliers.SupplierMaster
         {
             try
             {
-                var mappedSupplierMasterItem = ObjectMapper.Map<Supplier>(input);
-                var supplierId = await this._supplierRepository.InsertOrUpdateAndGetIdAsync(mappedSupplierMasterItem);
+                var supplierId = Guid.Empty;
+                var existingSupplierMasterItem = await this._supplierRepository.GetAll().AsNoTracking().FirstOrDefaultAsync(x => x.Id == input.Id);
+                var mappedSupplierMasterItem = ObjectMapper.Map<Supplier?>(input);
+                if (mappedSupplierMasterItem != null && mappedSupplierMasterItem.Id != Guid.Empty)
+                {
+                    if (existingSupplierMasterItem.Status != mappedSupplierMasterItem.Status)
+                    {
+                        mappedSupplierMasterItem.StatusChangeDate = DateTime.Now;
+                    }
+                    else {
+                        mappedSupplierMasterItem.StatusChangeDate = DateTime.Now;
+                    }
+
+                    supplierId = await this._supplierRepository.InsertOrUpdateAndGetIdAsync(mappedSupplierMasterItem);
+                }
+                else
+                {
+                    input.StatusChangeDate = DateTime.Now;
+
+                    supplierId = await this._supplierRepository.InsertOrUpdateAndGetIdAsync(mappedSupplierMasterItem);
+                }
                 await CurrentUnitOfWork.SaveChangesAsync();
                 return supplierId;
             }
@@ -63,6 +86,7 @@ namespace MyTraining1101Demo.Purchase.Suppliers.SupplierMaster
                 throw ex;
             }
         }
+
 
         [UnitOfWork]
         public async Task<bool> DeleteSupplierMasterFromDB(Guid supplierId)
