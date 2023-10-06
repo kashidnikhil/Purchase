@@ -65,7 +65,7 @@ namespace MyTraining1101Demo.Purchase.Suppliers.SupplierMaster
                         mappedSupplierMasterItem.StatusChangeDate = DateTime.Now;
                     }
 
-                    var tempMSMENumber = (mappedSupplierMasterItem.MSMEStatus == null || mappedSupplierMasterItem.MSMEStatus == MSMEStatus.No) ? mappedSupplierMasterItem.MSMENumber : 0;
+                    var tempMSMENumber = (mappedSupplierMasterItem.MSMEStatus == null || mappedSupplierMasterItem.MSMEStatus == MSMEStatus.No) ? 0 : mappedSupplierMasterItem.MSMENumber;
                     mappedSupplierMasterItem.MSMENumber = tempMSMENumber;
 
                     supplierId = await this._supplierRepository.InsertOrUpdateAndGetIdAsync(mappedSupplierMasterItem);
